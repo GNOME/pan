@@ -174,12 +174,6 @@ DataImpl :: rebuild_backend ()
     migration->migrate_data();
 
     quarks_t server_list = get_server_ids_from_db();
-    if (server_list.empty()) {
-      // load servers from file only if SQL db is empty
-      load_server_properties (*_data_io);
-      save_server_properties (_prefs);
-      server_list = get_server_ids_from_db();
-    }
 
     // populate the servers from database information. Which is a bit
     // dumb since the DB should be the reference. This is duplicated
@@ -192,10 +186,8 @@ DataImpl :: rebuild_backend ()
       read_server(it->c_str(), &server);
     }
 
-    foreach_const (quarks_t, server_list, it) {
-      Server &server(_servers[it->c_str()]);
-      save_group_in_db(it->to_string());
-    }
+    // populate data structure group from DB, which is also dumb
+    load_groups_from_db();
 
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);

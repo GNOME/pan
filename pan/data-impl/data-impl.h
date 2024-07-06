@@ -389,11 +389,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void save_group_permissions(DataIO &) const;
 
     std::string get_newsrc_filename(Quark const &server) const;
-    void load_newsrc(Quark const &server,
-                     LineReader *,
-                     alpha_groups_t &,
-                     alpha_groups_t &);
-    void load_newsrc_files(DataIO const &);
+    void load_groups_from_db();
     void save_newsrc_files(DataIO &) const;
     void save_group_in_db(Quark const &server_name);
 

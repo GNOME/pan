@@ -96,110 +96,77 @@ bool parse_newsrc_line(StringView const &line,
 #include <ext/algorithm>
 #endif
 
-void DataImpl ::load_newsrc(Quark const &server,
-                            LineReader *in,
-                            alpha_groups_t &sub,
-                            alpha_groups_t &unsub)
-{
-  Server * s = find_server (server);
-  if (!s) {
-    Log::add_err_va (_("Skipping newsrc file for server \"%s\""), server.c_str());
-    return;
-  }
-
-  std::vector<Quark>& groups (s->groups.get_container());
-
-  AlphabeticalQuarkOrdering o;
-  StringView line, name, numbers;
-  bool needs_sort (false);
-  Quark prev;
-  std::vector<Quark> tmp_sub, tmp_unsub;
-  tmp_sub.reserve (1000);
-  tmp_unsub.reserve (120000); // giganews has ~100k; anyone have more?
-  while (!in->fail() && in->getline (line))
-  {
-    bool subscribed;
-    if (parse_newsrc_line (line, name, subscribed, numbers))
-    {
-      Quark const &group(name);
-
-      needs_sort |= (!prev.empty() && !o(prev,group));
-      groups.push_back (group);
-
-      if (subscribed)
-        tmp_sub.push_back (group);
-      else
-        tmp_unsub.push_back (group);
-
-      if (!numbers.empty())
-        _read_groups[group][server]._read.mark_str (numbers);
-
-      prev = group;
-    }
-  }
-
-  // sub += tmp_sub
-  if (needs_sort)
-    std::sort (tmp_sub.begin(), tmp_sub.end(), AlphabeticalQuarkOrdering());
-  if (sub.empty())
-    sub.get_container().swap (tmp_sub);
-  else {
-    std::vector<Quark> tmp;
-    tmp.reserve (sub.size() + tmp_sub.size());
-    std::set_union (sub.begin(), sub.end(),
-                    tmp_sub.begin(), tmp_sub.end(),
-                    std::inserter (tmp, tmp.begin()), o);
-    sub.get_container().swap (tmp);
-  }
-
-  // unsub += tmp_unsub
-  if (needs_sort)
-    std::sort (tmp_unsub.begin(), tmp_unsub.end(), AlphabeticalQuarkOrdering());
-  if (unsub.empty())
-    unsub.get_container().swap (tmp_unsub);
-  else {
-    std::vector<Quark> tmp;
-    tmp.reserve (unsub.size() + tmp_unsub.size());
-    std::set_union (unsub.begin(), unsub.end(),
-                    tmp_unsub.begin(), tmp_unsub.end(),
-                    std::inserter (tmp, tmp.begin()), o);
-    unsub.get_container().swap (tmp);
-  }
-}
-
-void DataImpl ::load_newsrc_files(DataIO const &data_io)
-{
+void DataImpl ::load_groups_from_db() {
   alpha_groups_t& s(_subscribed);
   alpha_groups_t& u(_unsubscribed);
+  StringView line, name, numbers;
 
   s.clear ();
   u.clear ();
 
+  std::stringstream read_group_st;
+  // sqlitebrowser returns 110k groups in 210ms (57 without ordering)
+  read_group_st << "select name, read_ranges "
+                << "from `group` as g join server as s, server_group as sg "
+                << "where s.host = ? and s.id == sg.server_id and g.id == sg.group_id "
+                << "order by name asc";
+  SQLite::Statement read_group_q(pan_db,read_group_st.str());
+
+  // load groups of each server
   foreach_const (servers_t, _servers, sit) {
-    const Quark key (sit->first);
-    const std::string filename = file::absolute_fn("", sit->second.newsrc_filename);
-    debug("reading " << sit->second.host << " groups from " << filename);
-    if (file::file_exists (filename.c_str())) {
-      LineReader * in (data_io.read_file (filename));
-      load_newsrc (key, in, s, u);
-      delete in;
+    Quark const &server(sit->first);
+    Server * s = find_server (server);
+    std::vector<Quark>& groups (s->groups.get_container());
+    int i = 0;
+
+    read_group_q.reset();
+    read_group_q.bind(1, s->host);
+
+    try {
+      while (read_group_q.executeStep()) {
+        i++;
+        name = read_group_q.getColumn(0).getText();
+        numbers = read_group_q.getColumn(1).getText();
+
+        Quark const &group(name);
+        groups.push_back (group);
+
+        if (!numbers.empty())
+          _read_groups[group][server]._read.mark_str (numbers);
+
+      }
+    } catch (std::exception e) {
+      std::cout << "exception: " << e.what() << std::endl;
     }
+    debug("loaded " << i << " groups of server with pan_id " << server.c_str() << " from DB");
   }
 
-  // remove duplicates
-  s.erase (std::unique(s.begin(), s.end()), s.end());
-  u.erase (std::unique(u.begin(), u.end()), u.end());
+  // load subcribed groups
+  std::stringstream s_group_st;
+  s_group_st << "select name from `group` where subscribed == 1 order by name asc; ";
+  SQLite::Statement s_group_q(pan_db,s_group_st.str());
 
-  // unsub -= sub
-  AlphabeticalQuarkOrdering o;
-  std::vector<Quark> tmp;
-  tmp.reserve (u.size());
-  std::set_difference (u.begin(), u.end(), s.begin(), s.end(), inserter (tmp, tmp.begin()), o);
-  u.get_container().swap (tmp);
+  int s_count = 0;
+  while (s_group_q.executeStep()) {
+    name = s_group_q.getColumn(0).getText();
+    s.insert(name);
+    s_count++;
+  }
+  debug("loaded " << s_count << " subscribed groups from DB");
 
-  // shrink-to-fit
-  alpha_groups_t (s).swap(s);
-  alpha_groups_t (u).swap(u);
+  // load unsubcribed groups
+  std::stringstream u_group_st;
+  u_group_st << "select name from `group` where subscribed == 0 order by name asc; ";
+  SQLite::Statement u_group_q(pan_db,u_group_st.str());
+
+  int u_count = 0;
+  while (u_group_q.executeStep()) {
+    name = u_group_q.getColumn(0).getText();
+    u.insert(name);
+    u_count ++;
+  }
+  debug("loaded " << u_count << " unsubscribed groups from DB");
+
   fire_grouplist_rebuilt ();
 }
 
