@@ -192,7 +192,6 @@ DataImpl :: rebuild_backend ()
       read_server(it->c_str(), &server);
     }
 
-    load_newsrc_files (*_data_io);
     foreach_const (quarks_t, server_list, it) {
       Server &server(_servers[it->c_str()]);
       save_group_in_db(it->to_string());
