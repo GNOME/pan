@@ -102,47 +102,10 @@ DataMigration ::DataMigration(StringView const &cache_ext,
   newsrc_autosave_id(0),
   newsrc_autosave_timeout(0)
 {
-  rebuild_backend ();
-}
-
-void DataMigration ::load_db_schema(char const *file) {
-  GError *error;
-  char* contents;
-  gsize length;
-
-  // try local path
-  gchar *sql_path = g_build_filename((gchar*) "pan/data-migration/sql", file, NULL);
-  GFile *sql_file = g_file_new_for_path((char*) sql_path);
-
-  // does local path exists
-  if (g_file_query_exists(sql_file, nullptr)) {
-    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
-  } else {
-    // free local data
-    g_free(sql_path);
-    g_free(sql_file);
-    // try system path
-    sql_path = g_build_filename((gchar*) PAN_SYSTEM_SQL_PATH, file, NULL);
-    sql_file = g_file_new_for_path((char*) sql_path);
-
-    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
-  }
-
-  try {
-    pan_db.exec(contents);
-  }
-  catch (std::exception& e) {
-    std::cout << "Schema load exception in file " << sql_path << ": " << e.what() << std::endl;
-    exit(EXIT_FAILURE);
-  }
-
-  g_free(sql_path);
-  g_free(sql_file);
-  g_free(contents);
 }
 
 void
-DataMigration :: rebuild_backend ()
+DataMigration :: migrate_data ()
 {
   if (_unit_test)
   {
@@ -155,11 +118,6 @@ DataMigration :: rebuild_backend ()
     const std::string score_filename (_data_io->get_scorefile_name());
     if (file :: file_exists (score_filename.c_str()))
       _scorefile.parse_file (score_filename);
-
-    std::vector<std::string> sql_files { "01-server.sql", "02-group.sql" };
-    for (int i = 0; i < sql_files.size(); i++) {
-      load_db_schema(sql_files[i].c_str());
-    }
 
     quarks_t server_list = get_server_ids_from_db();
     if (server_list.empty()) {

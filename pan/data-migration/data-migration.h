@@ -157,7 +157,6 @@ class DataMigration final : public Data, public TaskArchive, public ProfilesImpl
     gchar *password_decrypt(PasswordData &) const override;
 #endif
   private:
-    void rebuild_backend();
     bool const _unit_test;
     DataIO *_data_io;
     Prefs &_prefs;
@@ -169,10 +168,8 @@ class DataMigration final : public Data, public TaskArchive, public ProfilesImpl
   private: // implementation
     void load_server_properties(DataIO const &);
 
-    void save_server_properties(DataIO &, Prefs &);
     void save_server_properties(Prefs &);
     void save_server_in_db(std::string pan_id, Server *s, Prefs &prefs);
-    void load_db_schema(char const *file);
 
     typedef Loki::AssocVector<Quark, Server> servers_t;
 

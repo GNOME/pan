@@ -701,50 +701,5 @@ void DataMigration :: save_server_properties (Prefs& prefs)
 }
 
 
-void DataMigration :: save_server_properties (DataIO& data_io, Prefs& prefs)
-{
-  int depth (0);
-  std::ostream * out = data_io.write_server_properties ();
 
-  *out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
 
-  // sort the servers by id
-  typedef std::set<Quark,AlphabeticalQuarkOrdering> alpha_quarks_t;
-  alpha_quarks_t servers;
-  foreach_const (servers_t, _servers, it)
-    servers.insert (it->first);
-
-  // write the servers to the ostream
-  *out << indent(depth++) << "<server-properties>\n";
-  foreach_const (alpha_quarks_t, servers, it) {
-    const Server* s (find_server (*it));
-    std::string user;
-    gchar* pass(NULL);
-    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
-    *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
-    *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
-         << indent(depth) << "<port>" << s->port << "</port>\n"
-         << indent(depth) << "<username>" << escaped(user) << "</username>\n";
-#ifdef HAVE_GKR
-    if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
-      *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
-    else
-      *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
-#else
-    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
-#endif
-    *out << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
-         << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
-         << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
-         << indent(depth) << "<rank>" << s->rank << "</rank>\n"
-         << indent(depth) << "<use-ssl>" << s->ssl_support << "</use-ssl>\n"
-         << indent(depth) << "<trust>" << s->trust << "</trust>\n"
-         << indent(depth) << "<compression-type>" << s->compression_type << "</compression-type>\n"
-         << indent(depth) << "<cert>"    << s->cert << "</cert>\n";
-
-    *out << indent(--depth) << "</server>\n";
-  }
-  *out << indent(--depth) << "</server-properties>\n";
-
-  data_io.write_done (out);
-}
