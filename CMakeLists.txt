@@ -63,6 +63,8 @@ include_directories(${CMAKE_BINARY_DIR})
 
 # https://cmake.org/cmake/help/latest/command/add_executable.html
 add_executable(pan pan/gui/pan.cc pan/gui/gui.cc)
+# remove this so pan binary lands in build dir. But this requires
+# first to rename pan/ dir to src/
 set_target_properties(pan PROPERTIES RUNTIME_OUTPUT_DIRECTORY "pan/gui")
 target_compile_options(pan PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
 
