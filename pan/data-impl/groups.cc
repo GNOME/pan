@@ -374,19 +374,6 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
 ***/
 
 void
-DataImpl :: load_group_descriptions (const DataIO& data_io) const
-{
-  _descriptions.clear ();
-
-  LineReader * in (data_io.read_group_descriptions ());
-  StringView s, group;
-  while (in && !in->fail() && in->getline(group))
-    if (group.pop_last_token (s, ':'))
-      _descriptions[group].assign (s.str, s.len);
-  delete in;
-}
-
-void
 DataImpl :: load_group_xovers (const DataIO& data_io)
 {
   LineReader * in (data_io.read_group_xovers ());
