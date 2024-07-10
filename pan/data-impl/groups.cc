@@ -267,7 +267,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
   // save all the servers' newsrc files
   foreach_const (servers_t, _servers, sit)
   {
-    const Quark& server (sit->first);
+    Quark const &server(sit->first);
 
     // write this server's newsrc
     const std::string filename = file::absolute_fn("", sit->second.newsrc_filename);
@@ -278,16 +278,16 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
     const alpha_groups_t::const_iterator sub_end(_subscribed.end());
     foreach_const (Server::groups_t, sit->second.groups, git) // for the groups in this server...
     {
-      const Quark& group (*git);
+      Quark const &group(*git);
 
       //const bool subscribed (_subscribed.count (group));
       while (sub_it!=sub_end && o (*sub_it, group)) ++sub_it; // see comment for 'o' above
-      const bool subscribed (sub_it!=sub_end && *sub_it==group);
+      bool const subscribed(sub_it != sub_end && *sub_it == group);
       out << group;
       out.put (subscribed ? ':' : '!');
 
       // if the group's been read, save its read number ranges...
-      const ReadGroup::Server * rgs (find_read_group_server (group, server));
+      ReadGroup::Server const *rgs(find_read_group_server(group, server));
       if (rgs != nullptr) {
         newsrc_string.clear ();
         rgs->_read.to_string (newsrc_string);
@@ -307,8 +307,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
 ****
 ***/
 
-void
-DataImpl :: load_group_permissions (const DataIO& data_io)
+void DataImpl ::load_group_permissions(DataIO const &data_io)
 {
   std::vector<Quark> m, n;
 
@@ -325,7 +324,7 @@ DataImpl :: load_group_permissions (const DataIO& data_io)
     }
 
     const Quark group (line);
-    const char ch = *s.str;
+    char const ch = *s.str;
 
     if (ch == 'm')
       m.push_back (group);
@@ -373,8 +372,7 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
 ****
 ***/
 
-void
-DataImpl :: load_group_xovers (const DataIO& data_io)
+void DataImpl ::load_group_xovers(DataIO const &data_io)
 {
   LineReader * in (data_io.read_group_xovers ());
   if (in && !in->fail())
@@ -432,10 +430,17 @@ namespace
   typedef std::map < pan::Quark, std::string > quark_to_symbol_t;
 
   struct QuarkToSymbol {
-    const quark_to_symbol_t& _map;
-    virtual ~QuarkToSymbol () {}
-    QuarkToSymbol (const quark_to_symbol_t& map): _map(map) { }
-    virtual std::string operator() (const Quark& quark) const {
+    quark_to_symbol_t const &_map;
+    virtual ~QuarkToSymbol () {
+    }
+
+    QuarkToSymbol(quark_to_symbol_t const &map) :
+      _map(map)
+    {
+    }
+
+    virtual std::string operator()(Quark const &quark) const
+    {
       quark_to_symbol_t::const_iterator it (_map.find (quark));
       return it!=_map.end() ? it->second : quark.to_string();
     }
@@ -454,7 +459,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
   typedef std::set<Quark, AlphabeticalQuarkOrdering> xgroups_t;
   xgroups_t xgroups;
   foreach_const (read_groups_t, _read_groups, git) {
-    const ReadGroup& group (git->second);
+    ReadGroup const &group(git->second);
     bool is_xgroup (static_cast<uint64_t>(group._article_count) != 0 || static_cast<uint64_t>(group._unread_count) != 0);
     if (!is_xgroup)
       foreach_const (ReadGroup::servers_t, group._servers, sit)
@@ -470,7 +475,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
   foreach_const (xgroups_t, xgroups, it)
   {
     const Quark groupname (*it);
-    const ReadGroup& g (*find_read_group (groupname));
+    ReadGroup const &g(*find_read_group(groupname));
     out << groupname;
     out.put (' ');
     out << g._article_count;
@@ -494,31 +499,28 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
 *****
 ****/
 
-Article_Number
-DataImpl :: get_xover_high (const Quark  & groupname,
-                            const Quark  & servername) const
+Article_Number DataImpl ::get_xover_high(Quark const &groupname,
+                                         Quark const &servername) const
 {
   Article_Number high (0ul);
-  const ReadGroup::Server * rgs (find_read_group_server (groupname, servername));
+  ReadGroup::Server const *rgs(find_read_group_server(groupname, servername));
   if (rgs)
     high = rgs->_xover_high;
   return high;
 }
 
-void
-DataImpl :: set_xover_high (const Quark & group,
-                            const Quark & server,
-                            const Article_Number high)
+void DataImpl ::set_xover_high(Quark const &group,
+                               Quark const &server,
+                               const Article_Number high)
 {
   //std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
   ReadGroup::Server& rgs (_read_groups[group][server]);
   rgs._xover_high = high;
 }
 
-void
-DataImpl :: add_groups (const Quark       & server,
-                        const NewGroup    * newgroups,
-                        size_t              count)
+void DataImpl ::add_groups(Quark const &server,
+                           NewGroup const *newgroups,
+                           size_t count)
 {
   Server * s (find_server (server));
   assert (s != nullptr);
@@ -531,8 +533,11 @@ DataImpl :: add_groups (const Quark       & server,
     // make a groups_t from the added groups,
     // and merge it with the server's list of groups
     groups.get_container().reserve (count);
-    for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it)
-      groups.get_container().push_back (it->group);
+    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+         ++it)
+    {
+      groups.get_container().push_back(it->group);
+    }
     groups.sort ();
     std::set_union (s->groups.begin(), s->groups.end(),
                     groups.begin(), groups.end(),
@@ -543,9 +548,12 @@ DataImpl :: add_groups (const Quark       & server,
     // make a groups_t of groups we didn't already have,
     // and merge it with _unsubscribed (i.e., groups we haven't seen before become unsubscribed)
     groups.clear ();
-    for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it)
+    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+         ++it)
+    {
       if (!_subscribed.count (it->group))
-        groups.get_container().push_back (it->group);
+        groups.get_container().push_back(it->group);
+    }
     groups.sort ();
     tmp.clear ();
     std::set_union (groups.begin(), groups.end(),
@@ -560,7 +568,9 @@ DataImpl :: add_groups (const Quark       & server,
     // this is pretty cumbersome, but since these lists almost never change it's still
     // a worthwhile tradeoff to get the speed/memory wins of a sorted_vector
     groups_t mod, notmod, post, nopost, tmp;
-    for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it) {
+    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+         ++it)
+    {
       if (it->permission == 'm') mod.get_container().push_back (it->group);
       if (it->permission != 'm') notmod.get_container().push_back (it->group);
       if (it->permission == 'n') nopost.get_container().push_back (it->group);
@@ -589,8 +599,10 @@ DataImpl :: add_groups (const Quark       & server,
   }
 
   // keep any descriptions worth keeping that we don't already have...
-  for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it) {
-    const NewGroup& ng (*it);
+  for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+       ++it)
+  {
+    NewGroup const &ng(*it);
     if (!ng.description.empty() && ng.description!="?")
       _descriptions[ng.group] = ng.description;
   }
@@ -600,8 +612,7 @@ DataImpl :: add_groups (const Quark       & server,
   fire_grouplist_rebuilt ();
 }
 
-void
-DataImpl :: mark_group_read (const Quark& groupname)
+void DataImpl ::mark_group_read(Quark const &groupname)
 {
   ReadGroup * rg (find_read_group (groupname));
   if (rg != nullptr) {
@@ -615,8 +626,7 @@ DataImpl :: mark_group_read (const Quark& groupname)
   }
 }
 
-void
-DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
+void DataImpl ::set_group_subscribed(Quark const &group, bool subscribed)
 {
   if (subscribed) {
     _unsubscribed.erase (group);
@@ -629,7 +639,7 @@ DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
   fire_group_subscribe (group, subscribed);
 }
 
-const std::string DataImpl :: get_group_description (const Quark& group) const
+const std::string DataImpl ::get_group_description(Quark const &group) const
 {
   std::stringstream st;
   st << "select (description) from `group_description` as gd join `group` as g "
