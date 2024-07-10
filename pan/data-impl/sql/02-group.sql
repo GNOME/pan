@@ -30,6 +30,15 @@ create table if not exists server_group (
 
 create unique index if not exists server_group_idx on server_group (server_id, group_id);
 
+-- In my tests, there's about 14k descriptions for 150k groups. So
+-- using a separate table is probably good
+create table if not exists group_description (
+  group_id integer references `group` (id) on delete cascade,
+  description blob -- might not be utf-8
+);
+
+create unique index if not exists group_desc_idx on group_description (group_id);
+
 create view if not exists subscribed_group as
   select name from 'group' where subscribed = 1 order by name asc;
 
@@ -39,6 +48,7 @@ create trigger if not exists delete_orphan_groups after delete on server
   begin
     delete from `group` where ( select count() from server_group where server_group.server_id == OLD.id) == 0;
   end
+
 
 -- Local Variables:
 -- mode: sql

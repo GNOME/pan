@@ -158,7 +158,16 @@ DataMigration :: migrate_data ()
     // _descriptions.clear ();
     // _descriptions_loaded = false;
 
-    //load_group_descriptions (*_data_io);
+    SQLite::Statement group_desc_q(pan_db,"select count(description) from `group_description`;");
+    int desc_count = 0;
+    while (group_desc_q.executeStep()) {
+      desc_count = group_desc_q.getColumn(0);
+    }
+
+    if (desc_count == 0) {
+       load_group_descriptions (*_data_io);
+       save_group_descriptions_in_db();
+    }
     Log::add_info_va (_("Loaded data backend in %.1f seconds"), timer.get_seconds_elapsed());
   }
 }

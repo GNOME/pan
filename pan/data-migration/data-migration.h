@@ -393,6 +393,7 @@ class DataMigration final : public Data, public TaskArchive, public ProfilesImpl
     void load_newsrc_files(DataIO const &);
     void save_newsrc_files(DataIO &) const;
     void save_group_in_db(Quark const &server_name);
+    void save_group_descriptions_in_db();
 
   public: // mutators
     void add_groups(Quark const &server,
