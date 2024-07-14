@@ -577,8 +577,6 @@ void DataImpl ::add_groups(Quark const &server,
     _nopost.swap (tmp);
   }
 
-  pan_db.exec("pragma synchronous = off");
-
   save_group_descriptions_in_db(newgroups, count);
 
   save_group_permissions (*_data_io);
