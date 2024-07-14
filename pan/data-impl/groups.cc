@@ -374,16 +374,6 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
 ***/
 
 void
-DataImpl :: ensure_descriptions_are_loaded () const
-{
-  if (!_descriptions_loaded)
-  {
-    _descriptions_loaded = true;
-    load_group_descriptions (*_data_io);
-  }
-}
-
-void
 DataImpl :: load_group_descriptions (const DataIO& data_io) const
 {
   _descriptions.clear ();
@@ -434,8 +424,6 @@ DataImpl :: save_group_descriptions (DataIO& data_io) const
 {
   if (_unit_test)
     return;
-
-  assert (_descriptions_loaded);
 
   typedef std::map<Quark, std::string, AlphabeticalQuarkOrdering> tmp_t;
   tmp_t tmp;
@@ -545,8 +533,6 @@ DataImpl :: add_groups (const Quark       & server,
                         const NewGroup    * newgroups,
                         size_t              count)
 {
-  ensure_descriptions_are_loaded ();
-
   Server * s (find_server (server));
   assert (s != nullptr);
 

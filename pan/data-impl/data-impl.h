@@ -378,7 +378,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       return read_group ? read_group->find_server(s) : nullptr;
     }
 
-    void ensure_descriptions_are_loaded() const;
     void load_group_descriptions(DataIO const &) const;
     void save_group_descriptions(DataIO &) const;
 
