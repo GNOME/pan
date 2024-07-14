@@ -404,27 +404,6 @@ void DataImpl ::load_group_xovers(DataIO const &data_io)
   delete in;
 }
 
-void
-DataImpl :: save_group_descriptions (DataIO& data_io) const
-{
-  if (_unit_test)
-    return;
-
-  typedef std::map<Quark, std::string, AlphabeticalQuarkOrdering> tmp_t;
-  tmp_t tmp;
-  foreach_const (descriptions_t, _descriptions, it)
-    tmp[it->first] = it->second;
-
-  std::ostream& out (*data_io.write_group_descriptions ());
-  foreach_const (tmp_t, tmp, it) {
-    out << it->first;
-    out.put (':');
-    out << it->second;
-    out.put ('\n');
-  }
-  data_io.write_done (&out);
-}
-
 namespace
 {
   typedef std::map < pan::Quark, std::string > quark_to_symbol_t;
@@ -598,16 +577,10 @@ void DataImpl ::add_groups(Quark const &server,
     _nopost.swap (tmp);
   }
 
-  // keep any descriptions worth keeping that we don't already have...
-  for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
-       ++it)
-  {
-    NewGroup const &ng(*it);
-    if (!ng.description.empty() && ng.description!="?")
-      _descriptions[ng.group] = ng.description;
-  }
+  pan_db.exec("pragma synchronous = off");
 
-  save_group_descriptions (*_data_io);
+  save_group_descriptions_in_db(newgroups, count);
+
   save_group_permissions (*_data_io);
   fire_grouplist_rebuilt ();
 }
@@ -652,6 +625,37 @@ const std::string DataImpl ::get_group_description(Quark const &group) const
     res.assign(desc_q.getColumn(0).getText());
   }
   return res;
+}
+
+// save group description if new of different from old description.
+// Returns the number of affected rows
+void DataImpl ::save_group_descriptions_in_db(NewGroup const *newgroups, int count)
+{
+  pan_db.exec("pragma synchronous = off");
+
+  std::stringstream st;
+  st << "insert into `group_description` (group_id, description) "
+     << "select id,? from `group` where name = ? " // add new row with description
+     << "on conflict do update set description = ? where description != ? ;"; // clobber old description if different
+  SQLite::Statement desc_q(pan_db, st.str());
+
+  int desc_count = 0;
+  // keep any descriptions worth keeping that we don't already have...
+  for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+       ++it)
+  {
+    NewGroup const &ng(*it);
+    if (!ng.description.empty() && ng.description!="?" && ng.description != ng.group.c_str()) {
+      desc_q.reset();
+      desc_q.bind(1,ng.description);
+      desc_q.bind(2,ng.group.c_str());
+      desc_q.bind(3,ng.description);
+      desc_q.bind(4,ng.description);
+      desc_count += desc_q.exec();
+    }
+  }
+  pan_db.exec("pragma synchronous = normal");
+  debug("saved " << desc_count << " group descriptions in DB ");
 }
 
 void

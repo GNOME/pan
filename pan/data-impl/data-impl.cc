@@ -101,7 +101,6 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _unit_test(unit_test),
   _data_io(io),
   _prefs(prefs),
-  _descriptions_loaded(false),
   _cached_xover_entry(nullptr),
   _rules_filter(prefs.get_flag("rules-autocache-mark-read", false),
                 prefs.get_flag("rules-auto-dl-mark-read", false),
@@ -191,9 +190,6 @@ DataImpl :: rebuild_backend ()
 
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);
-
-    _descriptions.clear ();
-    _descriptions_loaded = false;
 
     //load_group_descriptions (*_data_io);
     Log::add_info_va (_("Loaded data backend in %.1f seconds"), timer.get_seconds_elapsed());

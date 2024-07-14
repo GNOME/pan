@@ -262,8 +262,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   private: // implementation
     typedef std::map<Quark, std::string> descriptions_t;
-    mutable descriptions_t _descriptions; // groupname -> description
-    mutable bool _descriptions_loaded;
 
     typedef sorted_vector<Quark, true> unique_sorted_quarks_t;
     typedef sorted_vector<Quark, true> groups_t;
@@ -378,8 +376,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       return read_group ? read_group->find_server(s) : nullptr;
     }
 
-    void save_group_descriptions(DataIO &) const;
-
     void load_group_xovers(DataIO const &);
     void save_group_xovers(DataIO &) const;
 
@@ -390,6 +386,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void load_groups_from_db();
     void save_newsrc_files(DataIO &) const;
     void save_group_in_db(Quark const &server_name);
+    void save_group_descriptions_in_db (NewGroup const *new_groups, int count);
 
   public: // mutators
     void add_groups(Quark const &server,
