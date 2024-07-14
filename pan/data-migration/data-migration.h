@@ -405,7 +405,7 @@ class DataMigration final : public Data, public TaskArchive, public ProfilesImpl
     void set_group_subscribed(Quark const &group, bool sub) override;
 
   public: // accessors
-    std::string const &get_group_description(Quark const &group) const override;
+    std::string const get_group_description(Quark const &group) const override;
     void get_subscribed_groups(std::vector<Quark> &) const override;
     void get_other_groups(std::vector<Quark> &) const override;
     virtual void get_group_counts(Quark const &group,

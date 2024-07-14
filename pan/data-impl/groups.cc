@@ -656,13 +656,19 @@ DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
   fire_group_subscribe (group, subscribed);
 }
 
-const std::string&
-DataImpl :: get_group_description (const Quark& group) const
+const std::string DataImpl :: get_group_description (const Quark& group) const
 {
-  ensure_descriptions_are_loaded ();
-  static const std::string nil;
-  descriptions_t::const_iterator it (_descriptions.find (group));
-  return it == _descriptions.end() ? nil : it->second;
+  std::stringstream st;
+  st << "select (description) from `group_description` as gd join `group` as g "
+     << "where g.name = ? and g.id = gd.group_id " ;
+  SQLite::Statement desc_q(pan_db, st.str());
+  desc_q.bind(1,group.c_str());
+
+  std::string res;
+  while (desc_q.executeStep()) {
+    res.assign(desc_q.getColumn(0).getText());
+  }
+  return res;
 }
 
 void

@@ -721,7 +721,7 @@ void DataMigration ::set_group_subscribed(Quark const &group, bool subscribed)
   fire_group_subscribe (group, subscribed);
 }
 
-std::string const &DataMigration ::get_group_description(
+std::string const DataMigration ::get_group_description(
   Quark const &group) const
 {
   ensure_descriptions_are_loaded ();
