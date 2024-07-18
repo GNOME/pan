@@ -207,7 +207,8 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
     msg = gui->_cache.get_message(files);
 #endif
     gui->_body_pane->set_text_from_message(msg);
-    g_object_unref(msg);
+    if (msg)
+      g_object_unref(msg);
   }
 }
 
