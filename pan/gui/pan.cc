@@ -767,6 +767,7 @@ namespace
       def_fg.red = fg_color.red;
       def_fg.green = fg_color.red;
       def_fg.blue = fg_color.blue;
+      def_fg.alpha = fg_color.alpha;
     }
     if(!ctx || !gtk_style_context_lookup_color(ctx, "background-color", &bg_color))
       gdk_rgba_parse(&def_bg, "white");
@@ -775,6 +776,7 @@ namespace
       def_bg.red = bg_color.red;
       def_bg.green = bg_color.red;
       def_bg.blue = bg_color.blue;
+      def_bg.alpha = bg_color.alpha;
     }
 
     //todo move to pancolors
