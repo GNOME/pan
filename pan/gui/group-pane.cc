@@ -67,15 +67,15 @@ namespace
   Quark * sub_title_quark (nullptr);
   Quark * other_title_quark (nullptr);
 
-  bool is_group (const Quark& name) {
+  bool is_group(Quark const &name)
+  {
     return !name.empty() &&
         name!=*sub_title_quark &&
         name!=*other_title_quark &&
         name!=*virtual_title_quark;
   }
 
-  std::string
-  get_short_name (const StringView& in)
+  std::string get_short_name(StringView const &in)
   {
     StringView myline, long_token_one, long_token_two;
 
@@ -99,10 +99,9 @@ namespace
     return out;
   }
 
-  void
-  find_matching_groups (const TextMatch           * match,
-                        const std::vector<Quark>  & sorted_groups,
-                        std::vector<Quark>        & matching_groups)
+  void find_matching_groups(TextMatch const *match,
+                            std::vector<Quark> const &sorted_groups,
+                            std::vector<Quark> &matching_groups)
   {
     typedef std::vector<Quark> quark_v;
     if (!match)
@@ -110,7 +109,7 @@ namespace
     else {
       matching_groups.reserve (sorted_groups.size());
       foreach_const (quark_v, sorted_groups, it) {
-        const Quark& groupname (*it);
+        Quark const &groupname(*it);
         if (!match || match->test (groupname.c_str()))
           matching_groups.push_back (groupname);
       }
@@ -291,7 +290,8 @@ namespace
   typedef std::vector<GtkTreeIter> tree_iters_t;
 
   struct MyRowLessThan {
-    bool operator() (const MyRow* a, const MyRow* b) const {
+    bool operator()(MyRow const *a, MyRow const *b) const
+    {
       return a->groupname < b->groupname;
     }
   };
@@ -300,7 +300,7 @@ namespace
 
   rows_t _group_rows;
 
-  MyRow* find_row (const Quark& groupname)
+  MyRow *find_row(Quark const &groupname)
   {
     MyRow tmp;
     tmp.groupname = groupname;
@@ -327,17 +327,13 @@ namespace
   namespace
   {
   	//Local folders
-  	static const char* folders_groupnames[] = {
-            _("Sent"),
-            _("Drafts")
-          };
+  static char const *folders_groupnames[] = {_("Sent"), _("Drafts")};
   }
 
-  PanTreeStore*
-  build_model (const Data         & data,
-               const TextMatch    * match,
-               tree_iters_t       & expandme,
-               rows_t             & setme_rows)
+  PanTreeStore *build_model(Data const &data,
+                            TextMatch const *match,
+                            tree_iters_t &expandme,
+                            rows_t &setme_rows)
   {
     // build the model...
     PanTreeStore * store = PanTreeStore :: new_tree (COL_QTY, G_TYPE_ULONG);  // unread
@@ -437,7 +433,7 @@ namespace
       // or if there's no criteria and no subscribed groups (first-time usrs).
       // otherwise it's a flood of thousands of groups.
       // they can click the expander themselves to get that,
-      const bool user_did_search (match != nullptr);
+      bool const user_did_search(match != nullptr);
       if (!unsub.empty() && (user_did_search || sub.empty()))
         expandme.push_back (store->get_iter (row));
     }
@@ -456,8 +452,7 @@ namespace
 ****  Data listener
 ***/
 
-void
-GroupPane :: on_group_subscribe (const Quark& groupname, bool sub)
+void GroupPane ::on_group_subscribe(Quark const &groupname, bool sub)
 {
   GtkTreeModel * model (GTK_TREE_MODEL (_tree_store));
 
@@ -508,16 +503,17 @@ GroupPane :: dirty_groups_idle (gpointer user_data)
   return false;
 }
 
-void
-GroupPane :: on_group_read (const Quark& groupname)
+void GroupPane ::on_group_read(Quark const &groupname)
 {
   _dirty_groups.insert (groupname);
 
   if (!_dirty_groups_idle_tag)
        _dirty_groups_idle_tag = g_timeout_add (333, dirty_groups_idle, this);
 }
-void
-GroupPane :: on_group_counts (const Quark& groupname, Article_Count, Article_Count)
+
+void GroupPane ::on_group_counts(Quark const &groupname,
+                                 Article_Count,
+                                 Article_Count)
 {
   on_group_read (groupname);
 }
@@ -528,31 +524,29 @@ GroupPane :: on_group_counts (const Quark& groupname, Article_Count, Article_Cou
 
 namespace
 {
-  void
-  expand_iterators (const tree_iters_t& iters, GtkTreeModel * model, GtkTreeView * view)
+void expand_iterators(tree_iters_t const &iters,
+                      GtkTreeModel *model,
+                      GtkTreeView *view)
+{
+  foreach_const (tree_iters_t, iters, it)
   {
-    foreach_const (tree_iters_t, iters, it)
-    {
-      GtkTreePath * path = gtk_tree_model_get_path (model, const_cast<GtkTreeIter*>(&*it));
-      gtk_tree_view_expand_row (view, path, true);
-      gtk_tree_path_free (path);
-    }
+       GtkTreePath *path =
+         gtk_tree_model_get_path(model, const_cast<GtkTreeIter *>(&*it));
+       gtk_tree_view_expand_row(view, path, true);
+       gtk_tree_path_free(path);
   }
-  const char * mode_strings [] =
-  {
-    N_("Group"),
-    N_("Group (regex)")
-  };
-
-  enum
-  {
-    _GROUP,
-    _GROUP_REGEX
-  };
 }
 
-void
-GroupPane :: set_filter (const std::string& search_text, int mode)
+char const *mode_strings[] = {N_("Group"), N_("Group (regex)")};
+
+enum
+{
+  _GROUP,
+  _GROUP_REGEX
+};
+}
+
+void GroupPane ::set_filter(std::string const &search_text, int mode)
 {
   GtkTreeView * view = GTK_TREE_VIEW(_tree_view);
 
@@ -600,7 +594,7 @@ namespace
   std::string search_text;
   int mode;
 
- void set_search_entry (GtkWidget * entry, const char * s)
+  void set_search_entry(GtkWidget *entry, char const *s)
   {
     g_signal_handler_block (entry, entry_changed_tag);
     gtk_entry_set_text (GTK_ENTRY(entry), s);
@@ -709,12 +703,12 @@ namespace
     GroupPane* pane (static_cast<GroupPane*>(gp));
     PanTreeStore * tree (PAN_TREE_STORE(model));
     MyRow * row (dynamic_cast<MyRow*>(tree->get_row (iter)));
-    const Article_Count & unread (row->unread);
+    Article_Count const &unread(row->unread);
     //const unsigned long& total (row->total);
-    const Quark& name (row->groupname);
+    Quark const &name(row->groupname);
 
-    const bool is_g (is_group(name));
-    const bool do_shorten (shorten && is_g);
+    bool const is_g(is_group(name));
+    bool const do_shorten(shorten && is_g);
     std::string group_name (do_shorten ? get_short_name(StringView(name)) : name.to_string());
     if (is_g && static_cast<uint64_t>(unread) != 0) {
       char buf[64];
@@ -777,7 +771,7 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
   GtkTreeIter sel_iter;
   const Quark group = get_first_selection ();
   if (!group.empty()) {
-    const MyRow* row = find_row (group);
+    MyRow const *row = find_row(group);
     sel_iter = PAN_TREE_STORE(model)->get_iter (row);
     GtkTreePath * path = gtk_tree_model_get_path (model, &sel_iter);
     gint depth = gtk_tree_path_get_depth (path);
@@ -802,21 +796,20 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
 
     GtkTreeIter group_iter;
     gtk_tree_model_iter_nth_child (model, &group_iter, &sub_iter, n);
-    const MyRow * row (dynamic_cast<MyRow*>(_tree_store->get_row (&group_iter)));
-    const bool is_virtual (is_virtual_group(row->groupname));
+    MyRow const *row(dynamic_cast<MyRow *>(_tree_store->get_row(&group_iter)));
+    bool const is_virtual(is_virtual_group(row->groupname));
     if (!is_virtual && (static_cast<uint64_t>(row->unread) != 0 || !unread_only))
       return gtk_tree_model_get_path (model, &group_iter);
   }
 
 }
 
-void
-GroupPane :: read_group (const StringView& groupname)
+void GroupPane ::read_group(StringView const &groupname)
 {
     GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
     PanTreeStore * tree (PAN_TREE_STORE(gtk_tree_view_get_model(view)));
     GtkTreeIter iter;
-    const MyRow* row = find_row (groupname);
+    MyRow const *row = find_row(groupname);
     if(!row)
     {
       return;
@@ -880,9 +873,9 @@ namespace
   {
     GtkTreeIter iter;
     PanTreeStore * store (PAN_TREE_STORE(model));
-    const bool row_can_be_selected =
-      gtk_tree_model_get_iter (model, &iter, path)
-      && is_group (dynamic_cast<MyRow*>(store->get_row (&iter))->groupname);
+    bool const row_can_be_selected =
+      gtk_tree_model_get_iter(model, &iter, path)
+      && is_group(dynamic_cast<MyRow *>(store->get_row(&iter))->groupname);
     return row_can_be_selected;
   }
 }
@@ -928,8 +921,7 @@ GroupPane :: create_filter_entry ()
   return entry;
 }
 
-bool
-GroupPane :: is_virtual_group (const Quark& group)
+bool GroupPane ::is_virtual_group(Quark const &group)
 {
   bool is_virtual = false;
 
@@ -949,19 +941,25 @@ GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
 {
   GroupPane * self (static_cast<GroupPane*>(pane_gpointer));
   Quark group (self->get_first_selection());
-  const bool have_group = is_group (group);
-  static const char* actions_that_require_a_group[] = {
+  bool const have_group = is_group(group);
+  static char const *actions_that_require_a_group[] = {
     "show-group-preferences-dialog",
-    "subscribe", "unsubscribe",
-    "read-selected-group", "mark-groups-read", "delete-groups-articles",
-    "get-new-headers-in-selected-groups", "download-headers"
-  };
-  static const char* actions_in_nonvirtual_group[] = {
+    "subscribe",
+    "unsubscribe",
+    "read-selected-group",
+    "mark-groups-read",
+    "delete-groups-articles",
+    "get-new-headers-in-selected-groups",
+    "download-headers"};
+  static char const *actions_in_nonvirtual_group[] = {
     "show-group-preferences-dialog",
-    "subscribe", "unsubscribe",
-    "get-new-headers-in-selected-groups", "download-headers",
-    "refresh-group-list", "get-new-headers-in-subscribed-groups", "post"
-  };
+    "subscribe",
+    "unsubscribe",
+    "get-new-headers-in-selected-groups",
+    "download-headers",
+    "refresh-group-list",
+    "get-new-headers-in-subscribed-groups",
+    "post"};
   for (int i=0, n=G_N_ELEMENTS(actions_that_require_a_group); i<n; ++i)
     self->_action_manager.sensitize_action (actions_that_require_a_group[i], have_group);
 
@@ -979,7 +977,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
   _dirty_groups_idle_tag (0)
 {
 
-  const PanColors& colors (PanColors::get());
+  PanColors const &colors(PanColors::get());
   def_bg = colors.def_bg;
   def_fg = colors.def_fg;
 
@@ -1019,18 +1017,20 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
 
   gtk_container_add (GTK_CONTAINER(scroll), _tree_view);
 
-   const int xpad (prefs.get_int ("tree-view-row-margins", 1));
-   GtkCellRenderer * text_renderer = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, "ypad", 0, "xpad", xpad, nullptr));
+  int const xpad(prefs.get_int("tree-view-row-margins", 1));
+  GtkCellRenderer *text_renderer = GTK_CELL_RENDERER(g_object_new(
+    GTK_TYPE_CELL_RENDERER_TEXT, "ypad", 0, "xpad", xpad, nullptr));
 
-   GtkTreeViewColumn * col = gtk_tree_view_column_new ();
-   gtk_tree_view_column_set_sizing (col ,GTK_TREE_VIEW_COLUMN_FIXED);
-   gtk_tree_view_column_set_fixed_width (col, 200);
-   gtk_tree_view_column_set_resizable (col, true);
-   gtk_tree_view_column_set_title (col, _("Name"));
-   gtk_tree_view_append_column (GTK_TREE_VIEW(_tree_view), col);
-   gtk_tree_view_set_expander_column (GTK_TREE_VIEW(_tree_view), col);
-   gtk_tree_view_column_pack_start (col, text_renderer, true);
-   gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_group_name, this, nullptr);
+  GtkTreeViewColumn *col = gtk_tree_view_column_new();
+  gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
+  gtk_tree_view_column_set_fixed_width(col, 200);
+  gtk_tree_view_column_set_resizable(col, true);
+  gtk_tree_view_column_set_title(col, _("Name"));
+  gtk_tree_view_append_column(GTK_TREE_VIEW(_tree_view), col);
+  gtk_tree_view_set_expander_column(GTK_TREE_VIEW(_tree_view), col);
+  gtk_tree_view_column_pack_start(col, text_renderer, true);
+  gtk_tree_view_column_set_cell_data_func(
+    col, text_renderer, render_group_name, this, nullptr);
 
   _root = scroll;
   _data.add_listener (this);
@@ -1069,24 +1069,23 @@ GroupPane :: refresh_font ()
   }
 }
 
-void
-GroupPane :: on_prefs_flag_changed (const StringView& key, bool)
+void GroupPane ::on_prefs_flag_changed(StringView const &key, bool)
 {
   if (key == "group-pane-font-enabled")
     refresh_font ();
 }
 
-void
-GroupPane :: on_prefs_string_changed (const StringView& key, const StringView&)
+void GroupPane ::on_prefs_string_changed(StringView const &key,
+                                         StringView const &)
 {
   if (key == "group-pane-font")
     refresh_font ();
 }
 
-void
-GroupPane :: on_prefs_color_changed (const StringView& key, const GdkRGBA&)
+void GroupPane ::on_prefs_color_changed(StringView const &key, GdkRGBA const &)
 {
   if (key == "group-color")
     refresh_dirty_groups ();
-    refresh_font ();
+
+  refresh_font ();
 }
