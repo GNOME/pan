@@ -75,8 +75,8 @@ namespace
   };
 
   struct Icon {
-  const char * pixbuf_file;
-  GdkPixbuf * pixbuf;
+      char const *pixbuf_file;
+      GdkPixbuf *pixbuf;
   } icons[NUM_ICONS] = {
     { "icon_sig_ok.png",          nullptr },
     { "icon_sig_fail.png",        nullptr }
@@ -122,7 +122,7 @@ namespace
         return true;
       }
       void set_pixbuf_at_offset (int offset, GdkPixbuf *original, GdkPixbuf *scaled) {
-        const bool had_old (_pixbufs.count(offset));
+        bool const had_old(_pixbufs.count(offset));
         pixbuf_pair_t &p(_pixbufs[offset]), old(p);
         g_object_ref (p.first = original);
         g_object_ref (p.second = scaled);
@@ -138,7 +138,7 @@ namespace
   }
 
   PixbufCache& get_pixbuf_cache (gpointer gp) {
-    static const char * PIXBUF_CACHE ("pixbuf-cache");
+    static char const *PIXBUF_CACHE("pixbuf-cache");
     GObject * o (G_OBJECT (gp));
     PixbufCache *pc ((PixbufCache*) g_object_get_data(o, PIXBUF_CACHE));
     if (!pc) {
@@ -175,7 +175,7 @@ namespace
     return g_object_get_data (G_OBJECT(o), FULLSIZE) != nullptr;
   }
   bool toggle_fullsize_flag (gpointer o) {
-    const bool b (!get_fullsize_flag (o));
+    bool const b(! get_fullsize_flag(o));
     set_fullsize_flag (o, b);
     return b;
   }
@@ -242,9 +242,9 @@ namespace
     GtkTextTagTable * tags (gtk_text_buffer_get_tag_table (buf));
     GtkTextTag * pix_tag (gtk_text_tag_table_lookup (tags, "pixbuf"));
     GtkTextTag * url_tag (gtk_text_tag_table_lookup (tags, "url"));
-    const bool in_url (gtk_text_iter_has_tag (it, url_tag));
-    const bool in_pix (gtk_text_iter_has_tag (it, pix_tag));
-    const bool fullsize (get_fullsize_flag (buf));
+    bool const in_url(gtk_text_iter_has_tag(it, url_tag));
+    bool const in_pix(gtk_text_iter_has_tag(it, pix_tag));
+    bool const fullsize(get_fullsize_flag(buf));
 
     int mode;
     if (in_pix && fullsize) mode = CURSOR_ZOOM_OUT;
@@ -258,8 +258,8 @@ namespace
 
 namespace
 {
-  GtkTextTag* get_named_tag_from_view (GtkWidget * w, const char * key)
-  {
+GtkTextTag *get_named_tag_from_view(GtkWidget *w, char const *key)
+{
     GtkTextView * text_view (GTK_TEXT_VIEW(w));
     GtkTextBuffer * buf = gtk_text_view_get_buffer (text_view);
     GtkTextTagTable * tags = gtk_text_buffer_get_tag_table (buf);
@@ -320,21 +320,20 @@ namespace
 
   /* returns a GdkPixbuf of the scaled image.
      unref it when no longer needed. */
-  GdkPixbuf* size_to_fit (GdkPixbuf           * pixbuf,
-                          const GtkAllocation * size)
+  GdkPixbuf *size_to_fit(GdkPixbuf *pixbuf, GtkAllocation const *size)
   {
-    const int nw (size ? size->width : 0);
-    const int nh (size ? size->height : 0);
+    int const nw(size ? size->width : 0);
+    int const nh(size ? size->height : 0);
 
     GdkPixbuf * out (nullptr);
     if (nw>=100 && nh>=100)
     {
-      const int ow (gdk_pixbuf_get_width (pixbuf));
-      const int oh (gdk_pixbuf_get_height (pixbuf));
+      int const ow(gdk_pixbuf_get_width(pixbuf));
+      int const oh(gdk_pixbuf_get_height(pixbuf));
       double scale_factor (std::min (nw/(double)ow, nh/(double)oh));
       scale_factor = std::min (scale_factor, 1.0);
-      const int scaled_width ((int) std::floor (ow * scale_factor + 0.5));
-      const int scaled_height ((int) std::floor (oh * scale_factor + 0.5));
+      int const scaled_width((int)std::floor(ow * scale_factor + 0.5));
+      int const scaled_height((int)std::floor(oh * scale_factor + 0.5));
       out = gdk_pixbuf_scale_simple (pixbuf,
                                      scaled_width, scaled_height,
                                      GDK_INTERP_BILINEAR);
@@ -349,14 +348,14 @@ namespace
     return out;
   }
 
-  void resize_picture_at_iter (GtkTextBuffer        * buf,
-                               GtkTextIter          * iter,
-                               bool                   fullsize,
-                               const GtkAllocation  * size,
-                               GtkTextTag           * apply_tag)
+  void resize_picture_at_iter(GtkTextBuffer *buf,
+                              GtkTextIter *iter,
+                              bool fullsize,
+                              GtkAllocation const *size,
+                              GtkTextTag *apply_tag)
   {
 
-    const int begin_offset (gtk_text_iter_get_offset (iter));
+    int const begin_offset(gtk_text_iter_get_offset(iter));
 
     GdkPixbuf * original (nullptr);
     GdkPixbuf * old_scaled (nullptr);
@@ -364,10 +363,10 @@ namespace
       return;
 
     GdkPixbuf * new_scaled (size_to_fit (original, (fullsize ? nullptr : size)));
-    const int old_w (gdk_pixbuf_get_width (old_scaled));
-    const int new_w (gdk_pixbuf_get_width (new_scaled));
-    const int old_h (gdk_pixbuf_get_height (old_scaled));
-    const int new_h (gdk_pixbuf_get_height (new_scaled));
+    int const old_w(gdk_pixbuf_get_width(old_scaled));
+    int const new_w(gdk_pixbuf_get_width(new_scaled));
+    int const old_h(gdk_pixbuf_get_height(old_scaled));
+    int const new_h(gdk_pixbuf_get_height(new_scaled));
     if (old_w!=new_w || old_h!=new_h)
     {
       // remove the old..
@@ -402,16 +401,18 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
   g_return_val_if_fail (GTK_IS_TEXT_VIEW(w), false);
 
   if (event->button==1 || event->button==2) {
-    const std::string& url (_hover_url);
-    if (!url.empty()) {
-      /* this is a crude way of making sure that double-click
-       * doesn't open two or three browser windows. */
-      static time_t last_url_time (0);
-      const time_t this_url_time (time (nullptr));
-      if (this_url_time != last_url_time) {
-        last_url_time = this_url_time;
-        URL :: open (_prefs, url.c_str());
-      }
+      std::string const &url(_hover_url);
+      if (! url.empty())
+      {
+        /* this is a crude way of making sure that double-click
+         * doesn't open two or three browser windows. */
+        static time_t last_url_time(0);
+        const time_t this_url_time(time(nullptr));
+        if (this_url_time != last_url_time)
+        {
+          last_url_time = this_url_time;
+          URL ::open(_prefs, url.c_str());
+        }
     } else { // maybe we're zooming in/out on a pic...
       GtkTextIter iter;
       GtkTextTag * pix_tag (get_named_tag_from_view (w, "pixbuf"));
@@ -428,13 +429,13 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
         int buf_x, buf_y;
         gtk_text_view_window_to_buffer_coords (GTK_TEXT_VIEW(w), GTK_TEXT_WINDOW_WIDGET,
                                                (gint)event->x, (gint)event->y, &buf_x, &buf_y);
-        const double percent_x = (buf_x - rec.x) / (double)rec.width;
-        const double percent_y = (buf_y - rec.y) / (double)rec.height;
+        double const percent_x = (buf_x - rec.x) / (double)rec.width;
+        double const percent_y = (buf_y - rec.y) / (double)rec.height;
 
-         // resize the picture and refresh `iter'
-        const int offset (gtk_text_iter_get_offset (&iter));
+        // resize the picture and refresh `iter'
+        int const offset(gtk_text_iter_get_offset(&iter));
         GtkTextBuffer * buf (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)));
-        const bool fullsize (toggle_fullsize_flag (buf));
+        bool const fullsize(toggle_fullsize_flag(buf));
         GtkAllocation aloc;
         gtk_widget_get_allocation(w, &aloc);
 //        std::cerr<<"457 alloc "<<aloc.x<<" "<<aloc.y<<" "<<aloc.width<<" "<<aloc.height<<"\n";
@@ -444,8 +445,8 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
 
         // x2,y2 are to position percent_x,percent_y in the middle of the window.
         GtkTextMark * mark = gtk_text_buffer_create_mark (buf, nullptr, &iter, true);
-        const double x2 = CLAMP ((percent_x + (percent_x - 0.5)), 0.0, 1.0);
-        const double y2 = CLAMP ((percent_y + (percent_y - 0.5)), 0.0, 1.0);
+        double const x2 = CLAMP((percent_x + (percent_x - 0.5)), 0.0, 1.0);
+        double const y2 = CLAMP((percent_y + (percent_y - 0.5)), 0.0, 1.0);
         gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(w), mark, 0.0, true, x2, y2);
         gtk_text_buffer_delete_mark (buf, mark);
       }
@@ -460,31 +461,31 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
 namespace
 {
 
-  GtkTextTag* get_or_create_tag (GtkTextTagTable * table, const char * key)
-  {
-    g_assert (table);
-    g_assert (key && *key);
+GtkTextTag *get_or_create_tag(GtkTextTagTable *table, char const *key)
+{
+  g_assert(table);
+  g_assert(key && *key);
 
-    GtkTextTag * tag (gtk_text_tag_table_lookup (table, key));
-    if (!tag) {
-      tag = gtk_text_tag_new (key);
-      gtk_text_tag_table_add (table, tag);
-      g_object_unref (tag); // table refs it
-    }
-    return tag;
+  GtkTextTag *tag(gtk_text_tag_table_lookup(table, key));
+  if (! tag)
+  {
+    tag = gtk_text_tag_new(key);
+    gtk_text_tag_table_add(table, tag);
+    g_object_unref(tag); // table refs it
+  }
+  return tag;
   }
 
-  void
-  set_text_buffer_tags (GtkTextBuffer * buffer, const Prefs& p)
+  void set_text_buffer_tags(GtkTextBuffer *buffer, Prefs const &p)
   {
-    const PanColors& colors (PanColors::get());
-    const std::string fg (p.get_color_str ("text-color-fg", colors.def_fg));
-    const std::string bg (p.get_color_str ("text-color-bg", colors.def_bg));
+  PanColors const &colors(PanColors::get());
+  const std::string fg(p.get_color_str("text-color-fg", colors.def_fg));
+  const std::string bg(p.get_color_str("text-color-bg", colors.def_bg));
 
-    GtkTextTagTable * table = gtk_text_buffer_get_tag_table (buffer);
+  GtkTextTagTable *table = gtk_text_buffer_get_tag_table(buffer);
 
-    get_or_create_tag (table, "pixbuf");
-    get_or_create_tag (table, "quote_0");
+  get_or_create_tag(table, "pixbuf");
+  get_or_create_tag(table, "quote_0");
 
     g_object_set (get_or_create_tag (table, "text"),
       "foreground", p.get_color_str ("text-color-fg", fg).c_str(),
