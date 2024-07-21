@@ -60,9 +60,7 @@ namespace
 namespace
 {
   // default color theme's Colors
-PanColors const &colors(PanColors::get());
-char const *def_color_str(colors.def_bg.c_str());
-char const *def_color_fg_str(colors.def_fg.c_str());
+  PanColors const &colors(PanColors::get());
 }
 
 Article const *HeaderPane ::get_article(GtkTreeModel *model, GtkTreeIter *iter)
@@ -231,20 +229,20 @@ HeaderPane :: render_score (GtkTreeViewColumn * ,
   Prefs const &prefs(self->_prefs);
   std::string bg, fg;
   if (score >= 9999) {
-    fg = prefs.get_color_str ("score-color-watched-fg", def_color_fg_str);
+    fg = prefs.get_color_str ("score-color-watched-fg", colors.def_fg);
     bg = prefs.get_color_str ("score-color-watched-bg", TANGO_CHAMELEON_LIGHT);
   } else if (score >= 5000) {
-    fg = prefs.get_color_str ("score-color-high-fg", def_color_fg_str);
+    fg = prefs.get_color_str ("score-color-high-fg", colors.def_fg);
     bg = prefs.get_color_str ("score-color-high-bg", TANGO_BUTTER_LIGHT);
   } else if (score >= 1) {
-    fg = prefs.get_color_str ("score-color-medium-fg", def_color_fg_str);
+    fg = prefs.get_color_str ("score-color-medium-fg", colors.def_fg);
     bg = prefs.get_color_str ("score-color-medium-bg", TANGO_SKY_BLUE_LIGHT);
   } else if (score <= -9999) {
     fg = prefs.get_color_str ("score-color-ignored-fg", TANGO_ALUMINUM_4);
-    bg = prefs.get_color_str ("score-color-ignored-bg", def_color_str);
+    bg = prefs.get_color_str ("score-color-ignored-bg", colors.def_bg);
   } else if (score <= -1) {
     fg = prefs.get_color_str ("score-color-low-fg", TANGO_ALUMINUM_2);
-    bg = prefs.get_color_str ("score-color-low-bg", def_color_str);
+    bg = prefs.get_color_str ("score-color-low-bg", colors.def_bg);
   }
   else if (score == 0)
   {
@@ -1979,12 +1977,14 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _tree_view (nullptr),
   _tree_store (nullptr),
   _selection_changed_idle_tag (0),
-  _fg(prefs.get_color_str_wo_fallback ("text-color-fg")),
-  _bg(prefs.get_color_str_wo_fallback ("text-color-bg")),
+  _fg(),
+  _bg(),
   _cache (cache),
   _gui (gui),
   _cleared (true)
 {
+  _fg = prefs.get_color_str ("text-color-fg",colors.def_fg.c_str());
+  _bg = prefs.get_color_str ("text-color-bg", colors.def_bg.c_str());
 
   // init the icons
   for (guint i=0; i<ICON_QTY; ++i)
@@ -2480,8 +2480,8 @@ HeaderPane :: on_prefs_color_changed  (const StringView& key, const GdkRGBA&)
 {
   if (key == "text-color-fg" || key == "text-color-bg")
   {
-    _fg = _prefs.get_color_str ("text-color-fg", def_color_fg_str).c_str();
-    _bg = _prefs.get_color_str ("text-color-bg", def_color_str).c_str();
+    _fg = _prefs.get_color_str ("text-color-fg", colors.def_fg).c_str();
+    _bg = _prefs.get_color_str ("text-color-bg", colors.def_bg).c_str();
     refresh_font();
     build_tree_columns();
   }
