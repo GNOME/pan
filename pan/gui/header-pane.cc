@@ -60,15 +60,15 @@ namespace
 namespace
 {
   // default color theme's Colors
-  const PanColors& colors (PanColors::get());
-  const char* def_color_str (colors.def_bg.c_str());
-  const char* def_color_fg_str (colors.def_fg.c_str());
+PanColors const &colors(PanColors::get());
+char const *def_color_str(colors.def_bg.c_str());
+char const *def_color_fg_str(colors.def_fg.c_str());
 }
 
-const Article*
-HeaderPane :: get_article (GtkTreeModel* model, GtkTreeIter* iter)
+Article const *HeaderPane ::get_article(GtkTreeModel *model, GtkTreeIter *iter)
 {
-  const Article * a = dynamic_cast<Row*>(PAN_TREE_STORE(model)->get_row(iter))->article;
+  Article const *a =
+    dynamic_cast<Row *>(PAN_TREE_STORE(model)->get_row(iter))->article;
   g_assert (a != nullptr);
   return a;
 }
@@ -79,30 +79,31 @@ HeaderPane :: get_article (GtkTreeModel* model, GtkTreeIter* iter)
 
 namespace
 {
-  typedef std::set<const Article*> articles_t;
+typedef std::set<Article const *> articles_t;
 
-  enum
-  {
-    ICON_READ,
-    ICON_UNREAD,
+enum
+{
+  ICON_READ,
+  ICON_UNREAD,
 
-    ICON_COMPLETE,
-    ICON_COMPLETE_READ,
+  ICON_COMPLETE,
+  ICON_COMPLETE_READ,
 
-    ICON_INCOMPLETE,
-    ICON_INCOMPLETE_READ,
+  ICON_INCOMPLETE,
+  ICON_INCOMPLETE_READ,
 
-    ICON_CACHED,
-    ICON_QUEUED,
-    ICON_ERROR,
-    ICON_EMPTY,
-    ICON_FLAGGED,
-    ICON_GET_FLAGGED,
-    ICON_QTY
-   };
+  ICON_CACHED,
+  ICON_QUEUED,
+  ICON_ERROR,
+  ICON_EMPTY,
+  ICON_FLAGGED,
+  ICON_GET_FLAGGED,
+  ICON_QTY
+};
 
-  struct Icon {
-    const char * icon_file;
+struct Icon
+{
+    char const *icon_file;
     GdkPixbuf * pixbuf;
   } _icons[ICON_QTY] = {
     { "icon_article_read.png",           nullptr },
@@ -122,12 +123,11 @@ namespace
     { "icon_get_flagged.png",            nullptr }
   };
 
-  int
-  get_article_state (const Data& data, const Article * a)
+  int get_article_state(Data const &data, Article const *a)
   {
     int retval;
-    const bool read (data.is_read (a));
-    const int part_state (a->get_part_state());
+    bool const read(data.is_read(a));
+    int const part_state(a->get_part_state());
 
     if (part_state==Article::COMPLETE && read)
       retval = ICON_COMPLETE_READ;
@@ -145,11 +145,10 @@ namespace
     return retval;
   }
 
-  int
-  get_article_action (const Article       * article,
-                      const ArticleCache  & cache,
-                      const Queue         & queue,
-                      const Quark         & message_id)
+  int get_article_action(Article const *article,
+                         ArticleCache const &cache,
+                         Queue const &queue,
+                         Quark const &message_id)
   {
     int offset (ICON_EMPTY);
 
@@ -198,9 +197,9 @@ HeaderPane :: find_highest_followup_score (GtkTreeModel * model,
   int score (-9999);
   GtkTreeIter child;
   if (gtk_tree_model_iter_children (model, &child, parent)) do {
-    const Article * a (get_article (model, &child));
-    score = std::max (score, a->score);
-    score = std::max (score, find_highest_followup_score (model, &child));
+        Article const *a(get_article(model, &child));
+        score = std::max(score, a->score);
+        score = std::max(score, find_highest_followup_score(model, &child));
   } while (gtk_tree_model_iter_next (model, &child));
   return score;
 }
@@ -224,12 +223,12 @@ HeaderPane :: render_score (GtkTreeViewColumn * ,
   HeaderPane * self (static_cast<HeaderPane*>(user_data));
   GtkTreeView * view (GTK_TREE_VIEW (self->_tree_view));
   GtkTreePath * path (gtk_tree_model_get_path (model, iter));
-  const bool expanded (gtk_tree_view_row_expanded (view, path));
+  bool const expanded(gtk_tree_view_row_expanded(view, path));
   gtk_tree_path_free (path);
   if (!expanded)
     score = std::max (score, self->find_highest_followup_score (model, iter));
 
-  const Prefs& prefs (self->_prefs);
+  Prefs const &prefs(self->_prefs);
   std::string bg, fg;
   if (score >= 9999) {
     fg = prefs.get_color_str ("score-color-watched-fg", def_color_fg_str);
@@ -266,8 +265,8 @@ HeaderPane :: render_author (GtkTreeViewColumn * ,
                             GtkTreeIter       * iter,
                             gpointer            user_data)
 {
-  const HeaderPane * self (static_cast<HeaderPane*>(user_data));
-  const Article * a (self->get_article (model, iter));
+  HeaderPane const *self(static_cast<HeaderPane *>(user_data));
+  Article const *a(self->get_article(model, iter));
 
   g_object_set (renderer, "text", a->author.c_str() ,
                          "background", self->_bg.c_str(),
@@ -283,7 +282,7 @@ HeaderPane :: render_lines (GtkTreeViewColumn * ,
                             gpointer            user_data)
 {
 
-  const HeaderPane * self (static_cast<HeaderPane*>(user_data));
+  HeaderPane const *self(static_cast<HeaderPane *>(user_data));
 
   unsigned long lines(0ul);
   std::stringstream str;
@@ -304,7 +303,7 @@ HeaderPane :: render_bytes (GtkTreeViewColumn * ,
                             GtkTreeIter       * iter,
                             gpointer            userdata)
 {
-  const HeaderPane * self (static_cast<HeaderPane*>(userdata));
+  HeaderPane const *self(static_cast<HeaderPane *>(userdata));
 
   unsigned long bytes (0);
   gtk_tree_model_get (model, iter, COL_BYTES, &bytes, -1);
@@ -322,7 +321,7 @@ HeaderPane :: render_date  (GtkTreeViewColumn * ,
                             GtkTreeIter       * iter,
                             gpointer            userdata)
 {
-  const HeaderPane * self (static_cast<HeaderPane*>(userdata));
+  HeaderPane const *self(static_cast<HeaderPane *>(userdata));
 
   gchar* date (nullptr);
   gtk_tree_model_get (model, iter, COL_DATE_STR, &date, -1);
