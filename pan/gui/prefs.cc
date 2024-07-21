@@ -369,11 +369,9 @@ void Prefs ::set_color(StringView const &key, StringView const &value)
 GdkRGBA Prefs ::get_color(StringView const &key,
                           StringView const &fallback_str) const
 {
-  GdkRGBA result;
-  if (!gdk_rgba_parse (&result, key.to_string().c_str())) {
-    gdk_rgba_parse (&result, fallback_str.to_string().c_str());
-  }
-  return result;
+  GdkRGBA fallback;
+  g_assert(gdk_rgba_parse (&fallback, fallback_str.to_string().c_str()));
+  return get_color(key, fallback);
 }
 
 GdkRGBA
