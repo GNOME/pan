@@ -158,7 +158,9 @@ std::string escaped(std::string const &s)
   std::string color_to_string(GdkRGBA const &c)
   {
     gchar *str = gdk_rgba_to_string(&c);
-    return std::string(str);
+    std::string res(str);
+    g_free(str);
+    return res;
   }
 }
 
