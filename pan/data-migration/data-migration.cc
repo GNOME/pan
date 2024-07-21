@@ -120,7 +120,9 @@ DataMigration :: migrate_data ()
       _scorefile.parse_file (score_filename);
 
     quarks_t server_list = get_server_ids_from_db();
-    if (server_list.empty()) {
+
+    // By default, server table contains local host
+    if (server_list.size() == 1) {
       // load servers from file only if SQL db is empty
       load_server_properties (*_data_io);
       save_server_properties (_prefs);
@@ -142,7 +144,8 @@ DataMigration :: migrate_data ()
       group_count = group_q.getColumn(0);
     }
 
-    if (group_count == 0) {
+    // Buy defult, group table contains Drafts and Sent local groups
+    if (group_count == 2) {
       load_newsrc_files (*_data_io);
       foreach_const (quarks_t, server_list, it) {
         Server &server(_servers[it->c_str()]);

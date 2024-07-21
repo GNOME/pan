@@ -43,9 +43,18 @@ create unique index if not exists group_desc_idx on group_description (group_id)
 -- only remaining server was deleted
 create trigger if not exists delete_orphan_groups after delete on server
   begin
-    delete from `group` where ( select count() from server_group where server_group.server_id == OLD.id) == 0;
-  end
+    delete from `group` where ( select count() from server_group
+                                 where server_group.server_id == OLD.id) == 0;
+  end;
 
+-- Add local groups
+insert into `group` (name) values ('Sent'),('Drafts') on conflict do nothing;
+
+-- Assign local groups to local server
+insert into server_group (server_id, group_id) values (
+  (select id from `server` where host = 'local'),
+  (select id from `group` where name = 'Sent')
+) on conflict do nothing;
 
 -- Local Variables:
 -- mode: sql
