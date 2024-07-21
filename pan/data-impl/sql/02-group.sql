@@ -39,9 +39,6 @@ create table if not exists group_description (
 
 create unique index if not exists group_desc_idx on group_description (group_id);
 
-create view if not exists subscribed_group as
-  select name from 'group' where subscribed = 1 order by name asc;
-
 -- remove groups that are no longer attached to a server, i.e. its
 -- only remaining server was deleted
 create trigger if not exists delete_orphan_groups after delete on server
