@@ -151,11 +151,12 @@ DataMigration :: migrate_data ()
         Server &server(_servers[it->c_str()]);
         save_group_in_db(it->to_string());
       }
+
+      load_group_xovers (*_data_io);
     }
 
     // these functions may required to load groups in data structures.
 
-    // load_group_xovers (*_data_io);
     // load_group_permissions (*_data_io);
 
     // _descriptions.clear ();

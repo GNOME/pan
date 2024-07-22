@@ -17,6 +17,15 @@ create table if not exists `group` (
   -- stored as a list of ranges
   read_ranges text,
 
+  -- data extracted from newsgroup.xov, field 2
+  total_article_count integer,
+
+  -- data extracted from newsgroup.xov, field 3.
+  -- TODO: check if redundant with read_ranges
+  unread_article_count integer,
+
+  -- remaining fields of newsgroup.xov are stored in table server_group
+
   subscribed boolean check (subscribed in (False, True))
 );
 
@@ -25,7 +34,10 @@ create unique index if not exists group_name on `group` (name);
 create table if not exists server_group (
   id integer primary key asc autoincrement,
   server_id integer references server (id) on delete cascade,
-  group_id integer references `group` (id) on delete cascade
+  group_id integer references `group` (id) on delete cascade,
+  -- contains data extracted from newsgroups.xov file.  This may
+  -- contains the article count of a newsgroup on a specific server.
+  xover_high integer
 );
 
 create unique index if not exists server_group_idx on server_group (server_id, group_id);

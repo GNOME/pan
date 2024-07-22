@@ -26,6 +26,7 @@
 #include <cassert>
 #include <iostream>
 #include <map>
+#include <p11-kit/pkcs11.h>
 #include <set>
 #include <sstream>
 #include <vector>
@@ -455,9 +456,22 @@ void DataMigration ::load_group_xovers(DataIO const &data_io)
   LineReader * in (data_io.read_group_xovers ());
   if (in && !in->fail())
   {
+    debug("Loading newsgroup.xov file to DB");
     StringView line;
     StringView groupname, total, unread;
     StringView xover, servername, low;
+
+    std::stringstream count_st;
+    count_st << "update `group` set total_article_count = ? , unread_article_count = ? "
+             << "where name = ? ;";
+    SQLite::Statement count_q(pan_db, count_st.str());
+
+    std::stringstream xover_st;
+    xover_st << "update `server_group` set xover_high = ? "
+             << "where server_id = (select id from server where pan_id = ?) "
+             << "  and group_id = (select id from `group` where name = ?);";
+    SQLite::Statement xover_q(pan_db, xover_st.str());
+    int count ;
 
     // walk through the groups line-by-line...
     while (in->getline (line))
@@ -469,15 +483,30 @@ void DataMigration ::load_group_xovers(DataIO const &data_io)
 
       if (line.pop_token(groupname) && line.pop_token(total) && line.pop_token(unread))
       {
-        ReadGroup& g (_read_groups[groupname]);
-        g._article_count = Article_Count(total);
-        g._unread_count = Article_Count(unread);
+        count_q.reset();
+        count_q.bind(1,total);
+        count_q.bind(2,unread);
+        count_q.bind(3,groupname);
+        int exec_count = count_q.exec();
+        count += exec_count;
+        if ( exec_count != 1) {
+          std::cout << "Unkwown group " << groupname << " found in xover file\n";
+        };
 
         while (line.pop_token (xover))
-          if (xover.pop_token(servername,':'))
-            g[servername]._xover_high = Article_Number(xover);
+          if (xover.pop_token(servername,':')) {
+            xover_q.reset();
+            xover_q.bind(1,xover);
+            xover_q.bind(2,servername);
+            xover_q.bind(3,groupname);
+            int exec_count = xover_q.exec();
+            if (exec_count != 1) {
+              std::cout << "Unkwown group " << groupname << " or server pan_id " << servername << " found in xover file\n";
+            };
+          }
       }
     }
+    debug("Saved in DB " << count << " records from newsgroup.xov");
   }
   delete in;
 }
