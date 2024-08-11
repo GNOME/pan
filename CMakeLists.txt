@@ -133,11 +133,10 @@ if(WANT_GMIME_CRYPTO)
 endif()
 
 # GtkSpell support
-option(WANT_GTKSPELL "enable GtkSpell support (default: on)" ON)
-if(WANT_GTKSPELL)
-  pkg_check_modules(GTKSPELL REQUIRED IMPORTED_TARGET gtkspell3-3.0)
-  pkg_check_modules(ENCHANT REQUIRED IMPORTED_TARGET enchant-2>=2.2.3)
-  set(HAVE_GTKSPELL true)
+option(WANT_GSPELL "enable Gspell support (default: on)" ON)
+if(WANT_GSPELL)
+  pkg_check_modules(GSPELL REQUIRED IMPORTED_TARGET gspell-1)
+  set(HAVE_GSPELL true)
 endif()
 
 option(WANT_WEBKIT "enable WebKitGTK support (experimental, default: off)")

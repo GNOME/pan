@@ -32,8 +32,8 @@ extern "C" {
   #include <sys/stat.h>
   #include <sys/time.h>
 }
-#ifdef HAVE_GTKSPELL
-  #include <gtkspell/gtkspell.h>
+#ifdef HAVE_GSPELL
+#include <gspell/gspell.h>
 #endif
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
@@ -59,7 +59,7 @@ extern "C" {
 #include "url.h"
 
 
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
 #define DEFAULT_SPELLCHECK_FLAG true
 #else
 #define DEFAULT_SPELLCHECK_FLAG false
@@ -264,60 +264,19 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 {
   _prefs.set_flag ("spellcheck-enabled", enabled);
 
-  if (enabled)
-  {
-#ifdef HAVE_GTKSPELL
-    GtkTextView * view = GTK_TEXT_VIEW(_body_view);
-    GError * err (nullptr);
+#ifdef HAVE_GSPELL
+  GtkTextView * gtk_view = GTK_TEXT_VIEW(_body_view);
+  GError * err (nullptr);
 
-    gboolean spell_attach = TRUE;
-    GtkSpellChecker* spell = gtk_spell_checker_new ();
-
-    // a language has been selected
-    if(!_spellcheck_language.empty()) {
-      // attempt to set the selected language
-      if (!gtk_spell_checker_set_language (spell, _spellcheck_language.c_str(), &err)) {
-        Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
-        g_clear_error (&err);
-        // selected language failed, fall back upon the default system locale
-        if (!gtk_spell_checker_set_language (spell, nullptr, &err)) {
-          Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
-          g_clear_error (&err);
-          spell_attach = FALSE;
-        }
-      }
-    }
-    else {
-      if (!gtk_spell_checker_set_language (spell, nullptr, &err)) {
-        Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
-        g_clear_error (&err);
-        spell_attach = FALSE;
-      }
-    }
-
-    if (spell_attach) {
-      // sink the floating reference
-      gtk_spell_checker_attach (spell, view);
-    }
-    else {
-      // destroy the floating reference
-      g_object_ref_sink (spell);
-      g_object_unref (spell);
-    }
-#endif // HAVE_GTKSPELL
-  }
-  else // disable
-  {
-#ifdef HAVE_GTKSPELL
-    GtkTextView * view = GTK_TEXT_VIEW(_body_view);
-    if (view)
-    {
-      GtkSpellChecker * spell = gtk_spell_checker_get_from_text_view (view);
-      if (spell)
-        gtk_spell_checker_detach (spell);
-    }
-#endif // HAVE_GTKSPELL
-  }
+  gboolean spell_attach = TRUE;
+  const GspellLanguage *language = gspell_language_lookup(_spellcheck_language.c_str());
+  GspellChecker* spell = gspell_checker_new (language);
+    
+  GspellTextView *gspell_view = gspell_text_view_get_from_gtk_text_view (gtk_view);
+  gspell_text_view_basic_setup (gspell_view);
+  gspell_text_view_set_inline_spell_checking (gspell_view, enabled);
+  gspell_text_view_set_enable_language_menu (gspell_view, enabled);
+#endif // HAVE_GSPELL
 }
 
 int
@@ -3125,7 +3084,7 @@ PostUI :: PostUI (GtkWindow    * parent,
 
   ua_extra = prefs.get_flag(USER_AGENT_EXTRA_PREFS_KEY, false);
 
-  #ifdef HAVE_GTKSPELL
+  #ifdef HAVE_GSPELL
   // set the spellchecker language according to the first destination newsgroup's options
   StringView line (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
   StringView groupname;
