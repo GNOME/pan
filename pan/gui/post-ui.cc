@@ -270,7 +270,6 @@ PostUI :: set_spellcheck_enabled (bool enabled)
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
     GError * err (nullptr);
 
-#if GTKSPELL_VERSION == 3
     gboolean spell_attach = TRUE;
     GtkSpellChecker* spell = gtk_spell_checker_new ();
 
@@ -305,27 +304,6 @@ PostUI :: set_spellcheck_enabled (bool enabled)
       g_object_ref_sink (spell);
       g_object_unref (spell);
     }
-#else // GTKSPELL_VERSION
-    if(!_spellcheck_language.empty()) {
-      gtkspell_new_attach (view, _spellcheck_language.c_str(), &err);
-      if (err) {
-        Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
-        g_clear_error (&err);
-        gtkspell_new_attach (view, nullptr, &err);
-        if (err) {
-          Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
-          g_clear_error (&err);
-        }
-      }
-    }
-    else {
-      gtkspell_new_attach (view, nullptr, &err);
-      if (err) {
-        Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
-        g_clear_error (&err);
-      }
-    }
-#endif // GTKSPELL_VERSION
 #endif // HAVE_GTKSPELL
   }
   else // disable
@@ -334,15 +312,9 @@ PostUI :: set_spellcheck_enabled (bool enabled)
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
     if (view)
     {
-#if GTKSPELL_VERSION == 3
       GtkSpellChecker * spell = gtk_spell_checker_get_from_text_view (view);
       if (spell)
         gtk_spell_checker_detach (spell);
-#else // GTKSPELL_VERSION
-      GtkSpell * spell = gtkspell_get_from_text_view (view);
-      if (spell)
-        gtkspell_detach (spell);
-#endif // GTKSPELL_VERSION
     }
 #endif // HAVE_GTKSPELL
   }
