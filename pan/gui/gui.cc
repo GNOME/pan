@@ -31,7 +31,6 @@ extern "C" {
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
-#include <pan/general/editor-spawner.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
@@ -45,6 +44,7 @@ extern "C" {
 #include "actions.h"
 #include "body-pane.h"
 #include "dl-headers-ui.h"
+#include "editor-spawner.h"
 #include "e-charset-dialog.h"
 #include "group-pane.h"
 #include "group-prefs-dialog.h"

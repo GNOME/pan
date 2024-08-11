@@ -2,6 +2,7 @@ set(SRC_CC_FILES
  actions.cc
  body-pane.cc
  dl-headers-ui.cc
+ editor-spawner.cc
  group-pane.cc
  group-prefs-dialog.cc
  group-prefs.cc

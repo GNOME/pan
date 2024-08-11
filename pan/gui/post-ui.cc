@@ -37,7 +37,6 @@ extern "C" {
 #endif
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
-#include <pan/general/editor-spawner.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -52,6 +51,7 @@ extern "C" {
 #include <pan/tasks/task-post.h>
 #include "e-charset-dialog.h"
 #include "e-cte-dialog.h"
+#include "editor-spawner.h"
 #include "pad.h"
 #include "hig.h"
 #include "post.ui.h"
