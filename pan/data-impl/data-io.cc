@@ -46,23 +46,18 @@ namespace pan {
 
 namespace
 {
-  std::string get_pan_home_file (const char * fname)
-  {
-    const std::string home (file::get_pan_home());
-    char * filename (g_build_filename (home.c_str(), fname, nullptr));
-    std::string retval (filename);
-    g_free (filename);
-    return retval;
+std::string get_pan_home_file(char const *fname)
+{
+  const std::string home(file::get_pan_home());
+  char *filename(g_build_filename(home.c_str(), fname, nullptr));
+  std::string retval(filename);
+  g_free(filename);
+  return retval;
   }
 
   std::string get_tasks_filename ()
   {
     return get_pan_home_file ("tasks.nzb");
-  }
-
-  std::string get_group_descriptions_filename ()
-  {
-    return get_pan_home_file ("newsgroups.dsc");
   }
 
   std::string get_group_permissions_filename ()
@@ -116,7 +111,7 @@ namespace
     return c < 10 ? c + '0' : c + 'A' - 10;
   }
 
-  std::string get_group_headers_filename (const Quark& group)
+  std::string get_group_headers_filename(Quark const &group)
   {
     const std::string home (file::get_pan_home());
     //A note. We do a lot of work encoding the names here, because
@@ -172,7 +167,7 @@ DataIO :: get_scorefile_name () const
 {
   std::string s;
 
-  const char * env_str (g_getenv ("SCOREFILE"));
+  char const *env_str(g_getenv("SCOREFILE"));
   if (env_str && *env_str)
     s = env_str;
 
@@ -201,6 +196,11 @@ DataIO :: get_server_filename () const
   return get_pan_home_file ("servers.xml");
 }
 
+std::string DataIO :: get_group_descriptions_filename () const
+{
+  return get_pan_home_file ("newsgroups.dsc");
+}
+
 /****
 *****
 ****/
@@ -226,7 +226,8 @@ DataIO :: read_tasks () const
 LineReader*
 DataIO :: read_group_descriptions () const
 {
-   return read_file (get_group_descriptions_filename ());
+  const std::string filename (get_group_descriptions_filename ());
+  return file::file_exists(filename.c_str()) ? read_file(filename) : nullptr;
 }
 
 LineReader*
