@@ -823,7 +823,7 @@ bool DataImpl ::save_headers(DataIO &data_io,
                              Quark const &group,
                              std::vector<Article *> const &articles,
                              unsigned long &part_count,
-                             unsigned long &article_count) const
+                             unsigned long &article_count)
 {
   char const endl('\n');
   GroupHeaders const *h(get_group_headers(group));
@@ -971,13 +971,13 @@ bool DataImpl ::save_headers(DataIO &data_io,
 
     success = ! out.fail();
     data_io.write_done(&out);
-    save_group_xovers (data_io);
+    save_group_xovers();
   }
 
   return success;
 }
 
-void DataImpl ::save_headers(DataIO &data_io, Quark const &group) const
+void DataImpl ::save_headers(DataIO &data_io, Quark const &group)
 {
   if (_unit_test)
   {
