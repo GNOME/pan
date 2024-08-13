@@ -162,6 +162,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void rebuild_backend();
     void rebuild_server_data();
     void rebuild_group_data();
+    void rebuild_group_description_data();
     bool const _unit_test;
     DataIO *_data_io;
     Prefs &_prefs;
@@ -260,8 +261,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   private: // implementation
     typedef std::map<Quark, std::string> descriptions_t;
-    mutable descriptions_t _descriptions; // groupname -> description
-    mutable bool _descriptions_loaded;
 
     typedef sorted_vector<Quark, true> unique_sorted_quarks_t;
     typedef sorted_vector<Quark, true> groups_t;
@@ -376,10 +375,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       return read_group ? read_group->find_server(s) : nullptr;
     }
 
-    void ensure_descriptions_are_loaded() const;
-    void load_group_descriptions(DataIO const &) const;
-    void save_group_descriptions(DataIO &) const;
-
+    void migrate_group_descriptions(DataIO const &);
     void load_group_xovers(DataIO const &);
     void save_group_xovers(DataIO &) const;
 
@@ -392,6 +388,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void load_groups_from_db();
     void save_all_server_groups_in_db();
     void save_group_in_db(Quark const &server_name);
+    void save_group_descriptions_in_db (NewGroup const *new_groups, int count);
 
   public: // mutators
     void add_groups(Quark const &server,
@@ -403,7 +400,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void set_group_subscribed(Quark const &group, bool sub) override;
 
   public: // accessors
-    std::string const &get_group_description(Quark const &group) const override;
+    const std::string get_group_description(Quark const &group) const override;
     void get_subscribed_groups(std::vector<Quark> &) const override;
     void get_other_groups(std::vector<Quark> &) const override;
     virtual void get_group_counts(Quark const &group,
