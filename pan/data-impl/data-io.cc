@@ -60,16 +60,6 @@ std::string get_pan_home_file(char const *fname)
     return get_pan_home_file ("tasks.nzb");
   }
 
-  std::string get_group_permissions_filename ()
-  {
-    return get_pan_home_file ("newsgroups.ynm");
-  }
-
-  std::string get_group_xovers_filename ()
-  {
-    return get_pan_home_file ("newsgroups.xov");
-  }
-
   bool is_reserved_char(char c)
   {
 #ifdef G_OS_WIN32
@@ -200,6 +190,17 @@ std::string DataIO :: get_group_descriptions_filename () const
 {
   return get_pan_home_file ("newsgroups.dsc");
 }
+
+std::string DataIO :: get_group_xovers_filename () const
+{
+  return get_pan_home_file ("newsgroups.xov");
+}
+
+std::string DataIO :: get_group_permissions_filename () const
+{
+  return get_pan_home_file ("newsgroups.ynm");
+}
+
 
 /****
 *****
