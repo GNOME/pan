@@ -451,7 +451,7 @@ class Data :
     virtual void set_group_subscribed(Quark const &group, bool sub) = 0;
 
   public: // accessors
-    virtual std::string const &get_group_description(
+    virtual std::string const get_group_description(
       Quark const &group) const = 0;
 
     /**

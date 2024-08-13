@@ -34,6 +34,14 @@ create table if not exists server_group (
 
 create unique index if not exists server_group_idx on server_group (server_id, group_id);
 
+-- In my tests, there's about 14k descriptions for 150k groups. So
+-- using a separate table is probably good
+create table if not exists group_description (
+  group_id integer unique not null references `group` (id) on delete cascade,
+  description blob -- might not be utf-8
+);
+
+create unique index if not exists group_desc_idx on group_description (group_id);
 
 -- remove groups that are no longer attached to a server, i.e. its
 -- only remaining server was deleted by user

@@ -26,6 +26,7 @@
 #include <config.h>
 #include <cassert>
 #include <iostream>
+#include <log4cxx/logger.h>
 #include <map>
 #include <set>
 #include <sstream>
@@ -421,35 +422,47 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
   data_io.write_done (&out);
 }
 
-/***
-****
-***/
-
-void
-DataImpl :: ensure_descriptions_are_loaded () const
-{
-  if (!_descriptions_loaded)
-  {
-    _descriptions_loaded = true;
-    load_group_descriptions (*_data_io);
-  }
-}
-
-void
-DataImpl :: load_group_descriptions (const DataIO& data_io) const
-{
-  _descriptions.clear ();
-
+void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
   LineReader * in (data_io.read_group_descriptions ());
+
+  if (in == nullptr) {
+    return;
+  }
+
+  std::string filename (data_io.get_group_descriptions_filename());
+
+  LOG4CXX_INFO(logger,  "Migrating group descriptions from " << filename << "..." );
+
   StringView s, group;
-  while (in && !in->fail() && in->getline(group))
-    if (group.pop_last_token (s, ':'))
-      _descriptions[group].assign (s.str, s.len);
+
+  std::stringstream save_st;
+  save_st << "with alias (gid) as (select id from `group` where name = ? ) "
+          << "insert into `group_description` (group_id, description) select "
+             "gid,? from alias ";
+  SQLite::Statement save_desc_q(pan_db, save_st.str());
+
+  pan_db.exec("pragma synchronous = off");
+
+  while (in && !in->fail() && in->getline(group)) {
+    // save in DB only if description has information
+    if (group.pop_last_token (s, ':') && !s.empty() && s!="?" && s != group) {
+      save_desc_q.reset();
+      save_desc_q.bind(1, group);
+      save_desc_q.bind(2, s);
+      save_desc_q.exec();
+    }
+  }
+
   delete in;
+
+  pan_db.exec("pragma synchronous = normal");
+
+  // remove obsolete file
+  std::remove(filename.data());
+  LOG4CXX_INFO(logger, "Migration of group descriptions done.");
 }
 
-void
-DataImpl :: load_group_xovers (const DataIO& data_io)
+void DataImpl ::load_group_xovers(DataIO const &data_io)
 {
   LineReader * in (data_io.read_group_xovers ());
   if (in && !in->fail())
@@ -481,38 +494,22 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
   delete in;
 }
 
-void
-DataImpl :: save_group_descriptions (DataIO& data_io) const
-{
-  if (_unit_test)
-    return;
-
-  assert (_descriptions_loaded);
-
-  typedef std::map<Quark, std::string, AlphabeticalQuarkOrdering> tmp_t;
-  tmp_t tmp;
-  foreach_const (descriptions_t, _descriptions, it)
-    tmp[it->first] = it->second;
-
-  std::ostream& out (*data_io.write_group_descriptions ());
-  foreach_const (tmp_t, tmp, it) {
-    out << it->first;
-    out.put (':');
-    out << it->second;
-    out.put ('\n');
-  }
-  data_io.write_done (&out);
-}
-
 namespace
 {
   typedef std::map < pan::Quark, std::string > quark_to_symbol_t;
 
   struct QuarkToSymbol {
-    const quark_to_symbol_t& _map;
-    virtual ~QuarkToSymbol () {}
-    QuarkToSymbol (const quark_to_symbol_t& map): _map(map) { }
-    virtual std::string operator() (const Quark& quark) const {
+    quark_to_symbol_t const &_map;
+    virtual ~QuarkToSymbol () {
+    }
+
+    QuarkToSymbol(quark_to_symbol_t const &map) :
+      _map(map)
+    {
+    }
+
+    virtual std::string operator()(Quark const &quark) const
+    {
       quark_to_symbol_t::const_iterator it (_map.find (quark));
       return it!=_map.end() ? it->second : quark.to_string();
     }
@@ -531,7 +528,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
   typedef std::set<Quark, AlphabeticalQuarkOrdering> xgroups_t;
   xgroups_t xgroups;
   foreach_const (read_groups_t, _read_groups, git) {
-    const ReadGroup& group (git->second);
+    ReadGroup const &group(git->second);
     bool is_xgroup (static_cast<uint64_t>(group._article_count) != 0 || static_cast<uint64_t>(group._unread_count) != 0);
     if (!is_xgroup)
       foreach_const (ReadGroup::servers_t, group._servers, sit)
@@ -547,7 +544,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
   foreach_const (xgroups_t, xgroups, it)
   {
     const Quark groupname (*it);
-    const ReadGroup& g (*find_read_group (groupname));
+    ReadGroup const &g(*find_read_group(groupname));
     out << groupname;
     out.put (' ');
     out << g._article_count;
@@ -571,34 +568,29 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
 *****
 ****/
 
-Article_Number
-DataImpl :: get_xover_high (const Quark  & groupname,
-                            const Quark  & servername) const
+Article_Number DataImpl ::get_xover_high(Quark const &groupname,
+                                         Quark const &servername) const
 {
   Article_Number high (0ul);
-  const ReadGroup::Server * rgs (find_read_group_server (groupname, servername));
+  ReadGroup::Server const *rgs(find_read_group_server(groupname, servername));
   if (rgs)
     high = rgs->_xover_high;
   return high;
 }
 
-void
-DataImpl :: set_xover_high (const Quark & group,
-                            const Quark & server,
-                            const Article_Number high)
+void DataImpl ::set_xover_high(Quark const &group,
+                               Quark const &server,
+                               const Article_Number high)
 {
   //std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
   ReadGroup::Server& rgs (_read_groups[group][server]);
   rgs._xover_high = high;
 }
 
-void
-DataImpl :: add_groups (const Quark       & server,
-                        const NewGroup    * newgroups,
-                        size_t              count)
+void DataImpl ::add_groups(Quark const &server,
+                           NewGroup const *newgroups,
+                           size_t count)
 {
-  ensure_descriptions_are_loaded ();
-
   Server * s (find_server (server));
   assert (s != nullptr);
 
@@ -610,8 +602,11 @@ DataImpl :: add_groups (const Quark       & server,
     // make a groups_t from the added groups,
     // and merge it with the server's list of groups
     groups.get_container().reserve (count);
-    for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it)
-      groups.get_container().push_back (it->group);
+    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+         ++it)
+    {
+      groups.get_container().push_back(it->group);
+    }
     groups.sort ();
     std::set_union (s->groups.begin(), s->groups.end(),
                     groups.begin(), groups.end(),
@@ -622,9 +617,12 @@ DataImpl :: add_groups (const Quark       & server,
     // make a groups_t of groups we didn't already have,
     // and merge it with _unsubscribed (i.e., groups we haven't seen before become unsubscribed)
     groups.clear ();
-    for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it)
+    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+         ++it)
+    {
       if (!_subscribed.count (it->group))
-        groups.get_container().push_back (it->group);
+        groups.get_container().push_back(it->group);
+    }
     groups.sort ();
     tmp.clear ();
     std::set_union (groups.begin(), groups.end(),
@@ -639,7 +637,9 @@ DataImpl :: add_groups (const Quark       & server,
     // this is pretty cumbersome, but since these lists almost never change it's still
     // a worthwhile tradeoff to get the speed/memory wins of a sorted_vector
     groups_t mod, notmod, post, nopost, tmp;
-    for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it) {
+    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+         ++it)
+    {
       if (it->permission == 'm') mod.get_container().push_back (it->group);
       if (it->permission != 'm') notmod.get_container().push_back (it->group);
       if (it->permission == 'n') nopost.get_container().push_back (it->group);
@@ -667,20 +667,13 @@ DataImpl :: add_groups (const Quark       & server,
     _nopost.swap (tmp);
   }
 
-  // keep any descriptions worth keeping that we don't already have...
-  for (const NewGroup *it=newgroups, *end=newgroups+count; it!=end; ++it) {
-    const NewGroup& ng (*it);
-    if (!ng.description.empty() && ng.description!="?")
-      _descriptions[ng.group] = ng.description;
-  }
+  save_group_descriptions_in_db(newgroups, count);
 
-  save_group_descriptions (*_data_io);
   save_group_permissions (*_data_io);
   fire_grouplist_rebuilt ();
 }
 
-void
-DataImpl :: mark_group_read (const Quark& groupname)
+void DataImpl ::mark_group_read(Quark const &groupname)
 {
   ReadGroup * rg (find_read_group (groupname));
   if (rg != nullptr) {
@@ -694,8 +687,7 @@ DataImpl :: mark_group_read (const Quark& groupname)
   }
 }
 
-void
-DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
+void DataImpl ::set_group_subscribed(Quark const &group, bool subscribed)
 {
   if (subscribed) {
     _unsubscribed.erase (group);
@@ -708,13 +700,64 @@ DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
   fire_group_subscribe (group, subscribed);
 }
 
-const std::string&
-DataImpl :: get_group_description (const Quark& group) const
+const std::string DataImpl ::get_group_description(Quark const &group) const
 {
-  ensure_descriptions_are_loaded ();
-  static const std::string nil;
-  descriptions_t::const_iterator it (_descriptions.find (group));
-  return it == _descriptions.end() ? nil : it->second;
+  std::stringstream st;
+  st << "select (description) from `group_description` as gd join `group` as g "
+     << "where g.name = ? and g.id = gd.group_id " ;
+  SQLite::Statement desc_q(pan_db, st.str());
+  desc_q.bind(1,group.c_str());
+
+  std::string res;
+  while (desc_q.executeStep()) {
+    res.assign(desc_q.getColumn(0).getText());
+  }
+  return res;
+}
+
+// save group description if new or different from old description.
+// Returns the number of affected rows
+void DataImpl ::save_group_descriptions_in_db(NewGroup const *newgroups, int count)
+{
+  SQLite::Statement group_q(pan_db, "select id from `group` where name = ?" );
+
+  SQLite::Statement desc_q(pan_db, R"SQL(
+    insert into `group_description` (group_id, description)
+      --  add new row with description
+      values(?, @desc)
+      -- clobber old description if different
+      on conflict (group_id) do update set description = @desc where description != @desc ;
+  )SQL" );
+
+  pan_db.exec("pragma synchronous = off");
+
+  int desc_count = 0;
+  // keep any descriptions worth keeping that we don't already have...
+  for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
+       ++it)
+  {
+    NewGroup const &ng(*it);
+
+    group_q.reset();
+    group_q.bind(1, ng.group.c_str());
+    int group_id(0);
+    while(group_q.executeStep()) {
+      group_id = group_q.getColumn(0);
+    }
+
+    // abort if group is unknown
+    assert(group_id != 0);
+
+    if (!ng.description.empty() && ng.description!="?" && ng.description != ng.group.c_str()) {
+      desc_q.reset();
+      desc_q.bind(1,group_id);
+      desc_q.bind(2,ng.description);
+      desc_count += desc_q.exec();
+    }
+  }
+
+  pan_db.exec("pragma synchronous = normal");
+  LOG4CXX_DEBUG(logger, "saved " << desc_count << " group descriptions in DB ");
 }
 
 void

@@ -42,6 +42,7 @@ namespace pan
     virtual std::string get_scorefile_name () const;
     virtual std::string get_posting_name () const;
     virtual std::string get_server_filename () const;
+    virtual std::string get_group_descriptions_filename () const;
 
     virtual void clear_group_headers (const Quark& group);
 
