@@ -91,7 +91,6 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _unit_test(unit_test),
   _data_io(io),
   _prefs(prefs),
-  _descriptions_loaded(false),
   _cached_xover_entry(nullptr),
   _article_rules(prefs.get_flag("rules-autocache-mark-read", false),
                 prefs.get_flag("rules-auto-dl-mark-read", false)),
@@ -162,10 +161,8 @@ DataImpl :: rebuild_backend ()
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);
 
-    _descriptions.clear ();
-    _descriptions_loaded = false;
+    rebuild_group_description_data();
 
-    //load_group_descriptions (*_data_io);
     Log::add_info_va (_("Loaded data backend in %.1f seconds"), timer.get_seconds_elapsed());
   }
 }
@@ -213,7 +210,25 @@ void DataImpl ::rebuild_group_data()
   load_groups_from_db();
 }
 
-DataImpl :: ~DataImpl ()
+void DataImpl ::rebuild_group_description_data()
+{
+  // check if DB contains group descriptions
+  SQLite::Statement group_desc_q(
+    pan_db, "select count(description) from `group_description`;");
+  int desc_count = 0;
+  while (group_desc_q.executeStep())
+  {
+    desc_count = group_desc_q.getColumn(0);
+  }
+
+  if (desc_count == 0)
+  {
+    // migrate group descriptions into DB
+    migrate_group_descriptions(*_data_io);
+  }
+}
+
+DataImpl ::~DataImpl()
 {
   save_state ();
 }
