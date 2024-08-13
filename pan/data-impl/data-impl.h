@@ -163,6 +163,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void rebuild_backend();
     void rebuild_server_data();
     void rebuild_group_data();
+    void rebuild_group_xover_data();
     void rebuild_group_description_data();
     bool const _unit_test;
     DataIO *_data_io;
@@ -377,8 +378,9 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     }
 
     void migrate_group_descriptions(DataIO const &);
-    void load_group_xovers(DataIO const &);
-    void save_group_xovers(DataIO &) const;
+    void migrate_group_xovers(DataIO const &);
+    void load_group_xovers_from_db();
+    void save_group_xovers();
 
     void load_group_permissions(DataIO const &);
     void save_group_permissions(DataIO &) const;
@@ -437,12 +439,12 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                    unsigned long bytes);
 
     void load_headers(DataIO const &, Quark const &group);
-    void save_headers(DataIO &, Quark const &group) const;
+    void save_headers(DataIO &, Quark const &group);
     bool save_headers(DataIO &,
                       Quark const &group,
                       std::vector<Article *> const &,
                       unsigned long &,
-                      unsigned long &) const;
+                      unsigned long &);
 
     /**
      * ArticleNode is a Tree node used for threading Article objects.

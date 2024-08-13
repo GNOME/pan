@@ -158,8 +158,8 @@ DataImpl :: rebuild_backend ()
 
     rebuild_server_data();
     rebuild_group_data();
+    rebuild_group_xover_data();
 
-    load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);
 
     rebuild_group_description_data();
@@ -231,6 +231,23 @@ void DataImpl ::rebuild_group_description_data()
   }
 }
 
+void DataImpl ::rebuild_group_xover_data()
+{
+  // check if DB contains group xover data
+  SQLite::Statement xov_q(
+    pan_db, "select count() from `group` where total_article_count is not null limit 1;");
+  int count = 0;
+  while (xov_q.executeStep())
+  {
+    count = xov_q.getColumn(0);
+  }
+
+  if (count == 0)
+    migrate_group_xovers (*_data_io);
+
+  load_group_xovers_from_db ();
+}
+
 DataImpl ::~DataImpl()
 {
   save_state ();
@@ -242,7 +259,7 @@ DataImpl :: save_state ()
   if (!_unit_test)
   {
     pan_debug ("data-impl dtor saving group, xov...");
-    save_group_xovers (*_data_io);
+    save_group_xovers ();
     save_all_server_groups_in_db ();
   }
 }

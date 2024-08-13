@@ -21,11 +21,14 @@
 ***************
 **************/
 
+#include "pan/general/article_number.h"
+#include "pan/general/string-view.h"
 #include <SQLiteCpp/Statement.h>
 #include <SQLiteCpp/Transaction.h>
 #include <config.h>
 #include <cassert>
 #include <iostream>
+#include <log4cxx/logger.h>
 #include <map>
 #include <set>
 #include <sstream>
@@ -497,15 +500,44 @@ void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
   LOG4CXX_INFO(_db_logger, "Migration of group descriptions done.");
 }
 
-void DataImpl ::load_group_xovers(DataIO const &data_io)
+void DataImpl ::migrate_group_xovers(DataIO const &data_io)
 {
   LineReader * in (data_io.read_group_xovers ());
   if (in && !in->fail())
   {
+    LOG4CXX_INFO(_db_logger, "Migrating newsgroup.xov file to DB");
     StringView line;
     StringView groupname, total, unread;
     StringView xover, servername, low;
 
+    SQLite::Statement insert_group_q(pan_db, R"SQL(
+      insert into `group` (name) values (?) on conflict do nothing;
+    )SQL");
+
+    SQLite::Statement check_server_q(pan_db, R"SQL(
+      select count() from `server` where pan_id = ?
+    )SQL");
+
+    SQLite::Statement count_q(pan_db, R"SQL(
+      update `group` set total_article_count = ? , unread_article_count = ?
+      where name = ?
+    )SQL");
+
+    SQLite::Statement insert_server_group_q(pan_db, R"SQL(
+      insert into `server_group` (server_id, group_id) values (
+        (select id from server where pan_id = ?),
+        (select id from `group` where name = ?)
+      ) on conflict do nothing;
+    )SQL");
+
+    SQLite::Statement xover_q(pan_db, R"SQL(
+      update `server_group` set xover_high = ?
+      where server_id = (select id from server where pan_id = ?)
+        and group_id = (select id from `group` where name = ?)
+    )SQL");
+
+
+    int count ;
     // walk through the groups line-by-line...
     while (in->getline (line))
     {
@@ -516,17 +548,87 @@ void DataImpl ::load_group_xovers(DataIO const &data_io)
 
       if (line.pop_token(groupname) && line.pop_token(total) && line.pop_token(unread))
       {
-        ReadGroup& g (_read_groups[groupname]);
-        g._article_count = Article_Count(total);
-        g._unread_count = Article_Count(unread);
+        SQLite::Transaction store_xov_transaction(pan_db);
 
-        while (line.pop_token (xover))
-          if (xover.pop_token(servername,':'))
-            g[servername]._xover_high = Article_Number(xover);
+        // store new group if needed (have no servername, so just create the group)
+        insert_group_q.reset();
+        insert_group_q.bind(1, groupname);
+        insert_group_q.exec();
+
+        // for each xref
+        while (line.pop_token (xover)) {
+          if (xover.pop_token(servername,':')) {
+            // check if server is known (xov file may contain entries for removed servers, sic)
+            check_server_q.reset();
+            check_server_q.bind(1, servername);
+            int s_count(0);
+            while (check_server_q.executeStep()) {
+              s_count = check_server_q.getColumn(0);
+            }
+            if (s_count == 1) {
+              // store the server group link if needed
+              insert_server_group_q.reset();
+              insert_server_group_q.bind(1,servername);
+              insert_server_group_q.bind(2,groupname);
+              insert_server_group_q.exec();
+
+              // store the unread_article_count and xover_high
+              xover_q.reset();
+              xover_q.bind(1,xover);
+              xover_q.bind(2,servername);
+              xover_q.bind(3,groupname);
+              xover_q.exec();
+            }
+          }
+        }
+
+        // then update total and unread in group
+        count_q.reset();
+        count_q.bind(1,total);
+        count_q.bind(2,unread);
+        count_q.bind(3,groupname);
+        count += count_q.exec();
+
+        store_xov_transaction.commit();
       }
     }
+    LOG4CXX_INFO(_db_logger, "Migrated " << count << " records from newsgroup.xov into DB" );
+
+    std::remove(data_io.get_group_xovers_filename().c_str());
   }
-  delete in;
+}
+
+void DataImpl ::load_group_xovers_from_db() {
+  TimeElapsed timer;
+  LOG4CXX_DEBUG(_db_logger,"Loading xovers data from DB");
+
+  StringView groupname, total, unread, xover, server_pan_id;
+
+  std::stringstream xover_st;
+  xover_st << "select name, pan_id, total_article_count, unread_article_count, xover_high "
+           << "from `group` as g "
+           << "join `server_group` as sg, `server` as s "
+           << "where g.id == group_id and s.id == server_id and total_article_count is not null;";
+  SQLite::Statement xover_q(pan_db, xover_st.str());
+  int count(0) ;
+
+  // walk through the results row by row...
+  while (xover_q.executeStep()) {
+    count ++;
+    groupname = xover_q.getColumn(0).getText();
+    ReadGroup& g (_read_groups[groupname]);
+    g._article_count = Article_Count(xover_q.getColumn(2).getText());
+    g._unread_count = Article_Count(xover_q.getColumn(3).getText());
+
+    if (!xover_q.getColumn(4).isNull()) {
+      server_pan_id = xover_q.getColumn(1).getText();
+      xover = xover_q.getColumn(4).getText();
+      g[server_pan_id]._xover_high = Article_Number(xover);
+    }
+  }
+
+  LOG4CXX_INFO(_db_logger, "Loaded " << count << " group xover info from DB in "
+               << timer.get_seconds_elapsed() << "s.");
 }
 
 namespace
@@ -552,12 +654,10 @@ namespace
 }
 
 void
-DataImpl :: save_group_xovers (DataIO& data_io) const
+DataImpl :: save_group_xovers ()
 {
   if (_unit_test)
     return;
-
-  std::ostream& out (*data_io.write_group_xovers ());
 
   // find the set of groups that have had an xover
   typedef std::set<Quark, AlphabeticalQuarkOrdering> xgroups_t;
@@ -573,30 +673,51 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
       xgroups.insert (git->first);
   }
 
-  out << "# groupname totalArticleCount unreadArticleCount [server:latestXoverHigh]*\n";
+  std::stringstream count_st;
+  count_st << "update `group` set total_article_count = ? , unread_article_count = ? "
+           << "where name = ? ;";
+  SQLite::Statement count_q(pan_db, count_st.str());
+
+  std::stringstream xover_st;
+  xover_st << "update `server_group` set xover_high = ? "
+           << "where server_id = (select id from server where pan_id = ?) "
+           << "  and group_id = (select id from `group` where name = ?);";
+  SQLite::Statement xover_q(pan_db, xover_st.str());
+  int count ;
 
   // foreach xgroup
   foreach_const (xgroups_t, xgroups, it)
   {
     const Quark groupname (*it);
     ReadGroup const &g(*find_read_group(groupname));
-    out << groupname;
-    out.put (' ');
-    out << g._article_count;
-    out.put (' ');
-    out << g._unread_count;
+
+    SQLite::Transaction store_xov_transaction(pan_db);
+
+    count_q.reset();
+    count_q.bind(1,static_cast<int64_t>(g._article_count));
+    count_q.bind(2,static_cast<int64_t>(g._unread_count));
+    count_q.bind(3,groupname.c_str());
+    int exec_count = count_q.exec();
+    count += exec_count;
+    if ( exec_count != 1) {
+      LOG4CXX_WARN(_db_logger, "Unkwown group " << groupname << " when saving xover data");
+    };
+
     foreach_const (ReadGroup::servers_t, g._servers, i) {
       if (static_cast<uint64_t>(i->second._xover_high) != 0) {
-        out.put (' ');
-        out << i->first;
-        out.put (':');
-        out << i->second._xover_high;
+        xover_q.reset();
+        xover_q.bind(1,static_cast<int64_t>(i->second._xover_high));
+        xover_q.bind(2,i->first.c_str());
+        xover_q.bind(3,groupname.c_str());
+        int exec_count = xover_q.exec();
+        if (exec_count != 1) {
+          LOG4CXX_WARN(_db_logger, "Unkwown group " << groupname << " or server pan_id " << i->first.c_str() << " when saving xover data in DB");
+        };
       }
     }
-    out.put ('\n');
-  }
 
-  data_io.write_done (&out);
+    store_xov_transaction.commit();
+  }
 }
 
 /****
@@ -717,7 +838,7 @@ void DataImpl ::mark_group_read(Quark const &groupname)
       it->second._read.mark_range (static_cast<Article_Number>(0), it->second._xover_high, true);
     }
     rg->_unread_count = static_cast<Article_Count>(0);
-    save_group_xovers (*_data_io);
+    save_group_xovers ();
     fire_group_read (groupname);
   }
 }
@@ -792,7 +913,7 @@ void DataImpl ::save_group_descriptions_in_db(NewGroup const *newgroups, int cou
   }
 
   pan_db.exec("pragma synchronous = normal");
-  debug("saved " << desc_count << " group descriptions in DB ");
+  LOG4CXX_DEBUG(_db_logger,"saved " << desc_count << " group descriptions in DB ");
 }
 
 void
