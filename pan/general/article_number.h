@@ -1,6 +1,7 @@
 #ifndef article_number_h
 #define article_number_h
 
+#include <cstdint>
 #include <stdint.h>
 #include <iosfwd>
 
@@ -25,6 +26,7 @@ class Article_Count
     Article_Count(Article_Count const &rhs) = default;
 
     explicit operator type () const { return val_; }
+    explicit operator int64_t () const { return val_; }
 
     Article_Count &operator=(Article_Count const &val)
     {
@@ -125,6 +127,7 @@ class Article_Number {
     Article_Number(Article_Number const &rhs) = default;
 
     explicit operator type () const { return val_; }
+    explicit operator int64_t () const { return val_; }
 
     Article_Number &operator=(Article_Number const &val)
     {
