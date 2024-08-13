@@ -5,7 +5,20 @@ create table if not exists `group` (
   id integer primary key asc autoincrement,
   name text not null,
 
-  subscribed boolean check (subscribed in (False, True)) default False
+  subscribed boolean check (subscribed in (False, True)) default False,
+
+  -- n means posting not okay; m means moderated.
+  -- Since almost all groups allow posting, Pan assumes that as the default.
+  -- Only moderated or no-posting groups are listed here.
+  permission text  check (permission in ("y","n","m")) default "y",
+
+  -- data extracted from newsgroup.xov, field 2
+  total_article_count integer,
+
+  -- data extracted from newsgroup.xov, field 3.
+  -- TODO: check if redundant with read_ranges
+  unread_article_count integer
+  -- remaining fields of newsgroup.xov are stored in table server_group
 );
 
 create unique index if not exists group_name on `group` (name);
@@ -15,6 +28,13 @@ create table if not exists server_group (
   server_id integer not null references server (id) on delete cascade,
   -- a group must not be deleted if it's still provided by a server
   group_id integer not null references `group` (id) on delete restrict,
+
+
+  -- This contains the highest article number found for a newsgroup on
+  -- a specific server.  see "high water mark" in
+  -- https://www.rfc-editor.org/rfc/rfc3977#section-6.1.1.2
+  -- used to be stored in newsgroups.xov file
+  xover_high integer,
 
   -- From Thomas T: In theory these are denormalisations because if a
   -- server holds the group it should in general hold all the articles
