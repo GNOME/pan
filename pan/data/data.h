@@ -375,7 +375,7 @@ namespace pan
 
     public: // accessors
 
-      virtual const std::string& get_group_description (const Quark&group) const=0;
+      virtual const std::string get_group_description (const Quark&group) const=0;
 
       /**
        * Get an alphabetically-sorted list of subscribed newsgroups.
