@@ -18,6 +18,7 @@
  */
 
 
+#include <log4cxx/logger.h>
 #include <memory>
 #include <fstream>
 #include <config.h>
@@ -61,6 +62,7 @@ extern "C" {
 #include <config.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
+#include <pan/general/log4cxx.h>
 #include <pan/general/file-util.h>
 #include <pan/general/worker-pool.h>
 #include <pan/usenet-utils/gpg.h>
@@ -84,6 +86,10 @@ extern "C" {
 
 
 using namespace pan;
+
+namespace {
+log4cxx::LoggerPtr logger = pan::getLogger("Pan");
+}
 
 namespace
 {
@@ -469,8 +475,12 @@ namespace
     void on_queue_task_removed (Queue&, Task&, int) override {}
     void on_queue_task_moved (Queue&, Task&, int, int) override {}
     void on_queue_connection_count_changed (Queue&, int) override {}
-    void on_queue_online_changed (Queue&, bool) override {}
-    void on_queue_error (Queue&, const StringView&) override {}
+    void on_queue_online_changed (Queue&, bool) override {
+    }
+
+    void on_queue_error(Queue &, StringView const &) override
+    {
+    }
 
   private:
     Queue & q;
@@ -855,7 +865,7 @@ main (int argc, char *argv[])
     return EXIT_FAILURE;
   }
 
-  Log::add_info_va (_("Pan %s started"), PAN_VERSION);
+  LOG4CXX_INFO(logger, "Entering Pan " << PAN_VERSION );
 
   if (gui)
   {
