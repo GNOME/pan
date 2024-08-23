@@ -404,7 +404,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   _state.set_working();
 
   _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _bpf);
-  debug ("encoder thread was free, enqueued work");
+  pan_debug ("encoder thread was free, enqueued work");
 }
 
 void

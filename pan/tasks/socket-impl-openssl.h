@@ -107,7 +107,7 @@ namespace pan
   {
     public:
       virtual ~GIOChannelSocketGnuTLS ();
-      GIOChannelSocketGnuTLS () { debug("SocketSSL stub ctor"); }
+      GIOChannelSocketGnuTLS () { pan_debug("SocketSSL stub ctor"); }
 #endif  // HAVE_GNUTLS
 
   };

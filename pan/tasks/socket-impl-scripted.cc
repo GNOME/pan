@@ -76,7 +76,7 @@ void ScriptedSocket :: write_command (const StringView& chars, Listener * l)
          l->on_socket_abort (this);
       }
       else {
-         debug ("got [" << cat.first << "], writing [" << s << ']');
+         pan_debug ("got [" << cat.first << "], writing [" << s << ']');
          listener_wants_more = l->on_socket_response (this, s);
       }
    }

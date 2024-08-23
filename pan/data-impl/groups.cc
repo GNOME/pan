@@ -176,7 +176,7 @@ void DataImpl ::load_newsrc_files(DataIO const &data_io)
   foreach_const (servers_t, _servers, sit) {
     const Quark key (sit->first);
     const std::string filename = file::absolute_fn("", sit->second.newsrc_filename);
-    debug("reading " << sit->second.host << " groups from " << filename);
+    pan_debug("reading " << sit->second.host << " groups from " << filename);
     if (file::file_exists (filename.c_str())) {
       LineReader * in (data_io.read_file (filename));
       load_newsrc (key, in, s, u);

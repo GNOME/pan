@@ -41,21 +41,21 @@ void
 Task :: give_nntp (NNTP::Source * source, NNTP* nntp)
 {
   _nntp_to_source[nntp] = source;
-  debug ("gave nntp " << nntp->_server << " (" << nntp << ") to task " << this << ", which now has " << _nntp_to_source.size() << " nntps");
+  pan_debug ("gave nntp " << nntp->_server << " (" << nntp << ") to task " << this << ", which now has " << _nntp_to_source.size() << " nntps");
   use_nntp (nntp);
 }
 
 void
 Task :: check_in (NNTP * nntp, Health health)
 {
-   debug ("task " << this << " returning nntp " << nntp);
+   pan_debug ("task " << this << " returning nntp " << nntp);
 
    nntp_to_source_t::iterator it = _nntp_to_source.find (nntp);
    if (it != _nntp_to_source.end())
    {
       NNTP::Source * source = it->second;
       _nntp_to_source.erase (nntp);
-      debug ("returned nntp " << nntp << " OK; task " << this << " now has " << _nntp_to_source.size() << " nntps");
+      pan_debug ("returned nntp " << nntp << " OK; task " << this << " now has " << _nntp_to_source.size() << " nntps");
 
       source->check_in (nntp, health);
    }

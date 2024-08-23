@@ -247,7 +247,7 @@ GIOChannelSocket :: GIOChannelSocket ():
    _in_buf (g_string_new (NULL)),
    _io_performed (false)
 {
-   debug ("GIOChannelSocket ctor " << (void*)this);
+   pan_debug ("GIOChannelSocket ctor " << (void*)this);
 }
 
 namespace
@@ -262,7 +262,7 @@ namespace
 
 GIOChannelSocket :: ~GIOChannelSocket ()
 {
-  debug(" destroying GIO socket "<<this);
+  pan_debug(" destroying GIO socket "<<this);
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -388,7 +388,7 @@ GIOChannelSocket :: do_write ()
   GIOStatus status = g->len
     ? g_io_channel_write_chars (_channel, g->str, g->len, &out, &err)
     : G_IO_STATUS_NORMAL;
-  debug ("socket " << this << " channel " << _channel
+  pan_debug ("socket " << this << " channel " << _channel
                    << " maybe wrote [" << g->str << "]; status was " << status);
 
   if (status == G_IO_STATUS_NORMAL)
@@ -418,7 +418,7 @@ GIOChannelSocket :: timeout_func (gpointer sock_gp)
 
   if (!self->_io_performed)
   {
-    debug ("error: channel " << self->_channel << " not responding.");
+    pan_debug ("error: channel " << self->_channel << " not responding.");
     gio_func (self->_channel, G_IO_ERR, sock_gp);
     return false;
   }
@@ -440,7 +440,7 @@ gboolean
 GIOChannelSocket :: gio_func (GIOChannel   * channel,
                               GIOCondition   cond)
 {
-  debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << cond);
+  pan_debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << cond);
 
   set_watch_mode (IGNORE_NOW);
 
@@ -471,7 +471,7 @@ namespace
 void
 GIOChannelSocket :: set_watch_mode (WatchMode mode)
 {
-  debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << _channel);
+  pan_debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << _channel);
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
 
@@ -480,11 +480,11 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
   {
     case IGNORE_NOW:
       // don't add any watches
-      debug("channel " << _channel << " setting mode **IGNORE**");
+      pan_debug("channel " << _channel << " setting mode **IGNORE**");
       break;
 
     case READ_NOW:
-      debug("channel " << _channel << " setting mode read");
+      pan_debug("channel " << _channel << " setting mode read");
       cond = (int)G_IO_IN | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
@@ -492,7 +492,7 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
       break;
 
     case WRITE_NOW:
-      debug("channel " << _channel << " setting mode write");
+      pan_debug("channel " << _channel << " setting mode write");
       cond = (int)G_IO_OUT | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
@@ -500,5 +500,5 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
       break;
   }
 
-  debug ("set_watch_mode " << mode << ": _tag_watch is now " << _tag_watch);
+  pan_debug ("set_watch_mode " << mode << ": _tag_watch is now " << _tag_watch);
 }

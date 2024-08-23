@@ -139,7 +139,7 @@ namespace
 void
 DataImpl :: xover_clear_workarea (const Quark& group)
 {
-   debug ("Clearing the XOVER workearea for " << group);
+   pan_debug ("Clearing the XOVER workearea for " << group);
 
    _xovers.erase (group);
    if (group == _cached_xover_group) {

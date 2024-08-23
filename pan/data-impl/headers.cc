@@ -1402,10 +1402,10 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
 
     foreach (std::set<MyTree *>, _trees, it)
     {
-      debug("This tree has a group " << (*it)->_group);
+      pan_debug("This tree has a group " << (*it)->_group);
       if ((*it)->_group == group)
       {
-        debug("trying to add the articles to tree " << *it);
+        pan_debug("trying to add the articles to tree " << *it);
         (*it)->add_articles(mids);
       }
     }

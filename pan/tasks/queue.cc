@@ -289,38 +289,38 @@ Queue :: process_task (Task * task)
 {
   pan_return_if_fail (task != nullptr);
 
-  debug ("in process_task with a task of type " << task->get_type());
+  pan_debug ("in process_task with a task of type " << task->get_type());
 
   const Task::State& state (task->get_state());
 
   if (state._work == Task::COMPLETED)
   {
-    debug ("completed");
+    pan_debug ("completed");
     remove_task (task);
   }
   else if (_removing.count(task))
   {
-    debug ("removing");
+    pan_debug ("removing");
     remove_task (task);
   }
   else if (_stopped.count(task))
   {
-    debug ("stopped");
+    pan_debug ("stopped");
     task->stop();
   }
   else if (state._health == ERR_COMMAND || state._health == ERR_LOCAL)
   {
-    debug ("fail");
+    pan_debug ("fail");
     // do nothing
   }
   else if (state._health==ERR_NOSPACE)
   {
-    debug ("no space");
+    pan_debug ("no space");
     set_online(false);
   }
   else if (state._work == Task::WORKING)
   {
-    debug ("working");
+    pan_debug ("working");
   }
   else if (state._work == Task::INITIAL)
   {
@@ -345,7 +345,7 @@ Queue :: process_task (Task * task)
 
   else while (_is_online && (state._work == Task::NEED_NNTP))
   {
-    debug("online");
+    pan_debug("online");
     // make the requests...
     const Task::State::unique_servers_t& servers (state._servers);
     foreach_const (Task::State::unique_servers_t, servers, it)
@@ -357,14 +357,14 @@ Queue :: process_task (Task * task)
     Quark server;
     if (!find_best_server (servers, server))
     {
-      debug("break");
+      pan_debug("break");
       break;
     }
 
     NNTP * nntp (get_pool(server).check_out ());
     if (!nntp)
     {
-      debug("break");
+      pan_debug("break");
       break;
     }
 
@@ -664,7 +664,7 @@ Queue :: remove_task (Task * task)
 
   if (task_is_active (task)) // wait for the Task to finish
   {
-    debug ("can't delete this task right now because it's active");
+    pan_debug ("can't delete this task right now because it's active");
     task->stop();
     _removing.insert (task);
   }

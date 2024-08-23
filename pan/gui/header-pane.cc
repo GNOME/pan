@@ -775,7 +775,7 @@ HeaderPane :: select_message_id (const Quark& mid, bool do_scroll)
 void
 HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
 {
-  debug (diffs.added.size() << " article added; "
+  pan_debug (diffs.added.size() << " article added; "
       << diffs.reparented.size() << " reparented; "
       << diffs.removed.size() << " removed");
 

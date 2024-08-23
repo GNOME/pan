@@ -437,7 +437,7 @@ bool CertStore::add(gnutls_x509_crt_t cert, Quark const &server)
     _creds, &cert, 1); // for now, only 1 is saved
   valid_cert_added(cert, server.c_str());
 
-  debug("adding server cert " << server << " " << cert);
+  pan_debug("adding server cert " << server << " " << cert);
 
   return true;
 }
