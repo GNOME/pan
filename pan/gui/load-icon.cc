@@ -40,7 +40,7 @@ GdkPixbuf *load_icon_from_path(const gchar *file_name, const gchar *icon_dir)
 
   if (error != NULL)
   {
-    debug("Unable to load icon " << file_name << " from " << icon_dir << ": " << error->message);
+    pan_debug("Unable to load icon " << file_name << " from " << icon_dir << ": " << error->message);
     g_error_free(error);
   }
 

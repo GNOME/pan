@@ -35,7 +35,7 @@ namespace pan
 
 #define LINE_ID '(' << __FILE__ << ':' << __LINE__ << ':' << __func__ << ')'
 
-#define debug(A) \
+#define pan_debug(A) \
   do { \
     if (_debug_flag) \
       std::cerr<< LINE_ID << ' ' << A << '\n'; \
