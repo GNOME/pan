@@ -309,7 +309,7 @@ namespace
       notify_notification_show (notif, &error);
 
       if (error) {
-        debug ("Error showing notification: "<<error->message);
+        pan_debug ("Error showing notification: "<<error->message);
         g_error_free (error);
         _notifs.erase(G_OBJECT(notif));
         g_object_unref(G_OBJECT(notif));
