@@ -4,6 +4,7 @@ add_library(generalutils
  e-util.cc
  file-util.cc
  log.cc
+ log4cxx.cc
  line-reader.cc
  progress.cc
  quark.cc
