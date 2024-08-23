@@ -46,6 +46,7 @@ foreach (my_target "pan-cc-gui" "pan-c-gui")
 
   target_link_libraries(${my_target} PUBLIC PkgConfig::GTK3)
   target_link_libraries(${my_target} PUBLIC PkgConfig::GMIME)
+  target_link_libraries(${my_target} PUBLIC PkgConfig::LOG4CPP)
 
   if(WANT_GSPELL)
     my_target_system_lib(${my_target} PUBLIC GSPELL)

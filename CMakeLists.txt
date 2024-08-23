@@ -138,6 +138,8 @@ pkg_check_modules(GMIME REQUIRED IMPORTED_TARGET gmime-3.0)
 
 pkg_check_modules(GLIB REQUIRED IMPORTED_TARGET glib-2.0>=2.26.0)
 
+pkg_check_modules(LOG4CPP REQUIRED IMPORTED_TARGET liblog4cxx)
+
 # Check for GMime cryptography support
 option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: no)")
 if(WANT_GMIME_CRYPTO)

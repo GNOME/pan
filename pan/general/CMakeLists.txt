@@ -5,6 +5,7 @@ add_library(generalutils
  file-util.cc
  group-prefs.cc
  log.cc
+ log4cxx.cc
  line-reader.cc
  prefs.cc
  progress.cc
