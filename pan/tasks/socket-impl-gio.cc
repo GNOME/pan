@@ -340,7 +340,7 @@ GIOChannelSocket :: do_read ()
       //TODO validate!
       _partial_read.clear ();
 
-      debug_v ("read [" << g->str << "]"); // verbose debug, if --debug --debug was on the command-line
+      pan_debug_v ("read [" << g->str << "]"); // verbose debug, if --debug --debug was on the command-line
       increment_xfer_byte_count (g->len);
 
       more = _listener->on_socket_response (this, StringView (g->str, g->len));
