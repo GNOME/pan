@@ -41,7 +41,7 @@ namespace pan
       std::cerr<< LINE_ID << ' ' << A << '\n'; \
   } while (0)
 
-#define debug_v(A) \
+#define pan_debug_v(A) \
   do { \
     if (_debug_verbose_flag) \
       std::cerr << LINE_ID << ' ' << A << '\n'; \
