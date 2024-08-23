@@ -2453,7 +2453,7 @@ GUI :: edit_scores_cleanup(int status, char *filename, GtkAction *act)
 void
 GUI :: do_show_cert_failed_dialog(VerifyData* data)
 {
-  debug("do show cert failed dialog");
+  pan_debug("do show cert failed dialog");
   VerifyData& d(*data);
   bool delete_cert = false;
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),d.cert,d.server))
@@ -2472,7 +2472,7 @@ GUI :: do_show_cert_failed_dialog(VerifyData* data)
 gboolean
 GUI :: show_cert_failed_cb(gpointer gp)
 {
-  debug("show_cert_failed_cb");
+  pan_debug("show_cert_failed_cb");
   VerifyData* d(static_cast<VerifyData*>(gp));
   d->gui->do_show_cert_failed_dialog(d);
   return false;
@@ -2481,7 +2481,7 @@ GUI :: show_cert_failed_cb(gpointer gp)
 void
 GUI :: on_verify_cert_failed(gnutls_x509_crt_t cert, std::string server, int nr)
 {
-  debug("on verify failed GUI ("<<cert<<") ("<<server<<")");
+  pan_debug("on verify failed GUI ("<<cert<<") ("<<server<<")");
   if (!cert || server.empty()) return;
 
   VerifyData* data = new VerifyData();

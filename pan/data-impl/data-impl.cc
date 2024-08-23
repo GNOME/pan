@@ -97,7 +97,7 @@ DataImpl :: rebuild_backend ()
 {
   if (_unit_test)
   {
-    debug ("data-impl not loading anything because we're in unit test mode");
+    pan_debug ("data-impl not loading anything because we're in unit test mode");
   }
   else
   {
@@ -130,7 +130,7 @@ DataImpl :: save_state ()
 {
   if (!_unit_test)
   {
-    debug ("data-impl dtor saving xov, newsrc...");
+    pan_debug ("data-impl dtor saving xov, newsrc...");
     save_group_xovers (*_data_io);
     save_newsrc_files (*_data_io);
   }

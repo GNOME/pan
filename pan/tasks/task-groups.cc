@@ -63,7 +63,7 @@ TaskGroups :: ~TaskGroups ()
 void
 TaskGroups :: use_nntp (NNTP * nntp)
 {
-  debug ("groups task got an nntp " << nntp->_server << "; step is " << _step);
+  pan_debug ("groups task got an nntp " << nntp->_server << "; step is " << _step);
 
   _state.set_working ();
 
@@ -143,7 +143,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
                             Health              health,
                             const StringView  & response)
 {
-  debug ("groups task got an on_nntp_done() from " << nntp->_server);
+  pan_debug ("groups task got an on_nntp_done() from " << nntp->_server);
 
   if (health == ERR_NETWORK)
   {
@@ -190,7 +190,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
       _data.add_groups (_servername, ng, i);
       delete [] ng;
 
-      debug ("groups task setting state completed");
+      pan_debug ("groups task setting state completed");
       _state.set_completed ();
       set_finished (OK);
     }
