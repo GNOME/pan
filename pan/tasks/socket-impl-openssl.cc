@@ -620,7 +620,7 @@ GIOChannelSocketGnuTLS :: do_read ()
       g_string_prepend_len (g, _partial_read.c_str(), _partial_read.size());
       _partial_read.clear ();
 
-      debug_v ("read [" << g->str << "]");
+      pan_debug_v ("read [" << g->str << "]");
       increment_xfer_byte_count (g->len);
       //if (g_str_has_suffix (g->str, "\r\n"))
       //  g_string_truncate (g, g->len-2);
