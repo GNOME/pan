@@ -116,12 +116,12 @@ NNTP_Pool :: check_out ()
   NNTP * nntp (nullptr);
 
   foreach (pool_items_t, _pool_items, it) {
-    debug("pool item "<<it->is_checked_in<<" "<<it->nntp);
+    pan_debug("pool item "<<it->is_checked_in<<" "<<it->nntp);
     if (it->is_checked_in) {
       nntp = it->nntp;
       it->is_checked_in = false;
       ++_active_count;
-      debug ("nntp " << nntp << " is now checked out");
+      pan_debug ("nntp " << nntp << " is now checked out");
       break;
     }
   }
@@ -132,7 +132,7 @@ NNTP_Pool :: check_out ()
 void
 NNTP_Pool :: check_in (NNTP * nntp, Health health)
 {
-  debug ("nntp " << nntp << " is being checked in, health is " << health);
+  pan_debug ("nntp " << nntp << " is being checked in, health is " << health);
 
   // find this nntp in _pool_items
   pool_items_t::iterator it;
@@ -188,7 +188,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
           _prefs.get_flag(
               "use-password-storage",
               USE_LIBSECRET_DEFAULT));
-  debug("on socket created "<<host<<" "<<ok<<" "<<socket);
+  pan_debug("on socket created "<<host<<" "<<ok<<" "<<socket);
   if (!ok)
   {
     delete socket;
@@ -211,7 +211,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
 void
 NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response)
 {
-   debug ("NNTP_Pool: on_nntp_done()");
+   pan_debug ("NNTP_Pool: on_nntp_done()");
 
    if (health == ERR_COMMAND) // news server isn't accepting our connection!
    {
@@ -260,7 +260,7 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
    // if success...
    if (nntp != nullptr)
    {
-      debug ("success with handshake to " << _server << ", nntp " << nntp);
+      pan_debug ("success with handshake to " << _server << ", nntp " << nntp);
 
       PoolItem i;
       i.nntp = nntp;
