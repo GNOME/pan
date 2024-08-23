@@ -136,7 +136,7 @@ GIOChannelSocketGnuTLS :: GIOChannelSocketGnuTLS (ServerInfo& data, const Quark&
    _done(false)
 {
 
-  debug ("GIOChannelSocketGnuTLS ctor " << (void*)this);
+  pan_debug ("GIOChannelSocketGnuTLS ctor " << (void*)this);
   cs.add_listener(this);
 }
 
@@ -188,7 +188,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
       server.sin_port = htons(port);
       ++i;
       err = ::connect (sockfd,(struct sockaddr*)&server, sizeof(server));
-      debug ("connect "<<err<<" "<<i);
+      pan_debug ("connect "<<err<<" "<<i);
     }
 
     if (err) {
@@ -270,7 +270,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
   g_io_channel_set_buffered (channel,true);
   g_io_channel_set_line_term (channel, "\n", 1);
   GIOChannel* ret (gnutls_get_iochannel(channel, host_in.str));
-  debug ("########### SocketSSL "<<ret);
+  pan_debug ("########### SocketSSL "<<ret);
   return ret;
 }
 
@@ -317,7 +317,7 @@ GIOChannelSocketGnuTLS :: ~GIOChannelSocketGnuTLS ()
 
   _certstore.remove_listener(this);
 
-  debug(" destroying SSL socket "<<this);
+  pan_debug(" destroying SSL socket "<<this);
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -421,7 +421,7 @@ namespace
 
   GIOStatus gnutls_close(GIOChannel *handle, GError **gerr)
   {
-    debug("gnutls close "<<handle);
+    pan_debug("gnutls close "<<handle);
 
     GIOGnuTLSChannel *chan = (GIOGnuTLSChannel *) handle;
 
@@ -669,7 +669,7 @@ GIOChannelSocketGnuTLS :: do_write ()
   GIOStatus status = g->len
     ? gnutls_write_line(_channel, g->str, g->len, &out, &err)
     : G_IO_STATUS_NORMAL;
-  debug ("socket " << this << " channel " << _channel
+  pan_debug ("socket " << this << " channel " << _channel
                    << " maybe wrote [" << g->str << "]; status was " << status);
 
   if (status == G_IO_STATUS_NORMAL)
@@ -699,7 +699,7 @@ GIOChannelSocketGnuTLS :: timeout_func (gpointer sock_gp)
 
   if (!self->_io_performed)
   {
-    debug ("error: channel " << self->_channel << " not responding.");
+    pan_debug ("error: channel " << self->_channel << " not responding.");
     gio_func (self->_channel, G_IO_ERR, sock_gp);
     return false;
   }
@@ -739,7 +739,7 @@ GIOChannelSocketGnuTLS :: gio_func (GIOChannel   * channel,
     else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
   }
 
-  debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << (cond==G_IO_IN ? "IN" : "OUT"));
+  pan_debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << (cond==G_IO_IN ? "IN" : "OUT"));
 
   return false; // set_watch_mode(IGNORE) cleared the tag that called this func
 }
@@ -753,7 +753,7 @@ void
 GIOChannelSocketGnuTLS :: set_watch_mode (WatchMode mode)
 {
   GIOGnuTLSChannel *chan = (GIOGnuTLSChannel *)_channel;
-  debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << chan->giochan);
+  pan_debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << chan->giochan);
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
 
@@ -762,11 +762,11 @@ GIOChannelSocketGnuTLS :: set_watch_mode (WatchMode mode)
   {
     case IGNORE_NOW:
       // don't add any watches
-      debug("channel " << chan->giochan << " setting mode **IGNORE**");
+      pan_debug("channel " << chan->giochan << " setting mode **IGNORE**");
       break;
 
     case READ_NOW:
-      debug("channel " << chan->giochan << " setting mode read");
+      pan_debug("channel " << chan->giochan << " setting mode read");
       cond = (int)G_IO_IN | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (chan->giochan, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
@@ -774,7 +774,7 @@ GIOChannelSocketGnuTLS :: set_watch_mode (WatchMode mode)
       break;
 
     case WRITE_NOW:
-      debug("channel " << chan->giochan << " setting mode write");
+      pan_debug("channel " << chan->giochan << " setting mode write");
       cond = (int)G_IO_OUT | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (chan->giochan, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
@@ -782,7 +782,7 @@ GIOChannelSocketGnuTLS :: set_watch_mode (WatchMode mode)
       break;
   }
 
-  debug ("set_watch_mode " << (mode==READ_NOW?"READ":mode==WRITE_NOW?"WRITE":"IGNORE") << ": _tag_watch is now " << _tag_watch);
+  pan_debug ("set_watch_mode " << (mode==READ_NOW?"READ":mode==WRITE_NOW?"WRITE":"IGNORE") << ": _tag_watch is now " << _tag_watch);
 }
 
 GIOChannel *

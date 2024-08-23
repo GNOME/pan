@@ -244,7 +244,7 @@ EncodeCache :: resize (guint64 max_bytes)
     }
   }
 
-  debug("cache expired " << removed.size() << " articles, "
+  pan_debug("cache expired " << removed.size() << " articles, "
         "has " << _mid_to_info.size() << " active "
         "and " << _locks.size() << " locked.\n");
 
