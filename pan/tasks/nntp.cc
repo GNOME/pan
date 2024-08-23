@@ -86,7 +86,7 @@ NNTP :: fire_done_func (Health health, const StringView& response)
    if (_listener)
    {
       Listener * l = _listener;
-      debug ("I (" << (void*)this << ") am setting my _listener to 0");
+      pan_debug ("I (" << (void*)this << ") am setting my _listener to 0");
       _compression = false;
       _listener = nullptr;
       l->on_nntp_done (this, health, response);
@@ -354,11 +354,11 @@ NNTP :: write_next_command ()
    assert (!_commands.empty());
 
    //for (strings_t::const_iterator it=_commands.begin(), end=_commands.end(); it!=end; ++it)
-   //   debug ("command [" << *it << ']');
+   //   pan_debug ("command [" << *it << ']');
 
    _previous_command = _commands.front ();
    _commands.pop_front ();
-   debug ("nntp " << this << " writing to socket " << _socket << " on server " << _server << " this command: [" << _previous_command << ']');
+   pan_debug ("nntp " << this << " writing to socket " << _socket << " on server " << _server << " this command: [" << _previous_command << ']');
    _socket->write_command (_previous_command, this);
 }
 
@@ -528,7 +528,7 @@ NNTP :: group (const Quark  & group,
    _listener = l;
 
    _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
-   debug ("_commands.size(): " << _commands.size());
+   pan_debug ("_commands.size(): " << _commands.size());
    write_next_command ();
 }
 
