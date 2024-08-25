@@ -63,6 +63,19 @@ create trigger if not exists delete_orphan_groups after delete on `server`
         where sg.group_id is null
     );
   end;
+
+-- Add local groups
+insert into `group` (name) values ('Sent'),('Drafts') on conflict do nothing;
+
+-- Assign local groups to local server
+insert into server_group (server_id, group_id) values (
+  (select id from `server` where host = 'local'),
+  (select id from `group` where name = 'Sent')
+),(
+  (select id from `server` where host = 'local'),
+  (select id from `group` where name = 'Drafts')
+) on conflict do nothing;
+
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite
