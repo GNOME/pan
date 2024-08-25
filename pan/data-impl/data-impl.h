@@ -391,6 +391,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void migrate_newsrc_files(DataIO const &);
     void load_groups_from_db();
     void save_all_server_groups_in_db();
+    void save_new_groups_in_db(Quark const &server_pan_id, NewGroup const *newgroups, int count);
     void save_group_in_db(Quark const &server_name);
     void save_group_descriptions_in_db (NewGroup const *new_groups, int count);
 
