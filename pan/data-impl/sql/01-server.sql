@@ -19,6 +19,11 @@ create table if not exists server (
 create unique index if not exists server_pan_id on server (pan_id);
 create unique index if not exists server_host on server (host);
 
+-- create a pseudo server to host local folders managed by Pan like
+-- Drafts and Sent
+insert into server (host, port, pan_id, newsrc_filename)
+            values('local',1,0,'/dev/null') on conflict do nothing;
+
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite

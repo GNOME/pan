@@ -170,8 +170,8 @@ DataImpl :: rebuild_backend ()
 void DataImpl ::rebuild_server_data()
 {
   quarks_t server_list = get_server_ids_from_db();
-  if (server_list.empty())
-  {
+
+  if (server_list.empty()) {
     // load servers from file only if SQL db is empty
     migrate_server_properties_into_db(*_data_io);
     server_list = get_server_ids_from_db();
@@ -193,15 +193,17 @@ void DataImpl ::rebuild_server_data()
 void DataImpl ::rebuild_group_data()
 {
   // check if DB has group data
-  SQLite::Statement group_q(pan_db, "select count(name) from `group`;");
+  SQLite::Statement group_q(pan_db, R"SQL(
+    select count(name) from `group` as g, `server_group` as sg, `server` as s
+    where sg.group_id == g.id and sg.server_id == s.id and s.host != "local";
+)SQL");
   int group_count = 0;
   while (group_q.executeStep())
   {
     group_count = group_q.getColumn(0);
   }
 
-  if (group_count == 0)
-  {
+  if (group_count == 0) {
     // Migrate group data from newsrc files into DB.
     migrate_newsrc_files(*_data_io);
   }
