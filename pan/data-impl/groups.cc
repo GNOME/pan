@@ -22,6 +22,7 @@
 **************/
 
 #include "pan/general/article_number.h"
+#include "pan/general/quark.h"
 #include "pan/general/string-view.h"
 #include <SQLiteCpp/Statement.h>
 #include <SQLiteCpp/Transaction.h>
@@ -299,6 +300,138 @@ void DataImpl ::load_groups_from_db() {
   LOG4CXX_INFO(logger, "Loaded " << s_count + u_count << " group subscription info from DB in "
                << timer.get_seconds_elapsed() << "s." );
   fire_grouplist_rebuilt ();
+}
+
+void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const *newgroups, int count) {
+  TimeElapsed timer;
+  LOG4CXX_DEBUG(logger, "Saving " << count << " new groups in DB");
+
+  // get server id
+  SQLite::Statement get_server_id_q(pan_db, "select id from server where pan_id = ?");
+  get_server_id_q.bind(1, server_pan_id.c_str() );
+  int server_id(0);
+  while (get_server_id_q.executeStep()) {
+    server_id = get_server_id_q.getColumn(0);
+  }
+  assert(server_id > 0);
+
+  LOG4CXX_DEBUG(logger, "Saving new groups in DB. Stored old groups: " << timer.get_seconds_elapsed() << " s");
+
+  // get current list of group of this server
+  SQLite::Statement get_group_ids_q(pan_db, R"SQL(
+    select g.name, g.id from `group` as g join `server_group` as sg
+      where sg.group_id = g.id and sg.server_id = ?
+)SQL");
+  std::map <std::string, int> old_groups;
+  get_group_ids_q.bind(1, server_id );
+  while (get_group_ids_q.executeStep()) {
+    old_groups[get_group_ids_q.getColumn(0)] = get_group_ids_q.getColumn(1);
+  }
+
+  SQLite::Statement store_group_q(pan_db, R"SQL(
+    insert into `group` (name, subscribed) values (?, 0);
+)SQL");
+
+  SQLite::Statement store_link_q(pan_db,R"SQL(
+    insert  into `server_group` (server_id, group_id)
+      select ?, id from `group` where name = ? ;
+)SQL");
+
+  SQLite::Statement store_permission_q(pan_db, R"SQL(
+    update `group` set permission = ? where name = ?;
+)SQL");
+
+  SQLite::Statement set_desc_q(pan_db,R"SQL(
+    insert into `group_description` (group_id, description)
+      --  add new row with description
+      select id, @desc from `group` where name = @name
+      -- clobber old description if different
+      on conflict (group_id) do update set description = @desc where description != @desc ;
+  )SQL");
+
+  LOG4CXX_DEBUG(logger, "Saving new groups in DB. Prepared statements: " << timer.get_seconds_elapsed() << " s");
+
+  pan_db.exec("pragma synchronous = off");
+
+  int added(0);
+  for (NewGroup const *it = newgroups, *end = newgroups + count; it != end; ++it) {
+    std::string name (it->group.c_str());
+
+    if (old_groups.count(name) == 0) {
+      LOG4CXX_TRACE(logger, "Adding new group " << name << " permission " << it->permission );
+      SQLite::Transaction store_group_transaction(pan_db);
+
+      // insert new group
+      store_group_q.reset();
+      store_group_q.bind(1,name);
+      store_group_q.exec();
+
+      // store server/group link
+      store_link_q.reset();
+      store_link_q.bind(1,server_id);
+      store_link_q.bind(2,name);
+      store_link_q.exec();
+
+      store_group_transaction.commit();
+
+      added++;
+    }
+    else {
+      LOG4CXX_TRACE(logger, "Updating group " << name << " permission " << it->permission );
+      old_groups.erase(name);
+    }
+
+    // store permission
+    char perm (it->permission);
+    if (perm == 'n' || perm == 'm' || perm == 'y') {
+      std::string perm(1, it->permission);
+      store_permission_q.reset();
+      store_permission_q.bind(1, perm);
+      store_permission_q.bind(2, name);
+      store_permission_q.exec();
+    } else {
+      // Some server give unexpected permission like 'x' for intel.motherboards.pentium group on news.free.fr
+      LOG4CXX_DEBUG(logger, "Skipping permission '" << perm << "' of group " << name << " server pan_id " << server_pan_id.c_str() );
+    }
+
+    // store description (if any)
+    if (!it->description.empty() && it->description!="?" && it->description != name) {
+      set_desc_q.reset();
+      set_desc_q.bind(1, it->description);
+      set_desc_q.bind(2, name);
+      set_desc_q.exec();
+    }
+  }
+
+  LOG4CXX_DEBUG(logger, "Saving new groups in DB. Checked or saved groups: " << timer.get_seconds_elapsed() << " s");
+
+  int deleted(0);
+  SQLite::Statement delete_group_q(pan_db, R"SQL(
+    delete from `server_group`
+      where server_id = ?
+        and group_id = (select id from `group` where name = ?)
+  )SQL");
+
+  // delete old group no longer found on server (does this ever
+  // happens ?), i.e.  delete group_id from server_group. Group in
+  // group table is actually deleted by delete_orphan_group trigger if
+  // no other server provides it
+  for (auto const& grp : old_groups) {
+    LOG4CXX_DEBUG(logger, "Deleting obsolete group: " << grp.first);
+    delete_group_q.reset();
+    delete_group_q.bind(1, server_id);
+    delete_group_q.bind(2, grp.first);
+    int count = delete_group_q.exec();
+    assert(count == 1);
+    deleted++;
+  }
+
+  LOG4CXX_DEBUG(logger, "Saving new groups in DB. Deleted obsolete groups: " << timer.get_seconds_elapsed() << " s");
+
+  pan_db.exec("pragma synchronous = normal");
+
+  LOG4CXX_INFO(logger, "Added " << added << " and deleted " << deleted <<
+               " groups in " << timer.get_seconds_elapsed() << "s.");
 }
 
 void DataImpl::save_group_in_db(Quark const &server_name) {
@@ -869,10 +1002,10 @@ void DataImpl ::add_groups(Quark const &server,
     _nopost.swap (tmp);
   }
 
-  save_group_descriptions_in_db(newgroups, count);
+  save_new_groups_in_db(server, newgroups, count);
 
-  save_group_permissions_in_db ();
   fire_grouplist_rebuilt ();
+
 }
 
 void DataImpl ::mark_group_read(Quark const &groupname)
