@@ -1120,7 +1120,6 @@ DataImpl :: get_group_permission (const Quark & group) const
     return 'y';
 }
 
-
 void
 DataImpl :: group_get_servers (const Quark& groupname, quarks_t& addme) const
 {
