@@ -443,6 +443,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                    unsigned long bytes);
 
     void migrate_headers(DataIO const &, Quark const &group);
+    void migrate_read_ranges(Quark const &group);
     void load_headers_from_db(Quark const &group);
     void save_headers(DataIO &, Quark const &group);
     bool save_headers(DataIO &,
