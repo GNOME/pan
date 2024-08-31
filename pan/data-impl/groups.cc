@@ -1005,6 +1005,20 @@ void DataImpl ::add_groups(Quark const &server,
 
 void DataImpl ::mark_group_read(Quark const &groupname)
 {
+  SQLite::Statement set_read_q(pan_db, R"SQL(
+    update `article` as a set is_read = True
+      where a.id in (
+         select article_id from `article_xref` as xrf, `group` as g
+         where g.name = ? and xrf.group_id == g.id
+    ) and is_read == False
+)SQL");
+
+  set_read_q.bind(1, groupname.c_str());
+  int count = set_read_q.exec();
+
+  LOG4CXX_TRACE(_db_logger, "Set " << count <<
+                " articles as read for group " << groupname.c_str());
+
   ReadGroup * rg (find_read_group (groupname));
   if (rg != nullptr) {
     foreach (ReadGroup::servers_t, rg->_servers, it) {
