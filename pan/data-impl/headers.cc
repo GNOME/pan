@@ -17,6 +17,8 @@
  *
  */
 
+#include "pan/general/article_number.h"
+#include "pan/usenet-utils/numbers.h"
 #include <SQLiteCpp/Statement.h>
 #include <cerrno>
 #include <cmath>
@@ -218,6 +220,7 @@ void DataImpl ::ref_group(Quark const &group)
 
     if (!migrated) {
       migrate_headers(*_data_io, group);
+      migrate_read_ranges(group);
 
       SQLite::Statement set_q(pan_db, "update `group` set migrated = True where name = ?");
       set_q.bind(1, group.c_str());
@@ -805,6 +808,64 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         / (fabs(seconds) < 0.001 ? 0.001 : seconds));
   }
 }
+
+void DataImpl ::migrate_read_ranges(Quark const &group) {
+  // for each serveur containing this group:
+  //  foreach article in  read-range
+  //     mark article as read
+
+  LOG4CXX_INFO(_db_logger,  "Migrating articles read status of group " << group.c_str()
+               << " in DB.");
+
+  SQLite::Statement read_group_q(pan_db, R"SQL(
+    select s.id, g.id, read_ranges
+      from `group` as g join server as s, server_group as sg
+      where s.id == sg.server_id and g.id == sg.group_id
+            and s.host != "local"
+            and g.name = ?
+)SQL");
+
+  SQLite::Statement get_articles_q(pan_db, R"SQL(
+    select a.id, number
+      from `article` as a join article_xref as xr
+      where a.id == xr.article_id and xr.server_id = ? and  xr.group_id = ?
+)SQL");
+
+  SQLite::Statement set_articles_as_read(pan_db, R"SQL(
+    update `article` set is_read = True where id == ?
+)SQL");
+
+  int server_id, group_id, article_id, article_count(0), read_count(0);
+  Numbers ranges;
+
+  read_group_q.bind(1,group.c_str());
+
+  while(read_group_q.executeStep()) {
+    server_id = read_group_q.getColumn(0);
+    group_id = read_group_q.getColumn(1);
+    ranges.clear();
+    ranges.mark_str( read_group_q.getColumn(2).getText() );
+
+    get_articles_q.reset();
+    get_articles_q.bind(1, server_id);
+    get_articles_q.bind(2, group_id);
+    while (get_articles_q.executeStep()) {
+      article_id = get_articles_q.getColumn(0);
+      Article_Number article_nb( get_articles_q.getColumn(1).getInt64());
+      article_count++;
+      if (ranges.is_marked(article_nb)) {
+        set_articles_as_read.reset();
+        set_articles_as_read.bind(1, article_id);
+        int res = set_articles_as_read.exec();
+        assert(res == 1);
+        read_count++;
+      }
+    }
+  }
+
+  LOG4CXX_INFO(_db_logger, "Marked " << read_count << " articles as read (out of " << article_count << " articles)" );
+}
+
 
 void DataImpl ::load_headers_from_db(Quark const &group) {
   TimeElapsed timer;
