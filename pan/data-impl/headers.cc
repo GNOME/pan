@@ -1379,6 +1379,10 @@ void DataImpl ::mark_read(Article const **articles,
   typedef std::map<Quark, quarks_t> group_to_changed_mids_t;
   group_to_changed_mids_t group_to_changed_mids;
 
+  SQLite::Statement set_read_q(pan_db, R"SQL(
+    update `article` set is_read = ? where message_id = ?
+)SQL");
+
   // set them to `read'...
   for (Article const **it(articles), **end(articles + article_count); it != end;
        ++it)
@@ -1386,6 +1390,12 @@ void DataImpl ::mark_read(Article const **articles,
     Article const *article(*it);
     foreach_const (Xref, article->xref, xit)
     {
+      set_read_q.reset();
+      set_read_q.bind(1, read);
+      set_read_q.bindNoCopy(2, article->message_id.c_str());
+      assert(set_read_q.exec() == 1);
+      LOG4CXX_TRACE(logger,  "Setting read status of article " << article->message_id << " to " << read);
+
       bool const old_state(_read_groups[xit->group][xit->server]._read.mark_one(
         xit->number, read));
       if (! old_state != ! read)

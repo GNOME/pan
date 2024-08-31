@@ -17,6 +17,8 @@ create table if not exists article (
   foreign key(author_id) references author (id) on delete restrict
 );
 
+create unique index if not exists article_message_id on `article` (message_id);
+
 create table if not exists author (
   id integer primary key asc autoincrement,
   author text not null unique
