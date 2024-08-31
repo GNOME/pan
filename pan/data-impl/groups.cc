@@ -28,6 +28,7 @@
 #include <SQLiteCpp/Transaction.h>
 #include <config.h>
 #include <cassert>
+#include <cstdint>
 #include <iostream>
 #include <log4cxx/logger.h>
 #include <map>
@@ -1111,18 +1112,36 @@ void DataImpl ::save_group_descriptions_in_db(NewGroup const *newgroups, int cou
   LOG4CXX_DEBUG(logger, "saved " << desc_count << " group descriptions in DB ");
 }
 
-void
-DataImpl :: get_group_counts (const Quark   & groupname,
-                              Article_Count & unread_count,
-                              Article_Count & article_count) const
+void DataImpl ::get_group_counts(Quark const &groupname,
+                                 Article_Count &unread_count,
+                                 Article_Count &article_count) const
 {
-  const ReadGroup * g (find_read_group (groupname));
-  if (!g)
-    unread_count = article_count = static_cast<Article_Count>(0ul);
-  else {
-    unread_count = g->_unread_count;
-    article_count = g->_article_count;
-  }
+  TimeElapsed timer;
+
+  SQLite::Statement article_count_q(pan_db, R"SQL(
+    select count() from `article_group` as ag
+    join `group` as g on g.id == ag.group_id
+      where g.name = ?
+  )SQL");
+
+  SQLite::Statement unread_count_q(pan_db, R"SQL(
+    select count() from `article` as a
+    join `article_group` as ag on a.id == ag.article_id
+    join `group` as g on g.id == ag.group_id
+      where g.name = ? and is_read = False
+  )SQL");
+
+  article_count_q.bind(1, groupname.c_str());
+  while (article_count_q.executeStep())
+    article_count = Article_Count(article_count_q.getColumn(0).getInt64());
+
+  unread_count_q.bind(1, groupname.c_str());
+  while (unread_count_q.executeStep())
+    unread_count = Article_Count(unread_count_q.getColumn(0).getInt64());
+
+  LOG4CXX_TRACE(logger, "Counted " << article_count << " articles (" << unread_count
+                << " unread) in group " << groupname.c_str()
+                << " in " << timer.get_seconds_elapsed() << "s.");
 }
 
 char
