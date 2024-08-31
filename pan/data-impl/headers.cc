@@ -25,6 +25,7 @@
 #include <cmath>
 #include <config.h>
 #include <cstdint>
+#include <cstdlib>
 #include <fstream>
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -1432,21 +1433,20 @@ void DataImpl ::mark_read(Article const **articles,
 
 bool DataImpl ::is_read(Article const *a) const
 {
-  // if it's read on any server, the whole thing is read.
-  if (a != nullptr)
-  {
-    foreach_const (Xref, a->xref, xit)
-    {
-      ReadGroup::Server const *rgs(
-        find_read_group_server(xit->group, xit->server));
-      if (rgs && rgs->_read.is_marked(xit->number))
-      {
-        return true;
-      }
-    }
+  SQLite::Statement is_read_q(pan_db, R"SQL(
+    select is_read from `article` where message_id = ?
+  )SQL");
+
+  is_read_q.bind(1, a->message_id.c_str());
+  while (is_read_q.executeStep()) {
+    return is_read_q.getColumn(0).getInt() == 1;
   }
 
-  return false;
+  // article was not found, bail out
+  LOG4CXX_FATAL(logger, "Article not found in DB "
+                << a->message_id.c_str() << " '" << a->subject.c_str() <<"'");
+  // trigger a core dump so the pb can be debugged
+  assert(0);
 }
 
 void DataImpl ::get_article_scores(Quark const &group,
