@@ -31,6 +31,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/VariadicBind.h>
 
+#include "pan/general/log4cxx.h"
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/memchunk.h>
@@ -40,7 +41,6 @@
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 #include <pan/data/encode-cache.h>
-#include "pan/general/log4cxx.h"
 #include <pan/general/macros.h>
 #include <pan/general/map-vector.h>
 #include <pan/general/quark.h>
@@ -225,7 +225,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   public: // accessors
     quarks_t get_servers() const override;
-    quarks_t get_server_ids_from_db () const;
+    quarks_t get_server_ids_from_db() const;
 
     bool get_server_auth(Quark const &server,
                          std::string &setme_username,
@@ -391,9 +391,11 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void migrate_newsrc_files(DataIO const &);
     void load_groups_from_db();
     void save_all_server_groups_in_db();
-    void save_new_groups_in_db(Quark const &server_pan_id, NewGroup const *newgroups, int count);
+    void save_new_groups_in_db(Quark const &server_pan_id,
+                               NewGroup const *newgroups,
+                               int count);
     void save_group_in_db(Quark const &server_name);
-    void save_group_descriptions_in_db (NewGroup const *new_groups, int count);
+    void save_group_descriptions_in_db(NewGroup const *new_groups, int count);
 
   public: // mutators
     void add_groups(Quark const &server,
