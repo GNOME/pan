@@ -36,68 +36,70 @@ using namespace pan;
 
 namespace
 {
-  bool parse_multipart_subject (const StringView   & subj,
-                                int                & part,
-                                int                & parts,
-                                std::string        & no_part)
+bool parse_multipart_subject(StringView const &subj,
+                             int &part,
+                             int &parts,
+                             std::string &no_part)
+{
+  char const *numerator = nullptr;
+  char const *denominator = nullptr;
+
+  char const *s(subj.begin());
+  char const *pch(subj.end());
+  while (pch != s)
   {
-    const char * numerator = nullptr;
-    const char * denominator = nullptr;
+    // find the ']' of [n/N]
+    --pch;
+    if ((pch[1] != ')' && pch[1] != ']') || ! isdigit(*pch))
+      continue;
 
-    const char * s (subj.begin());
-    const char * pch (subj.end());
-    while (pch != s)
+    // find the '/' of [n/N]
+    while (s != pch && isdigit(*pch))
+      --pch;
+    if (s == pch || (*pch != '/' && *pch != '|'))
+      continue;
+
+    // N -> parts
+    denominator = pch + 1;
+    --pch;
+
+    // find the '[' of [n/N]
+    while (s != pch && isdigit(*pch))
+      --pch;
+    if (s == pch || (*pch != '(' && *pch != '['))
     {
-      // find the ']' of [n/N]
-      --pch;
-      if ((pch[1]!=')' && pch[1]!=']') || !isdigit(*pch))
-        continue;
-
-      // find the '/' of [n/N]
-      while (s!=pch && isdigit(*pch))
-        --pch;
-      if (s==pch || (*pch!='/' && *pch!='|'))
-        continue;
-
-      // N -> parts
-      denominator = pch+1;
-      --pch;
-
-      // find the '[' of [n/N]
-      while (s!=pch && isdigit(*pch))
-        --pch;
-      if (s==pch || (*pch!='(' && *pch!='[')) {
-        denominator = nullptr;
-        continue;
-      }
-
-      // N -> part
-      numerator = pch+1;
-      char * numerator_end (nullptr);
-      part = (int) strtol (numerator, &numerator_end, 10);
-      parts = atoi (denominator);
-
-      if (part > parts) {
-        // false positive...
-        numerator = denominator = nullptr;
-        part = parts = 0;
-        continue;
-      }
-
-      no_part.assign (subj.str, numerator-subj.str);
-      no_part.append (numerator_end, (subj.str+subj.len)-numerator_end);
-      return true;
+      denominator = nullptr;
+      continue;
     }
 
-    return false;
+    // N -> part
+    numerator = pch + 1;
+    char *numerator_end(nullptr);
+    part = (int)strtol(numerator, &numerator_end, 10);
+    parts = atoi(denominator);
+
+    if (part > parts)
+    {
+      // false positive...
+      numerator = denominator = nullptr;
+      part = parts = 0;
+      continue;
+    }
+
+    no_part.assign(subj.str, numerator - subj.str);
+    no_part.append(numerator_end, (subj.str + subj.len) - numerator_end);
+    return true;
   }
 
-  void find_parts (const StringView   & subj,
-                   const Quark        & group,
-                   int                  line_count,
-                   int                & part,
-                   int                & parts,
-                   std::string        & norm)
+  return false;
+  }
+
+  void find_parts(StringView const &subj,
+                  Quark const &group,
+                  int line_count,
+                  int &part,
+                  int &parts,
+                  std::string &norm)
   {
     if (!parse_multipart_subject (subj, part, parts, norm))
     {
@@ -137,8 +139,7 @@ namespace
   }
 }
 
-void
-DataImpl :: xover_clear_workarea (const Quark& group)
+void DataImpl ::xover_clear_workarea(Quark const &group)
 {
    pan_debug ("Clearing the XOVER workearea for " << group);
 
@@ -149,8 +150,7 @@ DataImpl :: xover_clear_workarea (const Quark& group)
    }
 }
 
-DataImpl :: XOverEntry&
-DataImpl :: xover_get_workarea (const Quark& group)
+DataImpl ::XOverEntry &DataImpl ::xover_get_workarea(Quark const &group)
 {
    XOverEntry * entry (nullptr);
    if (group == _cached_xover_group)
@@ -162,8 +162,7 @@ DataImpl :: xover_get_workarea (const Quark& group)
    return *entry;
 }
 
-void
-DataImpl :: xover_ref (const Quark& group)
+void DataImpl ::xover_ref(Quark const &group)
 {
   // sanity clause
   pan_return_if_fail (!group.empty());
@@ -178,15 +177,15 @@ DataImpl :: xover_ref (const Quark& group)
   // populate the normalized lookup for multipart detection...
   GroupHeaders * h (get_group_headers (group));
   foreach_const (nodes_t, h->_nodes, it) {
-    const Quark& mid (it->first);
-    const Article * a (it->second->_article);
-    if (a != nullptr)
-      workarea._subject_lookup.insert (std::pair<Quark,Quark>(a->subject,mid));
+      Quark const &mid(it->first);
+      Article const *a(it->second->_article);
+      if (a != nullptr)
+        workarea._subject_lookup.insert(
+          std::pair<Quark, Quark>(a->subject, mid));
   }
 }
 
-void
-DataImpl :: xover_flush (const Quark& group)
+void DataImpl ::xover_flush(Quark const &group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
 
@@ -197,8 +196,7 @@ DataImpl :: xover_flush (const Quark& group)
   workarea._last_flush_time = time(nullptr);
 }
 
-void
-DataImpl :: xover_unref (const Quark& group)
+void DataImpl ::xover_unref(Quark const &group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
   if (!--workarea.refcount)
@@ -210,29 +208,26 @@ DataImpl :: xover_unref (const Quark& group)
   unref_group (group);
 }
 
-
-void
-DataImpl :: set_xover_low (const Quark   & group,
-                           const Quark   & server,
-                           const Article_Number   low)
+void DataImpl ::set_xover_low(Quark const &group,
+                              Quark const &server,
+                              const Article_Number low)
 {
   ReadGroup::Server * rgs (find_read_group_server (group, server));
   if (rgs != nullptr)
     rgs->_read.mark_range (static_cast<Article_Number>(0), low, true);
 }
 
-const Article*
-DataImpl :: xover_add (const Quark         & server,
-                       const Quark         & group,
-                       const StringView    & subject,
-                       const StringView    & author,
-                       const time_t          time_posted,
-                       const StringView    & message_id,
-                       const StringView    & references_in,
-                       const unsigned long   byte_count,
-                       const unsigned long   line_count,
-                       const StringView    & xref,
-                       const bool            is_virtual)
+Article const *DataImpl ::xover_add(Quark const &server,
+                                    Quark const &group,
+                                    StringView const &subject,
+                                    StringView const &author,
+                                    const time_t time_posted,
+                                    StringView const &message_id,
+                                    StringView const &references_in,
+                                    unsigned long const byte_count,
+                                    unsigned long const line_count,
+                                    StringView const &xref,
+                                    bool const is_virtual)
 {
   if (is_virtual)
     ref_group(group);
@@ -248,7 +243,7 @@ DataImpl :: xover_add (const Quark         & server,
 
 //  std::cerr<<"xover add : "<<subject<<" "<<author<<" "<<message_id<<" lines "<<line_count<<" bytes "<<byte_count<<std::endl;
 
-  const Article* new_article (nullptr);
+  Article const *new_article(nullptr);
 
   XOverEntry& workarea (xover_get_workarea (group));
   const std::string references (
@@ -275,12 +270,11 @@ DataImpl :: xover_add (const Quark         & server,
     typedef XOverEntry::subject_to_mid_t::const_iterator cit;
     const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject_quark));
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
-      const Quark& candidate_mid (it->second);
-      const Article* candidate (h->find_article (candidate_mid));
-      if (candidate
-          && (candidate->author == author)
-          && ((int)candidate->get_total_part_count() == part_count))
-        art_mid = candidate_mid;
+        Quark const &candidate_mid(it->second);
+        Article const *candidate(h->find_article(candidate_mid));
+        if (candidate && (candidate->author == author)
+            && ((int)candidate->get_total_part_count() == part_count))
+          art_mid = candidate_mid;
     }
   }
 
@@ -316,7 +310,7 @@ DataImpl :: xover_add (const Quark         & server,
   **/
 
   {
-    const int number (part_count<2 ? 1 : part_index);
+    int const number(part_count < 2 ? 1 : part_index);
     load_part (group, art_mid,
                number, message_id,
                line_count, byte_count);
