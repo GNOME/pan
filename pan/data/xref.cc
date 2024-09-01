@@ -17,122 +17,134 @@
  *
  */
 
+#include "xref.h"
 #include <config.h>
 #include <glib.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/string-view.h>
-#include "xref.h"
 
 using namespace pan;
 
-void
-Xref :: insert (const Quark             & server,
-                const StringView        & line)
+void Xref ::insert(Quark const &server, StringView const &line)
 {
-  pan_return_if_fail (!server.empty());
+  pan_return_if_fail(! server.empty());
 
   // trim & cleanup; remove leading "Xref: " if present
-  StringView xref (line);
-  xref.trim ();
-  if (xref.len>6 && !memcmp(xref.str,"Xref: ",6)) {
-    xref = xref.substr (xref.str+6, NULL);
-    xref.trim ();
+  StringView xref(line);
+  xref.trim();
+  if (xref.len > 6 && ! memcmp(xref.str, "Xref: ", 6))
+  {
+    xref = xref.substr(xref.str + 6, NULL);
+    xref.trim();
   }
 
   // walk through the xrefs, of format "group1:number group2:number"
-  targets.reserve (targets.size() + std::count(xref.begin(), xref.end(), ':'));
+  targets.reserve(targets.size() + std::count(xref.begin(), xref.end(), ':'));
   StringView s;
-  while (xref.pop_token (s)) {
-    if (s.strchr (':') != nullptr) {
+  while (xref.pop_token(s))
+  {
+    if (s.strchr(':') != nullptr)
+    {
       StringView group_name;
-      if (s.pop_token(group_name, ':')) {
+      if (s.pop_token(group_name, ':'))
+      {
         Target t;
         t.server = server;
         t.group = group_name;
         t.number = Article_Number(s);
-        targets.get_container().push_back (t);
+        targets.get_container().push_back(t);
       }
     }
   }
 
-  targets.sort ();
+  targets.sort();
 }
 
-void
-Xref :: remove_server (const Quark& server)
+void Xref ::remove_server(Quark const &server)
 {
   std::vector<Target> t;
-  t.reserve (targets.size());
+  t.reserve(targets.size());
   foreach_const (targets_t, targets, it)
+  {
     if (it->server != server)
-      t.push_back (*it);
-  targets.get_container().swap (t);
+    {
+      t.push_back(*it);
+    }
+  }
+  targets.get_container().swap(t);
 }
 
-void
-Xref :: remove_targets_less_than (const Quark    & server,
-                                  const Quark    & group,
-                                  Article_Number   n)
+void Xref ::remove_targets_less_than(Quark const &server,
+                                     Quark const &group,
+                                     Article_Number n)
 {
   std::vector<Target> t;
-  t.reserve (targets.size());
+  t.reserve(targets.size());
   foreach_const (targets_t, targets, it)
-    if (it->server!=server || it->group!=group || it->number>=n)
-      t.push_back (*it);
-  targets.get_container().swap (t);
+  {
+    if (it->server != server || it->group != group || it->number >= n)
+    {
+      t.push_back(*it);
+    }
+  }
+  targets.get_container().swap(t);
 }
 
-namespace
+namespace {
+// targets are equal if their servers are equal.
+// this works because servers are the primary key in Target::operator< (const
+// Target)
+struct TargetServerStrictWeakOrdering
 {
-  // targets are equal if their servers are equal.
-  // this works because servers are the primary key in Target::operator< (const Target)
-  struct TargetServerStrictWeakOrdering {
-    bool operator()(const Xref::Target& a, const Xref::Target& b) const {
+    bool operator()(Xref::Target const &a, Xref::Target const &b) const
+    {
       return a.server < b.server;
     }
-  };
-}
+};
+} // namespace
 
-bool
-Xref :: has_server (const Quark  & server) const
+bool Xref ::has_server(Quark const &server) const
 {
   Target tmp;
   tmp.server = server;
-  return std::binary_search (targets.begin(), targets.end(), tmp, TargetServerStrictWeakOrdering());
+  return std::binary_search(
+    targets.begin(), targets.end(), tmp, TargetServerStrictWeakOrdering());
 }
 
-bool
-Xref :: find (const Quark    & server,
-              Quark          & setme_group,
-              Article_Number & setme_number) const
+bool Xref ::find(Quark const &server,
+                 Quark &setme_group,
+                 Article_Number &setme_number) const
 {
   Target tmp;
   tmp.server = server;
-  const_iterator it (std::lower_bound (targets.begin(), targets.end(), tmp, TargetServerStrictWeakOrdering()));
-  const bool found (it != targets.end());
-  if (found) {
+  const_iterator it(std::lower_bound(
+    targets.begin(), targets.end(), tmp, TargetServerStrictWeakOrdering()));
+  bool const found(it != targets.end());
+  if (found)
+  {
     setme_group = it->group;
     setme_number = it->number;
   }
   return found;
 }
 
-Article_Number
-Xref :: find_number (const Quark    & server,
-                     const Quark    & group) const
+Article_Number Xref ::find_number(Quark const &server, Quark const &group) const
 {
   Target tmp;
   tmp.server = server;
   tmp.group = group;
-  const_iterator it (targets.lower_bound (tmp));
-  return it!=targets.end() && it->server==server && it->group==group ? it->number : static_cast<Article_Number>(0ull);
+  const_iterator it(targets.lower_bound(tmp));
+  return it != targets.end() && it->server == server && it->group == group ?
+           it->number :
+           static_cast<Article_Number>(0ull);
 }
 
-void
-Xref :: get_servers (quarks_t & addme) const
+void Xref ::get_servers(quarks_t &addme) const
 {
   foreach_const (targets_t, targets, it)
-    addme.insert (it->server);
+  {
+    addme.insert(it->server);
+  }
 }
