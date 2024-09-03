@@ -49,9 +49,10 @@ log4cxx::LoggerPtr getLogger(std::string const &name)
           outfile
             << "# Other loggers will come and should be listed in README.org"
             << std::endl;
-          outfile << "log4j.logger.server=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.group=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.header=DEBUG, A1" << std::endl;
+          outfile << "log4j.logger.server=DEBUG, A1" << std::endl;
+          outfile << "log4j.logger.xover=DEBUG, A1" << std::endl;
         }
         if (PropertyConfigurator::configure(filename)
             == spi::ConfigurationStatus::NotConfigured) {
