@@ -1144,15 +1144,19 @@ void DataImpl ::get_group_counts(Quark const &groupname,
                 << " in " << timer.get_seconds_elapsed() << "s.");
 }
 
-char
-DataImpl :: get_group_permission (const Quark & group) const
+char DataImpl ::get_group_permission(Quark const &group) const
 {
-  if (_moderated.count (group))
-    return 'm';
-  else if (_nopost.count (group))
-    return 'n';
-  else
-    return 'y';
+  SQLite::Statement query(pan_db, "select permission from `group` where name = ?");
+  query.bind(group.c_str());
+
+  char const *perm = nullptr;
+  while (query.executeStep()) {
+    perm = query.getColumn(0).getText();
+  }
+  assert(perm != nullptr);
+  LOG4CXX_TRACE(logger, "got permission " << *perm << " for group " << group.c_str());
+  // return only the first character
+  return perm[0];
 }
 
 void
