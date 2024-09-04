@@ -269,12 +269,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     groups_t _moderated; // groups which are moderated
     groups_t _nopost;    // groups which do not allow posting
 
-    typedef sorted_vector<Quark, true, AlphabeticalQuarkOrdering>
-      alpha_groups_t;
-    alpha_groups_t _subscribed; // subscribed groups, sorted alphabetically
-    alpha_groups_t
-      _unsubscribed; // non-subscribed groups, sorted alphabetically
-
     /**
      * Represents a newsgroup that's been read.
      *

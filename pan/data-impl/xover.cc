@@ -313,7 +313,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
     if (part_count > 1)
       workarea._subject_lookup.insert(std::pair<Quark,Quark>(multipart_subject_quark, art_mid));
 
-    // if we don't already have this article...
+    // if we don't already have this article in memory...
     if (!h->find_article (art_mid))
     {
       //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
@@ -329,7 +329,19 @@ Article const *DataImpl ::xover_add(Quark const &server,
       new_article = &a;
 
       workarea._added_batch.insert (art_mid);
+    }
 
+    SQLite::Statement search_article_q(pan_db, R"SQL(
+        select count() from `article` where message_id = ?
+    )SQL");
+
+    search_article_q.bind(1, art_mid);
+    int count(0);
+    while (search_article_q.executeStep()) {
+      count = search_article_q.getColumn(0);
+    }
+    // if we don't have this article in DB
+    if (count == 0) {
       // Create author
       SQLite::Statement set_author_q(pan_db, R"SQL(
         insert into `author` (author) values (?) on conflict do nothing

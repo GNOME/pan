@@ -226,12 +226,7 @@ void DataImpl ::add_group_in_db(Quark const &server_pan_id, Quark const &group) 
 }
 
 void DataImpl ::load_groups_from_db() {
-  alpha_groups_t& s(_subscribed);
-  alpha_groups_t& u(_unsubscribed);
   StringView line, name, numbers;
-
-  s.clear ();
-  u.clear ();
 
   // sqlitebrowser returns 110k groups in 210ms (57 without ordering)
   SQLite::Statement read_group_q(pan_db,R"SQL(
@@ -265,41 +260,9 @@ void DataImpl ::load_groups_from_db() {
         _read_groups[group][server]._read.mark_str (numbers);
 
     }
-    LOG4CXX_INFO(logger, "Loaded " << i << " groups from server with pan_id " << server.c_str() << " from DB in "
-                 << timer.get_seconds_elapsed() << "s.");
+    LOG4CXX_DEBUG(logger, "Loaded " << i << " groups from server with pan_id " << server.c_str() << " from DB in "
+                  << timer.get_seconds_elapsed() << "s.");
   }
-
-  TimeElapsed timer;
-
-  SQLite::Statement group_q(pan_db, R"SQL(
-    select name from `group` as g join server_group as sg
-      where g.subscribed == ? and g.id = sg.group_id and sg.server_id != (select id from `server` where host = "local")
-      order by name asc;
-)SQL" );
-
-  // load subcribed groups
-  int s_count = 0;
-  group_q.bind(1,true);
-  while (group_q.executeStep()) {
-    name = group_q.getColumn(0).getText();
-    s.insert(name);
-    s_count++;
-  }
-  LOG4CXX_DEBUG(logger, "loaded " << s_count << " subscribed groups from DB");
-
-  // load unsubcribed groups
-  int u_count = 0;
-  group_q.reset();
-  group_q.bind(1,false);
-  while (group_q.executeStep()) {
-    name = group_q.getColumn(0).getText();
-    u.insert(name);
-    u_count ++;
-  }
-  LOG4CXX_DEBUG(logger,"loaded " << u_count << " unsubscribed groups from DB");
-
-  LOG4CXX_INFO(logger, "Loaded " << s_count + u_count << " group subscription info from DB in "
-               << timer.get_seconds_elapsed() << "s." );
   fire_grouplist_rebuilt ();
 }
 
@@ -438,8 +401,6 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
 void DataImpl::save_group_in_db(Quark const &server_name) {
   TimeElapsed timer;
   std::string newsrc_string;
-  alpha_groups_t::const_iterator sub_it(_subscribed.begin());
-  const alpha_groups_t::const_iterator sub_end(_subscribed.end());
   Server const *server = find_server(server_name);
 
   LOG4CXX_INFO(logger, "Saving groups of server " << server->host << " in DB...") ;
@@ -455,11 +416,6 @@ void DataImpl::save_group_in_db(Quark const &server_name) {
   while (get_id_q.executeStep()) {
     server_id = get_id_q.getColumn(0);
   }
-
-  std::stringstream group_st;
-  group_st << "insert into `group` (name, subscribed) values ($name, $subscribed) "
-           << "on conflict (name) do update set subscribed = $subscribed ;";
-  SQLite::Statement group_q(pan_db, group_st.str());
 
   std::stringstream link_st;
   link_st << "with ids(gid) as (select id from `group` where name = $gname) "
@@ -478,15 +434,6 @@ void DataImpl::save_group_in_db(Quark const &server_name) {
   int count = 0;
   foreach_const (Server::groups_t, server->groups, group_iter) {
     Quark const &group(*group_iter);
-
-    while (sub_it!=sub_end && o (*sub_it, group)) ++sub_it; // see comment for 'o' above
-    bool const subscribed(sub_it != sub_end && *sub_it == group);
-
-    // insert or update group
-    group_q.reset();
-    group_q.bind(1,group.c_str() );
-    group_q.bind(2,subscribed);
-    group_q.exec();
 
     // if the group's been read, save its read number ranges...
     ReadGroup::Server const *rgs(find_read_group_server(group, server_name));
@@ -953,19 +900,7 @@ void DataImpl ::add_groups(Quark const &server,
     // make a groups_t of groups we didn't already have,
     // and merge it with _unsubscribed (i.e., groups we haven't seen before become unsubscribed)
     groups.clear ();
-    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
-         ++it)
-    {
-      if (!_subscribed.count (it->group))
-        groups.get_container().push_back(it->group);
-    }
-    groups.sort ();
     tmp.clear ();
-    std::set_union (groups.begin(), groups.end(),
-                    _unsubscribed.begin(), _unsubscribed.end(),
-                    std::back_inserter (tmp), o);
-    tmp.erase (std::unique(tmp.begin(), tmp.end()), tmp.end());
-    _unsubscribed.get_container().swap (tmp);
   }
 
   {
@@ -1041,13 +976,13 @@ void DataImpl ::mark_group_read(Quark const &groupname)
 
 void DataImpl ::set_group_subscribed(Quark const &group, bool subscribed)
 {
-  if (subscribed) {
-    _unsubscribed.erase (group);
-    _subscribed.insert (group);
-  } else {
-    _subscribed.erase (group);
-    _unsubscribed.insert (group);
-  }
+  SQLite::Statement set_subscribed_q(pan_db, R"SQL(
+    update `group` set subscribed = ? where name = ?
+  )SQL");
+  set_subscribed_q.bind(1, subscribed);
+  set_subscribed_q.bind(2, group.c_str());
+  int res = set_subscribed_q.exec();
+  assert(res ==1);
 
   fire_group_subscribe (group, subscribed);
 }
@@ -1159,18 +1094,17 @@ char DataImpl ::get_group_permission(Quark const &group) const
   return perm[0];
 }
 
-void
-DataImpl :: group_get_servers (const Quark& groupname, quarks_t& addme) const
+void DataImpl ::group_get_servers(Quark const &groupname, quarks_t &addme) const
 {
   foreach_const (servers_t, _servers, it)
     if (it->second.groups.count (groupname))
       addme.insert (it->first);
 }
 
-void
-DataImpl :: server_get_groups (const Quark& servername, quarks_t& addme) const
+void DataImpl ::server_get_groups(Quark const &servername,
+                                  quarks_t &addme) const
 {
-  const Server * server (find_server (servername));
+  Server const *server(find_server(servername));
   if (server)
     addme.insert (server->groups.begin(), server->groups.end());
 }
@@ -1178,11 +1112,31 @@ DataImpl :: server_get_groups (const Quark& servername, quarks_t& addme) const
 void
 DataImpl :: get_subscribed_groups (std::vector<Quark>& setme) const
 {
-  setme.assign (_subscribed.begin(), _subscribed.end());
+  TimeElapsed timer;
+  SQLite::Statement q(pan_db, R"SQL(
+    select name from `group` where subscribed = True
+  )SQL");
+
+  while(q.executeStep()) {
+    setme.push_back(Quark(q.getColumn(0).getText()));
+  }
+
+  LOG4CXX_TRACE(logger, "Found " << setme.size() << " subscribed groups in " <<
+                timer.get_seconds_elapsed() << "s.");
 }
 
 void
 DataImpl :: get_other_groups (std::vector<Quark>& setme) const
 {
-  setme.assign (_unsubscribed.begin(), _unsubscribed.end());
+  TimeElapsed timer;
+  SQLite::Statement q(pan_db, R"SQL(
+    select name from `group` where subscribed = False
+  )SQL");
+
+  while(q.executeStep()) {
+    setme.push_back(Quark(q.getColumn(0).getText()));
+  }
+
+  LOG4CXX_TRACE(logger, "Found " << setme.size() << " unsubscribed groups in " <<
+                timer.get_seconds_elapsed() << "s.");
 }
