@@ -468,7 +468,7 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
   const bool compression_enabled(comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO || comp == HEADER_COMPRESS_XFEATURE);
   bool fail (false);
 
-  if (compression_enabled && atoi(response.str) == 0)
+  if (health == OK && compression_enabled && atoi(response.str) == 0)
   {
     std::stringstream* buffer(nullptr);
     std::stringstream out, out2;
