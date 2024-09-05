@@ -159,8 +159,7 @@ DataImpl :: rebuild_backend ()
     rebuild_server_data();
     rebuild_group_data();
     rebuild_group_xover_data();
-
-    load_group_permissions (*_data_io);
+    rebuild_group_permission_data();
 
     rebuild_group_description_data();
 
@@ -229,6 +228,26 @@ void DataImpl ::rebuild_group_description_data()
     // migrate group descriptions into DB
     migrate_group_descriptions(*_data_io);
   }
+}
+
+void DataImpl ::rebuild_group_permission_data()
+{
+  // check if DB contains group descriptions
+  SQLite::Statement group_perm_q(
+    pan_db, "select count() from `group` where permission != 'y';");
+  int count = 0;
+  while (group_perm_q.executeStep())
+  {
+    count = group_perm_q.getColumn(0);
+  }
+
+  if (count == 0)
+  {
+    // migrate group permissions into DB
+    migrate_group_permissions(*_data_io);
+  }
+
+  load_group_permissions ();
 }
 
 void DataImpl ::rebuild_group_xover_data()

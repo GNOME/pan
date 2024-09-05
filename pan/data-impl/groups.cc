@@ -399,12 +399,19 @@ DataImpl :: save_all_server_groups_in_db ()
 ****
 ***/
 
-void DataImpl ::load_group_permissions(DataIO const &data_io)
+void DataImpl ::migrate_group_permissions(DataIO const &data_io)
 {
-  std::vector<Quark> m, n;
-
+  TimeElapsed timer;
   LineReader * in (data_io.read_group_permissions ());
   StringView s, line;
+
+  SQLite::Statement save_perm_q(pan_db, "update `group` set permission = ? where name == ?");
+
+  // speed insert up -- from minutes to seconds
+  // see https://www.sqlite.org/pragma.html#pragma_synchronous
+  pan_db.exec("pragma synchronous = off");
+
+  int count = 0;
   while (in && !in->fail() && in->getline(line))
   {
     if (line.len && *line.str=='#')
@@ -416,48 +423,85 @@ void DataImpl ::load_group_permissions(DataIO const &data_io)
     }
 
     const Quark group (line);
-    char const ch = *s.str;
-
-    if (ch == 'm')
-      m.push_back (group);
-    else if (ch == 'n')
-      n.push_back (group);
+    const Quark perm (s);
+    save_perm_q.reset();
+    save_perm_q.bind(1,perm);
+    save_perm_q.bind(2,group);
+    save_perm_q.exec();
+    count ++;
   }
 
-  std::sort (m.begin(), m.end());
-  m.erase (std::unique(m.begin(), m.end()), m.end());
-  _moderated.get_container().swap (m);
+  pan_db.exec("pragma synchronous = normal");
 
-  std::sort (n.begin(), n.end());
-  n.erase (std::unique(n.begin(), n.end()), n.end());
-  _nopost.get_container().swap (n);
+  LOG4CXX_INFO(_db_logger, "Migrated " << count << " groups permissions "
+               << "in " << timer.get_seconds_elapsed() << "s.");
 
-  delete in;
+  std::string filename (data_io.get_group_permissions_filename());
+  std::remove(filename.data());
+}
+
+void DataImpl ::load_group_permissions()
+{
+  TimeElapsed timer;
+
+  SQLite::Statement load_perm_q(pan_db, "select name, permission from `group` where permission != 'y' order by name asc ;");
+
+  int count = 0;
+  while (load_perm_q.executeStep()) {
+    const Quark group (load_perm_q.getColumn(0).getText());
+    char const *perm = load_perm_q.getColumn(1);
+
+    if (perm[0] == 'm')
+      _moderated.get_container().push_back(group);
+    else if (perm[0] == 'n')
+      _nopost.get_container().push_back (group);
+    else {
+      assert(0);
+    }
+
+    count++;
+  }
+
+  LOG4CXX_INFO(_db_logger, "Loaded " << count << " groups permissions from DB "
+               << "in " << timer.get_seconds_elapsed() << "s.");
 }
 
 void
-DataImpl :: save_group_permissions (DataIO& data_io) const
+DataImpl :: save_group_permissions_in_db ()
 {
   if (_unit_test)
     return;
 
-  std::ostream& out (*data_io.write_group_permissions ());
+  TimeElapsed timer;
+  SQLite::Statement save_perm(pan_db, "update `group` set permission = ? where name == ?");
 
-  typedef std::map<Quark, char, AlphabeticalQuarkOrdering> tmp_t;
-  tmp_t tmp;
-  foreach_const (groups_t, _moderated, it) tmp[*it] = 'm';
-  foreach_const (groups_t, _nopost, it) tmp[*it] = 'n';
+  pan_db.exec("pragma synchronous = off");
 
-  out << "# Permissions: y means posting ok; n means posting not okay; m means moderated.\n"
-      << "# Since almost all groups allow posting, Pan assumes that as the default.\n"
-      << "# Only moderated or no-posting groups are listed here.\n";
-  foreach_const (tmp_t, tmp, it) {
-    out << it->first;
-    out.put (':');
-    out << it->second;
-    out.put ('\n');
+  int count = 0;
+  int nb = 0;
+  foreach_const (groups_t, _moderated, it) {
+    save_perm.reset();
+    save_perm.bind(1,"m");
+    save_perm.bind(2,*it);
+    nb = save_perm.exec();
+    // nb zero means that the group in unknown
+    assert(nb == 1);
+    count ++;
   }
-  data_io.write_done (&out);
+
+  foreach_const (groups_t, _nopost, it) {
+    save_perm.reset();
+    save_perm.bind(1,"n");
+    save_perm.bind(2,*it);
+    nb = save_perm.exec();
+    assert(nb == 1);
+    count ++;
+  }
+
+  pan_db.exec("pragma synchronous = normal");
+
+  LOG4CXX_INFO(_db_logger, "Saved " << count << " groups permissions in DB "
+               << "in " << timer.get_seconds_elapsed() << "s.");
 }
 
 void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
@@ -825,7 +869,7 @@ void DataImpl ::add_groups(Quark const &server,
 
   save_group_descriptions_in_db(newgroups, count);
 
-  save_group_permissions (*_data_io);
+  save_group_permissions_in_db ();
   fire_grouplist_rebuilt ();
 }
 

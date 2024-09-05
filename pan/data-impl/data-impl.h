@@ -165,6 +165,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void rebuild_group_data();
     void rebuild_group_xover_data();
     void rebuild_group_description_data();
+    void rebuild_group_permission_data();
     bool const _unit_test;
     DataIO *_data_io;
     Prefs &_prefs;
@@ -382,8 +383,9 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void load_group_xovers_from_db();
     void save_group_xovers();
 
-    void load_group_permissions(DataIO const &);
-    void save_group_permissions(DataIO &) const;
+    void migrate_group_permissions(DataIO const &);
+    void load_group_permissions();
+    void save_group_permissions_in_db();
 
     std::string get_newsrc_filename(Quark const &server) const;
     void migrate_newsrc(Quark const &server, LineReader *);

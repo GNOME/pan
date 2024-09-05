@@ -7,6 +7,11 @@ create table if not exists `group` (
 
   subscribed boolean check (subscribed in (False, True)) default False,
 
+  -- n means posting not okay; m means moderated.
+  -- Since almost all groups allow posting, Pan assumes that as the default.
+  -- Only moderated or no-posting groups are listed here.
+  permission text  check (permission in ("y","n","m")) default "y",
+
   -- data extracted from newsgroup.xov, field 2
   total_article_count integer,
 
