@@ -183,6 +183,44 @@ void DataImpl ::migrate_newsrc_files(DataIO const &data_io)
   }
 }
 
+// create a minimal group in DB. Does nothing if the group exists
+void DataImpl ::add_group_in_db(StringView const &server_pan_id, StringView const &group) {
+  Quark s (server_pan_id.to_string());
+  Quark g (group.to_string());
+  add_group_in_db(s,g);
+}
+
+// create a minimal group in DB. Does nothing if the group exists
+void DataImpl ::add_group_in_db(Quark const &server_pan_id, Quark const &group) {
+  SQLite::Statement check_group_q(pan_db,"select count() from `group` where name = ?");
+
+  // check if referenced group exists
+  check_group_q.bind(1,group);
+  int count(0);
+  while (check_group_q.executeStep()) {
+    count = check_group_q.getColumn(0);
+  }
+
+  if (count == 1) {
+    return;
+  }
+
+  SQLite::Statement insert_group_q(pan_db,"insert into `group` (name) values (?)");
+  insert_group_q.bind(1,group);
+  insert_group_q.exec();
+
+  SQLite::Statement insert_group_server_q(pan_db,R"SQL(
+      insert into server_group (server_id, group_id) values (
+        (select id from `server` where pan_id = ?),
+        (select id from `group` where name = ?)
+      )
+  )SQL");
+
+  insert_group_server_q.bind(1,server_pan_id);
+  insert_group_server_q.bind(2,group);
+  insert_group_server_q.exec();
+}
+
 void DataImpl ::load_groups_from_db() {
   alpha_groups_t& s(_subscribed);
   alpha_groups_t& u(_unsubscribed);

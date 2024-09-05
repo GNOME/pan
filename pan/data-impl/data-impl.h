@@ -395,6 +395,9 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                     NewGroup const *new_groups,
                     size_t group_count) override;
 
+    void add_group_in_db(StringView const &server_pan_id, StringView const &group);
+    void add_group_in_db(Quark const &server_pan_id, Quark const &group);
+
     void mark_group_read(Quark const &group) override;
 
     void set_group_subscribed(Quark const &group, bool sub) override;
