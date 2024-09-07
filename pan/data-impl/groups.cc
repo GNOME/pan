@@ -535,7 +535,7 @@ void DataImpl ::load_group_permissions()
     char const *perm = load_perm_q.getColumn(1);
 
     if (perm[0] == 'm')
-      _moderated.get_container().push_back(group);
+      ;
     else if (perm[0] == 'n')
       _nopost.get_container().push_back (group);
     else {
@@ -562,15 +562,6 @@ DataImpl :: save_group_permissions_in_db ()
 
   int count = 0;
   int nb = 0;
-  foreach_const (groups_t, _moderated, it) {
-    save_perm.reset();
-    save_perm.bind(1,"m");
-    save_perm.bind(2,*it);
-    nb = save_perm.exec();
-    // nb zero means that the group in unknown
-    assert(nb == 1);
-    count ++;
-  }
 
   foreach_const (groups_t, _nopost, it) {
     save_perm.reset();
@@ -918,15 +909,6 @@ void DataImpl ::add_groups(Quark const &server,
     }
     mod.sort (); notmod.sort ();
     post.sort (); nopost.sort ();
-
-    // _moderated -= notmod
-    tmp.clear ();
-    std::set_difference (_moderated.begin(), _moderated.end(), notmod.begin(), notmod.end(), inserter (tmp, tmp.begin()));
-    _moderated.swap (tmp);
-    // _moderated += mod
-    tmp.clear ();
-    std::set_union (_moderated.begin(), _moderated.end(), mod.begin(), mod.end(), inserter (tmp, tmp.begin()));
-    _moderated.swap (tmp);
 
     // _nopost -= post
     tmp.clear ();
