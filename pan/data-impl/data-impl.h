@@ -266,7 +266,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
     typedef sorted_vector<Quark, true> unique_sorted_quarks_t;
     typedef sorted_vector<Quark, true> groups_t;
-    groups_t _moderated; // groups which are moderated
     groups_t _nopost;    // groups which do not allow posting
 
     /**
