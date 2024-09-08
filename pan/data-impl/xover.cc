@@ -428,6 +428,9 @@ void DataImpl ::insert_xref_in_db(Quark const &server,
       StringView group_name;
       if (s.pop_token(group_name, ':'))
       {
+        // insert group name as pseudo group if it's unknown
+        add_group_in_db(server, group_name, true);
+
         // update xref table
         set_xref_q.reset();
         set_xref_q.bind(1, msg_id.c_str());
