@@ -182,29 +182,42 @@ void DataImpl ::migrate_newsrc_files(DataIO const &data_io)
 }
 
 // create a minimal group in DB. Does nothing if the group exists
-void DataImpl ::add_group_in_db(StringView const &server_pan_id, StringView const &group) {
+void DataImpl ::add_group_in_db(StringView const &server_pan_id, StringView const &group, bool pseudo) {
   Quark s (server_pan_id.to_string());
   Quark g (group.to_string());
-  add_group_in_db(s,g);
+  add_group_in_db(s,g, pseudo);
 }
 
-// create a minimal group in DB. Does nothing if the group exists
-void DataImpl ::add_group_in_db(Quark const &server_pan_id, Quark const &group) {
-  SQLite::Statement check_group_q(pan_db,"select count() from `group` where name = ?");
+// create a minimal group in DB. Update Pseudo property if the group exists.
+void DataImpl ::add_group_in_db(Quark const &server_pan_id, Quark const &group, bool pseudo) {
+  SQLite::Statement check_group_q(pan_db,"select pseudo from `group` where name = ?");
 
   // check if referenced group exists
   check_group_q.bind(1,group);
   int count(0);
+  bool is_pseudo(false);
   while (check_group_q.executeStep()) {
-    count = check_group_q.getColumn(0);
+    is_pseudo = check_group_q.getColumn(0).getInt();
+    count++;
   }
 
   if (count == 1) {
+    if (is_pseudo && !pseudo) {
+      // the group is not pseudo after all, so reset the pseudo property of group
+      SQLite::Statement update_group_q(pan_db,
+                                       "update `group` set pseudo = False where name == ?");
+      update_group_q.bind(1,group);
+      update_group_q.exec();
+    }
+
+    // no further change is needed.
     return;
   }
 
-  SQLite::Statement insert_group_q(pan_db,"insert into `group` (name) values (?)");
+  // new group add it as a pseudo or not pseudo group
+  SQLite::Statement insert_group_q(pan_db,"insert into `group` (name, pseudo) values (?,?)");
   insert_group_q.bind(1,group);
+  insert_group_q.bind(2,pseudo);
   insert_group_q.exec();
 
   SQLite::Statement insert_group_server_q(pan_db,R"SQL(
@@ -227,7 +240,7 @@ void DataImpl ::load_groups_from_db() {
     select name, read_ranges
       from `group` as g join server as s, server_group as sg
       where s.host = ? and s.id == sg.server_id and g.id == sg.group_id
-            and s.host != "local"
+            and s.host != "local" and g.pseudo == False
       order by name asc;
 )SQL");
 
@@ -278,7 +291,7 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
   // get current list of group of this server
   SQLite::Statement get_group_ids_q(pan_db, R"SQL(
     select g.name, g.id from `group` as g join `server_group` as sg
-      where sg.group_id = g.id and sg.server_id = ?
+      where sg.group_id = g.id and sg.server_id = ? and g.pseudo == False
 )SQL");
   std::map <std::string, int> old_groups;
   get_group_ids_q.bind(1, server_id );
@@ -296,7 +309,7 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
 )SQL");
 
   SQLite::Statement store_permission_q(pan_db, R"SQL(
-    update `group` set permission = ? where name = ?;
+    update `group` set permission = ?, pseudo = False where name == ?;
 )SQL");
 
   SQLite::Statement set_desc_q(pan_db,R"SQL(
@@ -365,6 +378,7 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
   SQLite::Statement delete_group_q(pan_db, R"SQL(
     delete from `server_group`
       where server_id = ?
+        and pseudo == False
         and group_id = (select id from `group` where name = ?)
   )SQL");
 
@@ -646,7 +660,7 @@ void DataImpl ::load_group_xovers_from_db() {
   xover_st << "select name, pan_id, total_article_count, unread_article_count, xover_high "
            << "from `group` as g "
            << "join `server_group` as sg, `server` as s "
-           << "where g.id == group_id and s.id == server_id and total_article_count is not null;";
+           << "where g.id == group_id and s.id == server_id and total_article_count is not null and g.pseudo == False;";
   SQLite::Statement xover_q(pan_db, xover_st.str());
   int count(0) ;
 
@@ -987,7 +1001,7 @@ DataImpl :: get_subscribed_groups (std::vector<Quark>& setme) const
 {
   TimeElapsed timer;
   SQLite::Statement q(pan_db, R"SQL(
-    select name from `group` where subscribed = True
+    select name from `group` where subscribed = True and pseudo == False
   )SQL");
 
   while(q.executeStep()) {
@@ -1003,7 +1017,7 @@ DataImpl :: get_other_groups (std::vector<Quark>& setme) const
 {
   TimeElapsed timer;
   SQLite::Statement q(pan_db, R"SQL(
-    select name from `group` where subscribed = False
+    select name from `group` where subscribed = False and pseudo == False
   )SQL");
 
   while(q.executeStep()) {
