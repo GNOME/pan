@@ -19,14 +19,15 @@
 
 #include <config.h>
 
-extern "C" {
-  #include <ctype.h>
+extern "C"
+{
+#include <ctype.h>
 }
-#include <glib.h>
-#include <glib/gi18n.h>
 #include "debug.h"
 #include "log.h"
 #include "text-match.h"
+#include <glib.h>
+#include <glib/gi18n.h>
 
 using namespace pan;
 
@@ -39,14 +40,15 @@ using namespace pan;
 #define is_metacharacter(A) (_metacharacters[(guchar)(A)])
 #if 0
 static char _metacharacters[UCHAR_MAX];
-#define PRINT_TABLE(A) \
-	printf ("static char " #A "[UCHAR_MAX] = {"); \
-	for (i=0; i<UCHAR_MAX; ++i) { \
-		if (!(i%40)) \
-			printf ("\n\t"); \
-		printf ("%d,", A[i]); \
-	} \
-	printf ("};\n\n");
+#define PRINT_TABLE(A)                                                         \
+  printf("static char " #A "[UCHAR_MAX] = {");                                 \
+  for (i = 0; i < UCHAR_MAX; ++i)                                              \
+  {                                                                            \
+    if (! (i % 40))                                                            \
+      printf("\n\t");                                                          \
+    printf("%d,", A[i]);                                                       \
+  }                                                                            \
+  printf("};\n\n");
 static void
 build_table (void)
 {
@@ -62,89 +64,120 @@ build_table (void)
 	PRINT_TABLE(_metacharacters)
 }
 #else
-static char _metacharacters[UCHAR_MAX+1] = {
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,
-	1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+static char _metacharacters[UCHAR_MAX + 1] = {
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 #endif
 
-namespace
+namespace {
+char *regexp_unescape(char const *in)
 {
-   char*
-   regexp_unescape (const char * in)
-   {
-      char * retval = g_new (char, strlen(in)+1);
-      char * out = retval;
+  char *retval = g_new(char, strlen(in) + 1);
+  char *out = retval;
 
-      if (*in == '^')
-         ++in;
-      while (*in) {
-         if (in[0]=='\\' && is_metacharacter(in[1]))
-            ++in;
-         *out++ = *in++;
-      }
+  if (*in == '^')
+  {
+    ++in;
+  }
+  while (*in)
+  {
+    if (in[0] == '\\' && is_metacharacter(in[1]))
+    {
+      ++in;
+    }
+    *out++ = *in++;
+  }
 
-      if ((out-retval>1) && in[-1]=='$' && in[-2]!='\\')
-         --out;
-      *out = '\0';
-      return retval;
-   }
-
-   std::string
-   quote_regexp (const StringView& in)
-   {
-      std::string s;
-      for (const char *pch=in.begin(), *end=in.end(); pch!=end; ++pch) {
-         if (is_metacharacter (*pch))
-            s += '\\';
-         s += *pch;
-      }
-      return s;
-   }
-
-   /**
-    * Try to downgrade the more-expensive regexes to a cheaper type.
-    */
-   TextMatch::Type
-   get_real_match_type (const StringView& key, TextMatch::Type type)
-   {
-      bool starts_with (false);
-      bool ends_with (false);
-
-      if (key.empty())
-         return type;
-
-      // if it's not a regex, keep it
-      if (type != TextMatch::REGEX)
-         return type;
-
-      // must it be a regex?
-      for (const char * front=key.begin(), *pch=front, *end=key.end(); pch!=end; ++pch)
-         if (*pch=='\\' && is_metacharacter(pch[1]))
-            ++pch;
-         else if (*pch=='^' && pch==front)
-            starts_with = true;
-         else if (*pch=='$' && pch+1==end)
-            ends_with = true;
-         else if (is_metacharacter(*pch))
-            return TextMatch::REGEX;
-
-      if (starts_with && ends_with)
-         return TextMatch::IS;
-
-      if (starts_with)
-         return TextMatch::BEGINS_WITH;
-
-      if (ends_with)
-         return TextMatch::ENDS_WITH;
-
-      return TextMatch::CONTAINS;
-   }
+  if ((out - retval > 1) && in[-1] == '$' && in[-2] != '\\')
+  {
+    --out;
+  }
+  *out = '\0';
+  return retval;
 }
+
+std::string quote_regexp(StringView const &in)
+{
+  std::string s;
+  for (char const *pch = in.begin(), *end = in.end(); pch != end; ++pch)
+  {
+    if (is_metacharacter(*pch))
+    {
+      s += '\\';
+    }
+    s += *pch;
+  }
+  return s;
+}
+
+/**
+ * Try to downgrade the more-expensive regexes to a cheaper type.
+ */
+TextMatch::Type get_real_match_type(StringView const &key, TextMatch::Type type)
+{
+  bool starts_with(false);
+  bool ends_with(false);
+
+  if (key.empty())
+  {
+    return type;
+  }
+
+  // if it's not a regex, keep it
+  if (type != TextMatch::REGEX)
+  {
+    return type;
+  }
+
+  // must it be a regex?
+  for (char const *front = key.begin(), *pch = front, *end = key.end();
+       pch != end;
+       ++pch)
+  {
+    if (*pch == '\\' && is_metacharacter(pch[1]))
+    {
+      ++pch;
+    }
+    else if (*pch == '^' && pch == front)
+    {
+      starts_with = true;
+    }
+    else if (*pch == '$' && pch + 1 == end)
+    {
+      ends_with = true;
+    }
+    else if (is_metacharacter(*pch))
+    {
+      return TextMatch::REGEX;
+    }
+  }
+
+  if (starts_with && ends_with)
+  {
+    return TextMatch::IS;
+  }
+
+  if (starts_with)
+  {
+    return TextMatch::BEGINS_WITH;
+  }
+
+  if (ends_with)
+  {
+    return TextMatch::ENDS_WITH;
+  }
+
+  return TextMatch::CONTAINS;
+}
+} // namespace
 
 /*****
 ******
@@ -159,69 +192,76 @@ namespace
  */
 class pan::TextMatch::PcreInfo
 {
-   public:
+  public:
+    GRegex *re;
 
-      GRegex * re;
+  public:
+    PcreInfo() :
+      re(nullptr)
+    {
+    }
 
-   public:
-
-      PcreInfo (): re(nullptr) { }
-
-
-
-
-      ~PcreInfo ()
+    ~PcreInfo()
+    {
+      if (re)
       {
-         if (re)
-            g_regex_unref (re);
-       }
+        g_regex_unref(re);
+      }
+    }
 
-    public:
+  public:
+    bool set(std::string const &pattern, bool case_sensitive)
+    {
+      GRegexCompileFlags options;
 
-       bool set (const std::string&  pattern,
-                 bool                case_sensitive)
-       {
-          GRegexCompileFlags options;
+      if (case_sensitive)
+      {
+        options = (GRegexCompileFlags)0;
+      }
+      else
+      {
+        options = (GRegexCompileFlags)G_REGEX_CASELESS;
+      }
 
-          if (case_sensitive)
-            options = (GRegexCompileFlags)0;
-          else
-            options = (GRegexCompileFlags)G_REGEX_CASELESS;
+      GError *err = nullptr;
+      re = g_regex_new(pattern.c_str(), options, (GRegexMatchFlags)0, &err);
+      if (err)
+      {
+        Log::add_err_va(_("Can't use regular expression \"%s\": %s"),
+                        pattern.c_str(),
+                        err->message);
+        g_error_free(err);
+        return false;
+      }
 
-          GError * err = nullptr;
-          re = g_regex_new (pattern.c_str(), options, (GRegexMatchFlags)0, &err);
-          if (err) {
-            Log::add_err_va (_("Can't use regular expression \"%s\": %s"), pattern.c_str(), err->message);
-            g_error_free (err);
-            return false;
-          }
-
-          return true;
-       }
+      return true;
+    }
 };
 
-int
-TextMatch :: my_regexec (const StringView& text) const
+int TextMatch ::my_regexec(StringView const &text) const
 {
-   if (_pcre_state == NEED_COMPILE)
-   {
-      _pcre_info = new PcreInfo ();
+  if (_pcre_state == NEED_COMPILE)
+  {
+    _pcre_info = new PcreInfo();
 
-      if (_pcre_info->set (_impl_text, state.case_sensitive))
-         _pcre_state = COMPILED;
-      else
-         _pcre_state = ERR;
-   }
+    if (_pcre_info->set(_impl_text, state.case_sensitive))
+    {
+      _pcre_state = COMPILED;
+    }
+    else
+    {
+      _pcre_state = ERR;
+    }
+  }
 
-   return _pcre_state != COMPILED
-      ? -1
-      : g_regex_match_full (_pcre_info->re,
-                            text.str,
-                            text.len,
-                            0,
-                            G_REGEX_MATCH_NOTEMPTY,
-                            NULL,
-                            NULL);
+  return _pcre_state != COMPILED ? -1 :
+                                   g_regex_match_full(_pcre_info->re,
+                                                      text.str,
+                                                      text.len,
+                                                      0,
+                                                      G_REGEX_MATCH_NOTEMPTY,
+                                                      NULL,
+                                                      NULL);
 }
 
 /*****
@@ -234,93 +274,102 @@ TextMatch :: my_regexec (const StringView& text) const
  * Boyer-Moore-Horspool-Sunday search algorithm.
  * case-sensitive and insensitive versions.
  */
-namespace
+namespace {
+int bmhs_isearch(StringView const &text_in,
+                 StringView const &pat_in,
+                 char const *skip)
+
 {
-   int
-   bmhs_isearch (const StringView& text_in,
-                 const StringView& pat_in,
-                 const char * skip)
+  guchar const *text = (guchar const *)text_in.str;
+  const size_t text_len = text_in.len;
+  guchar const *pat = (guchar const *)pat_in.str;
+  const size_t pat_len = pat_in.len;
+  const guchar first_uc = toupper(*pat);
+  const guchar first_lc = tolower(*pat);
+  guchar const *t = text;
+  guchar const *text_end = text + text_len - pat_len + 1;
+  guchar const *pat_end = pat + pat_len;
+  guchar const *p;
+  guchar const *q;
 
-   {
-      const guchar * text = (const guchar*) text_in.str;
-      const size_t text_len = text_in.len;
-      const guchar * pat = (const guchar*) pat_in.str;
-      const size_t pat_len = pat_in.len;
-      const guchar first_uc = toupper(*pat);
-      const guchar first_lc = tolower(*pat);
-      const guchar * t = text;
-      const guchar * text_end = text + text_len - pat_len + 1;
-      const guchar * pat_end = pat + pat_len;
-      const guchar * p;
-      const guchar * q;
+  for (;;)
+  {
+    // scan loop that searches for the first character of the pattern
+    while (t < text_end && *t != first_uc && *t != first_lc)
+    {
+      t += std::max(1, (int)skip[tolower(t[pat_len])]);
+    }
+    if (t >= text_end)
+    {
+      break;
+    }
 
-      for (;;)
-      {
-         // scan loop that searches for the first character of the pattern
-         while (t<text_end && *t!=first_uc && *t!=first_lc)
-            t += std::max (1, (int)skip[tolower(t[pat_len])]);
-         if (t >= text_end)
-            break;
+    // first character matches, so execute match loop in fwd direction
+    p = pat;
+    q = t;
+    while (++p < pat_end && *p == tolower(*++q))
+      ;
 
-         // first character matches, so execute match loop in fwd direction
-         p = pat;
-         q = t;
-         while (++p < pat_end && *p == tolower(*++q))
-            ;
+    if (p == pat_end)
+    {
+      return t - text;
+    }
 
-         if (p == pat_end)
-            return t - text;
+    t += skip[t[pat_len]];
+  }
 
-         t += skip[t[pat_len]];
-      }
+  return -1;
+}
 
-      return -1;
-   }
+/**
+ * Boyer-Moore-Horspool-Sunday search algorithm.
+ * Returns position of match, or -1 if no match.
+ */
+static int bmhs_search(StringView const &text_in,
+                       StringView const &pat_in,
+                       char const *skip)
 
-   /**
-    * Boyer-Moore-Horspool-Sunday search algorithm.
-    * Returns position of match, or -1 if no match.
-    */
-   static int
-   bmhs_search (const StringView& text_in,
-                const StringView& pat_in,
-                const char * skip)
+{
+  guchar const *text = (guchar const *)text_in.str;
+  const size_t text_len = text_in.len;
+  guchar const *pat = (guchar const *)pat_in.str;
+  const size_t pat_len = pat_in.len;
+  const guchar first = *pat;
+  guchar const *t = text;
+  guchar const *text_end = text + text_len - pat_len + 1;
+  guchar const *pat_end = pat + pat_len;
+  guchar const *p;
+  guchar const *q;
 
-   {
-      const guchar * text = (const guchar*) text_in.str;
-      const size_t text_len = text_in.len;
-      const guchar * pat = (const guchar*) pat_in.str;
-      const size_t pat_len  = pat_in.len;
-      const guchar first = *pat;
-      const guchar * t = text;
-      const guchar * text_end = text + text_len - pat_len + 1;
-      const guchar * pat_end  = pat + pat_len;
-      const guchar * p;
-      const guchar * q;
+  for (;;)
+  {
+    // scan loop that searches for the first character of the pattern
+    while (t < text_end && *t != first)
+    {
+      t += skip[t[pat_len]];
+    }
+    if (t >= text_end)
+    {
+      break;
+    }
 
-      for (;;)
-      {
-         // scan loop that searches for the first character of the pattern
-         while (t<text_end && *t!=first)
-            t += skip[t[pat_len]];
-         if (t >= text_end)
-            break;
+    // first character matches, so execute match loop in fwd direction
+    p = pat;
+    q = t;
+    while (++p < pat_end && *p == *++q)
+      ;
 
-         // first character matches, so execute match loop in fwd direction
-         p = pat;
-         q = t;
-         while (++p < pat_end && *p == *++q)
-            ;
+    if (p == pat_end)
+    {
+      return t - text;
+    }
 
-         if (p == pat_end)
-            return t - text;
+    t += skip[t[pat_len]];
+  }
 
-         t += skip[t[pat_len]];
-      }
-
-      return -1;
-   }
-};
+  return -1;
+}
+}; // namespace
 
 /*****
 ******
@@ -328,57 +377,74 @@ namespace
 ******
 *****/
 
-bool
-TextMatch :: test (const StringView& text_in) const
+bool TextMatch ::test(StringView const &text_in) const
 {
-   bool retval (false);
-   StringView text (text_in);
+  bool retval(false);
+  StringView text(text_in);
 
-   if (!text.empty())
-   {
-      const StringView pat (_impl_text);
+  if (! text.empty())
+  {
+    const StringView pat(_impl_text);
 
-      switch (_impl_type)
-      {
-         case REGEX:
-            //std::cerr << LINE_ID << " regex..." << std::endl;
-            retval = my_regexec (text) > 0;
-            break;
+    switch (_impl_type)
+    {
+      case REGEX:
+        // std::cerr << LINE_ID << " regex..." << std::endl;
+        retval = my_regexec(text) > 0;
+        break;
 
-         case ENDS_WITH:
-            //std::cerr << LINE_ID << " ends with..." << std::endl;
-            if (text.len < pat.len)
-               retval = false;
-            text.rtruncate (pat.len);
-            // fall through to "is"
+      case ENDS_WITH:
+        // std::cerr << LINE_ID << " ends with..." << std::endl;
+        if (text.len < pat.len)
+        {
+          retval = false;
+        }
+        text.rtruncate(pat.len);
+        // fall through to "is"
 
-         case IS:
-            //std::cerr << LINE_ID << " is..." << std::endl;
-            if (state.case_sensitive)
-               retval = text.len==pat.len && !StringView::strcmp (text.str, text.len, pat.str, pat.len);
-            else
-               retval = text.len==pat.len && !g_ascii_strncasecmp (text.str, pat.str, pat.len);
-            break;
+      case IS:
+        // std::cerr << LINE_ID << " is..." << std::endl;
+        if (state.case_sensitive)
+        {
+          retval =
+            text.len == pat.len
+            && ! StringView::strcmp(text.str, text.len, pat.str, pat.len);
+        }
+        else
+        {
+          retval = text.len == pat.len
+                   && ! g_ascii_strncasecmp(text.str, pat.str, pat.len);
+        }
+        break;
 
-         case BEGINS_WITH:
-            //std::cerr << LINE_ID << " begins with..." << std::endl;
-            if (state.case_sensitive)
-               retval = text.len>=pat.len && !strncmp (text.str, pat.str, pat.len);
-            else
-               retval = text.len>=pat.len && !g_ascii_strncasecmp (text.str, pat.str, pat.len);
-            break;
+      case BEGINS_WITH:
+        // std::cerr << LINE_ID << " begins with..." << std::endl;
+        if (state.case_sensitive)
+        {
+          retval = text.len >= pat.len && ! strncmp(text.str, pat.str, pat.len);
+        }
+        else
+        {
+          retval = text.len >= pat.len
+                   && ! g_ascii_strncasecmp(text.str, pat.str, pat.len);
+        }
+        break;
 
-         case CONTAINS:
-            //std::cerr << LINE_ID << " contains..." << std::endl;
-            if (state.case_sensitive)
-               retval = text.len>=pat.len && bmhs_search (text, pat, _skip) != -1;
-            else
-               retval = text.len>=pat.len && bmhs_isearch (text, pat, _skip) != -1;
-            break;
-      }
-   }
+      case CONTAINS:
+        // std::cerr << LINE_ID << " contains..." << std::endl;
+        if (state.case_sensitive)
+        {
+          retval = text.len >= pat.len && bmhs_search(text, pat, _skip) != -1;
+        }
+        else
+        {
+          retval = text.len >= pat.len && bmhs_isearch(text, pat, _skip) != -1;
+        }
+        break;
+    }
+  }
 
-   return state.negate ? !retval : retval;
+  return state.negate ? ! retval : retval;
 }
 
 /*****
@@ -387,25 +453,24 @@ TextMatch :: test (const StringView& text_in) const
 ******
 *****/
 
-TextMatch :: TextMatch ():
-   _impl_text (),
-   _skip (new char [UCHAR_MAX+1]),
-   _pcre_info (nullptr),
-   _pcre_state (NEED_COMPILE)
+TextMatch ::TextMatch() :
+  _impl_text(),
+  _skip(new char[UCHAR_MAX + 1]),
+  _pcre_info(nullptr),
+  _pcre_state(NEED_COMPILE)
 {
 }
 
-TextMatch :: ~TextMatch ()
+TextMatch ::~TextMatch()
 {
-   clear ();
-   delete [] _skip;
+  clear();
+  delete[] _skip;
 }
 
-void
-TextMatch :: clear ()
+void TextMatch ::clear()
 {
-  state.text.clear ();
-  _impl_text.clear ();
+  state.text.clear();
+  _impl_text.clear();
 
   if (_pcre_state == COMPILED)
   {
@@ -415,101 +480,112 @@ TextMatch :: clear ()
   }
 }
 
-void
-TextMatch :: set (const StringView  & text,
-                  Type                type,
-                  bool                case_sensitive,
-                  bool                negate)
+void TextMatch ::set(StringView const &text,
+                     Type type,
+                     bool case_sensitive,
+                     bool negate)
 {
-  clear ();
+  clear();
 
-  state.text.clear ();
-  state.text.insert (0, text.str, text.len);
+  state.text.clear();
+  state.text.insert(0, text.str, text.len);
   state.type = type;
   state.negate = negate;
   state.case_sensitive = case_sensitive;
 
-  _impl_type = get_real_match_type (text, type);
+  _impl_type = get_real_match_type(text, type);
 
   if (state.type == _impl_type)
+  {
     _impl_text = state.text;
-  else {
-    char * tmp = regexp_unescape (state.text.c_str());
+  }
+  else
+  {
+    char *tmp = regexp_unescape(state.text.c_str());
     _impl_text = tmp;
-    g_free (tmp);
+    g_free(tmp);
   }
 
-  if (!state.case_sensitive) {
-    char * pch = g_utf8_strdown (_impl_text.c_str(), -1);
+  if (! state.case_sensitive)
+  {
+    char *pch = g_utf8_strdown(_impl_text.c_str(), -1);
     _impl_text = pch;
-    g_free (pch);
+    g_free(pch);
   }
 
-//std::cerr << LINE_ID << " state.type " << state.type << " _impl_type " << _impl_type << " text " << state.text << " _impl_text " << _impl_text << std::endl;
+  // std::cerr << LINE_ID << " state.type " << state.type << " _impl_type " <<
+  // _impl_type << " text " << state.text << " _impl_text " << _impl_text <<
+  // std::endl;
 
   // Boyer-Moore-Horspool-Sunday
-  const char * pat (_impl_text.c_str());
-  const unsigned int len (_impl_text.size());
-  for (int i=0; i<=UCHAR_MAX; ++i)
+  char const *pat(_impl_text.c_str());
+  unsigned int const len(_impl_text.size());
+  for (int i = 0; i <= UCHAR_MAX; ++i)
+  {
     _skip[i] = len + 1;
-  for (unsigned int i=0; i<len; i++)
+  }
+  for (unsigned int i = 0; i < len; i++)
+  {
     _skip[(guchar)(pat[i])] = len - i;
+  }
 }
 
 /**
 ***
 **/
 
-
-/*static*/ std::string
-TextMatch :: create_regex (const StringView  & in,
-                           Type                type)
+/*static*/ std::string TextMatch ::create_regex(StringView const &in, Type type)
 {
-   std::string s;
+  std::string s;
 
-   if (type == REGEX)
-      s.insert (s.end(), in.begin(), in.end());
-   else
-      s = quote_regexp (in);
+  if (type == REGEX)
+  {
+    s.insert(s.end(), in.begin(), in.end());
+  }
+  else
+  {
+    s = quote_regexp(in);
+  }
 
-   StringView tmp (s);
-   tmp.trim ();
-   s = tmp;
+  StringView tmp(s);
+  tmp.trim();
+  s = tmp;
 
-   if (!s.empty())
-   {
-      if (type == IS || type == BEGINS_WITH)
-         s.insert (s.begin(), '^');
-      if (type == IS || type == ENDS_WITH)
-         s.insert (s.end(), '$');
-   }
+  if (! s.empty())
+  {
+    if (type == IS || type == BEGINS_WITH)
+    {
+      s.insert(s.begin(), '^');
+    }
+    if (type == IS || type == ENDS_WITH)
+    {
+      s.insert(s.end(), '$');
+    }
+  }
 
-   return s;
+  return s;
 }
 
-/*static*/ bool
-TextMatch :: validate_regex (const char * text)
+/*static*/ bool TextMatch ::validate_regex(char const *text)
 {
-   PcreInfo i;
-   bool ok (i.set (text, false));
-   return ok;
+  PcreInfo i;
+  bool ok(i.set(text, false));
+  return ok;
 }
 
-TextMatch :: TextMatch (const TextMatch& that):
-  _skip (new char [UCHAR_MAX+1]),
-  _pcre_info (nullptr),
-  _pcre_state (NEED_COMPILE)
+TextMatch ::TextMatch(TextMatch const &that) :
+  _skip(new char[UCHAR_MAX + 1]),
+  _pcre_info(nullptr),
+  _pcre_state(NEED_COMPILE)
 {
-  set (that.state);
+  set(that.state);
 }
 
-//FIXME this is clearly doing something odd, but the solution of deleting the
-//assignment and writing defaulted move constructors/assignments won't work
-//till C++20
-TextMatch&
-TextMatch :: operator= (const TextMatch& that)
+// FIXME this is clearly doing something odd, but the solution of deleting the
+// assignment and writing defaulted move constructors/assignments won't work
+// till C++20
+TextMatch &TextMatch ::operator=(TextMatch const &that)
 {
-  set (that.state);
+  set(that.state);
   return *this;
 }
-
