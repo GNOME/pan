@@ -94,6 +94,11 @@ create trigger if not exists delete_orphan_groups after delete on `server`
     );
   end;
 
+-- cleanup orphaned group on startup (may happen after a crash)
+delete from `group` where id not in (
+  select distinct group_id from server_group
+);
+
 -- Add local groups
 insert into `group` (name) values ('Sent'),('Drafts') on conflict do nothing;
 
