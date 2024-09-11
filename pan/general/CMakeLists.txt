@@ -28,3 +28,14 @@ endif()
 
 target_link_libraries(generalutils PUBLIC PkgConfig::GMIME)
 target_link_libraries(generalutils PUBLIC PkgConfig::GTK3)
+
+set (general-tests text-match-test progress-test quark-test string-view-test)
+
+foreach(test ${general-tests})
+  add_executable(${test} ${test}.cc)
+  # Sanity checking
+  # https://cmake.org/cmake/help/latest/command/add_compile_options.html
+  target_compile_options(${test} PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
+  target_link_libraries(${test} usenet-utils generalutils)
+  add_test(NAME ${test}-test COMMAND ${test})
+endforeach()
