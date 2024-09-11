@@ -45,6 +45,9 @@ create index if not exists xref_article_id
 create unique index if not exists xref_ags
   on `article_xref` (article_id, group_id, server_id);
 
+create index if not exists xref_group_id
+  on `article_xref` (group_id);
+
 create table if not exists article_part (
   id integer primary key asc autoincrement,
   article_id integer not null,
