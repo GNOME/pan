@@ -20,100 +20,111 @@
 #ifndef _TextMatch_h_
 #define _TextMatch_h_
 
-#include <string>
 #include <pan/general/string-view.h>
+#include <string>
 
-namespace pan
+namespace pan {
+/**
+ * Encapsulates regular expression and efficient case-insensitive text matching.
+ *
+ * @ingroup general
+ */
+class TextMatch
 {
-  /**
-   * Encapsulates regular expression and efficient case-insensitive text matching.
-   *
-   * @ingroup general
-   */
-  class TextMatch
-  {
-    public:
+  public:
+    enum Type
+    {
+      CONTAINS,
+      IS,
+      BEGINS_WITH,
+      ENDS_WITH,
+      REGEX
+    };
 
-      enum Type
-      {
-        CONTAINS,
-        IS,
-        BEGINS_WITH,
-        ENDS_WITH,
-        REGEX
-      };
-
-      /**
-       * Specifies how a TextMatch object should compare its text.
-       */
-      struct Description
-      {
+    /**
+     * Specifies how a TextMatch object should compare its text.
+     */
+    struct Description
+    {
         Type type;
         bool case_sensitive;
         bool negate;
         std::string text;
 
-        void clear () {
+        void clear()
+        {
           type = IS;
           case_sensitive = negate = false;
-          text.clear ();
+          text.clear();
         }
-        Description() { clear(); }
-      };
 
-    public:
+        Description()
+        {
+          clear();
+        }
+    };
 
-      TextMatch ();
-      TextMatch (const TextMatch& that);
-      TextMatch& operator= (const TextMatch& that);
-      ~TextMatch ();
+  public:
+    TextMatch();
+    TextMatch(TextMatch const &that);
+    TextMatch &operator=(TextMatch const &that);
+    ~TextMatch();
 
-      void clear ();
+    void clear();
 
-      void set (const StringView& text,
-                Type type,
-                bool case_sensitive,
-                bool negate=false);
+    void set(StringView const &text,
+             Type type,
+             bool case_sensitive,
+             bool negate = false);
 
-      void set (const Description& d)
-        { set (d.text, d.type, d.case_sensitive, d.negate); }
+    void set(Description const &d)
+    {
+      set(d.text, d.type, d.case_sensitive, d.negate);
+    }
 
-      bool test (const StringView& text) const;
+    bool test(StringView const &text) const;
 
-      static std::string create_regex (const StringView&, Type);
+    static std::string create_regex(StringView const &, Type);
 
-      static bool validate_regex (const char * regex);
+    static bool validate_regex(char const *regex);
 
-      const Description& get_state () const { return state; }
+    Description const &get_state() const
+    {
+      return state;
+    }
 
-    private:
+  private:
+    /** This is the state passed into set()... */
+    Description state;
 
-      /** This is the state passed into set()... */
-      Description state;
+  public:
+    /** The real state we use.  This is the same as state._type
+        unless state._type is REGEX and we can do it faster with
+        another type (i.e. "^hello" can be done with strncmp()
+        instead of a regex invocation */
+    Type _impl_type;
 
-    public:
+    /** This real string we use.  See _impl_type for description. */
+    std::string _impl_text;
 
-      /** The real state we use.  This is the same as state._type
-          unless state._type is REGEX and we can do it faster with
-          another type (i.e. "^hello" can be done with strncmp() 
-          instead of a regex invocation */
-      Type _impl_type;
+    char *_skip;
 
-      /** This real string we use.  See _impl_type for description. */
-      std::string _impl_text;
+  private:
+    class PcreInfo;
+    mutable PcreInfo *_pcre_info;
 
-      char * _skip;
+    enum PcreState
+    {
+      NEED_COMPILE,
+      COMPILED,
+      ERR
+    };
 
-private:
-      class PcreInfo;
-      mutable PcreInfo * _pcre_info;
+    mutable PcreState _pcre_state;
 
-      enum PcreState { NEED_COMPILE, COMPILED, ERR };
-      mutable PcreState _pcre_state;
-
-public:
-      int my_regexec (const StringView&) const;
-  };
-}
+  public:
+    int my_regexec(StringView const &) const;
+};
+} // namespace pan
 
 #endif
