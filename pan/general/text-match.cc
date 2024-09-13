@@ -17,7 +17,11 @@
  *
  */
 
+#include <algorithm>
 #include <config.h>
+#include <sstream>
+#include <streambuf>
+#include <string>
 
 extern "C"
 {
@@ -445,6 +449,80 @@ bool TextMatch ::test(StringView const &text_in) const
   }
 
   return state.negate ? ! retval : retval;
+}
+
+// TODO: set SQL snippet and param to bind. Return false if there's no need to perform search
+bool TextMatch::create_sql_search(std::string &set_sql,
+                                  std::string &set_param) const
+{
+  bool ret(false);
+
+  if (! _impl_text.empty())
+  {
+    ret = true;
+
+    switch (_impl_type)
+    {
+      case REGEX:
+        set_sql = "name regexp ?";
+        break;
+
+      case IS:
+        set_sql = "name == ?";
+        if (! state.case_sensitive)
+        {
+          set_sql += " collate nocase";
+        }
+        break;
+
+      case ENDS_WITH:
+      case BEGINS_WITH:
+      case CONTAINS:
+        if (state.case_sensitive)
+        {
+          set_sql = "name like ?";
+        }
+        else
+        {
+          set_sql = "lower(name) like ?";
+        }
+        break;
+    }
+
+    switch (_impl_type)
+    {
+      case REGEX:
+      case IS:
+        set_param = _impl_text;
+        break;
+
+      case ENDS_WITH:
+        set_param = "%" + _impl_text;
+        break;
+
+      case BEGINS_WITH:
+        set_param = _impl_text + "%";
+        break;
+
+      case CONTAINS:
+        if (state.case_sensitive)
+        {
+          set_param = "%" + _impl_text + "%";
+        }
+        else
+        {
+          // TODO: find an unicode compatible way to lowercase the search string
+          // see https://stackoverflow.com/a/24063783
+          std::string lc_text(_impl_text);
+          std::transform(lc_text.begin(), lc_text.end(), lc_text.begin(),
+                         [](unsigned char c){ return std::tolower(c); });
+          set_param = "%" + lc_text + "%";
+        }
+        break;
+    }
+  }
+
+  return ret;
 }
 
 /*****

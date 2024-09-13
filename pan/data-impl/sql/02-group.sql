@@ -5,6 +5,8 @@ pragma foreign_keys = on;
 -- see https://www.sqlite.org/pragma.html#pragma_synchronous
 pragma synchronous = off;
 
+pragma case_sensitive_like=on;
+
 create table if not exists `group` (
   id integer primary key asc autoincrement,
   name text not null,
