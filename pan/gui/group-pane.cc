@@ -351,10 +351,12 @@ namespace
     group_rows.clear ();
     group_rows.reserve (sub.size() + unsub.size());
 
+    // the 3 main section of the group list
     MyRow * headers = new MyRow[3];
-    headers[0].groupname = *virtual_title_quark;
-    headers[1].groupname = *sub_title_quark;
-    headers[2].groupname = *other_title_quark;
+    headers[0].groupname = *virtual_title_quark; // aka Local Folders
+    headers[1].groupname = *sub_title_quark; // Subscribed groups
+    headers[2].groupname = *other_title_quark; // Other groups
+    // call back delete rows with headers when store is freed
     g_object_weak_ref (G_OBJECT(store), delete_rows, headers);
 
     //
