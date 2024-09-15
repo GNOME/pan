@@ -22,6 +22,7 @@
 #include "pan/general/article_number.h"
 #include "pan/general/log4cxx.h"
 #include "tango-colors.h"
+#include <SQLiteCpp/Statement.h>
 #include <cassert>
 #include <config.h>
 #include <deque>
@@ -373,27 +374,70 @@ namespace {
 static char const *folders_groupnames[] = {_("Sent"), _("Drafts")};
 } // namespace
 
-PanTreeStore *build_model(Data const &data,
+PanTreeStore *build_model(Data &data,
                           TextMatch const *match,
                           tree_iters_t &expandme,
                           rows_t &setme_rows)
 {
+  TimeElapsed timer;
+
   // build the model...
   PanTreeStore *store =
     PanTreeStore ::new_tree(COL_QTY, G_TYPE_ULONG); // unread
   store->set_row_dispose(&noop_row_dispose);
 
-  // find the groups that we'll be adding.
-  std::vector<Quark> groups, local_folders, sub, unsub;
-  data.get_other_groups(groups);
-  find_matching_groups(match, groups, unsub);
-  groups.clear();
-  data.get_subscribed_groups(groups);
-  find_matching_groups(match, groups, sub);
+  // find if matching instruction is required
+  std::string sql_snippet, sql_param;
+  // match can be nullptr
+  bool do_match =
+    match != nullptr && match->create_sql_search(sql_snippet, sql_param);
+
+  // count groups, to be able to reserver arrays with  the right size
+  std::string count_group_str(R"SQL(
+    select count()
+      from `group` as g
+      join `server_group` as sg on sg.group_id == g.id
+      join `server` as s on s.id == sg.server_id
+      where pseudo == False and s.host != "local" and g.subscribed == ?
+    )SQL");
+
+  // add user filter to get correct count
+  if (do_match)
+  {
+    count_group_str += " and " + sql_snippet;
+  }
+
+  LOG4CXX_DEBUG(logger, "Count group query: " << count_group_str << " with param: " << sql_param);
+
+  SQLite::Statement count_group_q(data.get_db(), count_group_str);
+  int64_t count_sub, count_unsub;
+
+  // find subscribed group count
+  count_group_q.bind(1, true);
+  if (do_match)
+    count_group_q.bind(2,sql_param);
+  while (count_group_q.executeStep())
+  {
+    count_sub = count_group_q.getColumn(0);
+  }
+
+  // find unsubscribed group count
+  count_group_q.reset();
+  count_group_q.bind(1, false);
+  if (do_match)
+    count_group_q.bind(2,sql_param);
+  while (count_group_q.executeStep())
+  {
+    count_unsub = count_group_q.getColumn(0);
+  }
+
+  LOG4CXX_DEBUG(logger,
+                "Got " << count_sub << " subscribed and " << count_unsub
+                       << " unsubscribed groups");
 
   std::vector<MyRow *> &group_rows(setme_rows.get_container());
   group_rows.clear();
-  group_rows.reserve(sub.size() + unsub.size());
+  group_rows.reserve(count_sub + count_unsub);
 
   // the 3 main section of the group list
   MyRow *headers = new MyRow[3];
@@ -404,7 +448,7 @@ PanTreeStore *build_model(Data const &data,
   g_object_weak_ref(G_OBJECT(store), delete_rows, headers);
 
   //
-  // local folders
+  // local folders, only 2 groups, no need to optimize db calls
   //
   MyRow *row = &headers[0];
   store->append(nullptr, row);
@@ -412,6 +456,7 @@ PanTreeStore *build_model(Data const &data,
     const size_t n(G_N_ELEMENTS(folders_groupnames));
     std::vector<PanTreeStore::Row *> appendme;
     appendme.reserve(n);
+    // array is used only to delete all rows with one call to free
     MyRow *rows(new MyRow[n]), *r(rows);
     g_object_weak_ref(G_OBJECT(store), delete_rows, rows);
 
@@ -426,27 +471,60 @@ PanTreeStore *build_model(Data const &data,
     store->append(row, appendme);
     expandme.push_back(store->get_iter(row));
   }
+
   //
   //  subscribed
   //
 
+  // find the groups that we'll be adding with unread article count.
+  std::string group_str(R"SQL(
+    select distinct name, (
+      select count() from `article` as ia
+		    join `article_group` as ag on ia.id == ag.article_id
+        where ag.group_id = g.id and ia.is_read = False
+			) as count
+      from `group` as g
+      join `server_group` as sg on sg.group_id == g.id
+      join `server` as s on s.id == sg.server_id
+      where pseudo == False and g.subscribed = ? and s.host != "local"
+  )SQL");
+
+  // add user filter to get correct  list of groups
+  if (do_match)
+  {
+    group_str += " and " + sql_snippet;
+  }
+
+  // sort the group list
+  group_str += " order by g.name asc ";
+
+  LOG4CXX_DEBUG(logger, "Group query: " << group_str << " with param: " << sql_param);
+
+  SQLite::Statement group_q(data.get_db(), group_str);
+
   row = &headers[1];
   store->append(nullptr, row);
-  if (! sub.empty())
+  if (count_sub > 0)
   {
-    const size_t n(sub.size());
+    const size_t n(count_sub);
     std::vector<PanTreeStore::Row *> appendme;
     appendme.reserve(n);
     MyRow *rows(new MyRow[n]), *r(rows);
     g_object_weak_ref(G_OBJECT(store), delete_rows, rows);
+    group_q.bind(1, true);
+    if (do_match)
+      group_q.bind(2,sql_param);
 
-    Article_Count unused;
-    for (size_t i(0); i != n; ++i, ++r)
+    while (group_q.executeStep())
     {
-      r->groupname = sub[i];
-      data.get_group_counts(r->groupname, r->unread, unused);
+      std::string name(group_q.getColumn(0).getText());
+      r->groupname = Quark(name);
+      r->unread = Article_Count(group_q.getColumn(1).getInt());
       appendme.push_back(r);
       group_rows.push_back(r);
+      r++;
+      LOG4CXX_TRACE(logger, "Subscribed group " << name <<
+                    " has " << group_q.getColumn(1).getInt() << " articles");
     }
 
     store->append(row, appendme);
@@ -458,21 +536,27 @@ PanTreeStore *build_model(Data const &data,
   //
   row = &headers[2];
   store->append(nullptr, row);
-  if (! unsub.empty())
+  if (count_unsub > 0)
   {
-    const size_t n(unsub.size());
+    const size_t n(count_unsub);
     std::vector<PanTreeStore::Row *> appendme;
     appendme.reserve(n);
     MyRow *rows(new MyRow[n]), *r(rows);
     g_object_weak_ref(G_OBJECT(store), delete_rows, rows);
 
-    Article_Count unused;
-    for (size_t i(0); i != n; ++i, ++r)
+    group_q.reset();
+    group_q.bind(1, false);
+    if (do_match)
+      group_q.bind(2,sql_param);
+
+    while (group_q.executeStep())
     {
-      r->groupname = unsub[i];
-      data.get_group_counts(r->groupname, r->unread, unused);
+      std::string name(group_q.getColumn(0).getText());
+      r->groupname = Quark(name);
+      r->unread = Article_Count(group_q.getColumn(1).getInt());
       appendme.push_back(r);
       group_rows.push_back(r);
+      r++;
     }
 
     store->append(row, appendme);
@@ -482,7 +566,7 @@ PanTreeStore *build_model(Data const &data,
     // otherwise it's a flood of thousands of groups.
     // they can click the expander themselves to get that,
     bool const user_did_search(match != nullptr);
-    if (! unsub.empty() && (user_did_search || sub.empty()))
+    if (count_unsub > 0 && (user_did_search || count_sub == 0))
     {
       expandme.push_back(store->get_iter(row));
     }
@@ -494,6 +578,9 @@ PanTreeStore *build_model(Data const &data,
   // With normal sort, a random one of the two is picked, which is seriously
   // disconcerting.
   setme_rows.stable_sort();
+
+  LOG4CXX_DEBUG(logger, "build group pane with " << count_sub + count_unsub
+                << " groups in " << timer.get_seconds_elapsed() << "s.");
   return store;
 }
 } // namespace
