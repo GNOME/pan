@@ -49,6 +49,7 @@ auto getLogger(std::string const &name) -> log4cxx::LoggerPtr
             << "# Other loggers will come and should be listed in README.org"
             << std::endl;
           outfile << "log4j.logger.database=DEBUG, A1" << std::endl;
+          outfile << "log4j.logger.group-pane=DEBUG, A1" << std::endl;
         }
         if (PropertyConfigurator::configure(filename)
             == spi::ConfigurationStatus::NotConfigured) {

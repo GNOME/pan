@@ -20,6 +20,7 @@
 #ifndef PAN_TREE_STORE_H
 #define PAN_TREE_STORE_H
 
+#include <log4cxx/logger.h>
 #include <map>
 #include <vector>
 #include <gtk/gtk.h>
@@ -108,6 +109,7 @@ struct PanTreeStore
     class RowCompareByDepth;
     class RowCompareByColumn;
     class RowCompareByChildPos;
+    log4cxx::LoggerPtr _db_logger;
 
   public:
 
