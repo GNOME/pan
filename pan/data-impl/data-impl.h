@@ -59,7 +59,6 @@
 namespace pan {
 typedef std::vector<Article const *> articles_t;
 typedef Data::PasswordData PasswordData;
-typedef SQLite::Database SQLiteDb;
 
 /**
  * File-based implementation of the `Data' backend interface.
@@ -154,6 +153,11 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     SQLiteDb &pan_db;
 
   public:
+  SQLiteDb &get_db() override {
+    return pan_db;
+  }
+
+public:
 #ifdef HAVE_GKR
     gboolean password_encrypt(PasswordData const &) override;
     gchar *password_decrypt(PasswordData &) const override;
