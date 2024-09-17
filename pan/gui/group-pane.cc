@@ -659,9 +659,7 @@ void GroupPane ::on_group_read(Quark const &groupname)
   }
 }
 
-void GroupPane ::on_group_counts(Quark const &groupname,
-                                 Article_Count,
-                                 Article_Count)
+void GroupPane ::on_group_counts(Quark const &groupname)
 {
   on_group_read(groupname);
 }
