@@ -400,10 +400,7 @@ class Data :
 
     void fire_group_read(Quark const &);
 
-    void fire_group_counts(Quark const &,
-                           Article_Count unread,
-                           Article_Count total);
-
+    void fire_group_counts(Quark const &);
     void fire_group_subscribe(Quark const &, bool);
 
   private:

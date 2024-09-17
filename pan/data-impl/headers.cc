@@ -863,7 +863,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
   ReadGroup &g(_read_groups[group]);
   g._unread_count = unread_count;
   g._article_count = article_count;
-  fire_group_counts(group, unread_count, article_count);
+  fire_group_counts(group);
 
   int part_count = item_count - article_count;
   LOG4CXX_INFO(logger, "Migrated " << article_count << " articles and "
@@ -1102,7 +1102,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   ReadGroup &g(_read_groups[group]);
   g._unread_count = unread_count;
   g._article_count = article_count;
-  fire_group_counts(group, unread_count, article_count);
+  fire_group_counts(group);
 
   double const seconds = timer.get_seconds_elapsed();
   Log::add_info_va(
@@ -1440,7 +1440,7 @@ void DataImpl ::mark_read(Article const **articles,
     {
       g._unread_count += n;
     }
-    fire_group_counts(group, g._unread_count, g._article_count);
+    fire_group_counts(group);
     on_articles_changed(group, it->second, false);
   }
 
@@ -1699,7 +1699,7 @@ void DataImpl ::group_clear_articles(Quark const &group)
   ReadGroup &g(_read_groups[group]);
   g._article_count = static_cast<Article_Count>(0);
   g._unread_count = static_cast<Article_Count>(0);
-  fire_group_counts(group, g._unread_count, g._article_count);
+  fire_group_counts(group);
 }
 
 void DataImpl ::delete_articles(unique_articles_t const &articles)
@@ -1742,7 +1742,7 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
     ReadGroup &g(_read_groups[group]);
     g.decrement_unread(it->second.unread);
     g.decrement_count(it->second.count);
-    fire_group_counts(group, g._unread_count, g._article_count);
+    fire_group_counts(group);
 
     // remove the articles from our lookup table...
     GroupHeaders *h(get_group_headers(group));
@@ -1798,7 +1798,7 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
     ReadGroup &g(_read_groups[group]);
     g._article_count += mids.size();
     g._unread_count += mids.size();
-    fire_group_counts(group, g._unread_count, g._article_count);
+    fire_group_counts(group);
   }
 }
 
