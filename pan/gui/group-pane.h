@@ -41,9 +41,7 @@ namespace pan
       virtual void on_grouplist_rebuilt () override;
       virtual void on_group_read (const Quark& group) override;
       virtual void on_group_subscribe (const Quark& group, bool sub) override;
-      virtual void on_group_counts (const Quark& group,
-                                    Article_Count unread,
-                                    Article_Count total) override;
+      virtual void on_group_counts (const Quark& group) override;
 
     public:
       GroupPane (ActionManager&, Data&, Prefs&, GroupPrefs&);
