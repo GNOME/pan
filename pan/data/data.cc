@@ -53,7 +53,7 @@ void
 Data :: fire_group_counts (const Quark& group, Article_Count unread, Article_Count total)
 {
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ) {
-    (*it++)->on_group_counts (group, unread, total);
+    (*it++)->on_group_counts (group);
   }
 }
 
