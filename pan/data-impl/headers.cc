@@ -1671,8 +1671,29 @@ void DataImpl ::group_clear_articles(Quark const &group)
   //  headers->_node_chunk.clear ();
   //  headers->_art_chunk.clear ();
 
-  // remove 'em from disk too.
-  _data_io->clear_group_headers(group);
+  // remove 'em from DB too. delete the article_group entry.
+  SQLite::Statement delete_group_q(pan_db, R"SQL(
+    delete from `article_group` where group_id == (select id from `group` where name == ?);
+  )SQL" );
+  delete_group_q.bind(1,group.c_str());
+  int count = delete_group_q.exec();
+
+  LOG4CXX_TRACE(logger,  "Deleted all " << count << " xref articles of group "
+                << group.c_str() << " in DB.");
+
+  // delete orphan article, i.e. article not in article_group
+  SQLite::Statement delete_article_q(pan_db, R"SQL(
+    delete from `article` where id in (
+      select distinct a.id from `article` as a
+      left outer join article_group as ag on ag.article_id == a.id
+      where ag.article_id is null
+    )
+  )SQL");
+  count = delete_article_q.exec();
+
+  // count may be different because of cross-posting or previously orphaned articles
+  LOG4CXX_TRACE(logger,  "Deleted all " << count << " articles of group "
+                << group.c_str() << " in DB.");
 
   // fire a 'count changed' event.
   ReadGroup &g(_read_groups[group]);

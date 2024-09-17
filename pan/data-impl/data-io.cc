@@ -206,17 +206,6 @@ std::string DataIO :: get_group_permissions_filename () const
 *****
 ****/
 
-void
-DataIO :: clear_group_headers (const Quark& group)
-{
-  const std::string filename (get_group_headers_filename (group));
-  std::remove (filename.c_str());
-}
-
-/****
-*****
-****/
-
 LineReader*
 DataIO :: read_tasks () const
 {
