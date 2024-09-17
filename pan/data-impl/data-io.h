@@ -46,8 +46,6 @@ namespace pan
     virtual std::string get_group_permissions_filename () const;
     virtual std::string get_group_xovers_filename () const;
 
-    virtual void clear_group_headers (const Quark& group);
-
     virtual LineReader* read_tasks () const;
     virtual LineReader* read_group_xovers () const;
     virtual LineReader* read_group_headers (const Quark& group) const;
