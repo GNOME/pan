@@ -50,7 +50,7 @@ Data :: fire_grouplist_rebuilt ()
 }
 
 void
-Data :: fire_group_counts (const Quark& group, Article_Count unread, Article_Count total)
+Data :: fire_group_counts (const Quark& group)
 {
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ) {
     (*it++)->on_group_counts (group);
