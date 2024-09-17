@@ -46,6 +46,15 @@ create unique index if not exists xref_server_group_number
 create index if not exists xref_group_id
   on `article_xref` (group_id);
 
+-- check and remove orphaned article, i.e. articles that are no longer
+-- attached any group and server, i.e. a group was removed or a server was removed
+create trigger if not exists delete_orphan_article after delete on `article_xref`
+  begin
+    delete from `article` where id = OLD.article_id and (
+      select count() from article_xref where article_id == OLD.article_id
+    ) == 0;
+  end;
+
 create table if not exists article_part (
   id integer primary key asc autoincrement,
   article_id integer not null,

@@ -1600,8 +1600,15 @@ void DataImpl ::group_clear_articles(Quark const &group)
   //  headers->_node_chunk.clear ();
   //  headers->_art_chunk.clear ();
 
-  // remove 'em from disk too.
-  _data_io->clear_group_headers(group);
+  // remove 'em from DB too. delete the xref. A DB trigger cleans up orphaned article
+  SQLite::Statement delete_q(pan_db, R"SQL(
+    delete from `article_xref` where group_id == (select id from `group` where name == ?);
+  )SQL" );
+  delete_q.bind(1,group.c_str());
+  int count = delete_q.exec();
+
+  LOG4CXX_DEBUG(_db_logger,  "Deleted all " << count << " articles of group "
+                << group.c_str() << " in DB.");
 
   // fire a 'count changed' event.
   ReadGroup &g(_read_groups[group]);
