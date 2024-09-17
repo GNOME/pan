@@ -374,9 +374,7 @@ class Data :
         {
         }
 
-        virtual void on_group_counts(Quark const &group UNUSED,
-                                     Article_Count unread UNUSED,
-                                     Article_Count total UNUSED)
+        virtual void on_group_counts(Quark const &group UNUSED)
         {
         }
 
