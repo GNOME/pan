@@ -2036,7 +2036,6 @@ void GUI :: do_read_selected_group ()
   watch_cursor_off ();
 
   // periodically save our state
-  _data.save_state ();
   _prefs.save ();
   _group_prefs.save ();
 

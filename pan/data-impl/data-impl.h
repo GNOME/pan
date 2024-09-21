@@ -84,7 +84,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
              int cache_megs = 10,
              DataIO *source = new DataIO());
     virtual ~DataImpl();
-    void save_state() override final;
 
   public:
     ArticleCache &get_cache() override
