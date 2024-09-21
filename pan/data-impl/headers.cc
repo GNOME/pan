@@ -445,30 +445,6 @@ void DataImpl ::load_article(Quark const &group,
   assert(find_ancestor(article_node, article->message_id) == nullptr);
 }
 
-#if 0
-std::string
-DataImpl :: get_references (const Quark& group, const Article& a) const
-{
-  std::string s;
-
-  GroupHeaders * h (get_group_headers (group));
-  pan_return_if_fail (h!=0);
-
-  const Quark& mid (a.message_id);
-  ArticleNode * node (h->_nodes[mid]);
-  node = node->parent;
-  while (node) {
-    if (!s.empty())
-      s.insert (0, 1, ' ');
-    const StringView v (node->_mid.to_view());
-    s.insert (0, v.str, v.len);
-    node = node->parent;
-  }
-//  std::cerr << "article " << a.message_id << " references " << s << std::endl;
-  return s;
-}
-#endif
-
 void DataImpl ::load_part(Quark const &group,
                           Quark const &mid,
                           int number,
