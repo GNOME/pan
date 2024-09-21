@@ -754,23 +754,6 @@ public:
     const ArticleFilter _article_filter;
     ArticleRules _article_rules;
 
-  private:
-    mutable guint newsrc_autosave_id;
-    guint newsrc_autosave_timeout;
-
-  public:
-    void set_newsrc_autosave_timeout(guint seconds)
-    {
-      newsrc_autosave_timeout = seconds;
-    }
-
-    void save_server_groups()
-    { // Called from  rc_as_cb(...).
-      // The newsrc_autosave_id is now (soon) invalid since the timeout will be
-      // cancelled when our caller returns FALSE. So forget about it already.
-      newsrc_autosave_id = 0;
-      // TODO: remove
-    }
 };
 } // namespace pan
 
