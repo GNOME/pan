@@ -397,20 +397,6 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
                " groups in " << timer.get_seconds_elapsed() << "s.");
 }
 
-void
-DataImpl :: save_all_server_groups_in_db ()
-{
-  if (newsrc_autosave_id) {
-    g_source_remove( newsrc_autosave_id );
-    newsrc_autosave_id = 0;
-  }
-
-  if (_unit_test)
-    return;
-
-  // TODO: remove
-}
-
 /***
 ****
 ***/
