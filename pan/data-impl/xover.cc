@@ -210,13 +210,6 @@ void DataImpl ::xover_unref(Quark const &group)
   unref_group (group);
 }
 
-void DataImpl ::set_xover_low(Quark const &group,
-                              Quark const &server,
-                              const Article_Number low)
-{
-  // TODO: remove
-}
-
 Article const *DataImpl ::xover_add(Quark const &server,
                                     Quark const &group,
                                     StringView const &subject,

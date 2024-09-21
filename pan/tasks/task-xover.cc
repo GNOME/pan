@@ -214,7 +214,6 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, Article_Count qty,
       "got GROUP result from " << nntp->_server << " (" << nntp << "): " << " qty " << qty << " low " << low << " high " << high);
 
   Article_Number l(low), h(high);
-  _data.set_xover_low(group, nntp->_server, low);
   //std::cerr << LINE_ID << " This group's range is [" << low << "..." << high << ']' << std::endl;
 
   if (_mode == ALL || _mode == DAYS)
