@@ -758,15 +758,6 @@ class Data :
                                 Quark const &server,
                                 const Article_Number high) = 0;
 
-    /**
-     * Used to fold the Newsrc ranges together:
-     * articles below the low group number can all be
-     * pruned from the newsrc string.
-     */
-    virtual void set_xover_low(Quark const &group,
-                               Quark const &server,
-                               const Article_Number low) = 0;
-
     /** Sets the queue interface */
     virtual void set_queue(Queue *q) = 0;
 };
