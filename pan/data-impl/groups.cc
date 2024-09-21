@@ -132,6 +132,8 @@ void DataImpl ::migrate_newsrc(Quark const &server_name, LineReader *in) {
           << "select ?,`group`.id,? from `group` where `group`.`name` = ?;";
   SQLite::Statement link_q(pan_db,link_st.str());
 
+  SQLite::Transaction migrate_group_transaction(pan_db);
+
   StringView line, name, numbers;
   int count = 0;
   while (!in->fail() && in->getline (line))
@@ -139,8 +141,6 @@ void DataImpl ::migrate_newsrc(Quark const &server_name, LineReader *in) {
     bool subscribed;
     if (parse_newsrc_line (line, name, subscribed, numbers))
     {
-      SQLite::Transaction store_group_transaction(pan_db);
-
       create_q.reset();
       create_q.bind(1,name);
       create_q.bind(2,subscribed);
@@ -152,10 +152,11 @@ void DataImpl ::migrate_newsrc(Quark const &server_name, LineReader *in) {
       link_q.bind(3, name);
       link_q.exec();
 
-      store_group_transaction.commit();
       count++;
     }
   }
+
+  migrate_group_transaction.commit();
 
   double const seconds = timer.get_seconds_elapsed();
 
@@ -408,6 +409,8 @@ void DataImpl ::migrate_group_permissions(DataIO const &data_io)
 
   SQLite::Statement save_perm_q(pan_db, "update `group` set permission = ? where name == ?");
 
+  SQLite::Transaction store_group_permission(pan_db);
+
   int count = 0;
   while (in && !in->fail() && in->getline(line))
   {
@@ -427,6 +430,8 @@ void DataImpl ::migrate_group_permissions(DataIO const &data_io)
     save_perm_q.exec();
     count ++;
   }
+
+  store_group_permission.commit();
 
   LOG4CXX_INFO(_db_logger, "Migrated " << count << " groups permissions "
                << "in " << timer.get_seconds_elapsed() << "s.");
@@ -454,6 +459,8 @@ void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
              "gid,? from alias ";
   SQLite::Statement save_desc_q(pan_db, save_st.str());
 
+  SQLite::Transaction store_group_description(pan_db);
+
   while (in && !in->fail() && in->getline(group)) {
     // save in DB only if description has information
     if (group.pop_last_token (s, ':') && !s.empty() && s!="?" && s != group) {
@@ -463,6 +470,8 @@ void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
       save_desc_q.exec();
     }
   }
+
+  store_group_description.commit();
 
   delete in;
 
@@ -509,6 +518,7 @@ void DataImpl ::migrate_group_xovers(DataIO const &data_io)
 
 
     int count ;
+    SQLite::Transaction store_xov_transaction(pan_db);
     // walk through the groups line-by-line...
     while (in->getline (line))
     {
@@ -519,7 +529,6 @@ void DataImpl ::migrate_group_xovers(DataIO const &data_io)
 
       if (line.pop_token(groupname) && line.pop_token(total) && line.pop_token(unread))
       {
-        SQLite::Transaction store_xov_transaction(pan_db);
 
         // store new group if needed (have no servername, so just create the group)
         insert_group_q.reset();
@@ -559,10 +568,10 @@ void DataImpl ::migrate_group_xovers(DataIO const &data_io)
         count_q.bind(2,unread);
         count_q.bind(3,groupname);
         count += count_q.exec();
-
-        store_xov_transaction.commit();
       }
     }
+
+    store_xov_transaction.commit();
     LOG4CXX_INFO(_db_logger, "Migrated " << count << " records from newsgroup.xov into DB" );
 
     std::remove(data_io.get_group_xovers_filename().c_str());
