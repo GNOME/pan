@@ -1364,16 +1364,6 @@ void DataImpl ::save_headers(DataIO &data_io, Quark const &group)
 /*******
 ********
 *******/
-namespace {
-/* autosave newsrc files */
-gboolean nrc_as_cb(gpointer ptr)
-{
-  DataImpl *data = static_cast<DataImpl *>(ptr);
-  data->save_server_groups();
-
-  return FALSE;
-}
-} // namespace
 
 void DataImpl ::mark_read(Article const &a, bool read)
 {
@@ -1417,12 +1407,6 @@ void DataImpl ::mark_read(Article const **articles,
     Quark const &group(it->first);
     fire_group_counts(group);
     on_articles_changed(group, it->second, false);
-  }
-
-  if (! newsrc_autosave_id && newsrc_autosave_timeout)
-  {
-    newsrc_autosave_id =
-      g_timeout_add_seconds(newsrc_autosave_timeout * 60, nrc_as_cb, this);
   }
 }
 
