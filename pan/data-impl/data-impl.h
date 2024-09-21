@@ -314,34 +314,6 @@ public:
         }
     };
 
-    typedef Loki::AssocVector<Quark, ReadGroup> read_groups_t;
-    read_groups_t _read_groups;
-
-    ReadGroup *find_read_group(Quark const &g)
-    {
-      read_groups_t::iterator it(_read_groups.find(g));
-      return it == _read_groups.end() ? nullptr : &it->second;
-    }
-
-    ReadGroup const *find_read_group(Quark const &g) const
-    {
-      read_groups_t::const_iterator it(_read_groups.find(g));
-      return it == _read_groups.end() ? nullptr : &it->second;
-    }
-
-    ReadGroup::Server *find_read_group_server(Quark const &g, Quark const &s)
-    {
-      ReadGroup *read_group = find_read_group(g);
-      return read_group ? read_group->find_server(s) : nullptr;
-    }
-
-    ReadGroup::Server const *find_read_group_server(Quark const &g,
-                                                    Quark const &s) const
-    {
-      ReadGroup const *read_group = find_read_group(g);
-      return read_group ? read_group->find_server(s) : nullptr;
-    }
-
     void migrate_group_descriptions(DataIO const &);
     void migrate_group_xovers(DataIO const &);
 
