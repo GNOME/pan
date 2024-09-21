@@ -270,9 +270,6 @@ class Data :
     }
 
   public:
-    virtual void save_state() = 0;
-
-  public:
     virtual ArticleCache &get_cache() = 0;
     virtual ArticleCache const &get_cache() const = 0;
 
