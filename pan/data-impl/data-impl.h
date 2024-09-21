@@ -744,10 +744,6 @@ public:
                                 Quark const &server,
                                 const Article_Number high) override;
 
-    virtual void set_xover_low(Quark const &group,
-                               Quark const &server,
-                               const Article_Number low) override;
-
     /**
     *** TaskArchive
     **/
