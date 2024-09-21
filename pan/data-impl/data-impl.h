@@ -265,11 +265,7 @@ public:
     **/
 
   private: // implementation
-    typedef std::map<Quark, std::string> descriptions_t;
-
     typedef sorted_vector<Quark, true> unique_sorted_quarks_t;
-    typedef sorted_vector<Quark, true> groups_t;
-    groups_t _nopost;    // groups which do not allow posting
 
     /**
      * Represents a newsgroup that's been read.
