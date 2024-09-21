@@ -352,7 +352,6 @@ public:
     void migrate_newsrc(Quark const &server, LineReader *);
     void migrate_newsrc_files(DataIO const &);
     void load_groups_from_db();
-    void save_all_server_groups_in_db();
     void save_new_groups_in_db(Quark const &server_pan_id,
                                NewGroup const *newgroups,
                                int count);
@@ -771,7 +770,7 @@ public:
       // The newsrc_autosave_id is now (soon) invalid since the timeout will be
       // cancelled when our caller returns FALSE. So forget about it already.
       newsrc_autosave_id = 0;
-      save_all_server_groups_in_db();
+      // TODO: remove
     }
 };
 } // namespace pan

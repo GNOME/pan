@@ -276,7 +276,7 @@ DataImpl :: save_state ()
   if (!_unit_test)
   {
     pan_debug ("data-impl dtor saving group, xov...");
-    save_all_server_groups_in_db ();
+    // TODO: remove
   }
 }
 
