@@ -267,17 +267,6 @@ void DataImpl ::rebuild_group_xover_data()
 
 DataImpl ::~DataImpl()
 {
-  save_state ();
-}
-
-void
-DataImpl :: save_state ()
-{
-  if (!_unit_test)
-  {
-    pan_debug ("data-impl dtor saving group, xov...");
-    // TODO: remove
-  }
 }
 
 std::string
