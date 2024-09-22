@@ -484,16 +484,6 @@ public:
                                 Article const *,
                                 std::string &setme) const override;
 
-    /**
-     * For a given ArticleNode, returns the first ancestor whose mid is in
-     * mid_pool.
-     * FIXME: these should be member functions of ArticleNode
-     */
-    static ArticleNode *find_closest_ancestor(
-      ArticleNode *node, unique_sorted_quarks_t const &mid_pool);
-    static ArticleNode const *find_closest_ancestor(
-      ArticleNode const *node, unique_sorted_quarks_t const &mid_pool);
-
     static ArticleNode *find_ancestor(ArticleNode *node,
                                       Quark const &ancestor_mid);
 
