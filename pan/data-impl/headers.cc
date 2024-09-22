@@ -1739,28 +1739,6 @@ DataImpl::ArticleNode *DataImpl ::find_ancestor(ArticleNode *node,
   return parent_node;
 }
 
-DataImpl::ArticleNode *DataImpl ::find_closest_ancestor(
-  ArticleNode *node, unique_sorted_quarks_t const &mid_pool)
-{
-  ArticleNode *parent_node(node->_parent);
-  while (parent_node && ! mid_pool.count(parent_node->_mid))
-  {
-    parent_node = parent_node->_parent;
-  }
-  return parent_node;
-}
-
-DataImpl::ArticleNode const *DataImpl ::find_closest_ancestor(
-  ArticleNode const *node, unique_sorted_quarks_t const &mid_pool)
-{
-  ArticleNode const *parent_node(node->_parent);
-  while (parent_node && ! mid_pool.count(parent_node->_mid))
-  {
-    parent_node = parent_node->_parent;
-  }
-  return parent_node;
-}
-
 Data::ArticleTree *DataImpl ::group_get_articles(Quark const &group,
                                                  Quark const &save_path,
                                                  const ShowType show_type,
