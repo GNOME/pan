@@ -17,6 +17,7 @@
  *
  */
 
+#include <SQLiteCpp/Transaction.h>
 #include <config.h>
 #include <cmath>
 #include <cstdint>
@@ -209,6 +210,79 @@ void DataImpl ::xover_unref(Quark const &group)
   unref_group (group);
 }
 
+void DataImpl::set_reference_tree_in_db(time_t const &time_posted,
+                         StringView const &message_id,
+                         std::string const &references)
+{
+  StringView ref_view(references), parent_msg_id;
+  int parent_id(0);
+  std::string current_msg_id(message_id);
+
+  LOG4CXX_TRACE(_db_logger,
+                  "message " << message_id << ": build ref tree from " << references);
+  while (ref_view.pop_last_token(parent_msg_id))
+  {
+    LOG4CXX_TRACE(_db_logger,
+                  "message " << message_id << ": scanning reference " << parent_msg_id);
+    // avoid self loop. Some articles wrongly reference themselves
+    if (parent_msg_id == message_id)
+    {
+        LOG4CXX_WARN(_db_logger,
+                     "message " << message_id << " references itself");
+        continue;
+    }
+
+    SQLite::Statement get_author_id(
+      pan_db, "select author_id from article where message_id = ?");
+
+    int p_count(0), author_id(0);
+
+    // try to find parent id using parent_msg_id
+    get_author_id.bind(1, parent_msg_id);
+    while (get_author_id.executeStep()) {
+      p_count ++;
+      author_id = get_author_id.getColumn(0);
+    }
+
+    if (p_count == 0)
+    {
+      LOG4CXX_TRACE(_db_logger,
+                    "message " << message_id << ": creating dummy parent article for " << parent_msg_id );
+        // parent not found, create dummy article
+        SQLite::Statement set_dummy_article_q(pan_db, R"SQL(
+          insert into `article` (message_id, time_posted) values (?,?)
+        )SQL");
+        set_dummy_article_q.bind(1, parent_msg_id);
+        // re-use time stamp for expiration
+        set_dummy_article_q.bind(2, static_cast<int64_t>(time_posted));
+        set_dummy_article_q.exec();
+    } else {
+      LOG4CXX_TRACE(_db_logger,
+                    "message " << message_id << ": update existing parent article for " << parent_msg_id );
+    }
+
+    // now, update parent_id
+    SQLite::Statement set_parent_id(pan_db, R"SQL(
+        update `article` set parent_id = (select id from `article` where message_id = ?) where message_id = ?
+      )SQL");
+    set_parent_id.reset();
+    set_parent_id.bind(1, parent_msg_id);
+    set_parent_id.bind(2, current_msg_id);
+    set_parent_id.exec();
+
+    if (author_id != 0) {
+      LOG4CXX_TRACE(_db_logger,
+                    "message " << message_id << ": parent " << parent_msg_id << "is real article -> break loop");
+      // parent is a real article. Its parent_id and the chain
+      // above are assumed to be correct.
+      break;
+    }
+
+    // for next loop, if any
+    current_msg_id = parent_msg_id;
+  }
+}
+
 Article const *DataImpl ::xover_add(Quark const &server,
                                     Quark const &group,
                                     StringView const &subject,
@@ -294,6 +368,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
   if (art_mid.empty())
   {
+    SQLite::Transaction add_article(pan_db);
+
     art_mid = message_id;
 
     // TODO: find a similar fuzzy search using DB
@@ -312,6 +388,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
       a.set_part_count (a.is_binary ? part_count : 1);
       a.time_posted = time_posted;
       a.xref.insert (server, xref);
+      // build article tree in memory. Will be removed
       load_article (group, &a, references);
       new_article = &a;
 
@@ -319,23 +396,30 @@ Article const *DataImpl ::xover_add(Quark const &server,
     }
 
     SQLite::Statement search_article_q(pan_db, R"SQL(
-        select count() from `article` where message_id = ?
+        select author_id from `article` where message_id = ?
     )SQL");
 
     search_article_q.bind(1, art_mid);
     int count(0);
+    bool is_zombie(false);
     while (search_article_q.executeStep()) {
-      count = search_article_q.getColumn(0);
+      count++;
+      // we may have a zombie article found only in references field
+      // of another article in the thread
+      is_zombie = search_article_q.getColumn(0).getInt() == 0;
     }
+
     // if we don't have this article in DB
-    if (count == 0) {
+    if (count == 0 or is_zombie) {
       // Create author
       SQLite::Statement set_author_q(pan_db, R"SQL(
         insert into `author` (author) values (?) on conflict do nothing
       )SQL");
       set_author_q.bind(1,author);
       set_author_q.exec();
+    }
 
+    if (count == 0) {
       // Create the article in DB
       SQLite::Statement create_article_q(pan_db, R"SQL(
         insert into `article` (author_id,subject,message_id, binary, expected_parts,
@@ -353,7 +437,32 @@ Article const *DataImpl ::xover_add(Quark const &server,
       create_article_q.exec();
 
       insert_xref_in_db(server, art_mid, xref);
+    } else if (is_zombie) {
+      // update article data in DB
+      SQLite::Statement update_article_q(pan_db, R"SQL(
+        update `article` set (author_id,subject, binary, expected_parts,
+                               time_posted, `references`, line_count)
+        = ((select id from author where author = ?),?,?,?,?,?,?)
+        where message_id == ?
+      )SQL");
+      update_article_q.bind(1, author);
+      update_article_q.bind(2, multipart_subject_quark);
+      update_article_q.bind(3, part_count >= 1 );
+      update_article_q.bind(4, part_count > 1 ? part_count : 1);
+      update_article_q.bind(5, time_posted);
+      update_article_q.bind(6, references);
+      update_article_q.bind(7, static_cast<int64_t>(line_count));
+      update_article_q.exec();
+
+      insert_xref_in_db(server, art_mid, xref);
     }
+
+    // now update the article thread from references. i.e. set
+    // parent_id extracted from references to construct a tree of
+    // articles
+    set_reference_tree_in_db(time_posted, message_id, references);
+
+    add_article.commit();
   }
 
   /**
