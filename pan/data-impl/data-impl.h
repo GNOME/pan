@@ -682,6 +682,9 @@ public:
   public: // Data interface
     void xover_ref(Quark const &group) override;
 
+    void set_reference_tree_in_db(time_t const &time_posted,
+                   StringView const &message_id,
+                   std::string const &references);
     Article const *xover_add(Quark const &server,
                              Quark const &group,
                              StringView const &subject,
