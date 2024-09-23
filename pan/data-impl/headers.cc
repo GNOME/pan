@@ -17,6 +17,7 @@
  *
  */
 
+#include "pan/data/data.h"
 #include "pan/general/article_number.h"
 #include "pan/usenet-utils/numbers.h"
 #include <SQLiteCpp/Statement.h>
@@ -52,9 +53,12 @@ extern "C"
 
 using namespace pan;
 
-DataImpl ::GroupHeaders ::GroupHeaders() :
+extern log4cxx::LoggerPtr db_logger;
+
+DataImpl ::GroupHeaders ::GroupHeaders(SQLiteDb &my_pan_db) :
   _ref(0),
-  _dirty(false)
+  _dirty(false),
+  pan_db(my_pan_db)
 {
 }
 
@@ -153,18 +157,36 @@ void DataImpl ::GroupHeaders ::build_references_header(Article const *article,
                                                        std::string &setme) const
 {
   setme.clear();
-  Quark const &message_id(article->message_id);
-  ArticleNode const *node(find_node(message_id));
-  while (node && node->_parent)
+  // return parent_ids from leaf to root
+  SQLite::Statement ref_q(pan_db, R"SQL(
+    with RECURSIVE rec_art as (
+      select id, parent_id, message_id from article where message_id == $leaf
+      union ALL
+      select a.id, a.parent_id, a.message_id from article as a
+	      join rec_art on a.id == rec_art.parent_id
+        where rec_art.parent_id is not null limit 10000
+		)
+    select message_id from rec_art where message_id != $leaf
+  )SQL" );
+
+  LOG4CXX_DEBUG(db_logger, "building references for msg " << article->message_id );
+  ref_q.bind(1, article->message_id);
+
+  while (ref_q.executeStep())
   {
-    node = node->_parent;
-    StringView const &ancestor_mid = node->_mid.to_view();
-    setme.insert(0, ancestor_mid.str, ancestor_mid.len);
-    if (node->_parent)
-    {
-      setme.insert(0, 1, ' ');
+    std::string ancestor_mid = ref_q.getColumn(0);
+    if (setme.find(ancestor_mid) != std::string::npos) {
+      LOG4CXX_WARN(db_logger, "messages " << article->message_id  << " creates a reference loop");
+      break;
     }
+
+    setme.insert(0, ancestor_mid);
+    setme.insert(0, 1, ' ');
   }
+
+  setme.erase(0,1);
+
+  LOG4CXX_DEBUG(db_logger, "built references for msg " << article->message_id << " : " << setme);
 }
 
 void DataImpl::GroupHeaders::reserve(Article_Count articles)
@@ -211,7 +233,7 @@ void DataImpl ::ref_group(Quark const &group)
 
   if (! h)
   {
-    h = _group_to_headers[group] = new GroupHeaders();
+    h = _group_to_headers[group] = new GroupHeaders(pan_db);
     bool migrated;
     int count(0);
     while (read_article_xref_q.executeStep()) {
@@ -302,6 +324,8 @@ void DataImpl ::find_nodes(quarks_t const &mids,
 ********
 *******/
 
+
+// TODO: remove. This is redundant with the threading done in DB
 // 'article' must have been instantiated by
 // GroupHeaders::alloc_new_article()!!
 void DataImpl ::load_article(Quark const &group,
@@ -1018,6 +1042,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     if (expired) {
       ++expire_count;
     } else {
+      // build article tree in memory. Will be removed
       load_article(group, &a, references);
       // score _after_ threading, so References: works
       a.score = _article_filter.score_article(*this, score_sections, group, a);
@@ -1663,6 +1688,7 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
   }
 }
 
+// TODO: remove, used only in load_article
 DataImpl::ArticleNode *DataImpl ::find_ancestor(ArticleNode *node,
                                                 Quark const &ancestor_mid)
 {
