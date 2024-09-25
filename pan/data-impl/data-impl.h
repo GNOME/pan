@@ -340,11 +340,14 @@ public:
     void group_get_servers(Quark const &group, quarks_t &) const override;
     void server_get_groups(Quark const &server, quarks_t &) const override;
 
+    void store_references(Quark message_id, std::string references);
     /**
     ***  HEADERS
     **/
 
   private: // implementation
+    void store_parent_articles(Quark &message_id, std::string &references);
+
     /** 'article' MUST have been allocated by
      * GroupHeaders::alloc_new_article()!! */
     void load_article(Quark const &g,
