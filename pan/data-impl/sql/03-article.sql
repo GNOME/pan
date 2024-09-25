@@ -3,18 +3,29 @@ create table if not exists article (
   id integer primary key asc autoincrement,
   flag boolean check(flag in (false,true)) default false, 
   message_id text not null unique, 
-  subject text not null, 
-  author_id integer not null, 
-  `references` text,
-  time_posted integer not null, 
-  line_count integer not null, 
+  subject text,
+  author_id integer references author (id) on delete restrict,
+  `references` text, -- deprecated in favor of parent_id
+
+  -- parent_id is used to create a tree model of the article thread. A
+  -- dummy article is created when references field refers an unknown
+  -- article. This way, the tree does not need to be updated when the
+  -- unknown article is retrieved from server.
+  parent_id integer references article (id) on delete set null,
+
+  -- dummy article get the same time stamp as the child to enable
+  -- expiration even if the real article is not found
+  time_posted integer not null,
+
+  line_count integer,
   --  marked boolean check(marked = False or marked = True),
-  binary boolean check(binary = False or binary = True), 
-  expected_parts integer not null, -- 1 for text article
+  binary boolean check(binary = False or binary = True),
 
-  is_read boolean check(is_read = False or is_read = True) default False,
 
-  foreign key(author_id) references author (id) on delete restrict
+  -- 1 for text article, potentially a lot for binaries
+  expected_parts integer,
+
+  is_read boolean check(is_read = False or is_read = True) default False
 );
 
 create unique index if not exists article_message_id on `article` (message_id);
