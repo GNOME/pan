@@ -2241,6 +2241,7 @@ HeaderPane ::HeaderPane(ActionManager &action_manager,
                         GroupPrefs &group_prefs,
                         WaitUI &wait,
                         GUI &gui) :
+  pan_db(data.get_db()),
   _action_manager(action_manager),
   _data(data),
   _queue(queue),

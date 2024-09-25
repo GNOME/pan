@@ -105,6 +105,9 @@ class HeaderPane :
                GUI &);
     ~HeaderPane();
 
+  private:
+    SQLiteDb &pan_db;
+
   public:
     void refilter();
     void set_show_type(const Data::ShowType);
