@@ -1704,7 +1704,8 @@ HeaderPane :: build_tree_columns ()
         nullptr));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 24));
+      // used a fixed width since the column is not resizable
+      gtk_tree_view_column_set_fixed_width (col, 24);
       gtk_tree_view_column_set_resizable (col, false);
       gtk_tree_view_column_pack_start (col, r, false);
       gtk_tree_view_column_set_cell_data_func (col, r, render_state, nullptr, nullptr);
@@ -1719,7 +1720,8 @@ HeaderPane :: build_tree_columns ()
         nullptr));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 24));
+      // used a fixed width since the column is not resizable
+      gtk_tree_view_column_set_fixed_width (col, 24);
       gtk_tree_view_column_set_resizable (col, false);
       gtk_tree_view_column_pack_start (col, r, false);
       gtk_tree_view_column_set_cell_data_func (col, r, render_action, nullptr, nullptr);
