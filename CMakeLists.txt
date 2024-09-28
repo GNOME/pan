@@ -190,7 +190,12 @@ if(NOT COMPILED_LKSTRFTIME_TEST)
   message(WARNING "failed to compile test-strftime.c")
 endif()
 
-set(PLATFORM_INFO ${CMAKE_HOST_SYSTEM})
+# Don't embed uname -sr in PLATFORM_INFO for a reproducible build.
+if (DEFINED ENV{SOURCE_DATE_EPOCH})
+  set(PLATFORM_INFO "-")
+else ()
+  set(PLATFORM_INFO ${CMAKE_HOST_SYSTEM})
+endif ()
 message(STATUS "platform: ${PLATFORM_INFO}")
 
 # https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
