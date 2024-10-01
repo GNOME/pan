@@ -4,6 +4,8 @@ set(SOURCES
  encode-cache.cc
  cert-store.cc
  data.cc
+ outbound-article.cc
+ outbound-parts.cc
  parts.cc
  xref.cc
 )

@@ -66,7 +66,7 @@ namespace pan
         int total;
       };
 
-      const Article& get_article ()  { return _article; }
+      const OutboundArticle& get_article ()  { return _article; }
       const std::string& get_groups () const { return _groups; }
       const std::string& get_filename () const { return _filename; }
 
@@ -92,7 +92,7 @@ namespace pan
       TaskUpload ( const std::string         & filename,
                    const Quark               & server,
                    EncodeCache               & cache,
-                   Article                     article,
+                   OutboundArticle                     article,
                    UploadInfo                  format,
                    GMimeMessage *              msg=nullptr,
                    Progress::Listener        * listener= nullptr);
@@ -142,10 +142,10 @@ namespace pan
       unsigned long _bytes;
       EncodeCache& _cache;
       std::deque<Log::Entry> _logfile;   // for intermediate updates
-      Article _article;
+      OutboundArticle _article;
       unsigned long _all_bytes;
-      std::vector<Article*> _upload_list;
-      Article::mid_sequence_t _mids;
+      std::vector<OutboundArticle*> _upload_list;
+      OutboundArticle::mid_sequence_t _mids;
       int _queue_pos;
       int _bpf;
       needed_t _needed;

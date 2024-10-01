@@ -66,7 +66,7 @@ namespace
     return buf;
   }
 
-  std::string get_groups_str(const Article& a)
+  std::string get_groups_str(const OutboundArticle& a)
   {
     std::string r;
     quarks_t groups;
@@ -88,7 +88,7 @@ namespace
 TaskUpload :: TaskUpload (const std::string         & filename,
                           const Quark               & server,
                           EncodeCache               & cache,
-                          Article                     article,
+                          OutboundArticle                     article,
                           UploadInfo                  format,
                           GMimeMessage *              msg,
                           Progress::Listener        * listener):
