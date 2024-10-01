@@ -44,6 +44,12 @@ namespace pan
    *
    * @ingroup data
    */
+
+  // used in both huge model and as tmp data structure for other
+  // operation like encode (presumably to send article). Parts are
+  // also used this way so this class must stays as is. Reading
+  // article may rely on another class, like ArticleInDb and
+  // PartsInDb.
   class Article
   {
     public:
