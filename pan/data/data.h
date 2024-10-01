@@ -28,6 +28,7 @@
 
 #include <pan/data/article-cache.h>
 #include <pan/data/article.h>
+#include <pan/data/in-memory-article.h>
 #include <pan/data/encode-cache.h>
 #include <pan/data/server-info.h>
 #include <pan/general/compression.h>
