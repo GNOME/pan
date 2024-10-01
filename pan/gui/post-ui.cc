@@ -18,6 +18,7 @@
  */
 
 #include "post-ui.h"
+#include "pan/data/in-memory-article.h"
 
 #include <config.h>
 #include <fstream>
@@ -1149,7 +1150,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     std::string last_mid;
     std::string first_mid;
 
-    Article a;
+    InMemoryArticle a;
     TaskUpload * tmp (dynamic_cast<TaskUpload*>(tasks[0]));
     if (tmp) a = tmp->_article;
 
@@ -3235,7 +3236,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
     {
       GMimeMessage * msg (new_message_from_ui (UPLOADING));
       TaskUpload* tmp;
-      Article a;
+      InMemoryArticle a;
       a.subject = subject;
       a.author = author;
       foreach_const (quarks_t, groups, git)
