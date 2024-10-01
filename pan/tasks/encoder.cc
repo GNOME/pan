@@ -22,6 +22,7 @@
  *
  */
 #include "encoder.h"
+#include "pan/data/in-memory-article.h"
 
 #include <config.h>
 #include <algorithm>
@@ -74,7 +75,7 @@ Encoder :: ~Encoder()
 void
 Encoder :: enqueue (TaskUpload                      * task,
                     EncodeCache                     * cache,
-                    Article                         * article,
+                    InMemoryArticle                 * article,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
@@ -136,7 +137,7 @@ Encoder :: do_work()
   std::string s;
   char cachename[4096];
   FILE * fp ;
-  Article* tmp = article;
+  InMemoryArticle* tmp = article;
 
   enable_progress_update();
 
