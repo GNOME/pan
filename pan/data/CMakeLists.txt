@@ -4,6 +4,9 @@ set(SOURCES
  encode-cache.cc
  cert-store.cc
  data.cc
+ in-memory-article.cc
+ in-memory-parts.cc
+ in-memory-xref.cc
  parts.cc
  xref.cc
 )
