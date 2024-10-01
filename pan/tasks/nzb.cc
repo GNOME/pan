@@ -19,6 +19,8 @@
  */
 
 #include "nzb.h"
+#include "pan/data/in-memory-article.h"
+#include "pan/data/in-memory-parts.h"
 #include "task-article.h"
 #include "task-upload.h"
 
@@ -344,6 +346,77 @@ std::ostream &print_article(
   return out;
 }
 
+std::ostream &print_article(
+  std::ostream &out,
+  InMemoryArticle const &a,
+  bool task_dump = false,
+  bool paused = false,
+  Quark const *path = nullptr)
+{
+  int depth = 1;
+  out << indent(depth++) << "<file" << " poster=\"";
+  escaped (out, a.author.to_view());
+  out  << "\" date=\"" << a.time_posted << "\" subject=\"";
+  //This is nasty. pan munges the article title of a multipart article to
+  //xxxxxxxxx (/<parts>), but nzb wants (1/<parts>)
+  std::string subject(a.subject);
+  //Not doing this for task dump as I'm not entirely sure what task dump expects
+  //to load
+  if (not task_dump)
+  {
+      subject = std::regex_replace(subject,
+                                   std::regex("\\((/[0-9]*\\))$"),
+                                   "(1$1");
+  }
+  escaped (out, subject) << "\">\n";
+
+  if (task_dump)
+  {
+    // path to save this to.
+    // This isn't part of the nzb spec.
+    if (!path->empty()) {
+      out << indent(depth) << "<path>";
+      escaped (out, path->to_view());
+      out << "</path>\n";
+    }
+
+    out << indent(depth) <<"<paused>";
+    out << paused << "</paused>\n";
+  }
+
+  // what groups was this crossposted in?
+  quarks_t groups;
+  foreach_const (InMemoryXref, a.xref, xit)
+    groups.insert (xit->group);
+  out << indent(depth++) << "<groups>\n";
+  foreach_const (quarks_t, groups, git)
+    out << indent(depth) << "<group>" << *git << "</group>\n";
+  out << indent(--depth) << "</groups>\n";
+
+  // now for the parts...
+  out << indent(depth++) << "<segments>\n";
+  for (InMemoryArticle::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+  {
+    std::string mid = it.mid ();
+
+    // remove the surrounding < > as per nzb spec
+    if (mid.size()>=2 && mid[0]=='<') {
+      mid.erase (0, 1);
+      mid.resize (mid.size()-1);
+    }
+
+    // serialize this part
+    out << indent(depth)
+        << "<segment" << " bytes=\"" << it.bytes() << '"'
+        << " number=\"" << it.number() << '"'
+        << ">";
+    escaped(out, mid);
+    out  << "</segment>\n";
+  }
+  out << indent(--depth) << "</segments>\n";
+  out << indent(--depth) << "</file>\n";
+  return out;
+}
 }
 
 std::ostream &NZB::print_header(std::ostream &out)
@@ -392,10 +465,10 @@ NZB :: nzb_to_xml (std::ostream             & out,
 /* Saves upload_list to XML file for distribution */
 std::ostream&
 NZB :: upload_list_to_xml_file (std::ostream   & out,
-                   const std::vector<Article*> & tasks)
+                   const std::vector<InMemoryArticle*> & tasks)
 {
 
-  foreach_const (std::vector<Article*>, tasks, it)
+  foreach_const (std::vector<InMemoryArticle*>, tasks, it)
   {
     print_article(out, **it);
   }
