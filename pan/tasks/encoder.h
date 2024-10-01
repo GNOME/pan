@@ -24,6 +24,7 @@
 #ifndef _Encoder_H_
 #define _Encoder_H_
 
+#include "pan/data/in-memory-article.h"
 #include <list>
 #include <string>
 #include <vector>
@@ -62,7 +63,7 @@ namespace pan
 
       void enqueue (TaskUpload                      * task,
                     EncodeCache                     * cache,
-                    Article                         * article,
+                    InMemoryArticle                 * article,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
@@ -87,7 +88,7 @@ namespace pan
       int bpf;
       EncodeCache * cache;
       TaskUpload::needed_t * needed;
-      Article * article;
+      InMemoryArticle * article;
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;
