@@ -30,6 +30,7 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/tasks/queue.h>
 #include "pad.h"
+#include "pan/data/in-memory-article.h"
 #include "render-bytes.h"
 #include "task-pane.h"
 #include "taskpane.ui.h"
@@ -118,7 +119,7 @@ namespace
 
     if (tu)
     {
-      const Article& a(tu->get_article());
+      const InMemoryArticle& a(tu->get_article());
       date = date_maker.get_date_string (tu->get_article().time_posted);
       g_snprintf(buffer,size,
                  _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"

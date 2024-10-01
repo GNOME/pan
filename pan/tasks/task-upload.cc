@@ -66,12 +66,12 @@ namespace
     return buf;
   }
 
-  std::string get_groups_str(const Article& a)
+  std::string get_groups_str(const InMemoryArticle& a)
   {
     std::string r;
     quarks_t groups;
     size_t cnt(1);
-    foreach_const (Xref, a.xref, xit)
+    foreach_const (InMemoryXref, a.xref, xit)
     {
       r += xit->group.to_string();
       if (cnt != a.xref.size() && a.xref.size() != 1) r+=", ";
@@ -88,7 +88,7 @@ namespace
 TaskUpload :: TaskUpload (const std::string         & filename,
                           const Quark               & server,
                           EncodeCache               & cache,
-                          Article                     article,
+                          InMemoryArticle                     article,
                           UploadInfo                  format,
                           GMimeMessage *              msg,
                           Progress::Listener        * listener):
