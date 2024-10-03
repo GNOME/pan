@@ -69,22 +69,13 @@ class Article
       parts.set_part_count(num);
     }
 
-    Parts::number_t get_total_part_count() const
-    {
-      return parts.get_total_part_count();
-    }
+    Parts::number_t get_total_part_count() const;
 
-    Parts::number_t get_found_part_count() const
-    {
-      return parts.get_found_part_count();
-    }
+    Parts::number_t get_found_part_count() const;
 
     bool get_part_info(Parts::number_t num,
                        std::string &mid,
-                       Parts::bytes_t &bytes) const
-    {
-      return parts.get_part_info(num, mid, bytes, message_id);
-    }
+                       Parts::bytes_t &bytes) const;
 
     typedef Parts::const_iterator part_iterator;
 
@@ -124,16 +115,9 @@ class Article
   public:
     unsigned int get_crosspost_count() const;
 
-    unsigned long get_line_count() const
-    {
-      return lines;
-    }
+    unsigned long get_line_count() const;
 
-    bool is_line_count_ge(size_t test) const
-    {
-      return lines >= test;
-    }
-
+    bool is_line_count_ge(size_t test) const;
     unsigned long get_byte_count() const;
     bool is_byte_count_ge(unsigned long test) const;
 
