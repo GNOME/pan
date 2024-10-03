@@ -17,108 +17,115 @@
  *
  */
 
-#include <config.h>
-#include <cassert>
+#include "article.h"
 #include <algorithm>
+#include <cassert>
+#include <config.h>
 #include <glib.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>
-#include "article.h"
 
 using namespace pan;
 
-Article :: PartState
-Article :: get_part_state () const
+Article ::PartState Article ::get_part_state() const
 {
-  PartState part_state (SINGLE);
+  PartState part_state(SINGLE);
 
   // not a multipart
-  if (!is_binary)
+  if (! is_binary)
+  {
     part_state = SINGLE;
+  }
 
   // someone's posted a followup to a multipart
-  else if (!is_line_count_ge(250) && has_reply_leader(subject.to_view()))
+  else if (! is_line_count_ge(250) && has_reply_leader(subject.to_view()))
+  {
     part_state = SINGLE;
+  }
 
-  else  {
-    const Parts::number_t total = parts.get_total_part_count ();
-    const Parts::number_t found = parts.get_found_part_count ();
-    if (!found) // someone's posted a "000/124" info message
+  else
+  {
+    const Parts::number_t total = parts.get_total_part_count();
+    const Parts::number_t found = parts.get_found_part_count();
+    if (! found) // someone's posted a "000/124" info message
+    {
       part_state = SINGLE;
+    }
     else // a multipart..
-      part_state = total==found ? COMPLETE : INCOMPLETE;
+    {
+      part_state = total == found ? COMPLETE : INCOMPLETE;
+    }
   }
 
   return part_state;
 }
 
-unsigned int
-Article :: get_crosspost_count () const
+unsigned int Article ::get_crosspost_count() const
 {
   quarks_t groups;
-  foreach_const (Xref, xref,  xit)
-    groups.insert (xit->group);
-  return (int) groups.size ();
+  foreach_const (Xref, xref, xit)
+  {
+    groups.insert(xit->group);
+  }
+  return (int)groups.size();
 }
 
-bool
-Article :: has_reply_leader (const StringView& s)
+bool Article ::has_reply_leader(StringView const &s)
 {
-  return !s.empty()
-    && s.len>4 \
-    && (s.str[0]=='R' || s.str[0]=='r')
-    && (s.str[1]=='E' || s.str[1]=='e')
-    && s.str[2]==':'
-    && s.str[3]==' ';
+  return ! s.empty() && s.len > 4 && (s.str[0] == 'R' || s.str[0] == 'r')
+         && (s.str[1] == 'E' || s.str[1] == 'e') && s.str[2] == ':'
+         && s.str[3] == ' ';
 }
 
-unsigned long
-Article :: get_byte_count () const
+unsigned long Article ::get_byte_count() const
 {
   unsigned long bytes = 0;
-  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+  for (part_iterator it(pbegin()), end(pend()); it != end; ++it)
+  {
     bytes += it.bytes();
+  }
   return bytes;
 }
 
-bool
-Article :: is_byte_count_ge (unsigned long test) const
+bool Article ::is_byte_count_ge(unsigned long test) const
 {
   unsigned long bytes = 0;
-  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+  for (part_iterator it(pbegin()), end(pend()); it != end; ++it)
+  {
     if (((bytes += it.bytes())) >= test)
+    {
       return true;
+    }
+  }
   return false;
 }
 
-Article :: mid_sequence_t
-Article :: get_part_mids () const
+Article ::mid_sequence_t Article ::get_part_mids() const
 {
   mid_sequence_t mids;
-  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+  for (part_iterator it(pbegin()), end(pend()); it != end; ++it)
   {
-    mids.push_back (it.mid());
+    mids.push_back(it.mid());
   }
   return mids;
 }
 
-//const Quark&
-//Article :: get_attachment () const
+// const Quark&
+// Article :: get_attachment () const
 //{
-//  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
-//    if (it.mid() == search)
-//}
+//   for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+//     if (it.mid() == search)
+// }
 
-void
-Article :: clear ()
+void Article ::clear()
 {
-  message_id.clear ();
-  author.clear ();
-  subject.clear ();
+  message_id.clear();
+  author.clear();
+  subject.clear();
   time_posted = 0;
-  xref.clear ();
+  xref.clear();
   score = 0;
-  parts.clear ();
+  parts.clear();
   is_binary = false;
 }
