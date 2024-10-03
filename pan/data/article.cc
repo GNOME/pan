@@ -61,6 +61,33 @@ Article ::PartState Article ::get_part_state() const
   return part_state;
 }
 
+Parts::number_t Article::get_total_part_count () const
+{
+  return parts.get_total_part_count();
+}
+
+Parts::number_t Article::get_found_part_count() const
+{
+  return parts.get_found_part_count();
+}
+
+bool Article::get_part_info(Parts::number_t num,
+                            std::string &mid,
+                            Parts::bytes_t &bytes) const
+{
+  return parts.get_part_info(num, mid, bytes, message_id);
+}
+
+unsigned long Article::get_line_count() const
+{
+  return lines;
+}
+
+bool Article::is_line_count_ge(size_t test) const
+{
+  return lines >= test;
+}
+
 unsigned int Article ::get_crosspost_count() const
 {
   quarks_t groups;
