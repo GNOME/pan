@@ -159,6 +159,44 @@ void Article::set_time_posted(time_t t) const {
   assert( q.exec() == 1);
 }
 
+Quark Article::get_author() const {
+  SQLite::Statement q(pan_db, R"SQL(
+    select name || ' <' || address || '>' from author as t
+    join article as a on a.author_id == t.id
+      where a.message_id = ?
+  )SQL");
+  q.bind(1,message_id);
+  Quark result;
+  int count = 0;
+  while (q.executeStep()) {
+    result = Quark(q.getColumn(0).getText());
+    count ++;
+  }
+  assert(count > 0);
+  return result;
+}
+
+void Article::set_author(Quark a) const {
+  StringView name, address, auth(a);
+  auth.pop_token(name, '<');
+  name.trim();
+  auth.pop_token(address, '>');
+  SQLite::Statement author_q(pan_db, R"SQL(
+    insert into author (name, address) values (?,?) on conflict do nothing
+  )SQL");
+  author_q.bind(1,name);
+  author_q.bind(1,address);
+  author_q.exec();
+
+  SQLite::Statement q(pan_db, R"SQL(
+    update article
+    set author_id = (select id from author where adress = ?)
+    where message_id = ?
+  )SQL");
+  q.bind(1,address);
+  q.bind(2,message_id);
+  assert(q.exec() == 1);
+}
 
 // const Quark&
 // Article :: get_attachment () const
@@ -170,7 +208,7 @@ void Article::set_time_posted(time_t t) const {
 void Article ::clear()
 {
   message_id.clear();
-  author.clear();
+  // author.clear();
   subject.clear();
   // TODO: replace time_posted = 0;
   xref.clear();

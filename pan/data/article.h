@@ -103,7 +103,6 @@ class Article
 
   public:
     Quark message_id;
-    Quark author;
     Quark subject;
     unsigned int lines;
     int score;
@@ -121,7 +120,8 @@ class Article
     bool is_byte_count_ge(unsigned long test) const;
     time_t get_time_posted() const;
     void set_time_posted(time_t) const;
-
+    Quark get_author() const;
+    void set_author(Quark) const;
     Xref xref;
 
   public:
