@@ -127,7 +127,7 @@ namespace
       mc.file_clear ();
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
         if (!strcmp (*k,"poster"))       mc.a.set_author(*v);
-        else if (!strcmp (*k,"subject")) mc.a.subject = *v;
+        else if (!strcmp (*k,"subject")) mc.a.get_subject() = *v;
         else if (!strcmp (*k,"date"))    mc.a.set_time_posted(strtoul(*v,nullptr,10));
       }
     }
@@ -286,7 +286,7 @@ std::ostream &print_article(
   out  << "\" date=\"" << a.get_time_posted() << "\" subject=\"";
   //This is nasty. pan munges the article title of a multipart article to
   //xxxxxxxxx (/<parts>), but nzb wants (1/<parts>)
-  std::string subject(a.subject);
+  std::string subject(a.get_subject());
   //Not doing this for task dump as I'm not entirely sure what task dump expects
   //to load
   if (not task_dump)

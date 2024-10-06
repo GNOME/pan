@@ -77,7 +77,7 @@ Decoder :: enqueue (TaskArticle                     * task,
   this->save_mode = save_mode;
   this->options = options;
   this->attachment_filename = filename;
-  this->article_subject = article.subject;
+  this->article_subject = article.get_subject();
 
   mark_read = false;
 

@@ -136,7 +136,7 @@ namespace
       g_snprintf(buffer, size,
                  _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
                    "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
-                 escaped(a.subject.to_string()).c_str(), escaped(a.get_author().to_string()).c_str(), date ? date : _("unknown"),
+                 escaped(a.get_subject().to_string()).c_str(), escaped(a.get_author().to_string()).c_str(), date ? date : _("unknown"),
                  ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
     }
 
@@ -921,7 +921,7 @@ namespace
        {
         s1 = ta->get_article().get_author().c_str();
         if (s1.find(search_text) != s1.npos) return true;
-        s1 = ta->get_article().subject.c_str();
+        s1 = ta->get_article().get_subject().c_str();
        }
        if (search_mode == 1)
        {
@@ -930,13 +930,13 @@ namespace
           GRegex* rex = g_regex_new (search_text.c_str(), cf0, mf0, nullptr);
           if (!rex) return false;
           const bool match =
-            g_regex_match (rex, ta->get_article().subject.c_str(), G_REGEX_MATCH_NOTEMPTY, nullptr) ||
+            g_regex_match (rex, ta->get_article().get_subject().c_str(), G_REGEX_MATCH_NOTEMPTY, nullptr) ||
             g_regex_match (rex, ta->get_article().get_author().c_str(), G_REGEX_MATCH_NOTEMPTY, nullptr);
           g_regex_unref(rex);
           return match;
        }
        if (search_mode == 2)
-        s1 = ta->get_article().subject.c_str();
+        s1 = ta->get_article().get_subject().c_str();
        if (search_mode == 3)
         s1 = ta->get_article().get_author().c_str();
        if (search_mode == 4)

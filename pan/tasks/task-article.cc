@@ -47,7 +47,7 @@ namespace
   std::string get_description (const Article& article, bool save)
   {
     std::string stripped;
-    mime::remove_multipart_from_subject (article.subject.c_str(), stripped);
+    mime::remove_multipart_from_subject (article.get_subject().c_str(), stripped);
 
     const char* str = stripped.c_str();
     iconv_t c = iconv_open("UTF-8","UTF-8");
@@ -150,7 +150,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   // initialize our progress status...
   init_steps (all_bytes);
   set_step (all_bytes - need_bytes);
-  const char *artsub(article.subject.c_str());
+  const char *artsub(article.get_subject().c_str());
   if (save_path.empty())
     set_status (artsub);
   else
@@ -295,8 +295,8 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
     ArticleCache::CacheResponse res (_cache.add (it->message_id, view));
     if (ArticleCache::CACHE_OK != res.type)
       health = res.type == ArticleCache::CACHE_DISK_FULL ? ERR_NOSPACE : ERR_LOCAL;
-      if (health == ERR_NOSPACE)
-        _state.set_health (ERR_NOSPACE);
+    if (health == ERR_NOSPACE)
+      _state.set_health (ERR_NOSPACE);
   }
 
   // std::cerr << LINE_ID << ' ' << it->message_id << " from " << nntp->_server << ": health " << health << std::endl;
@@ -321,7 +321,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
              // an incomplete file gives us more PAR2 blocks than a missing one.
         Log :: add_err_va (
           _("Article \"%s\" is incomplete -- the news server(s) don't have part %s"),
-          _article.subject.c_str(),
+          _article.get_subject().c_str(),
           it->message_id.c_str());
         _needed.erase (it);
       }
@@ -348,7 +348,7 @@ TaskArticle :: use_decoder (Decoder* decoder)
   const Article::mid_sequence_t mids (_article.get_part_mids());
   ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
   _decoder->enqueue (this, _save_path, filenames, _save_mode, _options, _attachment, _article);
-  set_status_va (_("Decoding %s"), _article.subject.c_str());
+  set_status_va (_("Decoding %s"), _article.get_subject().c_str());
   pan_debug ("decoder thread was free, enqueued work");
 }
 
