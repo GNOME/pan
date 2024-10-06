@@ -1930,7 +1930,7 @@ void GUI :: do_show_selected_article_info ()
   {
     // date
     EvolutionDateMaker date_maker;
-    char * date = date_maker.get_date_string (a->time_posted);
+    char * date = date_maker.get_date_string (a->get_time_posted());
 
     // article parts
     typedef Parts::number_t number_t;

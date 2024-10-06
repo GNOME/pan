@@ -114,7 +114,7 @@ ArticleFilter :: test_article (const Data        & data,
     }
 
     case FilterInfo::DAYS_OLD_GE:
-      pass = (time(NULL) - article.time_posted) > (criteria._ge * 86400);
+      pass = (time(NULL) - article.get_time_posted()) > (criteria._ge * 86400);
       break;
 
     case FilterInfo::LINE_COUNT_GE:
