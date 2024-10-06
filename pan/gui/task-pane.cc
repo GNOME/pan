@@ -132,7 +132,7 @@ namespace
     if (ta)
     {
       const Article& a(ta->get_article());
-      date = date_maker.get_date_string (ta->get_article().time_posted);
+      date = date_maker.get_date_string (ta->get_article().get_time_posted());
       g_snprintf(buffer, size,
                  _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
                    "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
