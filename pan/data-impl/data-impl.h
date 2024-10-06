@@ -82,7 +82,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     /* The ProfilesImpl will own and destruct the DataIO object */
     DataImpl(StringView const &cache_ext,
              Prefs &prefs,
-             SQLiteDb &pan_db,
              bool unit_test = false,
              int cache_megs = 10,
              DataIO *source = new DataIO());
@@ -150,15 +149,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     CertStore _certstore;
     Queue *_queue;
     log4cxx::LoggerPtr _db_logger;
-
-    // database
-  private:
-    SQLiteDb &pan_db;
-
-  public:
-  SQLiteDb &get_db() override {
-    return pan_db;
-  }
 
 public:
 #ifdef HAVE_GKR
@@ -446,12 +436,11 @@ public:
     {
         int _ref;
         bool _dirty;
-        SQLiteDb &pan_db;
         nodes_t _nodes;
         MemChunk<Article> _art_chunk;
         MemChunk<ArticleNode> _node_chunk;
 
-        GroupHeaders(SQLiteDb &pan_db);
+        GroupHeaders();
         ~GroupHeaders();
 
         Article &alloc_new_article()

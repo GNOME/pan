@@ -21,25 +21,30 @@
 
 using namespace pan;
 
+
+SQLiteDb get_db()   {
+      // always start from an empty db
+      char const *db_file("/tmp/data-impl.db");
+      std::remove(db_file);
+      std::cout << "Creating DB";
+      SQLiteDb my_db = SQLiteDb(db_file, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+      return my_db;
+}
+
+SQLiteDb pan_db = get_db();
+
 class DataImplTest : public CppUnit::TestFixture
 {
 private:
-    SQLiteDb *my_db;
     DataImpl *data;
 
 public:
     void setUp()
     {
-      // always start from an empty db
-      char const *db_file("/tmp/data-impl.db");
-      std::remove(db_file);
-      my_db = new SQLiteDb(db_file, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-      std::cout << "Creating DB";
-
       StringView cache;
       Prefs prefs;
-      data = new DataImpl(cache, prefs, *my_db);
-      load_db_schema(*my_db);
+      data = new DataImpl(cache, prefs);
+      load_db_schema(pan_db);
     }
 
     void tearDown()
@@ -47,9 +52,9 @@ public:
     }
 
     void testSimpleAncestor() {
-        my_db->exec(R"SQL(insert into article (message_id,time_posted) values ("foo", 1234))SQL");
+        pan_db.exec(R"SQL(insert into article (message_id,time_posted) values ("foo", 1234))SQL");
         data->set_reference_tree_in_db(1234, "foo", "baz bar foo");
-        SQLite::Statement query(*my_db, R"SQL(
+        SQLite::Statement query(pan_db, R"SQL(
             select one.message_id,other.message_id as parent
             from article as one
             left outer join article as other on other.id == one.parent_id

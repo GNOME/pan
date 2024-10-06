@@ -127,7 +127,6 @@ using namespace pan;
 
 DataImpl ::DataImpl(StringView const &cache_ext,
                     Prefs &prefs,
-                    SQLiteDb &my_pan_db,
                     bool unit_test,
                     int cache_megs,
                     DataIO *io) :
@@ -137,7 +136,6 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _certstore(*this),
   _queue(nullptr),
   _db_logger(pan::getLogger("database")),
-  pan_db(my_pan_db),
   _unit_test(unit_test),
   _data_io(io),
   _prefs(prefs),
