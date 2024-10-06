@@ -42,7 +42,7 @@ StringView const ArticleFilter ::get_header(Article const &a,
   }
   if (header_name == from)
   {
-    return a.author.to_view();
+    return a.get_author().to_view();
   }
   if (header_name == message_Id)
   {
@@ -113,7 +113,7 @@ bool ArticleFilter ::test_article(Data const &data,
       break;
 
     case FilterInfo::IS_POSTED_BY_ME:
-      pass = data.has_from_header(article.author.to_view());
+      pass = data.has_from_header (article.get_author().to_view());
       break;
 
     case FilterInfo::IS_READ:
