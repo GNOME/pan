@@ -57,11 +57,10 @@ namespace {
 log4cxx::LoggerPtr logger = pan::getLogger("header");
 }
 
-DataImpl ::GroupHeaders ::GroupHeaders(SQLiteDb &my_pan_db) :
+DataImpl ::GroupHeaders ::GroupHeaders() :
 
   _ref(0),
-  _dirty(false),
-  pan_db(my_pan_db)
+  _dirty(false)
 {
 }
 
@@ -236,7 +235,7 @@ void DataImpl ::ref_group(Quark const &group)
 
   if (! h)
   {
-    h = _group_to_headers[group] = new GroupHeaders(pan_db);
+    h = _group_to_headers[group] = new GroupHeaders();
     bool migrated;
     int count(0);
     while (read_article_xref_q.executeStep()) {
