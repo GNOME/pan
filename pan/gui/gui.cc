@@ -1950,7 +1950,7 @@ void GUI :: do_show_selected_article_info ()
     foreach_const (std::set<number_t>, missing_parts, it)
       s << ' ' << *it;
 
-    const char* author = iconv_inited ? __g_mime_iconv_strdup(conv, a->author.c_str()) : a->author.c_str();
+    const char* author = iconv_inited ? __g_mime_iconv_strdup(conv, a->get_author().c_str()) : a->get_author().c_str();
     const char* subject = iconv_inited ? __g_mime_iconv_strdup(conv, a->subject.c_str()) : a->subject.c_str();
 
     GtkWidget * w = gtk_message_dialog_new_with_markup (
