@@ -37,7 +37,7 @@ ArticleFilter :: get_header (const Article& a, const Quark& header_name) const
   static const StringView empty;
 
   if (header_name == subject)    return a.subject.to_view ();
-  if (header_name == from)       return a.author.to_view ();
+  if (header_name == from)       return a.get_author().to_view ();
   if (header_name == message_Id) return a.message_id.to_view ();
   if (header_name == message_ID) return a.message_id.to_view ();
 
@@ -90,7 +90,7 @@ ArticleFilter :: test_article (const Data        & data,
       break;
 
     case FilterInfo::IS_POSTED_BY_ME:
-      pass = data.has_from_header (article.author.to_view());
+      pass = data.has_from_header (article.get_author().to_view());
       break;
 
     case FilterInfo::IS_READ:
