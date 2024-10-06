@@ -18,7 +18,10 @@
  */
 
 #include "article.h"
+#include "pan/data/pan-db.h"
+#include <SQLiteCpp/Statement.h>
 #include <algorithm>
+#include <bits/types/time_t.h>
 #include <cassert>
 #include <config.h>
 #include <glib.h>
@@ -138,6 +141,28 @@ Article ::mid_sequence_t Article ::get_part_mids() const
   return mids;
 }
 
+time_t Article::get_time_posted() const {
+  SQLite::Statement q(pan_db, "select time_posted from article where message_id = ?");
+  q.bind(1,message_id);
+  time_t result = 0;
+  int count(0);
+  while (q.executeStep()) {
+    // time may be 0 for some article
+    result = q.getColumn(0).getInt();
+    count++;
+  }
+  assert(count > 0);
+  return result;
+}
+
+void Article::set_time_posted(time_t t) const {
+  SQLite::Statement q(pan_db, "update article set time_posted = ? where message_id = ?");
+  q.bind(1,t);
+  q.bind(2,message_id);
+  assert( q.exec() == 1);
+}
+
+
 // const Quark&
 // Article :: get_attachment () const
 //{
@@ -150,7 +175,7 @@ void Article ::clear()
   message_id.clear();
   author.clear();
   subject.clear();
-  time_posted = 0;
+  // TODO: replace time_posted = 0;
   xref.clear();
   score = 0;
   parts.clear();
