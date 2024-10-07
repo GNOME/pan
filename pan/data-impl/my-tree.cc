@@ -348,7 +348,7 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
     pass.clear ();
     foreach_const (unique_nodes_t, d, it) {
       const Article * a ((*it)->_article);
-      if (a->score > -9999 || _data._article_filter.test_article (_data, _filter, _group, *a))
+      if (a->get_score() > -9999 || _data._article_filter.test_article (_data, _filter, _group, *a))
         pass.push_back (*it); // pass is now sorted by mid because d was too
       else
         fail2.push_back (*it); // fail2 is sorted by mid because d was too

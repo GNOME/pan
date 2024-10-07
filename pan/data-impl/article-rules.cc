@@ -54,14 +54,14 @@ bool ArticleRules ::apply_rules(Data &data,
                                 Quark const &group,
                                 Article &article)
 {
-
+  int score(article.get_score());
   // check if one of the rules below must be applied
-  bool apply(article.score >= rules._lb && article.score <= rules._hb);
-  if (rules._hb >= 9999 && article.score >= rules._hb)
+  bool apply(score >= rules._lb && score <= rules._hb);
+  if (rules._hb >= 9999 && score >= rules._hb)
   {
     apply = true;
   }
-  if (rules._lb <= -9999 && article.score <= rules._lb)
+  if (rules._lb <= -9999 && score <= rules._lb)
   {
     apply = true;
   }
