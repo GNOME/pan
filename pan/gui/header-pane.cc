@@ -218,7 +218,7 @@ int HeaderPane ::find_highest_followup_score(GtkTreeModel *model,
     do
     {
       Article const *a(get_article(model, &child));
-      score = std::max(score, a->score);
+      score = std::max(score, a->get_score());
       score = std::max(score, find_highest_followup_score(model, &child));
     } while (gtk_tree_model_iter_next(model, &child));
   }
@@ -558,7 +558,7 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
       break;
 
     case COL_SCORE:
-      ret = row_a.article->score - row_b.article->score;
+      ret = row_a.article->get_score() - row_b.article->get_score();
       break;
 
     case COL_BYTES:
