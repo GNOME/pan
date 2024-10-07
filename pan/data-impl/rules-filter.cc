@@ -54,13 +54,13 @@ bool RulesFilter ::test_article(Data &data,
                                 Quark const &group,
                                 Article &article)
 {
-
-  bool pass(article.score >= rules._lb && article.score <= rules._hb);
-  if (rules._hb >= 9999 && article.score >= rules._hb)
+  int score(article.get_score());
+  bool pass(score >= rules._lb && score <= rules._hb);
+  if (rules._hb >= 9999 && score >= rules._hb)
   {
     pass = true;
   }
-  if (rules._lb <= -9999 && article.score <= rules._lb)
+  if (rules._lb <= -9999 && score <= rules._lb)
   {
     pass = true;
   }
