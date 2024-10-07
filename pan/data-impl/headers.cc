@@ -1049,7 +1049,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
       // build article tree in memory.
       load_article(group, &a, references);
       // score _after_ threading, so References: works
-      a.score = _article_filter.score_article(*this, score_sections, group, a);
+      a.set_score(_article_filter.score_article(*this, score_sections, group, a));
       ++article_count;
       if (! is_read(&a)) {
         ++unread_count;
@@ -1412,7 +1412,7 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
     if ((*it)->_article)
     {
       Article &a(*(*it)->_article);
-      a.score = _article_filter.score_article(*this, sections, group, a);
+      a.set_score(_article_filter.score_article(*this, sections, group, a));
     }
   }
 }
@@ -1433,7 +1433,7 @@ void DataImpl ::rescore_group_articles(Quark const &group)
     if (it->second->_article)
     {
       Article &a(*(it->second->_article));
-      a.score = _article_filter.score_article(*this, sections, group, a);
+      a.set_score(_article_filter.score_article(*this, sections, group, a));
     }
   }
 }

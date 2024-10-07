@@ -13,6 +13,9 @@ create table if not exists article (
   -- in SQL null + 3 => null
   line_count integer default 0,
 
+  -- score is computed by pan.
+  score integer default 0,
+
   --  marked boolean check(marked = False or marked = True),
   binary boolean check(binary = False or binary = True),
 

@@ -238,6 +238,30 @@ void Article::set_subject(Quark a) const {
   assert( q.exec() == 1);
 }
 
+int Article::get_score() const {
+  SQLite::Statement q(pan_db, R"SQL(
+    select score from article where message_id = ?
+  )SQL");
+  q.bind(1,message_id);
+  int result;
+  int count = 0;
+  while (q.executeStep()) {
+    result = q.getColumn(0).getInt();
+    count ++;
+  }
+  assert(count > 0);
+  return result;
+}
+
+void Article::set_score(int s) const {
+  SQLite::Statement q(pan_db, R"SQL(
+    update article set score = ? where message_id = ?
+  )SQL");
+  q.bind(1,s);
+  q.bind(2,message_id);
+  assert( q.exec() == 1);
+}
+
 void Article ::clear()
 {
   message_id.clear();
@@ -245,7 +269,7 @@ void Article ::clear()
   // subject.clear();
   // TODO: replace time_posted = 0;
   xref.clear();
-  score = 0;
+  // score = 0;
   parts.clear();
   is_binary = false;
 }

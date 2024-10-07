@@ -264,7 +264,7 @@ bool ArticleFilter ::test_article(Data const &data,
       break;
 
     case FilterInfo::SCORE_GE:
-      pass = article.score >= criteria._ge;
+      pass = article.get_score() >= criteria._ge;
       break;
 
     case FilterInfo::IS_CACHED:

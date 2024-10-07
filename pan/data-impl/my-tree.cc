@@ -365,7 +365,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
     foreach_const (unique_nodes_t, d, it)
     {
       Article const *a((*it)->_article);
-      if (a->score > -9999
+      if (a->get_score() > -9999
           || _data._article_filter.test_article(_data, _filter, _group, *a))
       {
         pass.push_back(*it); // pass is now sorted by mid because d was too

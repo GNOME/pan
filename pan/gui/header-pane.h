@@ -369,7 +369,7 @@ class HeaderPane :
               set_value_int(setme, action);
               break;
             case COL_SCORE:
-              set_value_int(setme, article->score);
+              set_value_int(setme, article->get_score());
               break;
             case COL_LINES:
               set_value_ulong(setme, article->get_line_count());

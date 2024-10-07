@@ -103,7 +103,6 @@ class Article
 
   public:
     Quark message_id;
-    int score;
     bool is_binary;
     bool flag;
     static bool has_reply_leader(StringView const &);
@@ -122,11 +121,12 @@ class Article
     void set_author(Quark) const;
     Quark get_subject() const;
     void set_subject(Quark) const;
+    int get_score() const;
+    void set_score(int) const;
     Xref xref;
 
   public:
     Article() :
-      score(0),
       is_binary(false),
       flag(false)
     {
