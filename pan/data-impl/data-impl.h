@@ -305,11 +305,9 @@ public:
         servers_t _servers;
 
         Article_Count _article_count;
-        Article_Count _unread_count;
 
         ReadGroup() :
-          _article_count(0),
-          _unread_count(0)
+          _article_count(0)
         {
         }
 
@@ -321,11 +319,6 @@ public:
         static void decrement_safe(Article_Count &lhs, Article_Count dec)
         {
           lhs = lhs > dec ? lhs - dec : static_cast<Article_Count>(0);
-        }
-
-        void decrement_unread(Article_Count dec)
-        {
-          decrement_safe(_unread_count, dec);
         }
 
         void decrement_count(Article_Count dec)
