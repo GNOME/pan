@@ -245,8 +245,6 @@ void DataImpl ::rebuild_group_permission_data()
     // migrate group permissions into DB
     migrate_group_permissions(*_data_io);
   }
-
-  load_group_permissions ();
 }
 
 void DataImpl ::rebuild_group_xover_data()
