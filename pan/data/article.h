@@ -103,11 +103,11 @@ class Article
 
   public:
     Quark message_id;
-    bool is_binary;
     bool flag;
-    static bool has_reply_leader(StringView const &);
+    Xref xref;
 
   public:
+    static bool has_reply_leader(StringView const &);
     unsigned int get_crosspost_count() const;
 
     unsigned long get_line_count() const;
@@ -123,11 +123,11 @@ class Article
     void set_subject(Quark) const;
     int get_score() const;
     void set_score(int) const;
-    Xref xref;
+    bool is_binary() const;
+    void is_binary(bool) const;
 
   public:
     Article() :
-      is_binary(false),
       flag(false)
     {
     }
