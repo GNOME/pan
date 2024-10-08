@@ -54,17 +54,16 @@ create table if not exists server_group (
   -- servers so it's not entirely, and in any case a specific server
   -- may not have got all the articles yet.
 
-  -- In theory, a group should contain a list of articles, each with a read/not-read status.
-  -- In practice, retrieving these status can be quite long.
-  -- Anyway, pan internal data use these ranges, so I'll stick with them for now. I may
-  -- revisit this and remove this attribute if storing a status per article is viable
-  -- (which may require subtle usage of indexes and views)
+  -- Note that article table contains a list of articles, each with a read/not-read status.
+  -- this is redundant with read-range, but much simpler to retrieve.
 
-  -- stored as a list of ranges
+  -- stored as a list of ranges. ranges are used only during migration
+  -- of newsrc files and will eventually be removed
   read_ranges text
 );
 
-create unique index if not exists server_group_idx on server_group (server_id, group_id);
+create unique index if not exists server_group_sg_idx on server_group (server_id, group_id);
+create index if not exists server_group_g_idx on server_group (group_id);
 
 -- In my tests, there's about 14k descriptions for 150k groups. So
 -- using a separate table is probably good
