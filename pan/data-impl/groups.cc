@@ -657,7 +657,7 @@ void DataImpl ::load_group_xovers_from_db() {
   StringView groupname, total, unread, xover, server_pan_id;
 
   std::stringstream xover_st;
-  xover_st << "select name, pan_id, total_article_count, unread_article_count, xover_high "
+  xover_st << "select name, pan_id, xover_high "
            << "from `group` as g "
            << "join `server_group` as sg, `server` as s "
            << "where g.id == group_id and s.id == server_id and total_article_count is not null and g.pseudo == False;";
@@ -669,11 +669,10 @@ void DataImpl ::load_group_xovers_from_db() {
     count ++;
     groupname = xover_q.getColumn(0).getText();
     ReadGroup& g (_read_groups[groupname]);
-    g._article_count = Article_Count(xover_q.getColumn(2).getText());
 
-    if (!xover_q.getColumn(4).isNull()) {
+    if (!xover_q.getColumn(2).isNull()) {
       server_pan_id = xover_q.getColumn(1).getText();
-      xover = xover_q.getColumn(4).getText();
+      xover = xover_q.getColumn(2).getText();
       g[server_pan_id]._xover_high = Article_Number(xover);
     }
   }
@@ -733,17 +732,11 @@ DataImpl :: save_group_xovers ()
       xgroups.insert (git->first);
   }
 
-  std::stringstream count_st;
-  count_st << "update `group` set total_article_count = ? "
-           << "where name = ? ;";
-  SQLite::Statement count_q(pan_db, count_st.str());
-
   std::stringstream xover_st;
   xover_st << "update `server_group` set xover_high = ? "
            << "where server_id = (select id from server where pan_id = ?) "
            << "  and group_id = (select id from `group` where name = ?);";
   SQLite::Statement xover_q(pan_db, xover_st.str());
-  int count ;
 
   // foreach xgroup
   foreach_const (xgroups_t, xgroups, it)
@@ -752,15 +745,6 @@ DataImpl :: save_group_xovers ()
     ReadGroup const &g(*find_read_group(groupname));
 
     SQLite::Transaction store_xov_transaction(pan_db);
-
-    count_q.reset();
-    count_q.bind(1,static_cast<int64_t>(g._article_count));
-    count_q.bind(2,groupname.c_str());
-    int exec_count = count_q.exec();
-    count += exec_count;
-    if ( exec_count != 1) {
-      LOG4CXX_WARN(logger, "Unkwown group " << groupname << " when saving xover data");
-    };
 
     foreach_const (ReadGroup::servers_t, g._servers, i) {
       if (static_cast<uint64_t>(i->second._xover_high) != 0) {

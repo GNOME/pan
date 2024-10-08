@@ -1712,8 +1712,6 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
   {
     // update the group's read/unread count...
     Quark const &group(it->first);
-    ReadGroup &g(_read_groups[group]);
-    g.decrement_count(it->second.count);
     fire_group_counts(group);
 
     // remove the articles from our lookup table...

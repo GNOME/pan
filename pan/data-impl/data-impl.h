@@ -304,26 +304,9 @@ public:
         typedef Loki::AssocVector<Quark, Server> servers_t;
         servers_t _servers;
 
-        Article_Count _article_count;
-
-        ReadGroup() :
-          _article_count(0)
-        {
-        }
-
         Server &operator[](Quark const &s)
         {
           return _servers[s];
-        }
-
-        static void decrement_safe(Article_Count &lhs, Article_Count dec)
-        {
-          lhs = lhs > dec ? lhs - dec : static_cast<Article_Count>(0);
-        }
-
-        void decrement_count(Article_Count dec)
-        {
-          decrement_safe(_article_count, dec);
         }
 
         Server *find_server(Quark const &s)
