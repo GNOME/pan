@@ -1401,7 +1401,7 @@ void DataImpl ::mark_read(Article const **articles,
   group_to_changed_mids_t group_to_changed_mids;
 
   SQLite::Statement set_read_q(pan_db, R"SQL(
-    update `article` set is_read = ? where message_id = ?
+    update `article` set is_read = $read where message_id = ? and is_read != $read
 )SQL");
 
   // set them to `read'...
@@ -1414,13 +1414,10 @@ void DataImpl ::mark_read(Article const **articles,
       set_read_q.reset();
       set_read_q.bind(1, read);
       set_read_q.bindNoCopy(2, article->message_id.c_str());
-      assert(set_read_q.exec() == 1);
-      LOG4CXX_TRACE(logger,  "Setting read status of article " << article->message_id << " to " << read);
 
-      bool const old_state(_read_groups[xit->group][xit->server]._read.mark_one(
-        xit->number, read));
-      if (! old_state != ! read)
-      {
+      if (set_read_q.exec() == 1) {
+        LOG4CXX_TRACE(logger,  "Changed read status of article "
+                      << article->message_id << " to " << read);
         group_to_changed_mids[xit->group].insert(article->message_id);
       }
     }
@@ -1430,16 +1427,6 @@ void DataImpl ::mark_read(Article const **articles,
   foreach_const (group_to_changed_mids_t, group_to_changed_mids, it)
   {
     Quark const &group(it->first);
-    ReadGroup &g(_read_groups[group]);
-    const Article_Count n{it->second.size()};
-    if (read)
-    {
-      g.decrement_unread(n);
-    }
-    else
-    {
-      g._unread_count += n;
-    }
     fire_group_counts(group);
     on_articles_changed(group, it->second, false);
   }
