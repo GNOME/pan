@@ -263,8 +263,6 @@ void DataImpl ::rebuild_group_xover_data()
 
   if (count == 0)
     migrate_group_xovers (*_data_io);
-
-  load_group_xovers_from_db ();
 }
 
 DataImpl ::~DataImpl()
@@ -278,7 +276,6 @@ DataImpl :: save_state ()
   if (!_unit_test)
   {
     pan_debug ("data-impl dtor saving group, xov...");
-    save_group_xovers ();
     save_all_server_groups_in_db ();
   }
 }
