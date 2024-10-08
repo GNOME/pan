@@ -134,10 +134,6 @@ void DataImpl ::migrate_newsrc(Quark const &server_name, LineReader *in) {
           << "select ?,`group`.id,? from `group` where `group`.`name` = ?;";
   SQLite::Statement link_q(pan_db,link_st.str());
 
-  // speed insert up -- from minutes to seconds
-  // see https://www.sqlite.org/pragma.html#pragma_synchronous
-  pan_db.exec("pragma synchronous = off");
-
   StringView line, name, numbers;
   int count = 0;
   while (!in->fail() && in->getline (line))
@@ -162,8 +158,6 @@ void DataImpl ::migrate_newsrc(Quark const &server_name, LineReader *in) {
       count++;
     }
   }
-
-  pan_db.exec("pragma synchronous = normal");
 
   double const seconds = timer.get_seconds_elapsed();
 
@@ -315,8 +309,6 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
 
   LOG4CXX_DEBUG(logger, "Saving new groups in DB. Prepared statements: " << timer.get_seconds_elapsed() << " s");
 
-  pan_db.exec("pragma synchronous = off");
-
   int added(0);
   for (NewGroup const *it = newgroups, *end = newgroups + count; it != end; ++it) {
     std::string name (it->group.c_str());
@@ -392,8 +384,6 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
 
   LOG4CXX_DEBUG(logger, "Saving new groups in DB. Deleted obsolete groups: " << timer.get_seconds_elapsed() << " s");
 
-  pan_db.exec("pragma synchronous = normal");
-
   LOG4CXX_INFO(logger, "Added " << added << " and deleted " << deleted <<
                " groups in " << timer.get_seconds_elapsed() << "s.");
 }
@@ -404,10 +394,6 @@ void DataImpl::save_group_in_db(Quark const &server_name) {
   Server const *server = find_server(server_name);
 
   LOG4CXX_INFO(logger, "Saving groups of server " << server->host << " in DB...") ;
-
-  // speed insert up -- from minutes to seconds
-  // see https://www.sqlite.org/pragma.html#pragma_synchronous
-  pan_db.exec("pragma synchronous = off");
 
   // get server id
   SQLite::Statement get_id_q(pan_db, "select id from server where host = ?");
@@ -455,7 +441,6 @@ void DataImpl::save_group_in_db(Quark const &server_name) {
 
   LOG4CXX_INFO(logger, "Saved " << count << " groups "
                << "in " << seconds << "s in DB.");
-  pan_db.exec("pragma synchronous = normal");
 }
 
 
@@ -490,10 +475,6 @@ void DataImpl ::migrate_group_permissions(DataIO const &data_io)
 
   SQLite::Statement save_perm_q(pan_db, "update `group` set permission = ? where name == ?");
 
-  // speed insert up -- from minutes to seconds
-  // see https://www.sqlite.org/pragma.html#pragma_synchronous
-  pan_db.exec("pragma synchronous = off");
-
   int count = 0;
   while (in && !in->fail() && in->getline(line))
   {
@@ -513,8 +494,6 @@ void DataImpl ::migrate_group_permissions(DataIO const &data_io)
     save_perm_q.exec();
     count ++;
   }
-
-  pan_db.exec("pragma synchronous = normal");
 
   LOG4CXX_INFO(logger, "Migrated " << count << " groups permissions "
                << "in " << timer.get_seconds_elapsed() << "s.");
@@ -542,8 +521,6 @@ void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
              "gid,? from alias ";
   SQLite::Statement save_desc_q(pan_db, save_st.str());
 
-  pan_db.exec("pragma synchronous = off");
-
   while (in && !in->fail() && in->getline(group)) {
     // save in DB only if description has information
     if (group.pop_last_token (s, ':') && !s.empty() && s!="?" && s != group) {
@@ -555,8 +532,6 @@ void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
   }
 
   delete in;
-
-  pan_db.exec("pragma synchronous = normal");
 
   // remove obsolete file
   std::remove(filename.data());
@@ -917,8 +892,6 @@ void DataImpl ::save_group_descriptions_in_db(NewGroup const *newgroups, int cou
       on conflict (group_id) do update set description = @desc where description != @desc ;
   )SQL" );
 
-  pan_db.exec("pragma synchronous = off");
-
   int desc_count = 0;
   // keep any descriptions worth keeping that we don't already have...
   for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
@@ -944,7 +917,6 @@ void DataImpl ::save_group_descriptions_in_db(NewGroup const *newgroups, int cou
     }
   }
 
-  pan_db.exec("pragma synchronous = normal");
   LOG4CXX_DEBUG(logger, "saved " << desc_count << " group descriptions in DB ");
 }
 
