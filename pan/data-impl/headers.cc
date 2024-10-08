@@ -583,10 +583,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
     values ((select id from article where message_id = ?), ?, ?, ?) on conflict do nothing;
   )SQL");
 
-  // speed insert up -- from minutes to seconds
-  // see https://www.sqlite.org/pragma.html#pragma_synchronous
-  pan_db.exec("pragma synchronous = off");
-
   LOG4CXX_INFO(logger, "Migrating articles of group " << group.c_str()
                << " in DB. Please wait a few minutes.");
 
@@ -862,8 +858,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
     }
   }
   delete in;
-
-  pan_db.exec("pragma synchronous = normal");
 
   // update the group's article count...
   ReadGroup &g(_read_groups[group]);
@@ -1245,10 +1239,6 @@ bool DataImpl ::save_headers(DataIO &data_io,
     values ((select id from article where message_id = ?), ?, ?, ?) on conflict do nothing;
   )SQL");
 
-  // speed insert up -- from minutes to seconds
-  // see https://www.sqlite.org/pragma.html#pragma_synchronous
-  pan_db.exec("pragma synchronous = off");
-
   LOG4CXX_DEBUG(logger, "Saving new articles of groups " << group.c_str()
                 << " in DB...");
 
@@ -1337,7 +1327,6 @@ bool DataImpl ::save_headers(DataIO &data_io,
     save_group_xovers();
   }
 
-  pan_db.exec("pragma synchronous = normal");
   LOG4CXX_DEBUG(logger, "Done saving new articles of groups " << group.c_str()
                 << " in DB...");
 

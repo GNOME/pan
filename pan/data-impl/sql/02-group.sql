@@ -1,5 +1,9 @@
 pragma foreign_keys = on;
 
+-- speed up writing in file DB. This is necessary due to the amount of writes
+-- performed when loading new articles
+-- see https://www.sqlite.org/pragma.html#pragma_synchronous
+pragma synchronous = off;
 
 create table if not exists `group` (
   id integer primary key asc autoincrement,
