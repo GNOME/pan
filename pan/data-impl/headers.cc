@@ -1313,8 +1313,6 @@ bool DataImpl ::save_headers(DataIO &data_io,
 
       store_article_transaction.commit();
     }
-
-    save_group_xovers();
   }
 
   LOG4CXX_DEBUG(logger, "Done saving new articles of groups " << group.c_str()

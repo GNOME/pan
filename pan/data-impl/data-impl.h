@@ -292,12 +292,6 @@ public:
          */
         struct Server
         {
-            Article_Number _xover_high;
-
-            Server() :
-              _xover_high(0)
-            {
-            }
         };
 
         typedef Loki::AssocVector<Quark, Server> servers_t;
@@ -351,8 +345,6 @@ public:
 
     void migrate_group_descriptions(DataIO const &);
     void migrate_group_xovers(DataIO const &);
-    void load_group_xovers_from_db();
-    void save_group_xovers();
 
     void migrate_group_permissions(DataIO const &);
 

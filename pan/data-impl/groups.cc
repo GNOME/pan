@@ -628,37 +628,6 @@ void DataImpl ::migrate_group_xovers(DataIO const &data_io)
   }
 }
 
-void DataImpl ::load_group_xovers_from_db() {
-  TimeElapsed timer;
-  LOG4CXX_DEBUG(logger,"Loading xovers data from DB");
-
-  StringView groupname, total, unread, xover, server_pan_id;
-
-  std::stringstream xover_st;
-  xover_st << "select name, pan_id, xover_high "
-           << "from `group` as g "
-           << "join `server_group` as sg, `server` as s "
-           << "where g.id == group_id and s.id == server_id and total_article_count is not null and g.pseudo == False;";
-  SQLite::Statement xover_q(pan_db, xover_st.str());
-  int count(0) ;
-
-  // walk through the results row by row...
-  while (xover_q.executeStep()) {
-    count ++;
-    groupname = xover_q.getColumn(0).getText();
-    ReadGroup& g (_read_groups[groupname]);
-
-    if (!xover_q.getColumn(2).isNull()) {
-      server_pan_id = xover_q.getColumn(1).getText();
-      xover = xover_q.getColumn(2).getText();
-      g[server_pan_id]._xover_high = Article_Number(xover);
-    }
-  }
-
-  LOG4CXX_INFO(logger, "Loaded " << count << " group xover info from DB in "
-               << timer.get_seconds_elapsed() << "s.");
-}
-
 namespace
 {
   typedef std::map < pan::Quark, std::string > quark_to_symbol_t;
@@ -681,66 +650,6 @@ namespace
   };
 }
 
-void
-DataImpl :: save_group_xovers ()
-{
-  if (_unit_test)
-    return;
-
-  SQLite::Statement group_q(pan_db,R"SQL(
-    select total_article_count, unread_article_count from `group` where name = ?
-  )SQL");
-
-  // find the set of groups that have had an xover
-  typedef std::set<Quark, AlphabeticalQuarkOrdering> xgroups_t;
-  xgroups_t xgroups;
-  foreach_const (read_groups_t, _read_groups, git) {
-    ReadGroup const &group(git->second);
-    group_q.reset();
-    group_q.bind(1,git->first.c_str());
-    bool is_xgroup;
-    while (group_q.executeStep()) {
-      is_xgroup = group_q.getColumn(1).getInt();
-    }
-    if (!is_xgroup)
-      foreach_const (ReadGroup::servers_t, group._servers, sit)
-        if ((is_xgroup = (static_cast<uint64_t>(sit->second._xover_high)!=0)))
-          break;
-    if (is_xgroup)
-      xgroups.insert (git->first);
-  }
-
-  std::stringstream xover_st;
-  xover_st << "update `server_group` set xover_high = ? "
-           << "where server_id = (select id from server where pan_id = ?) "
-           << "  and group_id = (select id from `group` where name = ?);";
-  SQLite::Statement xover_q(pan_db, xover_st.str());
-
-  // foreach xgroup
-  foreach_const (xgroups_t, xgroups, it)
-  {
-    const Quark groupname (*it);
-    ReadGroup const &g(*find_read_group(groupname));
-
-    SQLite::Transaction store_xov_transaction(pan_db);
-
-    foreach_const (ReadGroup::servers_t, g._servers, i) {
-      if (static_cast<uint64_t>(i->second._xover_high) != 0) {
-        xover_q.reset();
-        xover_q.bind(1,static_cast<int64_t>(i->second._xover_high));
-        xover_q.bind(2,i->first.c_str());
-        xover_q.bind(3,groupname.c_str());
-        int exec_count = xover_q.exec();
-        if (exec_count != 1) {
-          LOG4CXX_WARN(logger, "Unkwown group " << groupname << " or server pan_id " << i->first.c_str() << " when saving xover data in DB");
-        };
-      }
-    }
-
-    store_xov_transaction.commit();
-  }
-}
-
 /****
 *****
 ****/
@@ -749,9 +658,27 @@ Article_Number DataImpl ::get_xover_high(Quark const &groupname,
                                          Quark const &servername) const
 {
   Article_Number high (0ul);
-  ReadGroup::Server const *rgs(find_read_group_server(groupname, servername));
-  if (rgs)
-    high = rgs->_xover_high;
+  SQLite::Statement xover_q(pan_db, R"SQL(
+    select xover_high from `server_group` as sg
+      join `group` as g on g.id == sg.group_id,
+           `server` as s on s.id == sg.server_id
+      where g.name = ? and s.pan_id = ?
+  )SQL");
+
+  xover_q.bind(1,groupname.c_str());
+  xover_q.bind(2,servername.c_str());
+  int count (0) ;
+
+  // walk through the results row by row...
+  while (xover_q.executeStep()) {
+    count ++;
+    if (!xover_q.getColumn(0).isNull()) {
+      high = static_cast<Article_Number>(xover_q.getColumn(0).getInt64());
+    }
+  }
+
+  assert (count == 1);
+
   return high;
 }
 
@@ -759,9 +686,24 @@ void DataImpl ::set_xover_high(Quark const &group,
                                Quark const &server,
                                const Article_Number high)
 {
-  //std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
-  ReadGroup::Server& rgs (_read_groups[group][server]);
-  rgs._xover_high = high;
+  // std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
+
+  LOG4CXX_TRACE(logger,"Saving xover high " << high << " of group " << group.c_str()
+                << " server pan_id " << server.c_str());
+
+  SQLite::Statement xover_q(pan_db, R"SQL(
+    update `server_group` set xover_high = ?
+    where server_id = (select id from server where pan_id = ?)
+      and group_id = (select id from `group` where name = ?)
+  )SQL");
+
+  uint64_t hi (high);
+  // bind does not accept uint64_t parameter
+  xover_q.bind(1,int64_t(hi));
+  xover_q.bind(2,server.c_str());
+  xover_q.bind(3,group.c_str());
+  int exec_count = xover_q.exec();
+  assert(exec_count == 1);
 }
 
 void DataImpl ::add_groups(Quark const &server,
