@@ -214,9 +214,7 @@ void DataImpl ::set_xover_low(Quark const &group,
                               Quark const &server,
                               const Article_Number low)
 {
-  ReadGroup::Server * rgs (find_read_group_server (group, server));
-  if (rgs != nullptr)
-    rgs->_read.mark_range (static_cast<Article_Number>(0), low, true);
+  // TODO: remove
 }
 
 Article const *DataImpl ::xover_add(Quark const &server,

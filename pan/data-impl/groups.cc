@@ -233,11 +233,11 @@ void DataImpl ::add_group_in_db(Quark const &server_pan_id, Quark const &group, 
 }
 
 void DataImpl ::load_groups_from_db() {
-  StringView line, name, numbers;
+  StringView line, name;
 
   // sqlitebrowser returns 110k groups in 210ms (57 without ordering)
   SQLite::Statement read_group_q(pan_db,R"SQL(
-    select name, read_ranges
+    select name
       from `group` as g join server as s, server_group as sg
       where s.host = ? and s.id == sg.server_id and g.id == sg.group_id
             and s.host != "local" and g.pseudo == False
@@ -258,14 +258,9 @@ void DataImpl ::load_groups_from_db() {
     while (read_group_q.executeStep()) {
       i++;
       name = read_group_q.getColumn(0).getText();
-      numbers = read_group_q.getColumn(1).getText();
 
       Quark const &group(name);
       groups.push_back (group);
-
-      if (!numbers.empty())
-        _read_groups[group][server]._read.mark_str (numbers);
-
     }
     LOG4CXX_DEBUG(logger, "Loaded " << i << " groups from server with pan_id " << server.c_str() << " from DB in "
                   << timer.get_seconds_elapsed() << "s.");
@@ -419,42 +414,25 @@ void DataImpl::save_group_in_db(Quark const &server_name) {
 
   std::stringstream link_st;
   link_st << "with ids(gid) as (select id from `group` where name = $gname) "
-          << "insert  into `server_group` (server_id, group_id, read_ranges) select $sid, gid, $rg from ids where true "
-          << "on conflict (server_id, group_id) do update set read_ranges = $rg;";
+          << "insert  into `server_group` (server_id, group_id) select $sid, gid from ids where true "
+          << "on conflict (server_id, group_id) do nothing;";
   SQLite::Statement link_q(pan_db,link_st.str());
-
-  // overly-complex optimization: both sit->second.groups and _subscribed
-  // are both ordered by AlphabeticalQuarkOrdering.
-  // Where N==sit->second.groups.size() and M==_subscribed.size(),
-  // "bool subscribed = _subscribed.count (group)" is N*log(M),
-  // but a sorted set comparison is M+N comparisons.
-  AlphabeticalQuarkOrdering o;
 
   // for the groups in this server...
   int count = 0;
   foreach_const (Server::groups_t, server->groups, group_iter) {
     Quark const &group(*group_iter);
 
-    // if the group's been read, save its read number ranges...
-    ReadGroup::Server const *rgs(find_read_group_server(group, server_name));
-    newsrc_string.clear ();
-    if (rgs != nullptr) {
-      rgs->_read.to_string (newsrc_string);
-    }
-
     link_q.reset();
     link_q.bind(1,group_iter->c_str());
     link_q.bind(2,server_id);
-    link_q.bind(3,newsrc_string);
-    link_q.exec();
-
-    count++;
+    count += link_q.exec();
   }
 
   double const seconds = timer.get_seconds_elapsed();
 
-  LOG4CXX_INFO(logger, "Saved " << count << " groups "
-               << "in " << seconds << "s in DB.");
+  LOG4CXX_WARN(logger, "Saved " << count << " groups "
+               << "in " << seconds << "s in DB. They should already be in there");
 }
 
 
@@ -843,13 +821,7 @@ void DataImpl ::mark_group_read(Quark const &groupname)
   LOG4CXX_TRACE(logger, "Set " << count <<
                 " articles as read for group " << groupname.c_str());
 
-  ReadGroup * rg (find_read_group (groupname));
-  if (rg != nullptr) {
-    foreach (ReadGroup::servers_t, rg->_servers, it) {
-      //std::cerr << LINE_ID << " marking read range [0..." << it->second._xover_high << "] in " << get_server_address(it->first) << ']' << std::endl;
-      it->second._read.mark_range (static_cast<Article_Number>(0), it->second._xover_high, true);
-    }
-    save_group_xovers ();
+  if (count > 0) {
     fire_group_read (groupname);
   }
 }
