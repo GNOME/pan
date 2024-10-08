@@ -445,11 +445,12 @@ public:
     {
         int _ref;
         bool _dirty;
+        SQLiteDb &pan_db;
         nodes_t _nodes;
         MemChunk<Article> _art_chunk;
         MemChunk<ArticleNode> _node_chunk;
 
-        GroupHeaders();
+        GroupHeaders(SQLiteDb &pan_db);
         ~GroupHeaders();
 
         Article &alloc_new_article()
