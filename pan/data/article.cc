@@ -43,7 +43,7 @@ Article ::PartState Article ::get_part_state() const
   PartState part_state(SINGLE);
 
   // not a multipart
-  if (! is_binary)
+  if (! is_binary())
   {
     part_state = SINGLE;
   }
@@ -262,6 +262,30 @@ void Article::set_score(int s) const {
   assert( q.exec() == 1);
 }
 
+bool Article::is_binary() const {
+  SQLite::Statement q(pan_db, R"SQL(
+    select binary from article where message_id = ?
+  )SQL");
+  q.bind(1,message_id);
+  bool result;
+  int count = 0;
+  while (q.executeStep()) {
+    result = q.getColumn(0).getInt();
+    count ++;
+  }
+  assert(count > 0);
+  return result;
+}
+
+void Article::is_binary(bool b) const {
+  SQLite::Statement q(pan_db, R"SQL(
+    update article set binary = ? where message_id = ?
+  )SQL");
+  q.bind(1,b);
+  q.bind(2,message_id);
+  assert( q.exec() == 1);
+}
+
 void Article ::clear()
 {
   message_id.clear();
@@ -271,5 +295,5 @@ void Article ::clear()
   xref.clear();
   // score = 0;
   parts.clear();
-  is_binary = false;
+  // is_binary = false;
 }
