@@ -670,7 +670,6 @@ void DataImpl ::load_group_xovers_from_db() {
     groupname = xover_q.getColumn(0).getText();
     ReadGroup& g (_read_groups[groupname]);
     g._article_count = Article_Count(xover_q.getColumn(2).getText());
-    g._unread_count = Article_Count(xover_q.getColumn(3).getText());
 
     if (!xover_q.getColumn(4).isNull()) {
       server_pan_id = xover_q.getColumn(1).getText();
@@ -711,12 +710,21 @@ DataImpl :: save_group_xovers ()
   if (_unit_test)
     return;
 
+  SQLite::Statement group_q(pan_db,R"SQL(
+    select total_article_count, unread_article_count from `group` where name = ?
+  )SQL");
+
   // find the set of groups that have had an xover
   typedef std::set<Quark, AlphabeticalQuarkOrdering> xgroups_t;
   xgroups_t xgroups;
   foreach_const (read_groups_t, _read_groups, git) {
     ReadGroup const &group(git->second);
-    bool is_xgroup (static_cast<uint64_t>(group._article_count) != 0 || static_cast<uint64_t>(group._unread_count) != 0);
+    group_q.reset();
+    group_q.bind(1,git->first.c_str());
+    bool is_xgroup;
+    while (group_q.executeStep()) {
+      is_xgroup = group_q.getColumn(1).getInt();
+    }
     if (!is_xgroup)
       foreach_const (ReadGroup::servers_t, group._servers, sit)
         if ((is_xgroup = (static_cast<uint64_t>(sit->second._xover_high)!=0)))
@@ -726,7 +734,7 @@ DataImpl :: save_group_xovers ()
   }
 
   std::stringstream count_st;
-  count_st << "update `group` set total_article_count = ? , unread_article_count = ? "
+  count_st << "update `group` set total_article_count = ? "
            << "where name = ? ;";
   SQLite::Statement count_q(pan_db, count_st.str());
 
@@ -747,8 +755,7 @@ DataImpl :: save_group_xovers ()
 
     count_q.reset();
     count_q.bind(1,static_cast<int64_t>(g._article_count));
-    count_q.bind(2,static_cast<int64_t>(g._unread_count));
-    count_q.bind(3,groupname.c_str());
+    count_q.bind(2,groupname.c_str());
     int exec_count = count_q.exec();
     count += exec_count;
     if ( exec_count != 1) {
@@ -858,7 +865,6 @@ void DataImpl ::mark_group_read(Quark const &groupname)
       //std::cerr << LINE_ID << " marking read range [0..." << it->second._xover_high << "] in " << get_server_address(it->first) << ']' << std::endl;
       it->second._read.mark_range (static_cast<Article_Number>(0), it->second._xover_high, true);
     }
-    rg->_unread_count = static_cast<Article_Count>(0);
     save_group_xovers ();
     fire_group_read (groupname);
   }
