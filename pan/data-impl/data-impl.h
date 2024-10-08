@@ -376,8 +376,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void save_group_xovers();
 
     void migrate_group_permissions(DataIO const &);
-    void load_group_permissions();
-    void save_group_permissions_in_db();
 
     std::string get_newsrc_filename(Quark const &server) const;
     void migrate_newsrc(Quark const &server, LineReader *);

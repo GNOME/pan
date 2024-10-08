@@ -523,61 +523,6 @@ void DataImpl ::migrate_group_permissions(DataIO const &data_io)
   std::remove(filename.data());
 }
 
-void DataImpl ::load_group_permissions()
-{
-  TimeElapsed timer;
-
-  SQLite::Statement load_perm_q(pan_db, "select name, permission from `group` where permission != 'y' order by name asc ;");
-
-  int count = 0;
-  while (load_perm_q.executeStep()) {
-    const Quark group (load_perm_q.getColumn(0).getText());
-    char const *perm = load_perm_q.getColumn(1);
-
-    if (perm[0] == 'm')
-      ;
-    else if (perm[0] == 'n')
-      _nopost.get_container().push_back (group);
-    else {
-      assert(0);
-    }
-
-    count++;
-  }
-
-  LOG4CXX_INFO(logger, "Loaded " << count << " groups permissions from DB "
-               << "in " << timer.get_seconds_elapsed() << "s.");
-}
-
-void
-DataImpl :: save_group_permissions_in_db ()
-{
-  if (_unit_test)
-    return;
-
-  TimeElapsed timer;
-  SQLite::Statement save_perm(pan_db, "update `group` set permission = ? where name == ?");
-
-  pan_db.exec("pragma synchronous = off");
-
-  int count = 0;
-  int nb = 0;
-
-  foreach_const (groups_t, _nopost, it) {
-    save_perm.reset();
-    save_perm.bind(1,"n");
-    save_perm.bind(2,*it);
-    nb = save_perm.exec();
-    assert(nb == 1);
-    count ++;
-  }
-
-  pan_db.exec("pragma synchronous = normal");
-
-  LOG4CXX_INFO(logger, "Saved " << count << " groups permissions in DB "
-               << "in " << timer.get_seconds_elapsed() << "s.");
-}
-
 void DataImpl ::migrate_group_descriptions(DataIO const &data_io) {
   LineReader * in (data_io.read_group_descriptions ());
 
@@ -892,32 +837,6 @@ void DataImpl ::add_groups(Quark const &server,
     // and merge it with _unsubscribed (i.e., groups we haven't seen before become unsubscribed)
     groups.clear ();
     tmp.clear ();
-  }
-
-  {
-    // build lists of the groups that should and should not be in _moderated and _nopost.t
-    // this is pretty cumbersome, but since these lists almost never change it's still
-    // a worthwhile tradeoff to get the speed/memory wins of a sorted_vector
-    groups_t mod, notmod, post, nopost, tmp;
-    for (NewGroup const *it = newgroups, *end = newgroups + count; it != end;
-         ++it)
-    {
-      if (it->permission == 'm') mod.get_container().push_back (it->group);
-      if (it->permission != 'm') notmod.get_container().push_back (it->group);
-      if (it->permission == 'n') nopost.get_container().push_back (it->group);
-      if (it->permission != 'n') post.get_container().push_back (it->group);
-    }
-    mod.sort (); notmod.sort ();
-    post.sort (); nopost.sort ();
-
-    // _nopost -= post
-    tmp.clear ();
-    std::set_difference (_nopost.begin(), _nopost.end(), post.begin(), post.end(), inserter (tmp, tmp.begin()));
-    _nopost.swap (tmp);
-    // _nopost += nopost
-    tmp.clear ();
-    std::set_union (_nopost.begin(), _nopost.end(), nopost.begin(), nopost.end(), inserter (tmp, tmp.begin()));
-    _nopost.swap (tmp);
   }
 
   save_new_groups_in_db(server, newgroups, count);
