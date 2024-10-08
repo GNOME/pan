@@ -312,8 +312,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
       // load article data in memory. Will be removed
       Article& a (h->alloc_new_article());
       a.message_id = art_mid;
-      a.is_binary = part_count >= 1;
-      a.set_part_count (a.is_binary ? part_count : 1);
+      a.set_part_count ( part_count >= 1 ? part_count : 1);
       a.xref.insert (server, xref);
       load_article (group, &a, references);
       new_article = &a;
