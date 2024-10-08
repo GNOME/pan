@@ -292,7 +292,6 @@ public:
          */
         struct Server
         {
-            Numbers _read;
             Article_Number _xover_high;
 
             Server() :
