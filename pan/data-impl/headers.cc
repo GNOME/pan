@@ -17,6 +17,7 @@
  *
  */
 
+#include "pan/data/data.h"
 #include "pan/general/string-view.h"
 #include "pan/general/article_number.h"
 #include "pan/usenet-utils/numbers.h"
@@ -59,9 +60,11 @@ log4cxx::LoggerPtr logger = pan::getLogger("header");
 log4cxx::LoggerPtr tree_logger = pan::getLogger("header-tree");
 }
 
-DataImpl ::GroupHeaders ::GroupHeaders() :
+DataImpl ::GroupHeaders ::GroupHeaders(SQLiteDb &my_pan_db) :
+
   _ref(0),
-  _dirty(false)
+  _dirty(false),
+  pan_db(my_pan_db)
 {
 }
 
@@ -159,18 +162,15 @@ DataImpl ::GroupHeaders *DataImpl ::get_group_headers(Quark const &group)
 void DataImpl ::GroupHeaders ::build_references_header(Article const *article,
                                                        std::string &setme) const
 {
-  setme.clear();
-  Quark const &message_id(article->message_id);
-  ArticleNode const *node(find_node(message_id));
-  while (node && node->_parent)
+  SQLite::Statement ref_q(pan_db, R"SQL(
+    select references from article where message_id = ?
+  )SQL" );
+
+  ref_q.bind(1, article->message_id);
+
+  while (ref_q.executeStep())
   {
-    node = node->_parent;
-    StringView const &ancestor_mid = node->_mid.to_view();
-    setme.insert(0, ancestor_mid.str, ancestor_mid.len);
-    if (node->_parent)
-    {
-      setme.insert(0, 1, ' ');
-    }
+    setme.assign(ref_q.getColumn(0).getText());
   }
 }
 
@@ -218,7 +218,7 @@ void DataImpl ::ref_group(Quark const &group)
 
   if (! h)
   {
-    h = _group_to_headers[group] = new GroupHeaders();
+    h = _group_to_headers[group] = new GroupHeaders(pan_db);
     bool migrated;
     int count(0);
     while (read_article_xref_q.executeStep()) {
@@ -1053,6 +1053,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     if (expired) {
       ++expire_count;
     } else {
+      // build article tree in memory.
       load_article(group, &a, references);
       // score _after_ threading, so References: works
       a.score = _article_filter.score_article(*this, score_sections, group, a);
@@ -1728,6 +1729,7 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
   }
 }
 
+// TODO: remove, used only in load_article
 DataImpl::ArticleNode *DataImpl ::find_ancestor(ArticleNode *node,
                                                 Quark const &ancestor_mid)
 {
