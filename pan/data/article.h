@@ -73,10 +73,6 @@ class Article
 
     Parts::number_t get_found_part_count() const;
 
-    bool get_part_info(Parts::number_t num,
-                       std::string &mid,
-                       Parts::bytes_t &bytes) const;
-
     typedef Parts::const_iterator part_iterator;
 
     part_iterator pbegin() const
