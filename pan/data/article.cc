@@ -81,13 +81,6 @@ Parts::number_t Article::get_found_part_count() const
   return parts.get_found_part_count();
 }
 
-bool Article::get_part_info(Parts::number_t num,
-                            std::string &mid,
-                            Parts::bytes_t &bytes) const
-{
-  return parts.get_part_info(num, mid, bytes, message_id);
-}
-
 unsigned long Article::get_line_count() const
 {
   SQLite::Statement q(pan_db, "select line_count from article where message_id = ?");
