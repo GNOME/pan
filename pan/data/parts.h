@@ -105,7 +105,6 @@ namespace pan
 
     public:
       void set_part_count (number_t num) { n_parts_total = num; parts.reserve(num); }
-      number_t get_total_part_count () const { return n_parts_total; }
       number_t get_found_part_count () const { return parts.size(); }
       void clear ();
       bool add_part (number_t num,
