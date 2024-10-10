@@ -26,7 +26,3 @@ endif()
 
 add_library(pan-db "pan-db.cc")
 target_link_libraries(pan-db PkgConfig::GLIB)
-
-# this test is broken
-# add_executable(article-test article-test.cc)
-# add_test(NAME article COMMAND article-test)
