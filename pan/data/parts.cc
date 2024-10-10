@@ -212,25 +212,6 @@ void Parts ::unpack_message_id(std::string &setme,
   ::pan::unpack_message_id(setme, v, reference_mid);
 }
 
-bool Parts ::get_part_info(number_t part_number,
-                           std::string &setme_message_id,
-                           bytes_t &setme_byte_count,
-                           Quark const &reference_mid) const
-{
-  Part findme;
-  findme.number = part_number;
-  part_v::const_iterator p =
-    std::lower_bound(parts.begin(), parts.end(), findme);
-  if ((p == parts.end()) || (p->number != part_number))
-  {
-    return false;
-  }
-
-  unpack_message_id(setme_message_id, &(*p), reference_mid);
-  setme_byte_count = p->bytes;
-  return true;
-}
-
 /***
 ****
 ***/
@@ -286,14 +267,6 @@ bool Parts ::add_part(number_t num,
   delete[] part_mid_buf;
   part_mid_buf = mbuf;
   part_mid_buf_len += midlen;
-
-#ifdef DEBUG
-  std::string test_mid;
-  bytes_t test_bytes;
-  assert(get_part_info(num, test_mid, test_bytes, reference_mid));
-  assert(test_bytes == bytes);
-  assert(mid == test_mid);
-#endif
 
   return true; // yes, we added it
 }
