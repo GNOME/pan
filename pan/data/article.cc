@@ -56,13 +56,26 @@ Article ::PartState Article ::get_part_state() const
 
   else
   {
-    const Parts::number_t total = parts.get_total_part_count();
-    const Parts::number_t found = parts.get_found_part_count();
-    if (! found) // someone's posted a "000/124" info message
+    SQLite::Statement q(pan_db, R"SQL(
+      select expected_parts,
+           (select count() from article_part as p
+            where p.article_id == a.id) as found_nb
+      from article as a
+      where a.message_id = ?
+  )SQL");
+  q.bindNoCopy(1, message_id.c_str());
+
+  int total(0), found(0);
+  while (q.executeStep()) {
+    total = q.getColumn(0).getInt64();
+    found = q.getColumn(0).getInt64();
+  }
+
+  if (! found) // someone's posted a "000/124" info message
     {
       part_state = SINGLE;
     }
-    else // a multipart..
+  else // a multipart..
     {
       part_state = total == found ? COMPLETE : INCOMPLETE;
     }
