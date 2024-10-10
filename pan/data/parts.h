@@ -113,12 +113,6 @@ namespace pan
                      bytes_t bytes,
                      const Quark& reference_mid);
       void set_parts (const PartBatch& parts);
-
-    public:
-      bool get_part_info (number_t        num,
-                          std::string   & mid,
-                          bytes_t       & bytes,
-                          const Quark   & reference_mid) const;
   };
 
   /**
