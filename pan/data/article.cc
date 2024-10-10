@@ -86,7 +86,17 @@ Article ::PartState Article ::get_part_state() const
 
 Parts::number_t Article::get_total_part_count () const
 {
-  return parts.get_total_part_count();
+  SQLite::Statement q(pan_db, R"SQL(
+    select expected_parts from article
+    where article.message_id = ?
+  )SQL");
+  q.bindNoCopy(1, message_id.c_str());
+
+  int count(0);
+  while (q.executeStep()) {
+    count = q.getColumn(0).getInt64();
+  }
+  return count;
 }
 
 Parts::number_t Article::get_found_part_count() const
