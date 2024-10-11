@@ -943,7 +943,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
 
   LOG4CXX_INFO(logger, "Loading headers for group " << group.c_str());
 
-  char const *groupname(group.c_str());
   int group_id(0), total_article_count(0);
 
   SQLite::Statement group_info_q(pan_db, "select id, total_article_count from `group` where name = ?");
