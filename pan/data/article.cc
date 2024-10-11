@@ -101,7 +101,16 @@ Parts::number_t Article::get_total_part_count () const
 
 Parts::number_t Article::get_found_part_count() const
 {
-  return parts.get_found_part_count();
+  SQLite::Statement q(pan_db, R"SQL(
+    select count() from article_part
+    where article_id == (select id from article where message_id = ?)
+  )SQL");
+  q.bind(1,message_id);
+  int64_t result(0);
+  while (q.executeStep()) {
+    result = q.getColumn(0).getInt();
+  }
+  return result;
 }
 
 unsigned long Article::get_line_count() const
