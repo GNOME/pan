@@ -70,7 +70,6 @@ namespace pan
       const_iterator end() const { return targets.end(); }
 
     public:
-      unsigned long size () const { return targets.size(); }
       bool empty () const { return targets.empty(); }
       Article_Number find_number (const Quark& server, const Quark& group) const;
       bool find (const Quark& server, Quark& setme_group, Article_Number& setme_number) const;

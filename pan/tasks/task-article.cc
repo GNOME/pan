@@ -70,15 +70,22 @@ log4cxx::LoggerPtr logger = getLogger("task-article");
 
   std::string get_groups_str(const Article& a)
   {
+    SQLite::Statement q(pan_db, R"SQL(
+      select group_concat(g.name, ", ")
+      from `group` as g
+      join article_group as ag on ag.group_id == g.id
+      join article as a on ag.article_id == a.id
+      where a.message_id = ?
+      order by g.name asc
+    )SQL");
+
+    q.bind(1,a.message_id);
+
     std::string r;
-    quarks_t groups;
-    int cnt(1);
-    foreach_const (Xref, a.xref, xit)
-    {
-      r += xit->group.to_string();
-      if (cnt != a.xref.size() && a.xref.size() != 1) r+=", ";
-      ++cnt;
+    while (q.executeStep()) {
+      r = q.getColumn(0).getText();
     }
+
     return r;
   }
 }
