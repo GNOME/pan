@@ -174,10 +174,17 @@ bool Article ::is_byte_count_ge(unsigned long test) const
 
 Article ::mid_sequence_t Article ::get_part_mids() const
 {
+  SQLite::Statement q(pan_db, R"SQL(
+    select part_message_id from article_part as p
+    join article as a on p.article_id == a.id
+    where a.message_id = ?
+    order by cast(part_number as integer)
+  )SQL");
+  q.bind(1,message_id);
+
   mid_sequence_t mids;
-  for (part_iterator it(pbegin()), end(pend()); it != end; ++it)
-  {
-    mids.push_back(it.mid());
+  while (q.executeStep()) {
+    mids.push_back(Quark(q.getColumn(0).getText()));
   }
   return mids;
 }
