@@ -86,6 +86,7 @@ class Article
     }
 
     typedef std::vector<Quark> mid_sequence_t;
+    // get list of message ids of all parts
     mid_sequence_t get_part_mids() const;
 
     enum PartState
