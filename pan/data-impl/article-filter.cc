@@ -233,7 +233,7 @@ bool ArticleFilter ::test_article(Data const &data,
       else if (criteria._header == references)
       {
         std::string s;
-        data.get_article_references(group, &article, s);
+        data.get_article_references(&article, s);
         pass = criteria._text.test(s);
       }
       else if (! criteria._needs_body)
