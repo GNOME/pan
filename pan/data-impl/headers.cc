@@ -94,19 +94,6 @@ DataImpl ::ArticleNode const *DataImpl ::GroupHeaders ::find_node(
   return node;
 }
 
-Quark const &DataImpl ::GroupHeaders ::find_parent_message_id(
-  Quark const &mid) const
-{
-  ArticleNode const *node(find_node(mid));
-  if (node && node->_parent)
-  {
-    return node->_parent->_mid;
-  }
-
-  static const Quark empty_quark;
-  return empty_quark;
-}
-
 Article const *DataImpl ::GroupHeaders ::find_article(
   Quark const &message_id) const
 {
