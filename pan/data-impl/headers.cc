@@ -94,20 +94,6 @@ DataImpl ::ArticleNode const *DataImpl ::GroupHeaders ::find_node(
   return node;
 }
 
-Article const *DataImpl ::GroupHeaders ::find_article(
-  Quark const &message_id) const
-{
-  Article *a(nullptr);
-
-  ArticleNode const *node(find_node(message_id));
-  if (node)
-  {
-    a = node->_article;
-  }
-
-  return a;
-}
-
 Article *DataImpl ::GroupHeaders ::find_article(Quark const &message_id)
 {
   Article *a(nullptr);
