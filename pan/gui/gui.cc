@@ -1202,7 +1202,7 @@ void GUI :: set_selected_thread_score (int score)
 
   Quark group (_header_pane->get_group());
   std::string references;
-  _data.get_article_references (group, article, references);
+  _data.get_article_references (article, references);
   StringView v(references), tok;
   v.pop_token (tok);
   if (tok.empty())

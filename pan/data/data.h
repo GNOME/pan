@@ -68,8 +68,7 @@ struct ArticleReferences
     {
     }
 
-    virtual void get_article_references(Quark const &group,
-                                        Article const *,
+    virtual void get_article_references(Article const *,
                                         std::string &setme) const = 0;
 };
 

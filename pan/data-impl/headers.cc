@@ -140,8 +140,7 @@ void DataImpl::GroupHeaders::reserve(Article_Count articles)
   _node_chunk.reserve(static_cast<Article_Count::type>(articles));
 }
 
-void DataImpl ::get_article_references(Quark const &group,
-                                       Article const *article,
+void DataImpl ::get_article_references(Article const *article,
                                        std::string &setme) const
 {
   SQLite::Statement ref_q(pan_db, R"SQL(
