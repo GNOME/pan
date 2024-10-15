@@ -453,7 +453,6 @@ public:
         ArticleNode const *find_node(Quark const &mid) const;
 
         Article *find_article(Quark const &mid);
-        Article const *find_article(Quark const &mid) const;
         void remove_articles(quarks_t const &mids);
         void build_references_header(Article const *article,
                                      std::string &setme) const;
