@@ -128,8 +128,18 @@ DataImpl ::GroupHeaders *DataImpl ::get_group_headers(Quark const &group)
   return it == _group_to_headers.end() ? nullptr : it->second;
 }
 
-void DataImpl ::GroupHeaders ::build_references_header(Article const *article,
-                                                       std::string &setme) const
+void DataImpl::GroupHeaders::reserve(Article_Count articles)
+{
+  _art_chunk.reserve(static_cast<Article_Count::type>(articles));
+  // A note - the number of nodes is very rarely the same as the number of
+  // articles, but it is generally not far out, so at worse you'll end up with
+  // two allocations
+  _node_chunk.reserve(static_cast<Article_Count::type>(articles));
+}
+
+void DataImpl ::get_article_references(Quark const &group,
+                                       Article const *article,
+                                       std::string &setme) const
 {
   setme.clear();
   // return parent_ids from leaf to root
@@ -162,30 +172,6 @@ void DataImpl ::GroupHeaders ::build_references_header(Article const *article,
   setme.erase(0,1);
 
   LOG4CXX_TRACE(logger, "built references for msg " << article->message_id << " : " << setme);
-}
-
-void DataImpl::GroupHeaders::reserve(Article_Count articles)
-{
-  _art_chunk.reserve(static_cast<Article_Count::type>(articles));
-  // A note - the number of nodes is very rarely the same as the number of
-  // articles, but it is generally not far out, so at worse you'll end up with
-  // two allocations
-  _node_chunk.reserve(static_cast<Article_Count::type>(articles));
-}
-
-void DataImpl ::get_article_references(Quark const &group,
-                                       Article const *article,
-                                       std::string &setme) const
-{
-  GroupHeaders const *h(get_group_headers(group));
-  if (! h)
-  {
-    setme.clear();
-  }
-  else
-  {
-    h->build_references_header(article, setme);
-  }
 }
 
 void DataImpl ::free_group_headers_memory(Quark const &group)
