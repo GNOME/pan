@@ -131,21 +131,6 @@ DataImpl ::GroupHeaders *DataImpl ::get_group_headers(Quark const &group)
   return it == _group_to_headers.end() ? nullptr : it->second;
 }
 
-void DataImpl ::GroupHeaders ::build_references_header(Article const *article,
-                                                       std::string &setme) const
-{
-  SQLite::Statement ref_q(pan_db, R"SQL(
-    select references from article where message_id = ?
-  )SQL" );
-
-  ref_q.bind(1, article->message_id);
-
-  while (ref_q.executeStep())
-  {
-    setme.assign(ref_q.getColumn(0).getText());
-  }
-}
-
 void DataImpl::GroupHeaders::reserve(Article_Count articles)
 {
   _art_chunk.reserve(static_cast<Article_Count::type>(articles));
@@ -159,14 +144,15 @@ void DataImpl ::get_article_references(Quark const &group,
                                        Article const *article,
                                        std::string &setme) const
 {
-  GroupHeaders const *h(get_group_headers(group));
-  if (! h)
+  SQLite::Statement ref_q(pan_db, R"SQL(
+    select `references` from article where message_id = ?
+  )SQL" );
+
+  ref_q.bind(1, article->message_id);
+
+  while (ref_q.executeStep())
   {
-    setme.clear();
-  }
-  else
-  {
-    h->build_references_header(article, setme);
+    setme.assign(ref_q.getColumn(0).getText());
   }
 }
 

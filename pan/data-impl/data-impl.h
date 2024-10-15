@@ -448,8 +448,6 @@ public:
 
         Article *find_article(Quark const &mid);
         void remove_articles(quarks_t const &mids);
-        void build_references_header(Article const *article,
-                                     std::string &setme) const;
 
         void reserve(Article_Count);
     };
