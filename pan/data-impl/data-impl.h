@@ -460,8 +460,7 @@ public:
                            nodes_t const &nodes,
                            const_nodes_v &setme);
 
-    void get_article_references(Quark const &group,
-                                Article const *,
+    void get_article_references(Article const *,
                                 std::string &setme) const override;
 
     static ArticleNode *find_ancestor(ArticleNode *node,
