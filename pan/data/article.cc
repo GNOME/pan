@@ -134,12 +134,18 @@ bool Article::is_line_count_ge(size_t test) const
 
 unsigned int Article ::get_crosspost_count() const
 {
-  quarks_t groups;
-  foreach_const (Xref, xref, xit)
-  {
-    groups.insert(xit->group);
+  SQLite::Statement q(pan_db, R"SQL(
+    select count() from article_group as ag
+    join article as a on a.id == ag.article_id
+    where a.message_id == ?
+  )SQL");
+
+  q.bind(1,message_id);
+  int count(0);
+  while (q.executeStep()) {
+    count = q.getColumn(0).getInt();
   }
-  return (int)groups.size();
+  return count;
 }
 
 bool Article ::has_reply_leader(StringView const &s)
