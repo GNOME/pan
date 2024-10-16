@@ -129,15 +129,8 @@ bool ArticleFilter ::test_article(Data const &data,
       break;
 
     case FilterInfo::CROSSPOST_COUNT_GE:
-    {
-      quarks_t groups;
-      foreach_const (Xref, article.xref, xit)
-      {
-        groups.insert(xit->group);
-      }
-      pass = (int)groups.size() >= criteria._ge;
+      pass = article.get_crosspost_count() >= criteria._ge;
       break;
-    }
 
     case FilterInfo::DAYS_OLD_GE:
       pass = (time(NULL) - article.get_time_posted()) > (criteria._ge * 86400);
