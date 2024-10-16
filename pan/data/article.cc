@@ -31,6 +31,7 @@
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>
+#include <vector>
 
 using namespace pan;
 
@@ -146,6 +147,23 @@ unsigned int Article ::get_crosspost_count() const
     count = q.getColumn(0).getInt();
   }
   return count;
+}
+
+void Article ::get_crosspost_groups(std::vector<StringView> &setme) const
+{
+  SQLite::Statement q(pan_db, R"SQL(
+    select g.name from `group` as g
+    join article_group as ag on ag.group_id == g.id
+    join article as a on a.id == ag.article_id
+    where a.message_id == ?
+    order by g.name
+  )SQL");
+
+  q.bindNoCopy(1,message_id);
+  int count(0);
+  while (q.executeStep()) {
+    setme.push_back(StringView(q.getColumn(0).getText()));
+  }
 }
 
 bool Article ::has_reply_leader(StringView const &s)
