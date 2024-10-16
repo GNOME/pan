@@ -20,6 +20,7 @@
 #ifndef __Article_h__
 #define __Article_h__
 
+#include "pan/general/string-view.h"
 #include <ctime>
 #include <pan/data/parts.h>
 #include <pan/data/xref.h>
@@ -106,6 +107,7 @@ class Article
   public:
     static bool has_reply_leader(StringView const &);
     unsigned int get_crosspost_count() const;
+    void get_crosspost_groups(std::vector<StringView> &setme) const;
 
     unsigned long get_line_count() const;
 
