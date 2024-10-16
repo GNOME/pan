@@ -28,6 +28,7 @@
 #include <glib.h>
 
 #include "article-filter.h"
+#include "pan/general/string-view.h"
 
 using namespace pan;
 
@@ -113,7 +114,7 @@ bool ArticleFilter ::test_article(Data const &data,
       break;
 
     case FilterInfo::IS_POSTED_BY_ME:
-      pass = data.has_from_header (article.get_author().to_view());
+      pass = data.has_from_header(article.get_author().to_view());
       break;
 
     case FilterInfo::IS_READ:
@@ -146,12 +147,13 @@ bool ArticleFilter ::test_article(Data const &data,
         if (criteria._text._impl_type
             == TextMatch::CONTAINS) // user is filtering by groupname?
         {
-          foreach_const (Xref, article.xref, xit)
+          std::vector<StringView> cross_p_groups;
+          StringView g;
+          article.get_crosspost_groups(cross_p_groups);
+          for (auto cross_p_groups : g)
           {
-            if ((pass = criteria._text.test(xit->group.to_view())))
-            {
+            if ((pass = criteria._text.test (g)))
               break;
-            }
           }
         }
         else if (criteria._text._impl_text.find("(.*:){")
