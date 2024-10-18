@@ -166,6 +166,28 @@ void Article ::get_crosspost_groups(std::vector<StringView> &setme) const
   }
 }
 
+std::string Article ::get_rebuilt_xref() const
+{
+  SQLite::Statement q(pan_db, R"SQL(
+    select s.host || " " || group_concat(g.name || ":" || x.number, " ") as xref
+    from `group` as g
+    join article_xref as xr on article_group_id = ag.id
+    join server as s on server_id == s.id
+    join article_group as ag on ag.group_id == g.id
+    join article as a on a.id == ag.article_id
+    where a.message_id == ?
+    group by s.host
+    order by g.name asc
+  )SQL");
+
+  q.bindNoCopy(1,message_id);
+  std::string result;
+  while (q.executeStep()) {
+    result = q.getColumn(0).getText();
+  }
+  return result;
+}
+
 bool Article ::has_reply_leader(StringView const &s)
 {
   return ! s.empty() && s.len > 4 && (s.str[0] == 'R' || s.str[0] == 'r')
