@@ -126,6 +126,7 @@ class Article
     void is_binary(bool) const;
 
     std::string get_rebuilt_xref() const;
+    std::string get_xrefed_groups() const;
 
   public:
     Article() :
