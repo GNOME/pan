@@ -188,6 +188,25 @@ std::string Article ::get_rebuilt_xref() const
   return result;
 }
 
+std::string Article ::get_xrefed_groups() const
+{
+  SQLite::Statement q(pan_db, R"SQL(
+    select group_concat(g.name, ",") as xref from `group` as g
+    join article_group as ag on ag.group_id == g.id
+    join article as a on a.id == ag.article_id
+    where a.message_id == ?
+    group by g.name
+    order by g.name asc
+  )SQL");
+
+  q.bindNoCopy(1,message_id);
+  std::string result;
+  while (q.executeStep()) {
+    result = q.getColumn(0).getText();
+  }
+  return result;
+}
+
 bool Article ::has_reply_leader(StringView const &s)
 {
   return ! s.empty() && s.len > 4 && (s.str[0] == 'R' || s.str[0] == 'r')
