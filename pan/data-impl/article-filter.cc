@@ -184,23 +184,7 @@ bool ArticleFilter ::test_article(Data const &data,
       }
       else if (criteria._header == newsgroups)
       {
-        quarks_t unique_groups;
-        foreach_const (Xref, article.xref, xit)
-        {
-          unique_groups.insert(xit->group);
-        }
-
-        std::string s;
-        foreach_const (quarks_t, unique_groups, git)
-        {
-          s += git->c_str();
-          s += ',';
-        }
-        if (! s.empty())
-        {
-          s.resize(s.size() - 1);
-        }
-        pass = criteria._text.test(s);
+        pass = criteria._text.test (article.get_xrefed_groups());
       }
       else if (criteria._header == references)
       {
