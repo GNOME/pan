@@ -125,6 +125,8 @@ class Article
     bool is_binary() const;
     void is_binary(bool) const;
 
+    std::string get_rebuilt_xref() const;
+
   public:
     Article() :
       flag(false)
