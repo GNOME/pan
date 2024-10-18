@@ -179,30 +179,7 @@ bool ArticleFilter ::test_article(Data const &data,
         else // oh fine, then, user is doing some other damn thing with the xref
              // header.  build one for them.
         {
-          std::string s;
-          foreach_const (Xref, article.xref, xit)
-          {
-            if (s.empty())
-            {
-              int unused;
-              data.get_server_addr(xit->server, s, unused);
-              s += ' ';
-            }
-            s += xit->group;
-            s += ':';
-            char buf[32];
-            g_snprintf(buf,
-                       sizeof(buf),
-                       "%" G_GUINT64_FORMAT,
-                       static_cast<uint64_t>(xit->number));
-            s += buf;
-            s += ' ';
-          }
-          if (! s.empty())
-          {
-            s.resize(s.size() - 1);
-          }
-          pass = criteria._text.test(s);
+          pass = criteria._text.test (article.get_rebuilt_xref());
         }
       }
       else if (criteria._header == newsgroups)
