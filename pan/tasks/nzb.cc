@@ -139,9 +139,16 @@ namespace
     else if (!strcmp (element_name, "segment")) {
       mc.bytes = 0;
       mc.number = 0;
-      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"bytes"))  mc.bytes  = strtoul (*v,nullptr,10);
-        else if (!strcmp (*k,"number")) mc.number = atoi (*v);
+      for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+      {
+        if (! strcmp(*k, "bytes"))
+        {
+          mc.bytes = strtoul(*v, nullptr, 10);
+        }
+        else if (! strcmp(*k, "number"))
+        {
+          mc.number = atoi(*v);
+        }
       }
     }
   }
