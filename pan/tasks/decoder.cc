@@ -67,7 +67,7 @@ Decoder :: enqueue (TaskArticle                     * task,
                     const TaskArticle::SaveMode     & save_mode,
                     const TaskArticle::SaveOptions  & options,
                     const StringView                & filename,
-                    const Article                   & article)
+                    const Quark                     & article_subject)
 {
   disable_progress_update ();
 
@@ -77,7 +77,7 @@ Decoder :: enqueue (TaskArticle                     * task,
   this->save_mode = save_mode;
   this->options = options;
   this->attachment_filename = filename;
-  this->article_subject = article.subject;
+  this->article_subject = article_subject;
 
   mark_read = false;
 

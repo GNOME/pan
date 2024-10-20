@@ -62,7 +62,7 @@ namespace pan
                     const TaskArticle::SaveMode    & save_mode,
                     const TaskArticle::SaveOptions & options,
                     const StringView               & filename,
-                    const Article                  & article);
+                    const Quark                    & article_subject);
 
     public:
 
