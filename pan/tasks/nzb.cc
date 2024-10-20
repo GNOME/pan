@@ -327,12 +327,20 @@ std::ostream &print_article(
   }
 
   // what groups was this crossposted in?
-  quarks_t groups;
-  foreach_const (Xref, a.xref, xit)
-    groups.insert (xit->group);
+  SQLite::Statement q(pan_db, R"SQL(
+    select g.name as xref from `group` as g
+    join article_group as ag on ag.group_id == g.id
+    join article as a on a.id == ag.article_id
+    where a.message_id == ?
+    order by g.name asc
+  )SQL");
+
+  q.bindNoCopy(1,a.message_id);
+  std::string result;
   out << indent(depth++) << "<groups>\n";
-  foreach_const (quarks_t, groups, git)
-    out << indent(depth) << "<group>" << *git << "</group>\n";
+  while (q.executeStep()) {
+    out << indent(depth) << "<group>" << q.getColumn(0) << "</group>\n";
+  }
   out << indent(--depth) << "</groups>\n";
 
   // now for the parts...
