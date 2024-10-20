@@ -34,6 +34,7 @@
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/article-cache.h>
 #include "decoder.h"
+#include "pan/general/article_number.h"
 #include "pan/general/log4cxx.h"
 #include "task-article.h"
 
@@ -117,6 +118,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _options(options),
   _paused(false)
 {
+  LOG4CXX_TRACE(logger, "Set download task for article " << article.get_subject());
 
   cache.reserve (article.get_part_mids());
 
@@ -125,35 +127,38 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
 
   // build a list of all the parts we need to download.
   // also calculate need_bytes and all_bytes for our Progress status.
-
-  quarks_t groups;
-  foreach_const (Xref, article.xref, it)
-    groups.insert (it->group);
-  quarks_t servers;
-  foreach_const (quarks_t, groups, it) {
-    quarks_t tmp;
-    group_server.group_get_servers (*it, tmp);
-    servers.insert (tmp.begin(), tmp.end());
-  }
+  SQLite::Statement q(pan_db, R"SQL(
+    select  p.size, part_message_id, s.pan_id, g.name, number from article_part as p
+      join article as a on p.article_id == a.id
+  	join article_group as ag on ag.article_id == a.id
+  	join `group` as g on ag.group_id = g.id
+  	join article_xref as xr on xr.article_group_id == ag.id
+  	join server as s on xr.server_id = s.id
+    where a.message_id = ?
+    order by number
+  )SQL");
+  q.bindNoCopy(1,article.message_id.c_str());
 
   unsigned long need_bytes(0), all_bytes(0);
-  for (Article::part_iterator i(article.pbegin()), e(article.pend()); i!=e; ++i)
-  {
-    all_bytes += i.bytes();
-    const std::string mid (i.mid ());
-    if (cache.contains (mid))
+  while (q.executeStep()) {
+    int psize(q.getColumn(0));
+    all_bytes += psize;
+    const std::string part_mid (q.getColumn(1).getText());
+    if (cache.contains (part_mid))
       continue;
 
-    need_bytes += i.bytes();
+    need_bytes += psize;
     Needed n;
-    n.message_id = mid;
-    n.bytes = i.bytes();
+    n.message_id = part_mid;
+    n.bytes = psize;
     // if we can keep the article-number from the main xref, do so.
     // otherwise plug in `0' as a null article-number and we'll use
     // `ARTICLE message-id' instead when talking to the server.
-    foreach_const (quarks_t, servers, sit)
-      foreach_const (quarks_t, groups, git)
-        n.xref.insert (*sit, *git, mid==article.message_id.to_string() ? article.xref.find_number(*sit,*git) : static_cast<Article_Number>(0));
+    Quark server_pan_id(q.getColumn(2).getText());
+    Quark group_name(q.getColumn(3).getText());
+    Article_Number p_nb (q.getColumn(4).getInt());
+    n.xref.insert (server_pan_id, group_name,
+                   part_mid==article.message_id.to_string() ? p_nb : static_cast<Article_Number>(0));
     _needed.push_back (n);
   }
 
