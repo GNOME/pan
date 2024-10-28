@@ -1507,7 +1507,8 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     std::string f;
     f += profile.face;
 
-    for (int i = GMIME_FOLD_BASE64_INTERVAL; i < f.length(); i += GMIME_FOLD_BASE64_INTERVAL)
+    // GMIME_FOLD_BASE64_INTERVAL - 6: Accounting for 'Face: ' beginning of header
+    for (int i = GMIME_FOLD_BASE64_INTERVAL - 6; i < f.length(); i += GMIME_FOLD_BASE64_INTERVAL)
     {
       f.insert (i, " ");
     }
