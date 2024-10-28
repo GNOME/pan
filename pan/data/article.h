@@ -134,6 +134,12 @@ class Article
     {
     }
 
+    Article(std::string mid) :
+      message_id(mid),
+      flag(false)
+    {
+    }
+
     void clear();
 
     /* Functions to bookmark an article */
