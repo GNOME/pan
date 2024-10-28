@@ -23,6 +23,7 @@
 
 #include <config.h>
 #include <cassert>
+#include <cstdint>
 #include <glib/gi18n.h>
 #include <log4cxx/logger.h>
 #include <pan/general/debug.h>
@@ -128,14 +129,14 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   // build a list of all the parts we need to download.
   // also calculate need_bytes and all_bytes for our Progress status.
   SQLite::Statement q(pan_db, R"SQL(
-    select  p.size, part_message_id, s.pan_id, g.name, number from article_part as p
+    select  p.size, part_message_id, s.pan_id, g.name, number, part_number from article_part as p
       join article as a on p.article_id == a.id
   	join article_group as ag on ag.article_id == a.id
   	join `group` as g on ag.group_id = g.id
   	join article_xref as xr on xr.article_group_id == ag.id
   	join server as s on xr.server_id = s.id
     where a.message_id = ?
-    order by number
+    order by cast(part_number as integer)
   )SQL");
   q.bindNoCopy(1,article.message_id.c_str());
 
@@ -157,6 +158,8 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
     Quark server_pan_id(q.getColumn(2).getText());
     Quark group_name(q.getColumn(3).getText());
     Article_Number p_nb (q.getColumn(4).getInt());
+    int64_t part_nb (q.getColumn(5));
+    LOG4CXX_TRACE(logger, "task: download part nb " << part_nb << " of article "  << article.message_id);
     n.xref.insert (server_pan_id, group_name,
                    part_mid==article.message_id.to_string() ? p_nb : static_cast<Article_Number>(0));
     _needed.push_back (n);
