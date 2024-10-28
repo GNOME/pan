@@ -19,12 +19,15 @@
  */
 
 #include "nzb.h"
+#include "pan/data/article.h"
 #include "pan/data/in-memory-article.h"
 #include "pan/data/in-memory-parts.h"
 #include "task-article.h"
 
 #include <config.h>
+#include <cstdint>
 #include <iostream>
+#include <log4cxx/logger.h>
 #include <string>
 #include <regex>
 
@@ -79,10 +82,11 @@ namespace
     std::string paused;
     std::string author;
     std::string subject;
-    PartBatch parts;
+    std::string article_message_id;
+
     int64_t time_posted;
     tasks_t tasks;
-    Article a;
+    Article db_a;
     ArticleCache& cache;
     EncodeCache& encode_cache;
     ArticleRead& read;
@@ -112,12 +116,142 @@ namespace
       paused.clear ();
       author.clear();
       subject.clear();
-      a.clear ();
       bytes = 0;
       number = 0;
       time_posted = 0;
+      subject.clear();
+      author.clear();
+      db_a.clear();
+      article_message_id.clear();
     }
   };
+
+  // create minimal article in DB
+  void create_article(MyContext mc)
+  {
+    StringView auth(mc.author),name,address;
+    auth.pop_token(name, '<');
+    name.trim();
+    auth.pop_token(address, '>');
+
+    SQLite::Statement set_author_q(
+      pan_db,
+      "insert into `author` (name,address) values (?,?) on conflict do nothing;");
+    set_author_q.bind(1, name);
+    set_author_q.bind(2, address);
+    set_author_q.exec();
+
+    SQLite::Statement set_article_q(pan_db, R"SQL(
+      insert into `article` (message_id,subject,author_id,time_posted, binary)
+      values ($msg_id, $subject, (select id from author where address = $addr),
+              $time_posted, true)
+      on conflict (message_id) do nothing
+    )SQL");
+    set_article_q.bindNoCopy(1, mc.article_message_id);
+    set_article_q.bindNoCopy(2, mc.subject);
+    set_article_q.bind(3, address);
+    set_article_q.bind(4, mc.time_posted);
+    LOG4CXX_TRACE(logger, "create nzb article " << mc.article_message_id << " (" << mc.subject <<")");
+    set_article_q.exec();
+  }
+
+  void change_article_id(std::string old_id, std::string new_id)
+  {
+    SQLite::Statement check_article_mid_q(pan_db, R"SQL(
+      select count() from `article` where message_id = ?
+    )SQL");
+    check_article_mid_q.bindNoCopy(1, new_id);
+    bool found(false);
+    while (check_article_mid_q.executeStep()) {
+        found = check_article_mid_q.getColumn(0).getInt() == 1;
+    }
+
+    if (found) {
+        // article is already in DB. we assume we have all parts
+        LOG4CXX_TRACE(logger,
+                      "deleting duplicate article with message id " << old_id );
+        SQLite::Statement delete_article_q(pan_db, R"SQL(
+          delete from `article` where message_id = ?
+        )SQL");
+        delete_article_q.bindNoCopy(1, old_id);
+        delete_article_q.exec();
+    } else {
+      SQLite::Statement set_article_mid_q(pan_db, R"SQL(
+        update `article` set message_id = ? where message_id = ?
+      )SQL");
+      set_article_mid_q.bindNoCopy(1, new_id);
+      set_article_mid_q.bindNoCopy(2, old_id);
+      LOG4CXX_TRACE(logger,
+                    "update article message id from " << old_id << " to "
+                                                      << new_id);
+      set_article_mid_q.exec();
+    }
+  }
+
+  bool is_article_part_known(std::string part_mid)
+  {
+    SQLite::Statement set_part_q(pan_db, R"SQL(
+      select count() from `article_part` where part_message_id == ?
+    )SQL");
+    bool found(false);
+    while (set_part_q.executeStep()) {
+        found = set_part_q.getColumn(0).getInt() == 1;
+    }
+    return found;
+  }
+
+  void add_article_part(std::string part_mid, MyContext mc)
+  {
+    SQLite::Statement set_part_q(pan_db, R"SQL(
+      insert into `article_part` (article_id, part_number, part_message_id, size)
+      values ((select id from article where message_id = ?), ?, ?, ?) on conflict do nothing;
+    )SQL");
+    set_part_q.bindNoCopy(1, mc.article_message_id);
+    set_part_q.bind(2, static_cast<int64_t>(mc.number));
+    set_part_q.bindNoCopy(3, part_mid);
+    set_part_q.bind(4, static_cast<int64_t>(mc.bytes));
+    LOG4CXX_TRACE(logger,
+                  "add nzb article part " << mc.number << " " << part_mid
+                                          << " to " << mc.article_message_id);
+    set_part_q.exec();
+  }
+
+  void set_article_xref(std::string mid,
+                        Quark s_pan_id,
+                        Quark group,
+                        int64_t number)
+  {
+    SQLite::Statement set_article_group_q(pan_db, R"SQL(
+      insert into `article_group` (article_id, group_id)
+      values (
+        (select id from article where message_id = ?),
+        (select id from `group` where name = ?)
+      ) on conflict (article_id, group_id) do nothing;
+    )SQL");
+
+    set_article_group_q.bindNoCopy(1, mid);
+    set_article_group_q.bindNoCopy(2, group);
+    set_article_group_q.exec();
+
+    SQLite::Statement set_xref_q(pan_db,R"SQL(
+      insert into `article_xref` (article_group_id, server_id, number)
+      values (
+        (select ag.id from article_group as ag
+         join `group` as g on g.id == ag.group_id
+         join article as a on a.id == ag.article_id
+         where a.message_id = ? and g.name = ?),
+        (select id from server where pan_id = ?),
+        ?
+      ) on conflict (article_group_id, server_id) do nothing;
+    )SQL");
+
+    set_xref_q.bindNoCopy(1, mid);
+    set_xref_q.bindNoCopy(2, group);
+    set_xref_q.bindNoCopy(3, s_pan_id);
+    set_xref_q.bind(4, number);
+    LOG4CXX_TRACE(logger, "add nzb article xref " << group << " to " << mid);
+    set_xref_q.exec();
+  }
 
   // called for open tags <foo bar='baz'>
   void start_element (GMarkupParseContext *context         UNUSED,
@@ -140,7 +274,7 @@ namespace
       }
     }
     else if (!strcmp (element_name, "segments")) {
-        mc.parts.init (null_mid);
+        ;
     }
     else if (!strcmp (element_name, "segment")) {
       mc.bytes = 0;
@@ -172,13 +306,48 @@ namespace
       mc.groups.insert (Quark (mc.text));
     }
 
-    else if (!strcmp(element_name, "segment") && mc.number && !mc.text.empty()) {
-      const std::string mid ("<" + mc.text + ">");
-      if (mc.a.message_id.empty()) {
-        mc.a.message_id = mid;
-        mc.parts.init (mid);
+    else if (! strcmp(element_name, "segment") && mc.number
+             && ! mc.text.empty())
+    {
+      std::string const mid("<" + mc.text + ">");
+      bool known_part = is_article_part_known(mid);
+
+      if (known_part && mc.number == 1) {
+        mc.article_message_id = mid;
       }
-      mc.parts.add_part (mc.number, mid, mc.bytes);
+      else if (known_part) {
+          ;
+      }
+      else if (mc.article_message_id.empty() && mc.number == 1)
+      {
+        // first part in nzb file is first part in serie
+        mc.article_message_id = mid;
+        create_article(mc);
+        add_article_part(mid, mc);
+      }
+      else if (mc.article_message_id.empty())
+      {
+        // the real message_id is in one of the next segments. Article
+        // must be created due to DB constraints and setting dummy
+        // message_id is required by DB not null constraint
+        mc.article_message_id = "dummy";
+        // create article in DB
+        create_article(mc);
+        add_article_part(mid, mc);
+      }
+      else if (mc.number == 1)
+      {
+        if (mc.article_message_id == "dummy")
+        {
+          // insert real article message id
+          change_article_id("dummy", mid);
+        }
+        mc.article_message_id = mid;
+        add_article_part(mid, mc);
+      }
+      else {
+        add_article_part(mid, mc);
+      }
     }
 
     else if (!strcmp(element_name,"path"))
@@ -189,23 +358,22 @@ namespace
 
     else if (!strcmp (element_name, "file"))
     {
-      mc.parts.sort ();
-      mc.a.set_parts (mc.parts);
-
       foreach_const (quarks_t, mc.groups, git) {
         quarks_t servers;
         mc.gs.group_get_servers (*git, servers);
         foreach_const (quarks_t, servers, sit)
-          mc.a.xref.insert (*sit, *git, static_cast<Article_Number>(0));
+          set_article_xref(mc.article_message_id, *sit, *git, 0);
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
       /// TODO get action mark read from prefs (?)
-      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, TaskArticle::NO_ACTION, nullptr, TaskArticle::DECODE, p);
+      Article dba(mc.article_message_id);
+
+      // TODO: test nzb download with ./debug-build/pan/gui/pan  --nzb ../x-men.nzb -o /tmp
+      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, dba, mc.cache, mc.read, TaskArticle::NO_ACTION, nullptr, TaskArticle::DECODE, p);
       if (mc.paused == "1")
         a->set_start_paused(true);
       mc.tasks.push_back (a);
     }
-
   }
 
   void text (GMarkupParseContext *context    UNUSED,
@@ -302,6 +470,7 @@ std::ostream &print_article(
   //This is nasty. pan munges the article title of a multipart article to
   //xxxxxxxxx (/<parts>), but nzb wants (1/<parts>)
   std::string subject(a.get_subject());
+  LOG4CXX_DEBUG(logger, "print article (as task " << task_dump << " )subject " << subject);
   //Not doing this for task dump as I'm not entirely sure what task dump expects
   //to load
   if (not task_dump)
