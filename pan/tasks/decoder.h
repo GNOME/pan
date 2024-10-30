@@ -25,85 +25,79 @@
 #define _Decoder_H_
 
 #include <list>
-#include <string>
-#include <vector>
 #include <pan/general/locking.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-article.h>
+#include <string>
+#include <vector>
 #ifndef PROTOTYPES
 #define PROTOTYPES
 #endif
 #include <uulib/uudeview.h>
 
-namespace pan
+namespace pan {
+/**
+ * Decodes attachments in a worker thread.
+ *
+ * @author Calin Culianu <calin@ajvar.org>
+ * @author Charles Kerr <charles@rebelbase.com>
+ * @ingroup tasks
+ * @see Queue
+ * @see TaskArticle
+ */
+class Decoder : public WorkerPool::Worker
 {
-  /**
-   * Decodes attachments in a worker thread.
-   *
-   * @author Calin Culianu <calin@ajvar.org>
-   * @author Charles Kerr <charles@rebelbase.com>
-   * @ingroup tasks
-   * @see Queue
-   * @see TaskArticle
-   */
-  class Decoder: public WorkerPool::Worker
-  {
-    public:
+  public:
+    Decoder(WorkerPool &);
 
-      Decoder (WorkerPool&);
+    ~Decoder();
 
-      ~Decoder ();
+    typedef std::vector<std::string> strings_t;
 
-      typedef std::vector<std::string> strings_t;
+    void enqueue(TaskArticle *task,
+                 Quark const &save_path,
+                 strings_t const &input_files,
+                 TaskArticle::SaveMode const &save_mode,
+                 TaskArticle::SaveOptions const &options,
+                 StringView const &filename,
+                 Quark const &article_subject);
 
-      void enqueue (TaskArticle                    * task,
-                    const Quark                    & save_path,
-                    const strings_t                & input_files,
-                    const TaskArticle::SaveMode    & save_mode,
-                    const TaskArticle::SaveOptions & options,
-                    const StringView               & filename,
-                    const Quark                    & article_subject);
+  public:
+    typedef std::list<std::string> log_t;
+    log_t log_severe, log_errors, log_infos, file_errors;
+    bool mark_read;
+    Health health;
 
-    public:
+  protected: // inherited from WorkerPool::Worker
+    void do_work() override;
 
-      typedef std::list<std::string> log_t;
-      log_t log_severe, log_errors, log_infos, file_errors;
-      bool mark_read;
-      Health health;
+  private:
+    TaskArticle *task;
+    std::string save_path;
+    strings_t input_files;
+    TaskArticle::SaveMode save_mode;
+    TaskArticle::SaveOptions options;
+    StringView attachment_filename;
+    Quark article_subject;
 
-    protected: // inherited from WorkerPool::Worker
+    // These are set in the worker thread and polled in the main thread.
+    Mutex mut;
+    double volatile percent;
+    std::string current_file; // the current file we are decoding, with path
+    int volatile num_scanned_files;
 
-      void do_work() override;
+    static void uu_log(void *thiz, char *message, int severity);
+    double get_percentage(uuprogress const &p) const;
+    static int uu_busy_poll(void *self, uuprogress *p);
+    /** tell our task about the decode's progress */
+    static gboolean progress_update_timer_func(gpointer decoder);
 
-    private:
-
-      TaskArticle * task;
-      std::string save_path;
-      strings_t input_files;
-      TaskArticle::SaveMode save_mode;
-      TaskArticle::SaveOptions options;
-      StringView attachment_filename;
-      Quark article_subject;
-
-      // These are set in the worker thread and polled in the main thread.
-      Mutex mut;
-      volatile double percent;
-      std::string current_file; // the current file we are decoding, with path
-      volatile int num_scanned_files;
-
-      static void uu_log(void *thiz, char *message, int severity);
-      double get_percentage (const uuprogress& p) const;
-      static int uu_busy_poll(void * self, uuprogress *p);
-      /** tell our task about the decode's progress */
-      static gboolean progress_update_timer_func(gpointer decoder);
-
-    protected:
-
-      WorkerPool& _worker_pool;
-      int _gsourceid;
-      void disable_progress_update();
-      void enable_progress_update();
-  };
-}
+  protected:
+    WorkerPool &_worker_pool;
+    int _gsourceid;
+    void disable_progress_update();
+    void enable_progress_update();
+};
+} // namespace pan
 
 #endif
