@@ -366,7 +366,7 @@ TaskArticle :: use_decoder (Decoder* decoder)
   Quark subject(_article.get_subject());
   _decoder->enqueue (this, _save_path, filenames, _save_mode, _options, _attachment, subject);
   set_status_va (_("Decoding %s"), subject.c_str());
-  pan_debug ("decoder thread was free, enqueued work");
+  LOG4CXX_DEBUG(logger,"decoder thread was free, enqueued decoding work for " << subject.c_str());
 }
 
 void
