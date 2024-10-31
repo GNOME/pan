@@ -198,36 +198,6 @@ namespace
     { "icon_status_new_articles.png",    nullptr }
   };
 
-
-  void status_icon_activate (GtkStatusIcon *icon, gpointer data)
-  {
-
-    GtkWindow * window = GTK_WINDOW(data);
-
-    GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(window));
-    GdkWindow *gdkwindow = gtk_widget_get_window (toplevel);
-    GdkWindowState state = gdk_window_get_state (gdkwindow);
-    gboolean maximized = state & GDK_WINDOW_STATE_MAXIMIZED;
-    gboolean iconified = state & GDK_WINDOW_STATE_ICONIFIED;
-
-//    std::cerr<<(state & GDK_WINDOW_STATE_MAXIMIZED)<<" "
-//    <<(state & GDK_WINDOW_STATE_ICONIFIED)<<" "
-//    <<(state & GDK_WINDOW_STATE_WITHDRAWN)<<" "
-//    <<(state & GDK_WINDOW_STATE_FULLSCREEN)<<"\n" ;
-
-    if (maximized || (maximized && iconified))
-    {
-      gtk_window_iconify (window);
-      gtk_widget_hide (GTK_WIDGET(window));
-    }
-    else if (!maximized || iconified)
-    {
-      gtk_widget_show (GTK_WIDGET(window));
-      gtk_window_deiconify(window);
-    }
-
-  }
-
   struct StatusIconListener : public Prefs::Listener,
                               public Queue::Listener,
                               public Data::Listener
@@ -263,9 +233,9 @@ namespace
 
     bool n() { return notif_shown; }
 
-    StatusIconListener(GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) :
+    StatusIconListener(GtkWidget* r, Prefs& p, Queue& q, Data& d) :
       queue(q), data(d), tasks_active(0), tasks_total(0),
-      minimized(v), notif_shown(false), prefs(p), root(r)
+      notif_shown(false), prefs(p), root(r)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
@@ -398,7 +368,6 @@ namespace
       int tasks_active;
       int tasks_total;
       bool is_online;
-      bool minimized;
       guint status_icon_timeout_tag;
       bool notif_shown;
 
@@ -429,7 +398,7 @@ namespace
   void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data, GUI* _gui)
   {
 
-    _status_icon = new StatusIconListener(GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
+    _status_icon = new StatusIconListener(GTK_WIDGET(window), prefs, queue, data);
 
     // required to show Pan icon in notification
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
@@ -450,12 +419,8 @@ namespace
     const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), &prefs);
 
     gtk_container_add (GTK_CONTAINER(window), gui.root());
-    bool const minimized(prefs.get_flag("start-minimized", false));
 
-    if (minimized)
-      gtk_window_iconify (window);
-
-    gtk_widget_set_visible (GTK_WIDGET(window), !minimized);
+    gtk_widget_set_visible (GTK_WIDGET(window), true);
 
     const quarks_t servers (data.get_servers ());
     if (servers.empty())

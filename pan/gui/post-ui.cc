@@ -1506,6 +1506,12 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   {
     std::string f;
     f += profile.face;
+
+    // GMIME_FOLD_BASE64_INTERVAL - 6: Accounting for 'Face: ' beginning of header
+    for (int i = GMIME_FOLD_BASE64_INTERVAL - 6; i < f.length(); i += GMIME_FOLD_BASE64_INTERVAL)
+    {
+      f.insert (i, " ");
+    }
     g_mime_object_set_header ((GMimeObject *) msg, "Face", f.c_str(), charset_cstr);
   }
 
@@ -1514,6 +1520,12 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   {
     std::string f;
     f += profile.xface;
+
+    // GMIME_FOLD_INTERVAL - 8: Accounting for 'X-Face: ' beginning of header
+    for(int i = GMIME_FOLD_INTERVAL - 8; i < f.length(); i += GMIME_FOLD_INTERVAL)
+    {
+      f.insert(i, " ");
+    }
     g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str(), charset_cstr);
   }
 
