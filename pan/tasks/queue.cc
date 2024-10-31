@@ -318,41 +318,42 @@ void Queue ::process_task(Task *task)
 {
   pan_return_if_fail(task != nullptr);
 
-  pan_debug("in process_task with a task of type " << task->get_type());
+  LOG4CXX_DEBUG(logger,"in process_task with a task of type " << task->get_type());
 
   Task::State const &state(task->get_state());
 
   if (state._work == Task::COMPLETED)
   {
-    pan_debug("completed");
+    LOG4CXX_DEBUG(logger,"task completed");
     remove_task(task);
   }
   else if (_removing.count(task))
   {
-    pan_debug("removing");
+    LOG4CXX_DEBUG(logger,"task removing");
     remove_task(task);
   }
   else if (_stopped.count(task))
   {
-    pan_debug("stopped");
+    LOG4CXX_DEBUG(logger,"task stopped");
     task->stop();
   }
   else if (state._health == ERR_COMMAND || state._health == ERR_LOCAL)
   {
-    pan_debug("fail");
+    LOG4CXX_DEBUG(logger,"task failed");
     // do nothing
   }
   else if (state._health == ERR_NOSPACE)
   {
-    pan_debug("no space");
+    LOG4CXX_DEBUG(logger,"task error: no space");
     set_online(false);
   }
   else if (state._work == Task::WORKING)
   {
-    pan_debug("working");
+    LOG4CXX_DEBUG(logger,"task working");
   }
   else if (state._work == Task::INITIAL)
   {
+    LOG4CXX_DEBUG(logger,"task initializing");
     TaskUpload *t = dynamic_cast<TaskUpload *>(task);
     if (t)
     {
@@ -365,6 +366,7 @@ void Queue ::process_task(Task *task)
   }
   else if (state._work == Task::NEED_DECODER)
   {
+    LOG4CXX_DEBUG(logger,"task needs decoder. _decoder_task is " << _decoder_task);
     if (! _decoder_task)
     {
       give_task_a_decoder(task);
@@ -372,6 +374,7 @@ void Queue ::process_task(Task *task)
   }
   else if (state._work == Task::NEED_ENCODER)
   {
+    LOG4CXX_DEBUG(logger,"task needs encoder. _encoder_task is " << _encoder_task);
     if (! _encoder_task)
     {
       give_task_a_encoder(task);
@@ -382,7 +385,7 @@ void Queue ::process_task(Task *task)
   {
     while (_is_online && (state._work == Task::NEED_NNTP))
     {
-      pan_debug("online");
+      LOG4CXX_DEBUG(logger,"task online (need NNTP state)");
       // make the requests...
       Task::State::unique_servers_t const &servers(state._servers);
       foreach_const (Task::State::unique_servers_t, servers, it)
@@ -397,14 +400,14 @@ void Queue ::process_task(Task *task)
       Quark server;
       if (! find_best_server(servers, server))
       {
-        pan_debug("break");
+        LOG4CXX_DEBUG(logger,"task break (did not find best server)");
         break;
       }
 
       NNTP *nntp(get_pool(server).check_out());
       if (! nntp)
       {
-        pan_debug("break");
+        LOG4CXX_DEBUG(logger,"task break (no NNTP process)");
         break;
       }
 
@@ -747,7 +750,7 @@ void Queue ::remove_task(Task *task)
 
   if (task_is_active(task)) // wait for the Task to finish
   {
-    pan_debug("can't delete this task right now because it's active");
+    LOG4CXX_DEBUG(logger,"can't delete this task right now because it's active");
     task->stop();
     _removing.insert(task);
   }
