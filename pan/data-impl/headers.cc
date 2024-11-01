@@ -920,7 +920,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   read_article_q.bind(1, group_id);
 
   SQLite::Statement read_xref_q(pan_db,R"SQL(
-    select s.pan_id, grp.name, xrf.number, s.expiry_days
+    select s.expiry_days
       from article_xref as xrf
       join article_group as ag on xrf.article_group_id = ag.id
       join article as a on ag.article_id = a.id
@@ -935,9 +935,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
       join article as a on ap.article_id = a.id
       where a.message_id = ?;
 )SQL");
-
-  Xref::targets_t targets;
-  std::vector<Xref::Target> &targets_v(targets.get_container());
 
   // each article in this group...
   unsigned int expire_count(0);
@@ -965,18 +962,11 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     StringView tok, server_tok, group_tok;
     bool expired(true);
     while (read_xref_q.executeStep()) {
-      Xref::Target target_it;
-      target_it.server = Quark(read_xref_q.getColumn(0).getText());
-      target_it.group = Quark(read_xref_q.getColumn(1).getText());
-      target_it.number = Article_Number(read_xref_q.getColumn(2).getInt64());
-      int article_expiry_days = read_xref_q.getColumn(3);
+      int article_expiry_days = read_xref_q.getColumn(0);
       if (( article_expiry_days == 0) || (days_old <= article_expiry_days)) {
         expired = false;
-        targets_v.push_back(target_it);
       }
     }
-    targets.sort();
-    a.xref.swap(targets);
 
     // is_binary [total_part_count found_part_count]
     int total_part_count(read_article_q.getColumn(i++).getInt());
