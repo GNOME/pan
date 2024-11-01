@@ -963,6 +963,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     read_xref_q.bind(1, message_id);
 
     StringView tok, server_tok, group_tok;
+    bool expired(true);
     while (read_xref_q.executeStep()) {
       Xref::Target target_it;
       target_it.server = Quark(read_xref_q.getColumn(0).getText());
@@ -970,11 +971,11 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
       target_it.number = Article_Number(read_xref_q.getColumn(2).getInt64());
       int article_expiry_days = read_xref_q.getColumn(3);
       if (( article_expiry_days == 0) || (days_old <= article_expiry_days)) {
+        expired = false;
         targets_v.push_back(target_it);
       }
     }
     targets.sort();
-    bool expired(targets.empty());
     a.xref.swap(targets);
 
     // is_binary [total_part_count found_part_count]
