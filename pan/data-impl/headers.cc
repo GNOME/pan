@@ -1539,51 +1539,33 @@ void DataImpl ::group_clear_articles(Quark const &group)
 
 void DataImpl ::delete_articles(unique_articles_t const &articles)
 {
-
   quarks_t all_mids;
 
-  // info we need to batch these deletions per group...
-  typedef std::map<Quark, PerGroup> per_groups_t;
-  per_groups_t per_groups;
-
-  // populate the per_groups map
+  // remove article from DB
   foreach_const (unique_articles_t, articles, it)
   {
+    SQLite::Statement q(pan_db, R"SQL(
+      delete from article where message_id == ?
+    )SQL");
+    q.reset();
+
     Article const *article(*it);
-    quarks_t groups;
-    foreach_const (Xref, article->xref, xit)
-    {
-      groups.insert(xit->group);
-    }
-    bool const was_read(is_read(article));
-    foreach_const (quarks_t, groups, git)
-    {
-      PerGroup &per(per_groups[*git]);
-      ++per.count;
-      if (! was_read)
-      {
-        ++per.unread;
-      }
-      per.mids.insert(article->message_id);
-      all_mids.insert(article->message_id);
-    }
+    q.bindNoCopy(1, article->message_id.c_str());
+    assert(q.exec() == 1);
+
+    LOG4CXX_TRACE(logger, "Deleted article " << article->message_id);
+
+    all_mids.insert(article->message_id);
   }
 
-  // process each group
-  foreach (per_groups_t, per_groups, it)
-  {
-    // update the group's read/unread count...
-    Quark const &group(it->first);
-    fire_group_counts(group);
-
-    // remove the articles from our lookup table...
-    GroupHeaders *h(get_group_headers(group));
-    if (h)
-    {
-      h->remove_articles(it->second.mids);
-    }
-  }
-
+  // delete orphan authors
+  SQLite::Statement author_q(pan_db, R"SQL(
+    delete from author where id in (
+      select distinct t.id from author as t 
+      left outer join article as a on t.id == a.author_id
+      where a.author_id is null
+    )
+  )SQL");
   on_articles_removed(all_mids);
 }
 
