@@ -912,22 +912,56 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(group_id != 0);
 
   SQLite::Statement read_article_q(pan_db,R"SQL(
-    select flag,message_id, time_posted, expected_parts, `references`
+    select flag,message_id, expected_parts, `references`
       from article
       join article_group as ag on ag.article_id = article.id
-      where ag.group_id = ?;
+      where ag.group_id = ?
   )SQL");
   read_article_q.bind(1, group_id);
 
-  SQLite::Statement read_xref_q(pan_db,R"SQL(
-    select s.expiry_days
-      from article_xref as xrf
-      join article_group as ag on xrf.article_group_id = ag.id
-      join article as a on ag.article_id = a.id
-      join `group` as grp on ag.group_id = grp.id
-      join server as s on xrf.server_id = s.id
-      where a.message_id = ?;
+  // expire articles of one group. Since expiry days is attached to server (and not
+  // group), an article must be expired when all its server show it as
+  // expired. With this, an orphaned article (its last server was
+  // removed) is also seen as expired.
+  // I hate negative logic, but it's the only way to expire article
+  // when it must be expired on all servers, i.e. do not expire an
+  // article if it's not expired on any server.
+  SQLite::Statement delete_expired_articles_q(pan_db,R"SQL(
+    with goners ( article_id ) as (
+      select a.id from article as a
+      join article_group as ag on ag.article_id == a.id
+      join `group` as g on ag.group_id == g.id
+      where g.name == ?
+        and
+        (
+          -- count **NOT** expired article parts
+          select count()
+          from article_xref  as ix
+          join server        as i_s on ix.server_id == i_s.id
+          join article_group as iag on ix.article_group_id == iag.id
+          where iag.article_id == a.id
+            and (
+              -- server has no expiration set
+              i_s.expiry_days == 0 or
+              -- article is younger than expiration date
+              julianday() - julianday(a.time_posted, 'unixepoch') < i_s.expiry_days
+            )
+         ) == 0 -- no *NOT* expired parts found
+    )
+    delete from article as a
+      where a.id in (select article_id from goners)
   )SQL");
+
+  delete_expired_articles_q.bindNoCopy(1, group.c_str());
+  unsigned int expire_count(delete_expired_articles_q.exec());
+
+  if (expire_count) {
+    LOG4CXX_INFO(logger, "Expired " << expire_count << " articles from group " << group.c_str()
+                  << "in " << timer.get_seconds_elapsed() << "s.");
+    Log::add_info_va(_("Expired %lu old articles from \"%s\""),
+                     expire_count,
+                     group.c_str());
+  }
 
   SQLite::Statement read_part_q(pan_db,R"SQL(
     select ap.part_number, ap.part_message_id, ap.size
@@ -936,8 +970,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
       where a.message_id = ?;
 )SQL");
 
-  // each article in this group...
-  unsigned int expire_count(0);
   Article_Count const article_qty{static_cast<unsigned long>(total_article_count)};
   h->reserve(article_qty);
 
@@ -951,23 +983,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     char const *message_id = read_article_q.getColumn(i++);
     a.message_id = Quark(message_id);
 
-    // date-posted line
-    int time_posted = read_article_q.getColumn(i++).getInt64();
-    int const days_old((now - time_posted) / (24 * 60 * 60));
-
-    // xref
-    read_xref_q.reset();
-    read_xref_q.bind(1, message_id);
-
-    StringView tok, server_tok, group_tok;
-    bool expired(true);
-    while (read_xref_q.executeStep()) {
-      int article_expiry_days = read_xref_q.getColumn(0);
-      if (( article_expiry_days == 0) || (days_old <= article_expiry_days)) {
-        expired = false;
-      }
-    }
-
     // is_binary [total_part_count found_part_count]
     int total_part_count(read_article_q.getColumn(i++).getInt());
 
@@ -976,27 +991,27 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     read_part_q.reset();
     read_part_q.bind(1, message_id);
 
+    bool corrupted(false);
     // loop around found parts (i.e. the one in DB)
     while (read_part_q.executeStep()) {
-      if (! expired) {
-        StringView tok;
-        int const number(read_part_q.getColumn(0).getInt());
-        if (number > total_part_count) {
-          // corrupted entry
-          expired = true;
-          break;
-        }
-        StringView part_mid(read_part_q.getColumn(1).getText());
-        unsigned long part_bytes(0);
-        if (part_mid.len == 1 && *part_mid.str == '"') {
-          part_mid = a.message_id.to_view();
-        }
-        part_bytes = read_part_q.getColumn(2).getInt();
-        part_batch.add_part(number, part_mid, part_bytes);
+      StringView tok;
+      int const number(read_part_q.getColumn(0).getInt());
+      if (number > total_part_count) {
+        // corrupted entry
+        corrupted = true;
+        break;
       }
+      StringView part_mid(read_part_q.getColumn(1).getText());
+      unsigned long part_bytes(0);
+      if (part_mid.len == 1 && *part_mid.str == '"') {
+        part_mid = a.message_id.to_view();
+      }
+      part_bytes = read_part_q.getColumn(2).getInt();
+      part_batch.add_part(number, part_mid, part_bytes);
     }
 
-    if (! expired) {
+    if (! corrupted)
+    {
       a.set_parts(part_batch);
     }
 
@@ -1004,9 +1019,8 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     std::string references(read_article_q.getColumn(i++).getText());
 
     // add the article to the group if it hasn't all expired
-    if (expired) {
-      ++expire_count;
-    } else {
+    if (! corrupted)
+    {
       // build article tree in memory.
       load_article(group, &a, references);
       // score _after_ threading, so References: works
@@ -1016,12 +1030,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
         ++unread_count;
       }
     }
-  }
-
-  if (expire_count) {
-    Log::add_info_va(_("Expired %lu old articles from \"%s\""),
-                     expire_count,
-                     group.c_str());
   }
 
   fire_group_counts(group);
