@@ -102,7 +102,6 @@ class Article
   public:
     Quark message_id;
     bool flag;
-    Xref xref;
 
   public:
     static bool has_reply_leader(StringView const &);

@@ -313,7 +313,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
       Article& a (h->alloc_new_article());
       a.message_id = art_mid;
       a.set_part_count ( part_count >= 1 ? part_count : 1);
-      a.xref.insert (server, xref);
       load_article (group, &a, references);
       new_article = &a;
 
