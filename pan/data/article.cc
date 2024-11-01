@@ -385,7 +385,6 @@ void Article ::clear()
   // author.clear();
   // subject.clear();
   // TODO: replace time_posted = 0;
-  xref.clear();
   // score = 0;
   parts.clear();
   // is_binary = false;
