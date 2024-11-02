@@ -1239,7 +1239,7 @@ GUI :: do_flag ()
   foreach (std::vector<const Article*>,v,it)
   {
     Article* a((Article*)*it);
-    a->set_flag(!a->get_flag());
+    a->toggle_flag();
   }
   const Quark& g(_header_pane->get_group());
   _data.fire_article_flag_changed(v, g);
