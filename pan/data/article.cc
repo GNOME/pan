@@ -393,3 +393,19 @@ void Article ::clear()
   parts.clear();
   // is_binary = false;
 }
+
+/* Functions to bookmark an article */
+void Article ::toggle_flag()
+{
+  flag = ! flag;
+}
+
+bool Article ::get_flag() const
+{
+  return flag;
+}
+
+void Article ::set_flag(bool setme)
+{
+  flag = setme;
+}

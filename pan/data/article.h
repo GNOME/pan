@@ -142,20 +142,9 @@ class Article
     void clear();
 
     /* Functions to bookmark an article */
-    void toggle_flag()
-    {
-      flag = ! flag;
-    }
-
-    bool get_flag() const
-    {
-      return flag;
-    }
-
-    void set_flag(bool setme)
-    {
-      flag = setme;
-    }
+    void toggle_flag();
+    bool get_flag() const;
+    void set_flag(bool setme);
 
   private:
     Parts parts;
