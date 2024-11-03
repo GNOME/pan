@@ -176,7 +176,7 @@ int get_article_action(Article const *article,
 
   if (article)
   {
-    if (article->flag)
+    if (article->get_flag())
     {
       offset = ICON_FLAGGED;
     }

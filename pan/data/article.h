@@ -101,7 +101,6 @@ class Article
 
   public:
     Quark message_id;
-    bool flag;
 
   public:
     static bool has_reply_leader(StringView const &);
@@ -128,14 +127,12 @@ class Article
     std::string get_xrefed_groups() const;
 
   public:
-    Article() :
-      flag(false)
+    Article()
     {
     }
 
     Article(std::string mid) :
-      message_id(mid),
-      flag(false)
+      message_id(mid)
     {
     }
 
