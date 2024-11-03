@@ -2409,7 +2409,8 @@ PostUI :: create_main_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("F_rom"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _from_combo = gtk_combo_box_text_new ();
@@ -2426,7 +2427,8 @@ PostUI :: create_main_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Subject"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _subject_entry = gtk_entry_new ();
@@ -2439,7 +2441,8 @@ PostUI :: create_main_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Newsgroups"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _groups_entry = gtk_entry_new ();
@@ -2453,7 +2456,8 @@ PostUI :: create_main_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Mail _To"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _to_entry = gtk_entry_new ();
@@ -2665,11 +2669,13 @@ PostUI :: create_parts_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Filename"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->_basename.c_str());
   l = gtk_label_new (buf);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.5f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current filename"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
@@ -2677,11 +2683,13 @@ PostUI :: create_parts_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Subject Line"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->_subject.c_str());
   l = gtk_label_new (buf);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.5f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current subject line"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
@@ -2737,7 +2745,8 @@ PostUI :: create_extras_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Follo_wup-To"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _followupto_entry = gtk_entry_new ();
@@ -2753,7 +2762,8 @@ PostUI :: create_extras_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Reply-To"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _replyto_entry = gtk_entry_new ();
@@ -2768,7 +2778,8 @@ PostUI :: create_extras_tab ()
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Custom Headers"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.0f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.0f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   ++row;

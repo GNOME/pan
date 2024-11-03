@@ -194,7 +194,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
     hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
     l = gtk_label_new(_("Signature Type: "));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+    gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+    gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
     gtk_box_pack_start(GTK_BOX(hbox), l, false, false, 0);
     gtk_box_pack_start(GTK_BOX(hbox), w, true, true, 0);
     _signature_file_combo = hbox;

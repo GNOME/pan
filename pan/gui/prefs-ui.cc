@@ -1092,14 +1092,16 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
     w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
     l = gtk_label_new(_("Minutes to autosave the current Article Draft: "));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL(l), 0.0);
+    gtk_label_set_yalign (GTK_LABEL(l), 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, l, w);
     HIG::workarea_add_section_divider (t, &row);
     HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
     w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
     l = gtk_label_new(_("Minutes to autosave newsrc files: "));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL(l), 0.0);
+    gtk_label_set_yalign (GTK_LABEL(l), 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, l, w);
 
@@ -1361,7 +1363,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   // 16 MiB blocks max, 512 kb min
   w = new_spin_button ("upload-option-bpf", 512*1024, 1024*1024*16, prefs);
   l = gtk_label_new(_("Default bytes per file (for encoder): "));
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5);
   HIG::workarea_add_row (t, &row, l, w);
 
   HIG :: workarea_finish (t, &row);

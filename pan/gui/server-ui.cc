@@ -477,7 +477,8 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     GtkWidget * l = gtk_label_new (_("Server Rank:"));
     GtkWidget * e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+    gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+    gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
     gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
 
@@ -529,7 +530,8 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     l = gtk_label_new (_("TLS (SSL) Settings:"));
     e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+    gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+    gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
     gtk_widget_set_tooltip_text( e,
           _("You can enable/disable secure SSL/TLS connections here. "
             "If you enable SSL/TLS, your data is encrypted and secure. "

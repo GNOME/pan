@@ -60,7 +60,8 @@ HIG :: workarea_add_section_title    (GtkWidget   * table,
 
   g_snprintf (buf, sizeof(buf), "<b>%s</b>", section_title);
   l = gtk_label_new (buf);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_label_set_xalign (GTK_LABEL(l), 0.0f);
+  gtk_label_set_yalign (GTK_LABEL(l), 0.5f);
   gtk_label_set_use_markup (GTK_LABEL(l), TRUE);
   gtk_table_attach (GTK_TABLE(table), l, 0, 4, *row, *row+1, (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), (GtkAttachOptions)0, 0, 0);
   gtk_widget_show (l);
@@ -113,9 +114,10 @@ HIG :: workarea_add_label   (GtkWidget   * table,
                              int           row,
                              GtkWidget   * label)
 {
-  if (GTK_IS_MISC (label))
-    gtk_misc_set_alignment (GTK_MISC(label), 0.0f, 0.5f);
-    //gtk_misc_set_alignment (GTK_MISC(label), 0.0f, 0.0f);
+  if (GTK_IS_LABEL (label)) {
+    gtk_label_set_xalign (GTK_LABEL(label), 0.0f);
+    gtk_label_set_yalign (GTK_LABEL(label), 0.5f);
+  }
   //gtk_table_attach (GTK_TABLE(table), label, 1, 2, row, row+1, GTK_FILL, (GtkAttachOptions)0, 0, 0);
   gtk_table_attach (GTK_TABLE(table), label, 1, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
