@@ -1727,7 +1727,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_show_all(_menu);
 
   GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_set_resize_mode (GTK_CONTAINER(vbox), GTK_RESIZE_QUEUE);
 
   // about this expander... getting the ellipsis to work is a strange process.
   // once you turn ellipsize on, the expander tries to make its label as narrow
