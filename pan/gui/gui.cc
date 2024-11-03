@@ -1665,7 +1665,12 @@ void GUI :: do_about_pan ()
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
+#ifdef PLATFORM_INFO
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
+#else
+  gtk_about_dialog_set_comments (w, VERSION_TITLE);
+#endif
+
   gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2021 Charles Kerr and others")); // \u00A9 is unicode for (c)
   gtk_about_dialog_set_website (w, "https://gitlab.gnome.org/GNOME/pan/-/blob/master/README.org");
   gtk_about_dialog_set_logo (w, logo);

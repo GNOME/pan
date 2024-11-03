@@ -69,15 +69,20 @@ set_target_properties(pan PROPERTIES RUNTIME_OUTPUT_DIRECTORY "pan/gui")
 target_compile_options(pan PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
 
 
-# Get the latest abbreviated commit hash of the working branch
-# see https://jonathanhamberg.com/post/cmake-embedding-git-hash/
-# drawback: commited changed are not taken into account until "cmake ." is run
-execute_process(
-  COMMAND git log -1 --format=%h
-  WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-  OUTPUT_VARIABLE GIT_REV
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+# Don't embed GIT_REV for a reproducible build. This is mostly done in
+# Linux distribution build where git rev is not the same as upstream
+if (NOT DEFINED ENV{SOURCE_DATE_EPOCH})
+  # Get the latest abbreviated commit hash of the working branch
+  # see https://jonathanhamberg.com/post/cmake-embedding-git-hash/
+  # drawback: commited changed are not taken into account until "cmake ." is run
+  execute_process(
+    COMMAND git log -1 --format=%h
+    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+    OUTPUT_VARIABLE GIT_REV
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+  message(STATUS "Git rev: ${GIT_REV}")
+endif ()
 
 CHECK_INCLUDE_FILE(errno.h HAVE_ERRNO_H)
 CHECK_INCLUDE_FILE(fcntl.h HAVE_FCNTL_H)
@@ -191,12 +196,10 @@ if(NOT COMPILED_LKSTRFTIME_TEST)
 endif()
 
 # Don't embed uname -sr in PLATFORM_INFO for a reproducible build.
-if (DEFINED ENV{SOURCE_DATE_EPOCH})
-  set(PLATFORM_INFO "-")
-else ()
+if (NOT DEFINED ENV{SOURCE_DATE_EPOCH})
   set(PLATFORM_INFO ${CMAKE_HOST_SYSTEM})
+  message(STATUS "platform: ${PLATFORM_INFO}")
 endif ()
-message(STATUS "platform: ${PLATFORM_INFO}")
 
 # https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 if(APPLE)

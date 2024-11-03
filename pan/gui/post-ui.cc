@@ -1427,7 +1427,11 @@ namespace
 {
   const char * get_user_agent ()
   {
-      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
+#ifdef GIT_REV
+    return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
+#else
+    return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE ")";
+#endif
   }
 
   bool header_has_dedicated_entry (const StringView& name)
