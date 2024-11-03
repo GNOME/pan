@@ -31,6 +31,7 @@
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>
+#include <stdexcept>
 #include <vector>
 
 using namespace pan;
@@ -397,15 +398,34 @@ void Article ::clear()
 /* Functions to bookmark an article */
 void Article ::toggle_flag()
 {
-  flag = ! flag;
+  LOG4CXX_TRACE(logger, "Toggle flag of " << message_id.c_str());
+  SQLite::Statement q(pan_db, R"SQL(
+    update article set flag = 1-flag where message_id = ?
+  )SQL");
+  q.bind(1,message_id);
+  assert( q.exec() == 1);
 }
 
 bool Article ::get_flag() const
 {
-  return flag;
+  LOG4CXX_TRACE(logger, "Get flag of " << message_id.c_str());
+  SQLite::Statement q(pan_db, R"SQL(
+    select flag from article where message_id = ?
+  )SQL");
+  q.bindNoCopy(1,message_id);
+  while (q.executeStep()) {
+    return q.getColumn(0).getInt() != 0 ;
+  }
+  throw std::invalid_argument("get_flag: unknown message_id");
 }
 
 void Article ::set_flag(bool setme)
 {
-  flag = setme;
+  LOG4CXX_TRACE(logger, "Set flag of " << message_id.c_str() << " to " << setme);
+  SQLite::Statement q(pan_db, R"SQL(
+    update article set flag = ? where message_id = ?
+  )SQL");
+  q.bind(1,setme);
+  q.bind(2,message_id);
+  assert( q.exec() == 1);
 }
