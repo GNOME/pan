@@ -22,6 +22,7 @@
 #include <config.h>
 #include <cctype>
 #include <cmath>
+#include <glib-object.h>
 #include <iostream>
 #include <sstream>
 #include <glib/gi18n.h>
@@ -1744,7 +1745,9 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
   _terse = gtk_label_new ("Expander");
   g_object_ref_sink (G_OBJECT(_terse));
-  gtk_misc_set_alignment (GTK_MISC(_terse), 0.0f, 0.5f);
+  gtk_label_set_xalign(GTK_LABEL(_terse), 0.0f);
+  gtk_label_set_yalign(GTK_LABEL(_terse), 0.5f);
+
   gtk_label_set_use_markup (GTK_LABEL(_terse), true);
   gtk_label_set_selectable (GTK_LABEL(_terse), true);
   gtk_label_set_ellipsize (GTK_LABEL(_terse), PANGO_ELLIPSIZE_MIDDLE);
@@ -1755,7 +1758,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   g_object_ref_sink (G_OBJECT(_verbose));
   w = _headers = gtk_label_new ("Headers");
   gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);
-  gtk_misc_set_alignment (GTK_MISC(w), 0.0f, 0.5f);
+  gtk_label_set_xalign(GTK_LABEL(_headers), 0.0f);
+  gtk_label_set_yalign(GTK_LABEL(_headers), 0.5f);
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
@@ -1792,7 +1796,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   _att_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   GtkWidget * att_label = gtk_label_new (_("Attachments:"));
   gtk_misc_set_padding (GTK_MISC(att_label), PAD_SMALL, 0);
-  gtk_misc_set_alignment (GTK_MISC(att_label), 0, 0);
+  gtk_label_set_xalign(GTK_LABEL(att_label), 0.0f);
+  gtk_label_set_yalign(GTK_LABEL(att_label), 0.0f);
   gtk_box_pack_start (GTK_BOX(_att_box), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
   gtk_box_pack_start (GTK_BOX(_att_box), att_label, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar (_att_box), false, false, 0);

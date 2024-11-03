@@ -108,7 +108,7 @@ endfunction()
 
 # see https://github.com/shlomif/gtk3-cmake-examples/blob/master/CMakeLists.txt
 # Use the package PkgConfig to detect GTK+ headers/library files
-pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET  gtk+-3.0)
+pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET  gtk+-3.0>=3.16.0)
 
 # https://cmake.org/cmake/help/latest/command/find_package.html
 # https://cmake.org/cmake/help/latest/module/FindIconv.html
