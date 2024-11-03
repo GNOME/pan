@@ -903,7 +903,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(group_id != 0);
 
   SQLite::Statement read_article_q(pan_db,R"SQL(
-    select flag,message_id, expected_parts, `references`
+    select message_id, expected_parts, `references`
       from article
       join article_group as ag on ag.article_id = article.id
       where ag.group_id = ?
@@ -970,7 +970,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     Article &a(h->alloc_new_article());
 
     int i(0);
-    a.flag = read_article_q.getColumn(i++).getInt() == 1 ? true : false;
     char const *message_id = read_article_q.getColumn(i++);
     a.message_id = Quark(message_id);
 
