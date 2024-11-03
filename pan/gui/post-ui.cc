@@ -69,7 +69,6 @@ using namespace pan;
 
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
-#define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
 
 namespace pan
 {
@@ -1426,13 +1425,8 @@ PostUI :: import_draft (const char* fn)
 
 namespace
 {
-  bool ua_extra=false;
-
   const char * get_user_agent ()
   {
-    if (ua_extra)
-      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV "; " PLATFORM_INFO ")";
-    else
       return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
   }
 
@@ -3082,8 +3076,6 @@ PostUI :: PostUI (GtkWindow    * parent,
 
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != nullptr);
-
-  ua_extra = prefs.get_flag(USER_AGENT_EXTRA_PREFS_KEY, false);
 
   #ifdef HAVE_GSPELL
   // set the spellchecker language according to the first destination newsgroup's options
