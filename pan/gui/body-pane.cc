@@ -1221,8 +1221,6 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   s += _(" at ");
   add_bold_header_value (s, message, "Date", fallback_charset);
   gtk_label_set_markup (GTK_LABEL(_terse), s.c_str());
-  // ellipsize mode is useless w/o this in expander...
-  gtk_label_set_width_chars (GTK_LABEL(_terse), (int)s.size());
 
   // clear the text buffer...
   GtkTextIter start, end;
