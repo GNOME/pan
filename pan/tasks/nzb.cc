@@ -513,23 +513,31 @@ std::ostream &print_article(
   out << indent(--depth) << "</groups>\n";
 
   // now for the parts...
+  SQLite::Statement get_part_q(pan_db, R"SQL(
+    select  part_message_id, size, part_number
+    from article_part as p
+    join article as a on a.id == p.article_id
+    where a.message_id == ?
+  )SQL");
+  get_part_q.bind(1, a.message_id);
+
   out << indent(depth++) << "<segments>\n";
-  for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+  while(get_part_q.executeStep())
   {
-    std::string mid = it.mid ();
+      std::string part_mid = get_part_q.getColumn(0).getText();
 
     // remove the surrounding < > as per nzb spec
-    if (mid.size()>=2 && mid[0]=='<') {
-      mid.erase (0, 1);
-      mid.resize (mid.size()-1);
+    if (part_mid.size()>=2 && part_mid[0]=='<') {
+      part_mid.erase (0, 1);
+      part_mid.resize (part_mid.size()-1);
     }
 
     // serialize this part
     out << indent(depth)
-        << "<segment" << " bytes=\"" << it.bytes() << '"'
-        << " number=\"" << it.number() << '"'
+        << "<segment" << " bytes=\"" << get_part_q.getColumn(1) << '"'
+        << " number=\"" << get_part_q.getColumn(2) << '"'
         << ">";
-    escaped(out, mid);
+    escaped(out, part_mid);
     out  << "</segment>\n";
   }
   out << indent(--depth) << "</segments>\n";
