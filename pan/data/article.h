@@ -74,6 +74,8 @@ class Article
 
     Parts::number_t get_found_part_count() const;
 
+    void get_missing_part_numbers(std::set<Parts::number_t> &setme) const;
+
     typedef Parts::const_iterator part_iterator;
 
     part_iterator pbegin() const
