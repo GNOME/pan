@@ -1936,10 +1936,8 @@ void GUI :: do_show_selected_article_info ()
     typedef Parts::number_t number_t;
     std::set<number_t> missing_parts;
     const number_t n_parts = a->get_total_part_count ();
-    for (number_t i=1; i<=n_parts; ++i)
-      missing_parts.insert (i);
-    for (Article::part_iterator it(a->pbegin()), e(a->pend()); it!=e; ++it)
-      missing_parts.erase (it.number());
+    a->get_missing_part_numbers(missing_parts);
+
     char msg[512];
     *msg = '\0';
     std::ostringstream s;
