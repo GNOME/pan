@@ -20,6 +20,7 @@
 #include "article.h"
 #include "pan/data/pan-db.h"
 #include "pan/general/log4cxx.h"
+#include "pan/general/time-elapsed.h"
 #include <SQLiteCpp/Statement.h>
 #include <algorithm>
 #include <bits/types/time_t.h>
@@ -217,25 +218,29 @@ bool Article ::has_reply_leader(StringView const &s)
 
 unsigned long Article ::get_byte_count() const
 {
+  SQLite::Statement q(pan_db, R"SQL(
+  select sum(p.size) as bytes
+    from article as a
+    join article_part as p on a.id == p.article_id
+    where a.message_id == ?
+  )SQL");
+  q.bind(1,message_id);
+
+  TimeElapsed timer;
   unsigned long bytes = 0;
-  for (part_iterator it(pbegin()), end(pend()); it != end; ++it)
-  {
-    bytes += it.bytes();
+  while (q.executeStep()) {
+    bytes = q.getColumn(0).getInt64();
   }
+  double const duration = timer.get_seconds_elapsed();
+  LOG4CXX_TRACE(logger, "Got byte count of article "
+                << message_id << " in " << duration << "s.");
   return bytes;
 }
 
 bool Article ::is_byte_count_ge(unsigned long test) const
 {
-  unsigned long bytes = 0;
-  for (part_iterator it(pbegin()), end(pend()); it != end; ++it)
-  {
-    if (((bytes += it.bytes())) >= test)
-    {
-      return true;
-    }
-  }
-  return false;
+  unsigned long bytes(get_byte_count());
+  return bytes > test;
 }
 
 Article ::mid_sequence_t Article ::get_part_mids() const
