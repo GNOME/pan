@@ -243,6 +243,37 @@ bool Article ::is_byte_count_ge(unsigned long test) const
   return bytes > test;
 }
 
+void Article ::get_missing_part_numbers(std::set<Parts::number_t> &setme) const
+{
+  // See https://sqlite.org/lang_with.html#recursive_query_examples
+  SQLite::Statement q(pan_db, R"SQL(
+    with recursive
+      cnt(x) as (
+         select 1
+         union all
+         select x+1 from cnt
+         where x < (select expected_parts from article where message_id == $msg_id)
+      )
+    select x from cnt where x not in (
+      select part_number from article_part  as p
+        join article as a on a.id == p.article_id
+        where message_id = $msg_id
+    )
+    order by x
+  )SQL");
+  q.bind(1,message_id);
+
+  TimeElapsed timer;
+  while (q.executeStep()) {
+    setme.insert(q.getColumn(0));
+  }
+
+  double const duration = timer.get_seconds_elapsed();
+  LOG4CXX_INFO(logger, "Got " << setme.size() << " missing parts in article "
+               << message_id << " in " << duration << "s.");
+
+}
+
 Article ::mid_sequence_t Article ::get_part_mids() const
 {
   SQLite::Statement q(pan_db, R"SQL(
