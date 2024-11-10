@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2 master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2023-01-25 21:43+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues/\n"
+"POT-Creation-Date: 2024-11-05 17:58+0000\n"
 "PO-Revision-Date: 2023-08-08 14:27-0400\n"
 "Last-Translator: Yinghua Wang <wantinghard@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -21,8 +21,8 @@ msgstr ""
 
 #. update the titlebar
 #: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
-#: pan/gui/dl-headers-ui.cc:119 pan/gui/gui.cc:1040 pan/gui/gui.cc:1665
-#: pan/gui/gui.cc:1985 pan/gui/score-add-ui.cc:600
+#: pan/gui/dl-headers-ui.cc:119 pan/gui/gui.cc:1041 pan/gui/gui.cc:1666
+#: pan/gui/gui.cc:1995 pan/gui/score-add-ui.cc:600
 msgid "Pan"
 msgstr "Pan"
 
@@ -66,8 +66,8 @@ msgstr "打开文件夹出错：“%s”：%s"
 
 # pan/nntp.c:481 pan/nntp.c:785
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
-#: pan/data-impl/data-io.cc:279 pan/data-impl/data-io.cc:311
-#: pan/gui/post-ui.cc:1768
+#: pan/data-impl/data-io.cc:278 pan/data-impl/data-io.cc:310
+#: pan/gui/post-ui.cc:1697
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "无法保存“%s” %s"
@@ -80,58 +80,58 @@ msgstr "打开文件“%s”出错 %s"
 
 # pan/base/acache.c:197
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
-#: pan/data-impl/server.cc:489 pan/general/file-util.cc:312
-#: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:741
+#: pan/data-impl/server.cc:478 pan/general/file-util.cc:311
+#: pan/gui/post-ui.cc:566 pan/gui/task-pane.cc:740
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "读文件出错“%s”: %s。"
 
 # pan/base/acache.c:197
-#: pan/data/cert-store.cc:261
+#: pan/data/cert-store.cc:259
 #, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "打开 SSL 证书目录出错：“%s”：%s"
 
-#: pan/data/cert-store.cc:292
+#: pan/data/cert-store.cc:290
 #, c-format
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr ""
 
-#: pan/data/cert-store.cc:312
+#: pan/data/cert-store.cc:310
 msgid ""
 "Error initializing Certificate Store. Check that the permissions for the "
 "folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
 
-#: pan/data/cert-store.cc:361
+#: pan/data/cert-store.cc:359
 #, c-format
 msgid "Could not export certificate for server: %s"
 msgstr ""
 
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:116
+#: pan/data-impl/data-impl.cc:119
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "已载入数据后台程序，用时 %.1f 秒"
 
-#: pan/data-impl/data-impl.cc:152
+#: pan/data-impl/data-impl.cc:155
 msgid "Pan Newsreader's server passwords"
 msgstr ""
 
 # pan/task-grouplist.c:471
-#: pan/data-impl/groups.cc:102
+#: pan/data-impl/groups.cc:104
 #, c-format
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "跳过服务器“%s”的 newsrc 文件"
 
 # pan/article-actions.c:567
-#: pan/data-impl/headers.cc:617
+#: pan/data-impl/headers.cc:713
 #, fuzzy, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "从“%2$s”中删除了 %1$lu 篇旧文章"
 
 # pan/base/file-headers.c:215
-#: pan/data-impl/headers.cc:624
+#: pan/data-impl/headers.cc:722
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -140,26 +140,26 @@ msgstr ""
 "%s 标题中有未被支持的数据版本: %d。\n"
 "您意外地运行着老版本的Pan么?"
 
-#: pan/data-impl/headers.cc:639
+#: pan/data-impl/headers.cc:740
 #, fuzzy, c-format
 #| msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgid "Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "加载了“%2$s”组的%1$lu篇文章，用时%3$.1f秒(%4$.0f篇/秒)"
 
 # pan/base/file-headers.c:732
-#: pan/data-impl/headers.cc:868
+#: pan/data-impl/headers.cc:1009
 #, fuzzy, c-format
 msgid ""
 "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr "保存了“%3$s”中的%1$lu部分，%2$lu篇文章，用时%4$.1f秒(%5$.0f篇/秒)"
 
 # pan/article-actions.c:567
-#: pan/data-impl/headers.cc:1201
+#: pan/data-impl/headers.cc:1399
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "已添加 %lu 篇文章到 %s。"
 
-#: pan/data-impl/server.cc:259
+#: pan/data-impl/server.cc:250
 #, c-format
 msgid "Received no password from libsecret for server %s."
 msgstr ""
@@ -169,17 +169,6 @@ msgstr ""
 #, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "从 %s 读取出错：未知的组“%s”"
-
-#: pan/general/editor-spawner.cc:66
-#, c-format
-msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgstr "解析“外部编辑器”命令行出错：%s(命令为：%s)"
-
-# pan/message-window.c:440
-#: pan/general/editor-spawner.cc:110
-#, c-format
-msgid "Error starting external editor: %s"
-msgstr "启动外部编辑器编辑出错：“%s”"
 
 #: pan/general/e-util.cc:164
 msgid "%l:%M %p"
@@ -216,17 +205,17 @@ msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "无法确定文章的编码。非 UTF8 的字符被移除。"
 
 # pan/dialogs/dialog-log-viewer.c:134 pan/gui.c:1925 pan/message-window.c:294
-#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
+#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:381
 msgid "_File"
 msgstr "文件(_F)"
 
 # pan/gui.c:1938 pan/message-window.c:299 pan/message-window.c:316
-#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:453
+#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:382
 msgid "_Edit"
 msgstr "编辑(_E)"
 
 # pan/prefs.c:2345
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1111
+#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1157
 msgid "_Layout"
 msgstr "布局(_L)"
 
@@ -260,7 +249,7 @@ msgid "_Go"
 msgstr "转到(_G)"
 
 # pan/rules/rule-edit-ui.c:814
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1161
+#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1207
 msgid "_Actions"
 msgstr "操作(_A)"
 
@@ -473,7 +462,7 @@ msgid "Edit S_core File"
 msgstr "签名文件"
 
 # pan/gui.c:1931
-#: pan/gui/actions.cc:463 pan/gui/post-ui.cc:469
+#: pan/gui/actions.cc:463 pan/gui/post-ui.cc:398
 msgid "Edit P_osting Profiles"
 msgstr "编辑投递配置文件(_O)"
 
@@ -751,7 +740,7 @@ msgstr "关于(_A)"
 
 #: pan/gui/actions.cc:710
 msgid "Edit _SSL Certificates"
-msgstr ""
+msgstr "编辑 _SSL 证书"
 
 # pan/message-window.c:1193
 #: pan/gui/actions.cc:725
@@ -805,7 +794,7 @@ msgstr "将焦点设置于图像"
 
 #: pan/gui/actions.cc:735
 msgid "Highlight _URLs"
-msgstr ""
+msgstr "高亮显示 _URL"
 
 # pan/dialogs/dialog-log-viewer.c:138
 #: pan/gui/actions.cc:738
@@ -930,7 +919,7 @@ msgstr "匹配评分为 -9999 的文章(忽略的)(_I)"
 
 #: pan/gui/actions.cc:760
 msgid "Enable/Disable All _Rules"
-msgstr ""
+msgstr "启用/禁用所有过滤规则(_R)"
 
 # pan/article-toolbar.c:666
 #: pan/gui/actions.cc:788
@@ -948,58 +937,58 @@ msgid "Show Matching Articles' _Subthreads"
 msgstr "显示匹配文章的子话题(_S)"
 
 # pan/identities/identity-edit-ui.c:242
-#: pan/gui/body-pane.cc:1036
+#: pan/gui/body-pane.cc:1041
 msgid "Unnamed File"
 msgstr "未命名文件"
 
 # pan/article-toolbar.c:871 pan/articlelist.c:933 pan/filter-edit-ui.c:748
 # pan/prefs.c:1817 pan/task-save.c:649
-#: pan/gui/body-pane.cc:1117 pan/gui/gui.cc:1956 pan/gui/header-pane.cc:1306
-#: pan/gui/header-pane.cc:1735 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:859
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
+#: pan/gui/body-pane.cc:1122 pan/gui/gui.cc:1966 pan/gui/header-pane.cc:1306
+#: pan/gui/header-pane.cc:1737 pan/gui/post-ui.cc:2575 pan/gui/prefs-ui.cc:896
+#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "主题"
 
 # pan/message-window.c:1136
-#: pan/gui/body-pane.cc:1119 pan/gui/gui.cc:1956
+#: pan/gui/body-pane.cc:1124 pan/gui/gui.cc:1966
 msgid "From"
 msgstr "来源"
 
 # pan/articlelist.c:936 pan/prefs.c:1810 pan/task-save.c:652
-#: pan/gui/body-pane.cc:1121 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1814
-#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:855
+#: pan/gui/body-pane.cc:1126 pan/gui/gui.cc:1967 pan/gui/header-pane.cc:1816
+#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:892
 msgid "Date"
 msgstr "日期"
 
 # pan/rules/rule-edit-ui.c:808
-#: pan/gui/body-pane.cc:1128
+#: pan/gui/body-pane.cc:1133
 msgid "Newsgroups"
 msgstr "新闻组"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/body-pane.cc:1143
-#: pan/gui/body-pane.cc:1150
+#: pan/gui/body-pane.cc:1140 pan/gui/body-pane.cc:1148
+#: pan/gui/body-pane.cc:1155
 msgid "User-Agent"
 msgstr "用户代理"
 
-#: pan/gui/body-pane.cc:1156
+#: pan/gui/body-pane.cc:1161
 #, fuzzy
 msgid "Followup-To"
 msgstr "跟随"
 
 # pan/gui-headers.c:282
-#: pan/gui/body-pane.cc:1166
+#: pan/gui/body-pane.cc:1171
 msgid "Reply-To"
 msgstr "回复给"
 
-#: pan/gui/body-pane.cc:1214
+#: pan/gui/body-pane.cc:1219
 msgid " from "
 msgstr "从"
 
-#: pan/gui/body-pane.cc:1216
+#: pan/gui/body-pane.cc:1221
 msgid " at "
 msgstr "于"
 
-#: pan/gui/body-pane.cc:1305
+#: pan/gui/body-pane.cc:1308
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -1009,40 +998,40 @@ msgid ""
 "<b>Created on:</b> %s"
 msgstr ""
 
-#: pan/gui/body-pane.cc:1310
+#: pan/gui/body-pane.cc:1313
 msgid "always"
 msgstr ""
 
-#: pan/gui/body-pane.cc:1530
+#: pan/gui/body-pane.cc:1532
 msgid "Copy _URL"
 msgstr "复制 _URL"
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/body-pane.cc:1718
+#: pan/gui/body-pane.cc:1719
 #, fuzzy
 msgid "Save Attachment As..."
 msgstr "保存附件于："
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/body-pane.cc:1721
+#: pan/gui/body-pane.cc:1722
 #, fuzzy
 msgid "Save All Attachments"
 msgstr "保存附件"
 
 # pan/filter-edit-ui.c:836 pan/message-window.c:1195 pan/save-ui.c:398
-#: pan/gui/body-pane.cc:1792
+#: pan/gui/body-pane.cc:1795
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachments:"
 msgstr "附件"
 
-#: pan/gui/body-pane.cc:1812
+#: pan/gui/body-pane.cc:1816
 #, fuzzy
 #| msgid "Text File"
 msgid "Text View"
 msgstr "文本文件"
 
-#: pan/gui/body-pane.cc:1821
+#: pan/gui/body-pane.cc:1825
 msgid "HTML View"
 msgstr ""
 
@@ -1074,7 +1063,7 @@ msgid "Get the _latest N headers: "
 msgstr "获取最近的 N 条标题(_L)："
 
 # pan/rules/rule-edit-ui.c:814
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:852
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:889
 msgid "Action"
 msgstr "操作"
 
@@ -1084,7 +1073,7 @@ msgid "A GtkRadioAction"
 msgstr "一个 GtkRadioAction"
 
 # pan/base/base-prefs.c:36
-#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:562
+#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:561
 msgid "Unknown"
 msgstr "未知"
 
@@ -1170,373 +1159,394 @@ msgstr "乌克兰文"
 msgid "Visual"
 msgstr "可视化"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
-#: pan/gui/prefs-ui.cc:763
+#: pan/gui/e-charset-combo-box.c:95 pan/gui/gui.cc:2164 pan/gui/post-ui.cc:476
+#: pan/gui/prefs-ui.cc:800
 msgid "Character Encoding"
 msgstr "字符编码"
 
-#: pan/gui/e-charset-combo-box.c:117
+#: pan/gui/e-charset-combo-box.c:97 pan/gui/e-charset-dialog.c:51
+#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:309
+msgid "Cancel"
+msgstr "取消"
+
+#: pan/gui/e-charset-combo-box.c:98 pan/gui/e-charset-dialog.c:52
+msgid "OK"
+msgstr ""
+
+#: pan/gui/e-charset-combo-box.c:119
 msgid "Enter the character set to use"
 msgstr "输入要使用的字符集"
 
-#: pan/gui/e-charset-combo-box.c:336
+#: pan/gui/e-charset-combo-box.c:339
 msgid "Other..."
 msgstr "其他..."
 
 # pan/base/decode.c:369
-#: pan/gui/e-cte-dialog.c:76
+#: pan/gui/e-cte-dialog.c:77
 msgid "Default Encoding"
 msgstr "默认编码"
 
 # pan/base/decode.c:369
-#: pan/gui/e-cte-dialog.c:78
+#: pan/gui/e-cte-dialog.c:79
 msgid "7-Bit Encoding"
 msgstr "7 比特编码"
 
 # pan/base/decode.c:369
-#: pan/gui/e-cte-dialog.c:80
+#: pan/gui/e-cte-dialog.c:81
 msgid "8-Bit Encoding"
 msgstr "8 比特编码"
 
 # pan/base/decode.c:369
-#: pan/gui/e-cte-dialog.c:82
+#: pan/gui/e-cte-dialog.c:83
 msgid "Base64 Encoding"
 msgstr "Base64 编码"
 
 # pan/prefs.c:2193
-#: pan/gui/e-cte-dialog.c:84
+#: pan/gui/e-cte-dialog.c:85
 #, fuzzy
 msgid "Quoted-Printable Encoding"
 msgstr "正文窗格编码"
 
-#: pan/gui/group-pane.cc:331
+#: pan/gui/editor-spawner.cc:66
+#, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "解析“外部编辑器”命令行出错：%s(命令为：%s)"
+
+# pan/message-window.c:440
+#: pan/gui/editor-spawner.cc:110
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "启动外部编辑器编辑出错：“%s”"
+
+#. Local folders
+#: pan/gui/group-pane.cc:330
 msgid "Sent"
 msgstr ""
 
-#: pan/gui/group-pane.cc:332
+#: pan/gui/group-pane.cc:330
 msgid "Drafts"
 msgstr ""
 
 # pan/grouplist.c:643 pan/grouplist.c:680 pan/gui-notebook.c:58
-#: pan/gui/group-pane.cc:543
+#: pan/gui/group-pane.cc:540
 #, fuzzy
 msgid "Group"
 msgstr "组"
 
 # pan/prefs.c:2191
-#: pan/gui/group-pane.cc:544
+#: pan/gui/group-pane.cc:540
 #, fuzzy
 msgid "Group (regex)"
 msgstr "组名"
 
-#: pan/gui/group-pane.cc:987
+#: pan/gui/group-pane.cc:985
 msgid "Local Folders"
 msgstr ""
 
 # pan/rules/rule-edit-ui.c:622
-#: pan/gui/group-pane.cc:988
+#: pan/gui/group-pane.cc:986
 msgid "Subscribed Groups"
 msgstr "已订阅的新闻组"
 
 # pan/grouplist.c:532 pan/grouplist.c:937
-#: pan/gui/group-pane.cc:989
+#: pan/gui/group-pane.cc:987
 msgid "Other Groups"
 msgstr "其他组"
 
 # pan/prefs.c:2912
-#: pan/gui/group-pane.cc:1029 pan/gui/score-view-ui.cc:157
+#: pan/gui/group-pane.cc:1028 pan/gui/score-view-ui.cc:156
 msgid "Name"
 msgstr "名称"
 
 # pan/gui.c:1931
-#: pan/gui/group-prefs-dialog.cc:162
+#: pan/gui/group-prefs-dialog.cc:161
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "在编辑|投递配置文件中没有定义配置文件。"
 
 # pan/prefs.c:3024
-#: pan/gui/group-prefs-dialog.cc:265
+#: pan/gui/group-prefs-dialog.cc:264
 msgid "Pan: Group Preferences"
 msgstr "Pan：组首选项"
 
 # pan/dialogs/dialog-group-props.c:173
-#: pan/gui/group-prefs-dialog.cc:280
+#: pan/gui/group-prefs-dialog.cc:279
 #, fuzzy
 msgid "Properties for Groups"
 msgstr "%s 的属性"
 
 # pan/dialogs/dialog-group-props.c:173
-#: pan/gui/group-prefs-dialog.cc:282
+#: pan/gui/group-prefs-dialog.cc:281
 #, c-format
 msgid "Properties for %s"
 msgstr "%s 的属性"
 
-#: pan/gui/group-prefs-dialog.cc:293
+#: pan/gui/group-prefs-dialog.cc:292
 msgid "Character _encoding:"
 msgstr "字符编码(_E)："
 
 # pan/dialogs/dialog-group-props.c:128
-#: pan/gui/group-prefs-dialog.cc:295
+#: pan/gui/group-prefs-dialog.cc:294
 msgid "Directory for Saving Attachments"
 msgstr "用于保存附件的文件夹"
 
 # pan/dialogs/dialog-group-props.c:128
-#: pan/gui/group-prefs-dialog.cc:303
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for _saving attachments:"
 msgstr "用于保存附件的文件夹(_S)："
 
 # pan/identities/identity-ui.c:436
-#: pan/gui/group-prefs-dialog.cc:305
+#: pan/gui/group-prefs-dialog.cc:304
 msgid "Posting _profile:"
 msgstr "Pan：配置文件(_P)："
 
-#: pan/gui/group-prefs-dialog.cc:310
+#: pan/gui/group-prefs-dialog.cc:309
 msgid "Spellchecker _language:"
 msgstr ""
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Group color:"
 msgstr ""
 
 # pan/gui.c:652
-#: pan/gui/gui.cc:311
+#: pan/gui/gui.cc:312
 msgid "Open the Task Manager"
 msgstr "打开任务管理器"
 
 # pan/gui.c:684
-#: pan/gui/gui.cc:334
+#: pan/gui/gui.cc:335
 msgid "Open the Event Log"
 msgstr "打开事件日志"
 
-#: pan/gui/gui.cc:610
+#: pan/gui/gui.cc:611
 msgid "Save NZB's Files"
 msgstr "保存 NZB 文件"
 
-#: pan/gui/gui.cc:637
+#: pan/gui/gui.cc:638
 msgid "Untitled.nzb"
 msgstr ""
 
-#: pan/gui/gui.cc:639
+#: pan/gui/gui.cc:640
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "保存 NZB 文件"
 
 # pan/newsrc-ui.c:73
-#: pan/gui/gui.cc:808
+#: pan/gui/gui.cc:809
 msgid "Import NZB Files"
 msgstr "导入 NZB 文件"
 
 # pan/filter-ui.c:373 pan/rules/rule-edit-ui.c:811
-#: pan/gui/gui.cc:816 pan/gui/post-ui.cc:3349
+#: pan/gui/gui.cc:817 pan/gui/post-ui.cc:3288
 msgid "NZB Files"
 msgstr "NZB 文件"
 
 # pan/filter-ui.c:373 pan/rules/rule-edit-ui.c:811
-#: pan/gui/gui.cc:821
+#: pan/gui/gui.cc:822
 msgid "All Files"
 msgstr "所有文件"
 
 # pan/articlelist.c:3146
-#: pan/gui/gui.cc:1335
+#: pan/gui/gui.cc:1336
 #, fuzzy
 msgid "Unable to supersede article."
 msgstr "无法替换文章。"
 
-#: pan/gui/gui.cc:1336 pan/gui/gui.cc:1412
+#: pan/gui/gui.cc:1337 pan/gui/gui.cc:1413
 msgid "The article doesn't match any of your posting profiles."
 msgstr "该文章不匹配任何一个投递配置文件。"
 
-#: pan/gui/gui.cc:1385
+#: pan/gui/gui.cc:1386
 msgid "Revise and send this article to replace the old one."
 msgstr "修订并发送该文章以替换旧的那篇。"
 
-#: pan/gui/gui.cc:1386 pan/gui/gui.cc:1450
+#: pan/gui/gui.cc:1387 pan/gui/gui.cc:1451
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "不要着急！您的更改生效需要一段时间。"
 
 # pan/article-actions.c:171
-#: pan/gui/gui.cc:1411
+#: pan/gui/gui.cc:1412
 msgid "Unable to cancel article."
 msgstr "无法取消文章。"
 
-#: pan/gui/gui.cc:1449
+#: pan/gui/gui.cc:1450
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "发送此文章来让您的服务器取消您的另一篇文章。"
 
 # pan/gui.c:1945
-#: pan/gui/gui.cc:1467
+#: pan/gui/gui.cc:1468
 #, fuzzy
 msgid "You have marked some articles for deletion."
 msgstr "添加相似话题到选择(_S)"
 
 # pan/group-action.c:282
-#: pan/gui/gui.cc:1468
+#: pan/gui/gui.cc:1469
 #, fuzzy
 msgid "Are you sure you want to delete them?"
 msgstr "您确定要删除这些%d组/文件夹及其文章么?"
 
-#: pan/gui/gui.cc:1494
+#: pan/gui/gui.cc:1495
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr ""
 
 # pan/article-actions.c:171
-#: pan/gui/gui.cc:1640
+#: pan/gui/gui.cc:1641
 msgid "Unable to open help file."
 msgstr "无法打开帮助文件。"
 
 # pan/dialogs/dialog-about.c:53
-#: pan/gui/gui.cc:1668
+#: pan/gui/gui.cc:1678
 msgid "Copyright © 2002-2021 Charles Kerr and others"
 msgstr "版权所有 © 2002-2021 Charles Kerr 等"
 
-#: pan/gui/gui.cc:1673
+#: pan/gui/gui.cc:1683
 msgid "translator-credits"
 msgstr ""
 "zipeco <zipeco@btamail.net.cn>\n"
 "Yinghua Wang <wantinghard@gmail.com>"
 
 # pan/prefs.c:2191
-#: pan/gui/gui.cc:1801
+#: pan/gui/gui.cc:1811
 msgid "_1. Group Pane"
 msgstr "_1. 组窗格"
 
-#: pan/gui/gui.cc:1802
+#: pan/gui/gui.cc:1812
 msgid "_2. Header Pane"
 msgstr "_2. 标题窗格"
 
 # pan/prefs.c:2193
-#: pan/gui/gui.cc:1803
+#: pan/gui/gui.cc:1813
 msgid "_3. Body Pane"
 msgstr "_3. 正文窗格"
 
-#: pan/gui/gui.cc:1893 pan/gui/gui.cc:1908
+#: pan/gui/gui.cc:1903 pan/gui/gui.cc:1918
 #, fuzzy
 msgid " Bytes"
 msgstr "字节"
 
-#: pan/gui/gui.cc:1896
+#: pan/gui/gui.cc:1906
 msgid " KB"
 msgstr ""
 
-#: pan/gui/gui.cc:1899
+#: pan/gui/gui.cc:1909
 msgid " MB"
 msgstr ""
 
-#: pan/gui/gui.cc:1902
+#: pan/gui/gui.cc:1912
 msgid " GB"
 msgstr ""
 
-#: pan/gui/gui.cc:1905
+#: pan/gui/gui.cc:1915
 msgid " TB"
 msgstr ""
 
 # pan/filters/filter-binary.c:77
-#: pan/gui/gui.cc:1937
+#: pan/gui/gui.cc:1947
 #, fuzzy, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "该文章具备所有的 %d 个部分。"
 
-#: pan/gui/gui.cc:1939
+#: pan/gui/gui.cc:1949
 #, fuzzy, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "此文章 %2$d 个部分中缺少 %1$d 个部分："
 
 # pan/article-toolbar.c:873 pan/filter-edit-ui.c:758
-#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:1967 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:797
 msgid "Message-ID"
 msgstr "信息标识"
 
 # pan/articlelist.c:934 pan/task-save.c:650
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1783 pan/gui/prefs-ui.cc:856
+#: pan/gui/gui.cc:1968 pan/gui/header-pane.cc:1785 pan/gui/prefs-ui.cc:893
 msgid "Lines"
 msgstr "行数"
 
-#: pan/gui/gui.cc:1958
+#: pan/gui/gui.cc:1968
 msgid "Size"
 msgstr ""
 
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:854
+#: pan/gui/gui.cc:1969 pan/gui/header-pane.cc:1801 pan/gui/prefs-ui.cc:891
 msgid "Bytes"
 msgstr "字节"
 
-#: pan/gui/gui.cc:2009
+#: pan/gui/gui.cc:2019
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
 msgstr ""
 
 # pan/prefs.c:2193
-#: pan/gui/gui.cc:2155
+#: pan/gui/gui.cc:2165
 msgid "Body Pane Encoding"
 msgstr "正文窗格编码"
 
 # pan/gui.c:1620 pan/task-manager.c:426
-#: pan/gui/gui.cc:2186 pan/gui/task-pane.cc:613
+#: pan/gui/gui.cc:2196 pan/gui/task-pane.cc:612
 msgid "Offline"
 msgstr "离线"
 
 # pan/gui.c:1621
-#: pan/gui/gui.cc:2190
+#: pan/gui/gui.cc:2200
 #, fuzzy, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "正在关闭 %d 连接"
 
 # pan/gui.c:1621
-#: pan/gui/gui.cc:2192 pan/gui/gui.cc:2222
+#: pan/gui/gui.cc:2202 pan/gui/gui.cc:2232
 msgid "No Connections"
 msgstr "没有连接"
 
 # pan/gui.c:1615 pan/task-manager.c:418
-#: pan/gui/gui.cc:2196
+#: pan/gui/gui.cc:2206
 msgid "Connecting"
 msgstr "正在连接"
 
-#: pan/gui/gui.cc:2209
+#: pan/gui/gui.cc:2219
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s：%d 空闲，%d 活动 速度 %.1f KB/S"
 
 # pan/gui.c:1719
-#: pan/gui/gui.cc:2265
+#: pan/gui/gui.cc:2275
 msgid "No Tasks"
 msgstr "没有任务"
 
 # pan/gui.c:1719
-#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1094
+#: pan/gui/gui.cc:2277 pan/gui/prefs-ui.cc:1140
 msgid "Tasks"
 msgstr "任务"
 
-#: pan/gui/gui.cc:2284 pan/gui/task-pane.cc:479
+#: pan/gui/gui.cc:2294 pan/gui/task-pane.cc:478
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu 项任务，%s，%.1f KB/S，ETA %d:%02d:%02d"
 
-#: pan/gui/gui.cc:2336
+#: pan/gui/gui.cc:2346
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 "Pan 已离线。请查看“文件|事件日志”并修正问题，然后使用“文件|在线工作”继续。"
 
-#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:795
+#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:793
 msgid "Subject or Author"
 msgstr "主题或作者"
 
-#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:796
+#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:794
 #, fuzzy
 msgid "Sub or Auth (regex)"
 msgstr "主题或作者"
 
 # pan/article-toolbar.c:872 pan/articlelist.c:935 pan/filter-edit-ui.c:753
 # pan/prefs.c:1809 pan/task-save.c:651
-#: pan/gui/header-pane.cc:1307 pan/gui/header-pane.cc:1767
-#: pan/gui/prefs-ui.cc:853 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:798
+#: pan/gui/header-pane.cc:1307 pan/gui/header-pane.cc:1769
+#: pan/gui/prefs-ui.cc:890 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:796
 msgid "Author"
 msgstr "作者"
 
-#: pan/gui/header-pane.cc:1752 pan/gui/prefs-ui.cc:857
+#: pan/gui/header-pane.cc:1754 pan/gui/prefs-ui.cc:894
 msgid "Score"
 msgstr "评分"
 
@@ -1554,29 +1564,25 @@ msgstr "Pan：事件"
 msgid "Message"
 msgstr "信息"
 
-#: pan/gui/pan.cc:369
+#: pan/gui/pan.cc:306
 msgid "Maximize"
 msgstr "最大化"
 
-#: pan/gui/pan.cc:422
+#: pan/gui/pan.cc:346
 msgid "An error has occurred!"
 msgstr "出现了错误！"
 
-#: pan/gui/pan.cc:434
+#: pan/gui/pan.cc:359
 msgid "New Articles!"
 msgstr "有新文章！"
 
-#: pan/gui/pan.cc:435
+#: pan/gui/pan.cc:360
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
 
-#: pan/gui/pan.cc:502
-msgid "Toggle on/offline"
-msgstr ""
-
-#: pan/gui/pan.cc:550
+#: pan/gui/pan.cc:435
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1586,7 +1592,7 @@ msgstr ""
 " \n"
 "要开始新闻阅读，请先添加一个服务器。"
 
-#: pan/gui/pan.cc:632
+#: pan/gui/pan.cc:517
 #, fuzzy
 msgid ""
 "General Options\n"
@@ -1625,284 +1631,271 @@ msgstr ""
 "  --no-gui                 只显示控制台输出，不下载队列。\n"
 " "
 
-#: pan/gui/pan.cc:966
+#: pan/gui/pan.cc:852
 #, fuzzy
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "错误：使用了 --no-gui 选项但没有 nzb 文件或 news:message-id。"
 
 # pan/pan.c:176
-#: pan/gui/pan.cc:970
+#: pan/gui/pan.cc:856
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s 已启动"
 
-#: pan/gui/pan.cc:990
+#: pan/gui/pan.cc:876
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "在将 Pan作为 nzb 客户端使用之前，请先配置 Pan 的新闻服务器。"
 
-#: pan/gui/pan.cc:1108
+#: pan/gui/pan.cc:996
 msgid "Pan notification"
 msgstr ""
 
-#: pan/gui/post-ui.cc:176
+#: pan/gui/post-ui.cc:174
 #, c-format
 msgid "Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."
 msgstr ""
 
-# pan/message-window.c:440
-#: pan/gui/post-ui.cc:282 pan/gui/post-ui.cc:313
-#, fuzzy, c-format
-msgid "Error setting custom spellchecker: %s"
-msgstr "设置拼写检查器出错：%s"
-
-# pan/message-window.c:440
-#: pan/gui/post-ui.cc:286 pan/gui/post-ui.cc:294 pan/gui/post-ui.cc:317
-#: pan/gui/post-ui.cc:325
-#, c-format
-msgid "Error setting spellchecker: %s"
-msgstr "设置拼写检查器出错：%s"
-
 # pan/identities/identity-ui.c:449
-#: pan/gui/post-ui.cc:454
+#: pan/gui/post-ui.cc:383
 msgid "_Profile"
 msgstr "配置文件(_P)"
 
 # pan/message-window.c:440
-#: pan/gui/post-ui.cc:455
+#: pan/gui/post-ui.cc:384
 msgid "Set Editor"
 msgstr "设置编辑器"
 
-#: pan/gui/post-ui.cc:457
+#: pan/gui/post-ui.cc:386
 msgid "_Send Article"
 msgstr "发送文章(_S)"
 
 # pan/message-window.c:399
-#: pan/gui/post-ui.cc:457
+#: pan/gui/post-ui.cc:386
 msgid "Send Article Now"
 msgstr "现在发送文章"
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/post-ui.cc:458
+#: pan/gui/post-ui.cc:387
 #, fuzzy
 msgid "_Send and Save Articles to NZB"
 msgstr "保存来自此 NZB 的文章"
 
 # pan/articlelist.c:3146
-#: pan/gui/post-ui.cc:458
+#: pan/gui/post-ui.cc:387
 #, fuzzy
 msgid "Send and Save Articles to NZB"
 msgstr "Pan：保存文章"
 
-#: pan/gui/post-ui.cc:459
+#: pan/gui/post-ui.cc:388
 msgid "Set Character _Encoding..."
 msgstr "设置字符编码(_E)..."
 
-#: pan/gui/post-ui.cc:460
+#: pan/gui/post-ui.cc:389
 #, fuzzy
 msgid "Set Content _Transfer Encoding..."
 msgstr "设置字符编码..."
 
 # pan/save-ui.c:351
-#: pan/gui/post-ui.cc:461
+#: pan/gui/post-ui.cc:390
 msgid "Sa_ve Draft"
 msgstr "保存文章草稿(_V)"
 
-#: pan/gui/post-ui.cc:461
+#: pan/gui/post-ui.cc:390
 msgid "Save as a Draft for Future Posting"
 msgstr "保存为草稿以备以后投递"
 
 # pan/articlelist.c:3143
-#: pan/gui/post-ui.cc:462
+#: pan/gui/post-ui.cc:391
 msgid "_Open Draft..."
 msgstr "打开草稿(_O)..."
 
 # pan/articlelist.c:3143
-#: pan/gui/post-ui.cc:462
+#: pan/gui/post-ui.cc:391
 msgid "Open an Article Draft"
 msgstr "打开一篇文章的草稿"
 
 # pan/message-window.c:433
-#: pan/gui/post-ui.cc:467
+#: pan/gui/post-ui.cc:396
 #, fuzzy
 msgid "_Rot13"
 msgstr "_Rot13"
 
 # pan/message-window.c:433
-#: pan/gui/post-ui.cc:467
+#: pan/gui/post-ui.cc:396
 msgid "Rot13 Selected Text"
 msgstr "Rot13 选择的文本"
 
 # pan/message-window.c:440
-#: pan/gui/post-ui.cc:468
+#: pan/gui/post-ui.cc:397
 msgid "Run _Editor"
 msgstr "运行编辑器(_E)"
 
 # pan/message-window.c:440
-#: pan/gui/post-ui.cc:468
+#: pan/gui/post-ui.cc:397
 msgid "Run Editor"
 msgstr "运行编辑器"
 
-#: pan/gui/post-ui.cc:470
+#: pan/gui/post-ui.cc:399
 msgid "Add _Files to Queue"
 msgstr ""
 
-#: pan/gui/post-ui.cc:470
+#: pan/gui/post-ui.cc:399
 msgid "Add Files to Queue"
 msgstr ""
 
 # pan/dialogs/dialog-newuser.c:686 pan/prefs.c:2584
-#: pan/gui/post-ui.cc:485 pan/gui/post-ui.cc:486
+#: pan/gui/post-ui.cc:414 pan/gui/post-ui.cc:415
 #, fuzzy
 msgid "Remove from Queue"
 msgstr "移除一个服务器"
 
 # pan/rules/rule-edit-ui.c:486
-#: pan/gui/post-ui.cc:490 pan/gui/post-ui.cc:491
+#: pan/gui/post-ui.cc:419 pan/gui/post-ui.cc:420
 msgid "Clear List"
 msgstr "清空列表"
 
 # pan/prefs.c:2263
-#: pan/gui/post-ui.cc:495 pan/gui/post-ui.cc:496
+#: pan/gui/post-ui.cc:424 pan/gui/post-ui.cc:425
 #, fuzzy
 msgid "Select Needed Parts"
 msgstr "选择的布局："
 
-#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:681
-#: pan/gui/task-pane.cc:682
+#: pan/gui/post-ui.cc:429 pan/gui/post-ui.cc:430 pan/gui/task-pane.cc:680
+#: pan/gui/task-pane.cc:681
 msgid "Move Up"
 msgstr ""
 
-#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:686
-#: pan/gui/task-pane.cc:687
+#: pan/gui/post-ui.cc:434 pan/gui/post-ui.cc:435 pan/gui/task-pane.cc:685
+#: pan/gui/task-pane.cc:686
 msgid "Move Down"
 msgstr ""
 
-#: pan/gui/post-ui.cc:510 pan/gui/post-ui.cc:511
+#: pan/gui/post-ui.cc:439 pan/gui/post-ui.cc:440
 msgid "Move to Top"
 msgstr ""
 
 # pan/task-manager.c:747
-#: pan/gui/post-ui.cc:515 pan/gui/post-ui.cc:516
+#: pan/gui/post-ui.cc:444 pan/gui/post-ui.cc:445
 #, fuzzy
 msgid "Move to Bottom"
 msgstr "选定的任务移动到底部"
 
 # pan/message-window.c:424
-#: pan/gui/post-ui.cc:523
+#: pan/gui/post-ui.cc:452
 msgid "_Wrap Text"
 msgstr "文本自动换行(_W)"
 
 # pan/message-window.c:424
-#: pan/gui/post-ui.cc:523
+#: pan/gui/post-ui.cc:452
 msgid "Wrap Text"
 msgstr "文本自动换行"
 
 # pan/message-window.c:440
-#: pan/gui/post-ui.cc:524
+#: pan/gui/post-ui.cc:453
 msgid "Always Run Editor"
 msgstr "总是运行编辑器"
 
-#: pan/gui/post-ui.cc:525
+#: pan/gui/post-ui.cc:454
 #, fuzzy
 #| msgid "Remember Character Encoding for this Group"
 msgid "Remember Character Encoding for This Group"
 msgstr "记住此组的字符编码设置"
 
 # pan/filters/filter-thread.c:71
-#: pan/gui/post-ui.cc:526
+#: pan/gui/post-ui.cc:455
 #, fuzzy
 msgid "Thread Attached Replies"
 msgstr "话题已被跟踪或被忽略"
 
 # pan/prefs.c:1486
-#: pan/gui/post-ui.cc:527
+#: pan/gui/post-ui.cc:456
 #, fuzzy
 msgid "PGP-Encrypt the Article"
 msgstr "产生消息号(_G)"
 
 # pan/prefs.c:1486
-#: pan/gui/post-ui.cc:528
+#: pan/gui/post-ui.cc:457
 #, fuzzy
 msgid "PGP-Sign the Article"
 msgstr "产生消息号(_G)"
 
-#: pan/gui/post-ui.cc:529
+#: pan/gui/post-ui.cc:458
 msgid "Check _Spelling"
 msgstr "检查拼写(_S)"
 
 # pan/save-ui.c:280
-#: pan/gui/post-ui.cc:548
+#: pan/gui/post-ui.cc:477
 msgid "New Article's Encoding:"
 msgstr "新文章的编码："
 
-#: pan/gui/post-ui.cc:558
+#: pan/gui/post-ui.cc:487
 #, fuzzy
 msgid "Content Transfer Encoding"
 msgstr "字符编码"
 
 # pan/save-ui.c:280
-#: pan/gui/post-ui.cc:559
+#: pan/gui/post-ui.cc:488
 #, fuzzy
 msgid "New Article's Content Transfer Encoding:"
 msgstr "新文章的编码："
 
-#: pan/gui/post-ui.cc:743
+#: pan/gui/post-ui.cc:672
 msgid "Your changes will be lost!"
 msgstr "您的更改将丢失！"
 
-#: pan/gui/post-ui.cc:744
+#: pan/gui/post-ui.cc:673
 msgid "Close this window and lose your changes?"
 msgstr "关闭此窗口并放弃您的更改？"
 
-#: pan/gui/post-ui.cc:789 pan/gui/post-ui.cc:828
+#: pan/gui/post-ui.cc:718 pan/gui/post-ui.cc:757
 msgid "There were problems with this post."
 msgstr "这份投递有问题。"
 
-#: pan/gui/post-ui.cc:791 pan/gui/post-ui.cc:830 pan/gui/post-ui.cc:895
+#: pan/gui/post-ui.cc:720 pan/gui/post-ui.cc:759 pan/gui/post-ui.cc:824
 msgid "Go Back"
 msgstr "返回"
 
-#: pan/gui/post-ui.cc:793
+#: pan/gui/post-ui.cc:722
 msgid "Continue Anyway"
 msgstr "仍然继续"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:822
+#: pan/gui/post-ui.cc:751
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr "消息使用的字符在字符集 '%s' 中没有指定 - 可能使用的是 '%s'"
 
-#: pan/gui/post-ui.cc:845
+#: pan/gui/post-ui.cc:774
 msgid "Go _Online"
 msgstr "转为在线(_O)"
 
-#: pan/gui/post-ui.cc:894
+#: pan/gui/post-ui.cc:823
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 
 # pan/filters/filter-aggregate.c:72 pan/filters/filter-binary.c:79
 # pan/filters/filter-phrase.c:104 pan/filters/filter-saved.c:79
 # pan/filters/filter-thread.c:75 pan/prefs.c:2194 pan/task-headers.c:447
-#: pan/gui/post-ui.cc:1074
+#: pan/gui/post-ui.cc:1003
 msgid "IO Error"
 msgstr "输入输出错误"
 
-#: pan/gui/post-ui.cc:1074
+#: pan/gui/post-ui.cc:1003
 msgid "No space left on device"
 msgstr "设备上无剩余空间"
 
-#: pan/gui/post-ui.cc:1075
+#: pan/gui/post-ui.cc:1004
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr ""
 
-#: pan/gui/post-ui.cc:1081
+#: pan/gui/post-ui.cc:1010
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 
-#: pan/gui/post-ui.cc:1103
+#: pan/gui/post-ui.cc:1032
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1910,22 +1903,22 @@ msgstr ""
 "该投递配置文件没有设置投递服务器。\n"
 "请通过“编辑|管理投递配置文件”编辑该配置文件。"
 
-#: pan/gui/post-ui.cc:1108
+#: pan/gui/post-ui.cc:1037
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
 msgstr ""
 
 # pan/gui.c:1620 pan/task-manager.c:426
-#: pan/gui/post-ui.cc:1150
+#: pan/gui/post-ui.cc:1079
 msgid "Pan is Offline."
 msgstr "Pan 已经离线。"
 
-#: pan/gui/post-ui.cc:1151
+#: pan/gui/post-ui.cc:1080
 msgid "Go online to post the article?"
 msgstr "上线以投递该文章？"
 
-#: pan/gui/post-ui.cc:1200
+#: pan/gui/post-ui.cc:1129
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1933,125 +1926,125 @@ msgid ""
 msgstr ""
 
 # pan/base/newsrc-port.c:105
-#: pan/gui/post-ui.cc:1350
+#: pan/gui/post-ui.cc:1279
 msgid "Error opening temporary file"
 msgstr "打开临时文件时出错"
 
 # pan/base/newsrc-port.c:105
-#: pan/gui/post-ui.cc:1361
+#: pan/gui/post-ui.cc:1290
 #, fuzzy, c-format
 #| msgid "Error opening temporary file"
 msgid "Error creating temporary file: %s"
 msgstr "打开临时文件时出错"
 
-#: pan/gui/post-ui.cc:1369
+#: pan/gui/post-ui.cc:1298
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "写入文章到临时文件时出错：“%s”"
 
 # pan/articlelist.c:3143
-#: pan/gui/post-ui.cc:1442
+#: pan/gui/post-ui.cc:1371
 msgid "Open Draft Article"
 msgstr "打开草稿文章"
 
 # pan/save-ui.c:351
-#: pan/gui/post-ui.cc:1684
+#: pan/gui/post-ui.cc:1613
 msgid "Save Draft Article"
 msgstr "保存草稿文章"
 
 # pan/group-ui.c:154
-#: pan/gui/post-ui.cc:1722
+#: pan/gui/post-ui.cc:1651
 msgid "File already exists."
 msgstr "文件已经存在。"
 
-#: pan/gui/post-ui.cc:1723
+#: pan/gui/post-ui.cc:1652
 msgid "Overwrite it?"
 msgstr ""
 
 # pan/base/util-file.c:224
-#: pan/gui/post-ui.cc:1932
+#: pan/gui/post-ui.cc:1861
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "无法解析签名命令“%s”：%s"
 
 # pan/base/util-file.c:224
-#: pan/gui/post-ui.cc:1968
+#: pan/gui/post-ui.cc:1897
 msgid "Couldn't convert signature to UTF-8."
 msgstr "无法将签名转换为 UTF-8 编码。"
 
 # pan/message-window.c:1136
-#: pan/gui/post-ui.cc:2480
+#: pan/gui/post-ui.cc:2409
 msgid "F_rom"
 msgstr "来自(_R)"
 
 # pan/article-toolbar.c:871 pan/articlelist.c:933 pan/filter-edit-ui.c:748
 # pan/prefs.c:1817 pan/task-save.c:649
-#: pan/gui/post-ui.cc:2497
+#: pan/gui/post-ui.cc:2427
 msgid "_Subject"
 msgstr "主题(_S)"
 
 # pan/rules/rule-edit-ui.c:808
-#: pan/gui/post-ui.cc:2510
+#: pan/gui/post-ui.cc:2441
 msgid "_Newsgroups"
 msgstr "新闻组(_N)"
 
 # pan/message-window.c:1169
-#: pan/gui/post-ui.cc:2524
+#: pan/gui/post-ui.cc:2456
 msgid "Mail _To"
 msgstr "发信给(_T)"
 
-#: pan/gui/post-ui.cc:2626
+#: pan/gui/post-ui.cc:2560
 msgid "Delete from Queue"
 msgstr "从队列中删除"
 
-#: pan/gui/post-ui.cc:2639
+#: pan/gui/post-ui.cc:2573
 msgid "No."
 msgstr ""
 
 # pan/message-window.c:848
-#: pan/gui/post-ui.cc:2643 pan/gui/post-ui.cc:2735 pan/gui/post-ui.cc:2776
+#: pan/gui/post-ui.cc:2577 pan/gui/post-ui.cc:2669 pan/gui/post-ui.cc:2714
 msgid "Filename"
 msgstr "文件名"
 
-#: pan/gui/post-ui.cc:2645
+#: pan/gui/post-ui.cc:2579
 msgid "Size (KB)"
 msgstr ""
 
 # pan/save-ui.c:411
-#: pan/gui/post-ui.cc:2743
+#: pan/gui/post-ui.cc:2679
 #, fuzzy
 msgid "The current filename"
 msgstr "使用加密的文件名"
 
 # pan/article-toolbar.c:871 pan/articlelist.c:933 pan/filter-edit-ui.c:748
 # pan/prefs.c:1817 pan/task-save.c:649
-#: pan/gui/post-ui.cc:2747
+#: pan/gui/post-ui.cc:2683
 #, fuzzy
 msgid "Subject Line"
 msgstr "主题"
 
 # pan/save-ui.c:411
-#: pan/gui/post-ui.cc:2755
+#: pan/gui/post-ui.cc:2693
 #, fuzzy
 msgid "The current subject line"
 msgstr "使用加密的文件名"
 
-#: pan/gui/post-ui.cc:2769
+#: pan/gui/post-ui.cc:2707
 msgid "No. "
 msgstr ""
 
-#: pan/gui/post-ui.cc:2773
+#: pan/gui/post-ui.cc:2711
 msgid "Enable/Disable"
 msgstr ""
 
-#: pan/gui/post-ui.cc:2807
+#: pan/gui/post-ui.cc:2745
 #, fuzzy
 msgid "Follo_wup-To"
 msgstr "跟随(_W)"
 
 # pan/message-window.c:998
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2816
+#: pan/gui/post-ui.cc:2755
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -2063,12 +2056,12 @@ msgstr ""
 "要将所有的回复定向到您的电子邮件地址，使用“Followup-To: poster”"
 
 # pan/gui-headers.c:282
-#: pan/gui/post-ui.cc:2823
+#: pan/gui/post-ui.cc:2762
 msgid "_Reply-To"
 msgstr "回复给(_R)"
 
 # pan/message-window.c:1018
-#: pan/gui/post-ui.cc:2831
+#: pan/gui/post-ui.cc:2771
 #, fuzzy
 #| msgid ""
 #| "The email account where mail replies to your posted message should go.  "
@@ -2081,75 +2074,75 @@ msgstr ""
 
 # pan/identities/identity-edit-ui.c:415 pan/identities/identity-edit-ui.c:547
 # pan/message-window.c:1097
-#: pan/gui/post-ui.cc:2838
+#: pan/gui/post-ui.cc:2778
 msgid "_Custom Headers"
 msgstr "自定义标题(_C)"
 
 # pan/message-window.c:1089
-#: pan/gui/post-ui.cc:2862
+#: pan/gui/post-ui.cc:2803
 msgid "Add \"_User-Agent\" header"
 msgstr "添加“用户代理”标题"
 
 # pan/save-ui.c:364
-#: pan/gui/post-ui.cc:2869
+#: pan/gui/post-ui.cc:2810
 #, fuzzy
 msgid "Add \"Message-_ID\" header"
 msgstr "添加“消息标识”标题"
 
 # pan/pan-font-picker.c:52
-#: pan/gui/post-ui.cc:2997
+#: pan/gui/post-ui.cc:2938
 #, fuzzy
 msgid "Select Parts"
 msgstr "选择字体"
 
-#: pan/gui/post-ui.cc:3010
+#: pan/gui/post-ui.cc:2951
 msgid "_Parts"
 msgstr ""
 
 # pan/articlelist.c:3455
-#: pan/gui/post-ui.cc:3177
+#: pan/gui/post-ui.cc:3116
 msgid "Post Article"
 msgstr "投递文章"
 
 # pan/gui-notebook.c:60 pan/message-window.c:1191
-#: pan/gui/post-ui.cc:3198
+#: pan/gui/post-ui.cc:3137
 msgid "_Message"
 msgstr "信息(_M)"
 
 # pan/message-window.c:1193
-#: pan/gui/post-ui.cc:3199
+#: pan/gui/post-ui.cc:3138
 msgid "More _Headers"
 msgstr "更多的标题(_H)"
 
-#: pan/gui/post-ui.cc:3200
+#: pan/gui/post-ui.cc:3139
 msgid "File _Queue"
 msgstr ""
 
 # pan/identities/identity-edit-ui.c:311 pan/identities/identity.c:48
-#: pan/gui/post-ui.cc:3231 pan/gui/profiles-dialog.cc:490
+#: pan/gui/post-ui.cc:3170 pan/gui/profiles-dialog.cc:491
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%n 在 %d 写道："
 
-#: pan/gui/post-ui.cc:3260
+#: pan/gui/post-ui.cc:3199
 msgid "Add files to queue"
 msgstr ""
 
-#: pan/gui/post-ui.cc:3336
+#: pan/gui/post-ui.cc:3275
 msgid "Save Upload Queue as NZB File"
 msgstr ""
 
 # pan/task-body.c:227
-#: pan/gui/prefs.cc:366
+#: pan/gui/prefs.cc:368
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "无法解析 %s 颜色“%s”"
 
-#: pan/gui/prefs-ui.cc:127
+#: pan/gui/prefs-ui.cc:140
 msgid "Grab Key"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:133
+#: pan/gui/prefs-ui.cc:146
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
@@ -2158,617 +2151,619 @@ msgstr ""
 
 # pan/filter-ui.c:399 pan/identities/identity-ui.c:482
 # pan/rules/rule-ui.c:513
-#: pan/gui/prefs-ui.cc:173
+#: pan/gui/prefs-ui.cc:183
 #, fuzzy
 msgid "Edit Shortcut"
 msgstr "编辑"
 
 # pan/group-ui.c:154
-#: pan/gui/prefs-ui.cc:235
+#: pan/gui/prefs-ui.cc:244
 #, fuzzy
 msgid "Error: Shortcut key is invalid!"
 msgstr "文件夹“%s”已经存在。"
 
 # pan/group-ui.c:154
-#: pan/gui/prefs-ui.cc:251
+#: pan/gui/prefs-ui.cc:260
 #, fuzzy
 msgid "Error: Shortcut key already exists!"
 msgstr "文件夹“%s”已经存在。"
 
-#: pan/gui/prefs-ui.cc:565
+#: pan/gui/prefs-ui.cc:601
 #, fuzzy
 msgid "Show only icons"
 msgstr "仅现实我所张贴的"
 
-#: pan/gui/prefs-ui.cc:566
+#: pan/gui/prefs-ui.cc:602
 #, fuzzy
 msgid "Show only text"
 msgstr "仅现实我所张贴的"
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/prefs-ui.cc:567
+#: pan/gui/prefs-ui.cc:603
 msgid "Show icons and text"
 msgstr "显示图标和字体"
 
 # pan/prefs.c:3024
-#: pan/gui/prefs-ui.cc:606
+#: pan/gui/prefs-ui.cc:642
 msgid "Use GNOME Preferences"
 msgstr "使用 GNOME 首选设置"
 
 # pan/prefs.c:3024
-#: pan/gui/prefs-ui.cc:607
+#: pan/gui/prefs-ui.cc:643
 msgid "Use KDE Preferences"
 msgstr "使用 KDE 首选设置"
 
 # pan/prefs.c:3024
-#: pan/gui/prefs-ui.cc:608
+#: pan/gui/prefs-ui.cc:644
 msgid "Use OS X Preferences"
 msgstr "使用 OS X 首选设置"
 
 # pan/prefs.c:3024
-#: pan/gui/prefs-ui.cc:609
+#: pan/gui/prefs-ui.cc:645
 msgid "Use Windows Preferences"
 msgstr "使用 Windows 首选设置"
 
 # pan/print.c:180
-#: pan/gui/prefs-ui.cc:610
+#: pan/gui/prefs-ui.cc:646
 msgid "Custom Command:"
 msgstr "自定义命令："
 
 # pan/task-manager.c:412
-#: pan/gui/prefs-ui.cc:662
+#: pan/gui/prefs-ui.cc:698
 #, fuzzy
 msgid "Disabled"
 msgstr "已启用"
 
-#: pan/gui/prefs-ui.cc:663
+#: pan/gui/prefs-ui.cc:699
 msgid "Only new (score == 0)"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:664
+#: pan/gui/prefs-ui.cc:700
 #, fuzzy
 msgid "9999 or more"
 msgstr "评分为 999 或更高："
 
-#: pan/gui/prefs-ui.cc:665
+#: pan/gui/prefs-ui.cc:701
 #, fuzzy
 msgid "5000 to 9998"
 msgstr "评分从 5000 到 9998："
 
-#: pan/gui/prefs-ui.cc:666
+#: pan/gui/prefs-ui.cc:702
 msgid "1 to 4999"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:667
+#: pan/gui/prefs-ui.cc:703
 #, fuzzy
 msgid "-9998 to -1"
 msgstr "评分从 -9998 到 -1："
 
-#: pan/gui/prefs-ui.cc:668
+#: pan/gui/prefs-ui.cc:704
 #, fuzzy
 msgid "-9999 or less"
 msgstr "评分为 -9999 或更低："
 
-#: pan/gui/prefs-ui.cc:732
+#: pan/gui/prefs-ui.cc:770
 #, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:764
+#: pan/gui/prefs-ui.cc:801
 msgid "Global Character Set Settings"
 msgstr ""
 
 # pan/task-manager.c:794
-#: pan/gui/prefs-ui.cc:858 pan/gui/task-pane.cc:1072
+#: pan/gui/prefs-ui.cc:895 pan/gui/task-pane.cc:1067
 msgid "State"
 msgstr "状态"
 
 # pan/task-manager.c:412
-#: pan/gui/prefs-ui.cc:892
+#: pan/gui/prefs-ui.cc:929
 msgid "Enabled"
 msgstr "已启用"
 
 # pan/prefs.c:2191
-#: pan/gui/prefs-ui.cc:896
+#: pan/gui/prefs-ui.cc:933
 msgid "Column Name"
 msgstr "列名称"
 
 # pan/prefs.c:3024
-#: pan/gui/prefs-ui.cc:934
+#: pan/gui/prefs-ui.cc:981
 msgid "Pan: Preferences"
 msgstr "Pan：参数设置"
 
-#: pan/gui/prefs-ui.cc:949
+#: pan/gui/prefs-ui.cc:996
 msgid "Mouse"
 msgstr "鼠标"
 
-#: pan/gui/prefs-ui.cc:951
+#: pan/gui/prefs-ui.cc:998
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "单击激活而不是选中组(_G)"
 
-#: pan/gui/prefs-ui.cc:953
+#: pan/gui/prefs-ui.cc:1000
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "单击激活而不是选中文章(_A)"
 
 # pan/grouplist.c:643 pan/grouplist.c:680 pan/gui-notebook.c:58
-#: pan/gui/prefs-ui.cc:956
+#: pan/gui/prefs-ui.cc:1003
 msgid "Groups"
 msgstr "组"
 
-#: pan/gui/prefs-ui.cc:958
+#: pan/gui/prefs-ui.cc:1005
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "在启动时获取订阅组的新文章标题(_s)"
 
-#: pan/gui/prefs-ui.cc:960
+#: pan/gui/prefs-ui.cc:1007
 msgid "Get new headers when _entering group"
 msgstr "在进入组时获取新文章标题(_E)"
 
-#: pan/gui/prefs-ui.cc:962
+#: pan/gui/prefs-ui.cc:1009
 msgid "Mark entire group _read when leaving group"
 msgstr "在离开组时标记整个组为已读(_R)"
 
-#: pan/gui/prefs-ui.cc:964
+#: pan/gui/prefs-ui.cc:1011
 msgid "Mark entire group read before getting _new headers"
 msgstr "在获取新标题前标记整个组为已读(_N)"
 
-#: pan/gui/prefs-ui.cc:966
+#: pan/gui/prefs-ui.cc:1013
 msgid "E_xpand all threads when entering group"
 msgstr "在进入组时展开所有话题(_X)"
 
 # pan/gui.c:2016
-#: pan/gui/prefs-ui.cc:971
+#: pan/gui/prefs-ui.cc:1018
 msgid "Articles"
 msgstr "文章"
 
 # pan/filters/filter-read.c:50
-#: pan/gui/prefs-ui.cc:973
+#: pan/gui/prefs-ui.cc:1020
 #, fuzzy
 msgid "Mark downloaded articles read"
 msgstr "未读文章"
 
-#: pan/gui/prefs-ui.cc:975
+#: pan/gui/prefs-ui.cc:1022
 msgid "Space selects next article rather than next unread"
 msgstr "用空格键选择下一篇文章而非下一篇未读文章"
 
 # pan/gui.c:1945
-#: pan/gui/prefs-ui.cc:977
+#: pan/gui/prefs-ui.cc:1024
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "添加话题到选择(_T)"
 
-#: pan/gui/prefs-ui.cc:979
+#: pan/gui/prefs-ui.cc:1026
 msgid "Always ask before deleting an article"
 msgstr ""
 
 # pan/prefs.c:1957
-#: pan/gui/prefs-ui.cc:981
+#: pan/gui/prefs-ui.cc:1028
 msgid "Smooth scrolling"
 msgstr "平滑滚动"
 
 # pan/prefs.c:2772
-#: pan/gui/prefs-ui.cc:986
+#: pan/gui/prefs-ui.cc:1033
 #, fuzzy
 msgid "Article Cache"
 msgstr "清空文章缓存"
 
-#: pan/gui/prefs-ui.cc:987
+#: pan/gui/prefs-ui.cc:1034
 msgid "Clear article cache on shutdown"
 msgstr "关闭时清空文章缓存"
 
-#: pan/gui/prefs-ui.cc:990
+#: pan/gui/prefs-ui.cc:1037
 msgid "Size of article cache (in MiB):"
 msgstr ""
 
 # pan/gui.c:2080
-#: pan/gui/prefs-ui.cc:995
+#: pan/gui/prefs-ui.cc:1041
 #, fuzzy
 msgid "File extension for cached articles: "
 msgstr "/过滤器(_R)/匹配读过的文章"
 
-#: pan/gui/prefs-ui.cc:1000
+#: pan/gui/prefs-ui.cc:1045
 msgid "Tabs"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1005
+#: pan/gui/prefs-ui.cc:1050
 msgid "_Behavior"
 msgstr "行为(_B)"
 
-#: pan/gui/prefs-ui.cc:1005
+#: pan/gui/prefs-ui.cc:1050
 #, fuzzy
 msgid "Behavior"
 msgstr "行为(_B)"
 
 # pan/gui.c:1961
-#: pan/gui/prefs-ui.cc:1011
+#: pan/gui/prefs-ui.cc:1056
 #, fuzzy
 #| msgid "_Task Manager"
 msgid "Task Pane"
 msgstr "任务管理器(_T)"
 
-#: pan/gui/prefs-ui.cc:1012
+#: pan/gui/prefs-ui.cc:1057
 msgid "Show task pane popups"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1059
 #, fuzzy
 msgid "Show Download Meter"
 msgstr "仅现实我所张贴的"
 
 # pan/prefs.c:2193
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1063
 #, fuzzy
 #| msgid "_Body Pane"
 msgid "_Panes"
 msgstr "信体窗格(_B)"
 
 # pan/message-window.c:131
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1063
 #, fuzzy
 #| msgid "Japanese"
 msgid "Panes"
 msgstr "日文"
 
 # pan/base/decode.c:369
-#: pan/gui/prefs-ui.cc:1024
+#: pan/gui/prefs-ui.cc:1069
 #, fuzzy
 msgid "Language Settings"
 msgstr "设置"
 
-#. systray and notify popup
-#: pan/gui/prefs-ui.cc:1033
+# pan/prefs.c:1888 pan/prefs.c:2057 pan/prefs.c:2422
+#: pan/gui/prefs-ui.cc:1070
+#, fuzzy
+#| msgid "Fonts"
+msgid "Font"
+msgstr "字体"
+
+#: pan/gui/prefs-ui.cc:1078
 #, fuzzy
 msgid "System Tray Behavior"
 msgstr "行为(_B)"
 
-#: pan/gui/prefs-ui.cc:1035
-msgid "Minimize to tray"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1037
-msgid "Start Pan minimized"
-msgstr ""
-
 # pan/identities/identity-edit-ui.c:123
-#: pan/gui/prefs-ui.cc:1040
+#: pan/gui/prefs-ui.cc:1080
 #, fuzzy
 msgid "Show notifications"
 msgstr "显示文章信息"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1045
+#: pan/gui/prefs-ui.cc:1085
 #, fuzzy
 msgid "Startup Behavior"
 msgstr "行为(_B)"
 
-#: pan/gui/prefs-ui.cc:1047
+#: pan/gui/prefs-ui.cc:1087
 msgid "Allow multiple instances of Pan"
 msgstr ""
 
 # pan/articlelist.c:3143
-#: pan/gui/prefs-ui.cc:1052
+#: pan/gui/prefs-ui.cc:1092
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "打开一篇文章的草稿"
 
 # pan/articlelist.c:3143
-#: pan/gui/prefs-ui.cc:1054
+#: pan/gui/prefs-ui.cc:1094
 #, fuzzy
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "打开一篇文章的草稿"
 
 # pan/articlelist.c:3146
-#: pan/gui/prefs-ui.cc:1059
+#: pan/gui/prefs-ui.cc:1100
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "保存文章"
 
-#: pan/gui/prefs-ui.cc:1061
+#: pan/gui/prefs-ui.cc:1102
 msgid "Minutes to autosave newsrc files: "
 msgstr ""
 
 # pan/dialogs/dialog-newuser.c:518
-#: pan/gui/prefs-ui.cc:1068
+#: pan/gui/prefs-ui.cc:1110
 #, fuzzy
 #| msgid "Password:"
 msgid "Password Storage"
 msgstr "密码："
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1112
 msgid "Save passwords in password storage"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1073
+#: pan/gui/prefs-ui.cc:1119
 msgid "_Miscellaneous"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1073
+#: pan/gui/prefs-ui.cc:1119
 msgid "Miscellaneous"
 msgstr ""
 
 # pan/prefs.c:3057
-#: pan/gui/prefs-ui.cc:1078
+#: pan/gui/prefs-ui.cc:1124
 msgid "Pane Layout"
 msgstr "窗格布局"
 
-#: pan/gui/prefs-ui.cc:1097
+#: pan/gui/prefs-ui.cc:1143
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=组，2=标题，3=正文"
 
-#: pan/gui/prefs-ui.cc:1099
+#: pan/gui/prefs-ui.cc:1145
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=组，2=正文，3=标题"
 
-#: pan/gui/prefs-ui.cc:1101
+#: pan/gui/prefs-ui.cc:1147
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=标题，2=组，3=正文"
 
-#: pan/gui/prefs-ui.cc:1103
+#: pan/gui/prefs-ui.cc:1149
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=标题，2=正文，3=组"
 
-#: pan/gui/prefs-ui.cc:1105
+#: pan/gui/prefs-ui.cc:1151
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=正文，2=组，3=标题"
 
-#: pan/gui/prefs-ui.cc:1107
+#: pan/gui/prefs-ui.cc:1153
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=正文，2=标题，3=组"
 
 # pan/prefs.c:2345
-#: pan/gui/prefs-ui.cc:1111
+#: pan/gui/prefs-ui.cc:1157
 #, fuzzy
 msgid "Layout"
 msgstr "布局(_L)"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1162
 msgid "Header Pane Columns"
 msgstr "标题窗格列"
 
 # pan/message-window.c:1193
-#: pan/gui/prefs-ui.cc:1120
+#: pan/gui/prefs-ui.cc:1166
 msgid "_Headers"
 msgstr "标题(_H)"
 
 # pan/message-window.c:1193
-#: pan/gui/prefs-ui.cc:1120
+#: pan/gui/prefs-ui.cc:1166
 #, fuzzy
 msgid "Headers"
 msgstr "标题(_H)"
 
-#: pan/gui/prefs-ui.cc:1126
+#: pan/gui/prefs-ui.cc:1172
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on an article's score."
 msgstr ""
 
 # pan/filters/filter-read.c:50
-#: pan/gui/prefs-ui.cc:1131
+#: pan/gui/prefs-ui.cc:1177
 #, fuzzy
 msgid "Mark affected articles read"
 msgstr "未读文章"
 
 # pan/save-ui.c:418
-#: pan/gui/prefs-ui.cc:1140
+#: pan/gui/prefs-ui.cc:1186
 #, fuzzy
 #| msgid "set the article's score to"
 msgid "_Delete articles scoring at: "
 msgstr "将文章评分设为"
 
 # pan/filters/filter-read.c:50
-#: pan/gui/prefs-ui.cc:1146
+#: pan/gui/prefs-ui.cc:1192
 #, fuzzy
 msgid "Mark articles read scoring at: "
 msgstr "未读文章"
 
 # pan/save-ui.c:418
-#: pan/gui/prefs-ui.cc:1152
+#: pan/gui/prefs-ui.cc:1198
 #, fuzzy
 #| msgid "set the article's score to"
 msgid "_Cache articles scoring at: "
 msgstr "将文章评分设为"
 
-#: pan/gui/prefs-ui.cc:1158
+#: pan/gui/prefs-ui.cc:1204
 msgid "Download attachments of articles scoring at: "
 msgstr ""
 
 # pan/rules/rule-edit-ui.c:814
-#: pan/gui/prefs-ui.cc:1161
+#: pan/gui/prefs-ui.cc:1207
 #, fuzzy
 msgid "Actions"
 msgstr "操作(_A)"
 
 # pan/prefs.c:1888 pan/prefs.c:2057 pan/prefs.c:2422
-#: pan/gui/prefs-ui.cc:1166 pan/gui/prefs-ui.cc:1187
+#: pan/gui/prefs-ui.cc:1212 pan/gui/prefs-ui.cc:1233
 msgid "Fonts"
 msgstr "字体"
 
 # pan/save-ui.c:379 pan/save-ui.c:426
-#: pan/gui/prefs-ui.cc:1168
+#: pan/gui/prefs-ui.cc:1214
 msgid "Use custom font in Group Pane:"
 msgstr "组窗格使用自定义字体："
 
 # pan/save-ui.c:379 pan/save-ui.c:426
-#: pan/gui/prefs-ui.cc:1173
+#: pan/gui/prefs-ui.cc:1219
 msgid "Use custom font in Header Pane:"
 msgstr "标题窗格使用自定义字体："
 
 # pan/save-ui.c:379 pan/save-ui.c:426
-#: pan/gui/prefs-ui.cc:1178
+#: pan/gui/prefs-ui.cc:1224
 msgid "Use custom font in Body Pane:"
 msgstr "正文窗格使用自定义字体："
 
-#: pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1229
 msgid "Monospace font:"
 msgstr "等宽字体："
 
 # pan/prefs.c:1888 pan/prefs.c:2057 pan/prefs.c:2422
-#: pan/gui/prefs-ui.cc:1187
+#: pan/gui/prefs-ui.cc:1233
 msgid "_Fonts"
 msgstr "字体(_F)"
 
-#: pan/gui/prefs-ui.cc:1196
+#: pan/gui/prefs-ui.cc:1242
 msgid "Header Pane"
 msgstr "标题窗格"
 
 # pan/prefs.c:1917
-#: pan/gui/prefs-ui.cc:1199 pan/gui/prefs-ui.cc:1205 pan/gui/prefs-ui.cc:1211
-#: pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223 pan/gui/prefs-ui.cc:1229
-#: pan/gui/prefs-ui.cc:1238 pan/gui/prefs-ui.cc:1244 pan/gui/prefs-ui.cc:1250
-#: pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1262 pan/gui/prefs-ui.cc:1272
-#: pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1245 pan/gui/prefs-ui.cc:1251 pan/gui/prefs-ui.cc:1257
+#: pan/gui/prefs-ui.cc:1263 pan/gui/prefs-ui.cc:1269 pan/gui/prefs-ui.cc:1275
+#: pan/gui/prefs-ui.cc:1284 pan/gui/prefs-ui.cc:1290 pan/gui/prefs-ui.cc:1296
+#: pan/gui/prefs-ui.cc:1302 pan/gui/prefs-ui.cc:1308 pan/gui/prefs-ui.cc:1318
+#: pan/gui/prefs-ui.cc:1328
 msgid "Text:"
 msgstr "文本："
 
 # pan/prefs.c:1898
-#: pan/gui/prefs-ui.cc:1201 pan/gui/prefs-ui.cc:1207 pan/gui/prefs-ui.cc:1213
-#: pan/gui/prefs-ui.cc:1219 pan/gui/prefs-ui.cc:1225 pan/gui/prefs-ui.cc:1231
-#: pan/gui/prefs-ui.cc:1240 pan/gui/prefs-ui.cc:1246 pan/gui/prefs-ui.cc:1252
-#: pan/gui/prefs-ui.cc:1258 pan/gui/prefs-ui.cc:1264 pan/gui/prefs-ui.cc:1274
-#: pan/gui/prefs-ui.cc:1284
+#: pan/gui/prefs-ui.cc:1247 pan/gui/prefs-ui.cc:1253 pan/gui/prefs-ui.cc:1259
+#: pan/gui/prefs-ui.cc:1265 pan/gui/prefs-ui.cc:1271 pan/gui/prefs-ui.cc:1277
+#: pan/gui/prefs-ui.cc:1286 pan/gui/prefs-ui.cc:1292 pan/gui/prefs-ui.cc:1298
+#: pan/gui/prefs-ui.cc:1304 pan/gui/prefs-ui.cc:1310 pan/gui/prefs-ui.cc:1320
+#: pan/gui/prefs-ui.cc:1330
 msgid "Background:"
 msgstr "背景："
 
-#: pan/gui/prefs-ui.cc:1203
+#: pan/gui/prefs-ui.cc:1249
 msgid "Scores of 9999 or more:"
 msgstr "评分为 999 或更高："
 
-#: pan/gui/prefs-ui.cc:1209
+#: pan/gui/prefs-ui.cc:1255
 msgid "Scores from 5000 to 9998:"
 msgstr "评分从 5000 到 9998："
 
-#: pan/gui/prefs-ui.cc:1215
+#: pan/gui/prefs-ui.cc:1261
 msgid "Scores from 1 to 4999:"
 msgstr "评分从 1 到 4999："
 
-#: pan/gui/prefs-ui.cc:1221
+#: pan/gui/prefs-ui.cc:1267
 msgid "Scores from -9998 to -1:"
 msgstr "评分从 -9998 到 -1："
 
-#: pan/gui/prefs-ui.cc:1227
+#: pan/gui/prefs-ui.cc:1273
 msgid "Scores of -9999 or less:"
 msgstr "评分为 -9999 或更低："
 
-#: pan/gui/prefs-ui.cc:1233
+#: pan/gui/prefs-ui.cc:1279
 msgid "Collapsed thread with unread articles:"
 msgstr ""
 
 # pan/prefs.c:2193
-#: pan/gui/prefs-ui.cc:1235
+#: pan/gui/prefs-ui.cc:1281
 msgid "Body Pane"
 msgstr "正文窗格"
 
-#: pan/gui/prefs-ui.cc:1242
+#: pan/gui/prefs-ui.cc:1288
 msgid "First level of quoted text:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1248
+#: pan/gui/prefs-ui.cc:1294
 msgid "Second level of quoted text:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1254
+#: pan/gui/prefs-ui.cc:1300
 msgid "Third level of quoted text:"
 msgstr ""
 
 # pan/prefs.c:1919
 #.
-#: pan/gui/prefs-ui.cc:1260
+#: pan/gui/prefs-ui.cc:1306
 msgid "URL:"
 msgstr "URL："
 
 #.
-#: pan/gui/prefs-ui.cc:1266
+#: pan/gui/prefs-ui.cc:1312
 msgid "Signature:"
 msgstr "签名："
 
 # pan/prefs.c:2191
-#: pan/gui/prefs-ui.cc:1269
+#: pan/gui/prefs-ui.cc:1315
 #, fuzzy
 #| msgid "_Group Pane"
 msgid "Group Pane"
 msgstr "组列表窗格(_G)"
 
 #.
-#: pan/gui/prefs-ui.cc:1276
+#: pan/gui/prefs-ui.cc:1322
 msgid "Group Color:"
 msgstr ""
 
 # pan/message-window.c:424
-#: pan/gui/prefs-ui.cc:1280
+#: pan/gui/prefs-ui.cc:1326
 #, fuzzy
 msgid "Other Text"
 msgstr "文字换行"
 
 # pan/pan-color-picker.c:55
-#: pan/gui/prefs-ui.cc:1286
+#: pan/gui/prefs-ui.cc:1332
 #, fuzzy
 #| msgid "Select Color"
 msgid "Text Color:"
 msgstr "选择颜色"
 
 # pan/prefs.c:1921 pan/prefs.c:2074
-#: pan/gui/prefs-ui.cc:1289
+#: pan/gui/prefs-ui.cc:1335
 msgid "_Colors"
 msgstr "颜色(_C)"
 
 # pan/prefs.c:1921 pan/prefs.c:2074
-#: pan/gui/prefs-ui.cc:1289
+#: pan/gui/prefs-ui.cc:1335
 #, fuzzy
 msgid "Colors"
 msgstr "颜色"
 
-#: pan/gui/prefs-ui.cc:1294
+#: pan/gui/prefs-ui.cc:1340
 msgid "Preferred Applications"
 msgstr "首选应用程序"
 
 # pan/pan-file-entry.c:66
-#: pan/gui/prefs-ui.cc:1298
+#: pan/gui/prefs-ui.cc:1344
 msgid "_Web browser:"
 msgstr "网络浏览器(_W)"
 
+#: pan/gui/prefs-ui.cc:1347
+msgid "_Gemini client:"
+msgstr ""
+
 # pan/prefs.c:2812
-#: pan/gui/prefs-ui.cc:1301
+#: pan/gui/prefs-ui.cc:1350
 msgid "_Mail reader:"
 msgstr "邮件阅读器(_M)"
 
 # pan/message-window.c:440
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1352
 msgid "_Text editor:"
 msgstr "文本编辑器(_T)"
 
-#: pan/gui/prefs-ui.cc:1305
+#: pan/gui/prefs-ui.cc:1354
 msgid "_HTML previewer:"
 msgstr "_ HTML 预览工具："
 
-#: pan/gui/prefs-ui.cc:1307
+#: pan/gui/prefs-ui.cc:1356
 msgid "_Applications"
 msgstr "应用程序(_A)"
 
-#: pan/gui/prefs-ui.cc:1307
+#: pan/gui/prefs-ui.cc:1356
 msgid "Applications"
 msgstr "应用程序"
 
 # pan/base/decode.c:369
-#: pan/gui/prefs-ui.cc:1312 pan/gui/task-pane.cc:556
+#: pan/gui/prefs-ui.cc:1361 pan/gui/task-pane.cc:555
 msgid "Encoding"
 msgstr "编码"
 
-#: pan/gui/prefs-ui.cc:1316
+#: pan/gui/prefs-ui.cc:1365
 msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1321
+#: pan/gui/prefs-ui.cc:1371
 msgid "_Upload"
 msgstr "上传(_U)"
 
-#: pan/gui/prefs-ui.cc:1321
+#: pan/gui/prefs-ui.cc:1371
 msgid "Upload"
 msgstr "上传"
 
-#: pan/gui/prefs-ui.cc:1330
+#: pan/gui/prefs-ui.cc:1380
 msgid "_Shortcuts"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1330
+#: pan/gui/prefs-ui.cc:1380
 msgid "Shortcuts"
 msgstr ""
 
@@ -2857,21 +2852,21 @@ msgstr "PGP 签名"
 msgid "Signature Type: "
 msgstr "签名类型(_T)："
 
-#: pan/gui/profiles-dialog.cc:227
+#: pan/gui/profiles-dialog.cc:228
 msgid "Avatars"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:230
+#: pan/gui/profiles-dialog.cc:231
 msgid ""
 "You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
 "Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:233
 msgid "_Face:"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:236
+#: pan/gui/profiles-dialog.cc:237
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
@@ -2879,16 +2874,16 @@ msgid ""
 "xface/xface.php)."
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:239
+#: pan/gui/profiles-dialog.cc:240
 msgid "_X-Face:"
 msgstr ""
 
 # pan/identities/identity-edit-ui.c:186
-#: pan/gui/profiles-dialog.cc:241
+#: pan/gui/profiles-dialog.cc:242
 msgid "Optional Information"
 msgstr "可选信息"
 
-#: pan/gui/profiles-dialog.cc:246
+#: pan/gui/profiles-dialog.cc:247
 #, fuzzy
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.\n"
@@ -2899,11 +2894,11 @@ msgstr ""
 "或者留空，让 Pan 使用您电子邮箱的域名。"
 
 # pan/article-find.c:375
-#: pan/gui/profiles-dialog.cc:249
+#: pan/gui/profiles-dialog.cc:250
 msgid "Message-ID _Domain Name:"
 msgstr "信息标识域名(_D)："
 
-#: pan/gui/profiles-dialog.cc:253
+#: pan/gui/profiles-dialog.cc:254
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2917,12 +2912,12 @@ msgstr ""
 "%d 对应日期"
 
 # pan/identities/identity-edit-ui.c:228
-#: pan/gui/profiles-dialog.cc:254
+#: pan/gui/profiles-dialog.cc:255
 msgid "_Attribution:"
 msgstr "属性(_A)："
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:279
+#: pan/gui/profiles-dialog.cc:280
 #, fuzzy
 msgid ""
 "Extra headers to be included in your articles, such as\n"
@@ -2934,35 +2929,35 @@ msgstr ""
 "组织：您的组织名称"
 
 # pan/message-window.c:1193
-#: pan/gui/profiles-dialog.cc:289
+#: pan/gui/profiles-dialog.cc:290
 msgid "E_xtra Headers:"
 msgstr "外部标题(_X)："
 
 # pan/dialogs/dialog-newuser.c:349
-#: pan/gui/profiles-dialog.cc:334
+#: pan/gui/profiles-dialog.cc:335
 msgid "Invalid email address."
 msgstr "无效的电子邮件地址"
 
-#: pan/gui/profiles-dialog.cc:335
+#: pan/gui/profiles-dialog.cc:336
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "请使用 joe@somewhere.org 形式的地址"
 
 # pan/identities/identity-ui.c:314
-#: pan/gui/profiles-dialog.cc:491
+#: pan/gui/profiles-dialog.cc:492
 msgid "New Profile"
 msgstr "新建配置文件"
 
 # pan/gui.c:1931
-#: pan/gui/profiles-dialog.cc:537
+#: pan/gui/profiles-dialog.cc:538
 msgid "Posting Profiles"
 msgstr "投递配置文件"
 
 # pan/identities/identity-ui.c:449
-#: pan/gui/profiles-dialog.cc:553
+#: pan/gui/profiles-dialog.cc:554
 msgid "Profiles"
 msgstr "配置文件"
 
-#: pan/gui/save-attach-ui.cc:46
+#: pan/gui/save-attach-ui.cc:44
 #, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
@@ -2985,48 +2980,48 @@ msgstr ""
 "\"/home/user/News/Pan/%G\" 变成\n"
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 
-#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
+#: pan/gui/save-attach-ui.cc:196 pan/gui/save-ui.cc:216
 msgid "Add to the queue sorted by date posted"
 msgstr "添加到按投递日期排列的队列中"
 
 # pan/save-ui.c:452
-#: pan/gui/save-attach-ui.cc:199 pan/gui/save-ui.cc:219
+#: pan/gui/save-attach-ui.cc:197 pan/gui/save-ui.cc:217
 msgid "Add to the front of the queue"
 msgstr "添加到队列的前面"
 
 # pan/save-ui.c:459
-#: pan/gui/save-attach-ui.cc:200 pan/gui/save-ui.cc:220
+#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
 msgid "Add to the back of the queue"
 msgstr "添加到队列的后面"
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/save-attach-ui.cc:232
+#: pan/gui/save-attach-ui.cc:230
 #, fuzzy
 msgid "Pan: Save Attachments"
 msgstr "保存附件于："
 
 # pan/save-ui.c:292
-#: pan/gui/save-attach-ui.cc:257 pan/gui/save-attach-ui.cc:275
-#: pan/gui/save-ui.cc:272 pan/gui/save-ui.cc:293
+#: pan/gui/save-attach-ui.cc:255 pan/gui/save-attach-ui.cc:273
+#: pan/gui/save-ui.cc:270 pan/gui/save-ui.cc:291
 msgid "_Location:"
 msgstr "位置(_L)："
 
 # pan/articlelist.c:3146
-#: pan/gui/save-attach-ui.cc:261 pan/gui/save-ui.cc:276
+#: pan/gui/save-attach-ui.cc:259 pan/gui/save-ui.cc:274
 msgid "Save Articles"
 msgstr "保存文章"
 
-#: pan/gui/save-attach-ui.cc:278 pan/gui/save-ui.cc:296
+#: pan/gui/save-attach-ui.cc:276 pan/gui/save-ui.cc:294
 #, c-format
 msgid "_Group's path: %s"
 msgstr "组路径(_G)：%s"
 
 # pan/dialogs/dialog-newuser.c:493 pan/prefs.c:2802
-#: pan/gui/save-attach-ui.cc:289 pan/gui/save-ui.cc:311
+#: pan/gui/save-attach-ui.cc:287 pan/gui/save-ui.cc:309
 msgid "_Priority:"
 msgstr "优先级(_P)："
 
-#: pan/gui/save-ui.cc:46
+#: pan/gui/save-ui.cc:44
 #, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
@@ -3051,27 +3046,27 @@ msgstr ""
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/save-ui.cc:209
+#: pan/gui/save-ui.cc:207
 msgid "Save attachments"
 msgstr "保存附件"
 
 # pan/message-window.c:424
-#: pan/gui/save-ui.cc:210
+#: pan/gui/save-ui.cc:208
 msgid "Save text"
 msgstr "保存文本"
 
 # pan/rules/rule-edit-ui.c:164
-#: pan/gui/save-ui.cc:211
+#: pan/gui/save-ui.cc:209
 msgid "Save attachments and text"
 msgstr "保存附件和文本"
 
 # pan/articlelist.c:3146
-#: pan/gui/save-ui.cc:247
+#: pan/gui/save-ui.cc:245
 msgid "Pan: Save Articles"
 msgstr "Pan：保存文章"
 
 # pan/rules/rule-edit-ui.c:814
-#: pan/gui/save-ui.cc:307
+#: pan/gui/save-ui.cc:305
 msgid "_Action:"
 msgstr "操作(_A)："
 
@@ -3187,14 +3182,14 @@ msgid "Back"
 msgstr "后退"
 
 # pan/prefs.c:2949
-#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1045
+#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1040
 msgid "Delete"
 msgstr "删除"
 
 # pan/filter-ui.c:393 pan/identities/identity-ui.c:469
 # pan/rules/rule-ui.c:507
 #: pan/gui/score-add-ui.cc:486 pan/gui/score-add-ui.cc:607
-#: pan/gui/score-view-ui.cc:208
+#: pan/gui/score-view-ui.cc:207
 msgid "Add"
 msgstr "添加"
 
@@ -3208,10 +3203,6 @@ msgstr "添加并重新评分(_S)"
 msgid "New Scoring Rule"
 msgstr "新建评分规则"
 
-#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:310
-msgid "Cancel"
-msgstr "取消"
-
 # pan/prefs.c:2191
 #: pan/gui/score-add-ui.cc:633
 #, fuzzy
@@ -3224,74 +3215,74 @@ msgstr "组窗格字体"
 msgid "and"
 msgstr "Pan"
 
-#: pan/gui/score-view-ui.cc:56
+#: pan/gui/score-view-ui.cc:55
 msgid "Close and Re_score"
 msgstr "关闭并重新评分(_S)"
 
-#: pan/gui/score-view-ui.cc:154
+#: pan/gui/score-view-ui.cc:153
 #, c-format
 msgid "File %s, Lines %d - %d"
 msgstr "%s 文件，第 %d - %d 行"
 
 # pan/save-ui.c:280
-#: pan/gui/score-view-ui.cc:182
+#: pan/gui/score-view-ui.cc:181
 msgid "Pan: Article's Scores"
 msgstr "Pan：文章的评分"
 
 # pan/dialogs/dialog-newuser.c:686 pan/prefs.c:2584
-#: pan/gui/score-view-ui.cc:213
+#: pan/gui/score-view-ui.cc:212
 msgid "New Score"
 msgstr "新评分"
 
-#: pan/gui/score-view-ui.cc:218
+#: pan/gui/score-view-ui.cc:217
 msgid "Criteria"
 msgstr "标准"
 
 # pan/filter-ui.c:395
-#: pan/gui/score-view-ui.cc:241
+#: pan/gui/score-view-ui.cc:240
 msgid "Add a New Scoring Rule"
 msgstr "添加一个新的评分规则"
 
 # pan/identities/identity-ui.c:491
-#: pan/gui/score-view-ui.cc:248
+#: pan/gui/score-view-ui.cc:247
 msgid "Remove the Selected Scoring Rule"
 msgstr "移除选择的评分规则"
 
-#: pan/gui/server-ui.cc:284
+#: pan/gui/server-ui.cc:292
 msgid "Please specify the server's address."
 msgstr "请指定服务器的地址。"
 
-#: pan/gui/server-ui.cc:330
+#: pan/gui/server-ui.cc:344
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr ""
 
 # pan/filter-ui.c:395
 #. create the dialog
-#: pan/gui/server-ui.cc:367 pan/gui/server-ui.cc:982
+#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:998
 msgid "Add a Server"
 msgstr "添加一个服务器"
 
-#: pan/gui/server-ui.cc:367 pan/gui/server-ui.cc:988
+#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:1004
 msgid "Edit a Server's Settings"
 msgstr "编辑服务器设置"
 
 # pan/save-ui.c:292
-#: pan/gui/server-ui.cc:387
+#: pan/gui/server-ui.cc:401
 msgid "Location"
 msgstr "位置"
 
-#: pan/gui/server-ui.cc:391
+#: pan/gui/server-ui.cc:405
 #, fuzzy
 #| msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
 msgstr "新闻服务器的实际地址，如“news.mynewsserver.com”"
 
 # pan/prefs.c:2913
-#: pan/gui/server-ui.cc:392
+#: pan/gui/server-ui.cc:406
 msgid "_Address:"
 msgstr "地址(_A)："
 
-#: pan/gui/server-ui.cc:397
+#: pan/gui/server-ui.cc:411
 #, fuzzy
 #| msgid "The news server's port number.  Typically 119."
 msgid ""
@@ -3300,92 +3291,92 @@ msgid ""
 msgstr "新闻服务器的端口号，类型情况为 119。"
 
 # pan/dialogs/dialog-newuser.c:493 pan/prefs.c:2802
-#: pan/gui/server-ui.cc:398
+#: pan/gui/server-ui.cc:412
 msgid "Por_t:"
 msgstr "端口(_T)："
 
-#: pan/gui/server-ui.cc:401
+#: pan/gui/server-ui.cc:415
 msgid "Login (if Required)"
 msgstr "登录(若要求)"
 
 # pan/prefs.c:1420
-#: pan/gui/server-ui.cc:405
+#: pan/gui/server-ui.cc:419
 msgid "_Username:"
 msgstr "用户名(_U)："
 
-#: pan/gui/server-ui.cc:406
+#: pan/gui/server-ui.cc:420
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr "在服务器询问时发送的用户名。如果服务器不要求身份认证，您可以不填。"
 
 # pan/dialogs/dialog-newuser.c:518
-#: pan/gui/server-ui.cc:410
+#: pan/gui/server-ui.cc:424
 msgid "_Password:"
 msgstr "密码(_P)："
 
-#: pan/gui/server-ui.cc:411
+#: pan/gui/server-ui.cc:425
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr "在服务器询问时发送的密码。如果服务器不要求身份认证，您可以不填。"
 
 # pan/base/decode.c:369
-#: pan/gui/server-ui.cc:414
+#: pan/gui/server-ui.cc:428
 msgid "Settings"
 msgstr "设置"
 
 # pan/gui.c:1615 pan/task-manager.c:418
-#: pan/gui/server-ui.cc:421
+#: pan/gui/server-ui.cc:435
 msgid "Connection _Limit:"
 msgstr "连接限制(_L)："
 
-#: pan/gui/server-ui.cc:425
+#: pan/gui/server-ui.cc:439
 msgid "After Two Weeks"
 msgstr "两周后"
 
-#: pan/gui/server-ui.cc:426
+#: pan/gui/server-ui.cc:440
 msgid "After One Month"
 msgstr "一个月后"
 
-#: pan/gui/server-ui.cc:427
+#: pan/gui/server-ui.cc:441
 msgid "After Two Months"
 msgstr "两个月后"
 
-#: pan/gui/server-ui.cc:428
+#: pan/gui/server-ui.cc:442
 msgid "After Three Months"
 msgstr "三个月后"
 
-#: pan/gui/server-ui.cc:429
+#: pan/gui/server-ui.cc:443
 msgid "After Six Months"
 msgstr "六个月后"
 
-#: pan/gui/server-ui.cc:430
+#: pan/gui/server-ui.cc:444
 #, fuzzy
 msgid "Never Expire Old Articles"
 msgstr "从不标记旧文章过期"
 
-#: pan/gui/server-ui.cc:444
+#: pan/gui/server-ui.cc:458
 #, fuzzy
 msgid "E_xpire Old Articles:"
 msgstr "标记旧文章过期(_X)："
 
 # pan/save-ui.c:446
-#: pan/gui/server-ui.cc:448
+#: pan/gui/server-ui.cc:462
 msgid "Primary"
 msgstr "主"
 
-#: pan/gui/server-ui.cc:449
+#: pan/gui/server-ui.cc:463
 #, fuzzy
 msgid "Fallback"
 msgstr "后备"
 
 # pan/prefs.c:1376
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:477
 msgid "Server Rank:"
 msgstr "服务器排名："
 
-#: pan/gui/server-ui.cc:467
+#: pan/gui/server-ui.cc:482
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -3394,109 +3385,109 @@ msgstr ""
 "后备服务器用于在主服务器上找不到的文章。一种常见做法是使用免费服务器作为主服"
 "务器，订阅服务器作为后备。"
 
-#: pan/gui/server-ui.cc:472
+#: pan/gui/server-ui.cc:487
 msgid "Disable Compression (N/A)"
 msgstr ""
 
-#: pan/gui/server-ui.cc:473
+#: pan/gui/server-ui.cc:488
 msgid "XZVER Compression (Astraweb)"
 msgstr ""
 
-#: pan/gui/server-ui.cc:474
+#: pan/gui/server-ui.cc:489
 msgid "GZIP Compression (Giganews etc.)"
 msgstr ""
 
 # pan/filter-edit-ui.c:769
-#: pan/gui/server-ui.cc:488
+#: pan/gui/server-ui.cc:503
 #, fuzzy
 #| msgid "Regular Expression"
 msgid "Header Compression:"
 msgstr "正则表达式"
 
-#: pan/gui/server-ui.cc:494
+#: pan/gui/server-ui.cc:509
 msgid "Security"
 msgstr ""
 
 # pan/task-manager.c:775
-#: pan/gui/server-ui.cc:499
+#: pan/gui/server-ui.cc:514
 #, fuzzy
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "设置每个服务器连接数的限制"
 
 # pan/task-manager.c:775
-#: pan/gui/server-ui.cc:500
+#: pan/gui/server-ui.cc:515
 #, fuzzy
 msgid "Use Secure SSL Connections"
 msgstr "设置每个服务器连接数的限制"
 
-#: pan/gui/server-ui.cc:515
+#: pan/gui/server-ui.cc:530
 msgid "TLS (SSL) Settings:"
 msgstr ""
 
-#: pan/gui/server-ui.cc:520
+#: pan/gui/server-ui.cc:536
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
 "for privacy reasons."
 msgstr ""
 
-#: pan/gui/server-ui.cc:525
+#: pan/gui/server-ui.cc:541
 msgid "Always trust this server's certificate"
 msgstr ""
 
-#: pan/gui/server-ui.cc:710
+#: pan/gui/server-ui.cc:726
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "真的要删除“%s”？"
 
-#: pan/gui/server-ui.cc:799
+#: pan/gui/server-ui.cc:815
 msgid "No information available."
 msgstr ""
 
-#: pan/gui/server-ui.cc:809
+#: pan/gui/server-ui.cc:825
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr ""
 
-#: pan/gui/server-ui.cc:908
+#: pan/gui/server-ui.cc:924
 #, fuzzy, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "真的要删除“%s”？"
 
 # pan/task-manager.c:775 pan/task-manager.c:796
 #. dialog
-#: pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:956 pan/gui/server-ui.cc:1054
+#: pan/gui/server-ui.cc:951 pan/gui/server-ui.cc:972 pan/gui/server-ui.cc:1070
 msgid "Servers"
 msgstr "服务器"
 
 # pan/dialogs/dialog-newuser.c:686 pan/prefs.c:2584
-#: pan/gui/server-ui.cc:995
+#: pan/gui/server-ui.cc:1011
 msgid "Remove a Server"
 msgstr "移除一个服务器"
 
 #. dialog
-#: pan/gui/server-ui.cc:1028
+#: pan/gui/server-ui.cc:1044
 msgid "SSL Certificates"
 msgstr "SSL 证书"
 
-#: pan/gui/server-ui.cc:1049
+#: pan/gui/server-ui.cc:1065
 msgid "Certificates"
 msgstr "证书"
 
-#: pan/gui/server-ui.cc:1080
+#: pan/gui/server-ui.cc:1096
 msgid "Import Certificate"
 msgstr "导入证书"
 
-#: pan/gui/server-ui.cc:1086
+#: pan/gui/server-ui.cc:1102
 msgid "Inspect Certificate"
 msgstr "检查证书"
 
 # pan/dialogs/dialog-newuser.c:686 pan/prefs.c:2584
-#: pan/gui/server-ui.cc:1093
+#: pan/gui/server-ui.cc:1109
 msgid "Remove Certificate"
 msgstr "移除证书"
 
-#: pan/gui/task-pane.cc:125
+#: pan/gui/task-pane.cc:124
 #, c-format
 msgid ""
 "\n"
@@ -3508,7 +3499,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 
-#: pan/gui/task-pane.cc:137
+#: pan/gui/task-pane.cc:136
 #, c-format
 msgid ""
 "\n"
@@ -3522,249 +3513,249 @@ msgid ""
 msgstr ""
 
 # pan/base/base-prefs.c:36
-#: pan/gui/task-pane.cc:139
+#: pan/gui/task-pane.cc:138
 msgid "unknown"
 msgstr "未知"
 
-#: pan/gui/task-pane.cc:307
+#: pan/gui/task-pane.cc:306
 #, fuzzy
 msgid "Choose New Destination for Selected Tasks"
 msgstr "获得全部所选择组内的新文章标题"
 
 # pan/filter-edit-ui.c:786
-#: pan/gui/task-pane.cc:311
+#: pan/gui/task-pane.cc:310
 #, fuzzy
 #| msgid "Saved"
 msgid "Save"
 msgstr "保存的"
 
 # pan/task-manager.c:614
-#: pan/gui/task-pane.cc:461
+#: pan/gui/task-pane.cc:460
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan：任务(%d 排队，%d 运行，%d 停止)"
 
 # pan/task-manager.c:616
-#: pan/gui/task-pane.cc:463
+#: pan/gui/task-pane.cc:462
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan：任务(%d 排队，%d 运行)"
 
 # pan/task-manager.c:870
-#: pan/gui/task-pane.cc:465
+#: pan/gui/task-pane.cc:464
 msgid "Pan: Tasks"
 msgstr "Pan：任务"
 
-#: pan/gui/task-pane.cc:490
+#: pan/gui/task-pane.cc:489
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu 已选择，%s"
 
 # pan/task-manager.c:409
-#: pan/gui/task-pane.cc:554
+#: pan/gui/task-pane.cc:553
 msgid "Running"
 msgstr "正在运行"
 
 # pan/base/decode.c:369
-#: pan/gui/task-pane.cc:555
+#: pan/gui/task-pane.cc:554
 msgid "Decoding"
 msgstr "正在解码"
 
 # pan/filter-edit-ui.c:791
-#: pan/gui/task-pane.cc:557
+#: pan/gui/task-pane.cc:556
 msgid "Queued for Decode"
 msgstr "排队等待解码"
 
 # pan/filter-edit-ui.c:791
-#: pan/gui/task-pane.cc:558
+#: pan/gui/task-pane.cc:557
 #, fuzzy
 msgid "Queued for Encode"
 msgstr "排队等待解码"
 
 # pan/task-manager.c:406
-#: pan/gui/task-pane.cc:559
+#: pan/gui/task-pane.cc:558
 msgid "Queued"
 msgstr "在队列中"
 
-#: pan/gui/task-pane.cc:560
+#: pan/gui/task-pane.cc:559
 msgid "Stopped"
 msgstr "已停止"
 
 # pan/filter-ui.c:406 pan/identities/identity-ui.c:489
 # pan/rules/rule-ui.c:520
-#: pan/gui/task-pane.cc:561
+#: pan/gui/task-pane.cc:560
 msgid "Removing"
 msgstr "正在移除"
 
 # pan/task-manager.c:795
-#: pan/gui/task-pane.cc:590
+#: pan/gui/task-pane.cc:589
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% 完成"
 
-#: pan/gui/task-pane.cc:596
+#: pan/gui/task-pane.cc:595
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "剩余 %d:%02d:%02d(%d 速度 %lu KB/s)"
 
 # pan/task-manager.c:747
-#: pan/gui/task-pane.cc:691 pan/gui/task-pane.cc:692
+#: pan/gui/task-pane.cc:690 pan/gui/task-pane.cc:691
 #, fuzzy
 msgid "Move To Top"
 msgstr "选定的任务移动到底部"
 
 # pan/task-manager.c:747
-#: pan/gui/task-pane.cc:696 pan/gui/task-pane.cc:697
+#: pan/gui/task-pane.cc:695 pan/gui/task-pane.cc:696
 #, fuzzy
 msgid "Move To Bottom"
 msgstr "选定的任务移动到底部"
 
 # pan/identities/identity-edit-ui.c:123
-#: pan/gui/task-pane.cc:701 pan/gui/task-pane.cc:702
+#: pan/gui/task-pane.cc:700 pan/gui/task-pane.cc:701
 #, fuzzy
 #| msgid "Show Article Information"
 msgid "Show Task Information"
 msgstr "显示文章信息"
 
 # pan/gui.c:1719
-#: pan/gui/task-pane.cc:706 pan/gui/task-pane.cc:707
+#: pan/gui/task-pane.cc:705 pan/gui/task-pane.cc:706
 #, fuzzy
 msgid "Stop Task"
 msgstr "停止任务"
 
 # pan/rules/rule-manager.c:108
-#: pan/gui/task-pane.cc:711 pan/gui/task-pane.cc:712
+#: pan/gui/task-pane.cc:710 pan/gui/task-pane.cc:711
 #, fuzzy
 msgid "Delete Task"
 msgstr "删除任务"
 
-#: pan/gui/task-pane.cc:716 pan/gui/task-pane.cc:717
+#: pan/gui/task-pane.cc:715 pan/gui/task-pane.cc:716
 #, fuzzy
 msgid "Restart Task"
 msgstr "重启任务"
 
-#: pan/gui/task-pane.cc:721 pan/gui/task-pane.cc:722
+#: pan/gui/task-pane.cc:720 pan/gui/task-pane.cc:721
 msgid "Change Download Destination"
 msgstr ""
 
-#: pan/gui/task-pane.cc:1021
+#: pan/gui/task-pane.cc:1016
 msgid "_Online"
 msgstr "在线(_O)"
 
 # pan/task-manager.c:747
-#: pan/gui/task-pane.cc:1031
+#: pan/gui/task-pane.cc:1026
 #, fuzzy
 msgid "Move up"
 msgstr "选定的任务移动到底部"
 
 # pan/task-manager.c:732
-#: pan/gui/task-pane.cc:1032
+#: pan/gui/task-pane.cc:1027
 #, fuzzy
 #| msgid "Move Selected Task(s) Up"
 msgid "Move task up"
 msgstr "选定的任务向上移动"
 
 # pan/task-manager.c:747
-#: pan/gui/task-pane.cc:1033
+#: pan/gui/task-pane.cc:1028
 #, fuzzy
 msgid "Move to top"
 msgstr "选定的任务移动到底部"
 
-#: pan/gui/task-pane.cc:1034
+#: pan/gui/task-pane.cc:1029
 msgid "Move task to top of the download queue"
 msgstr ""
 
 # pan/task-manager.c:747
-#: pan/gui/task-pane.cc:1036
+#: pan/gui/task-pane.cc:1031
 #, fuzzy
 msgid "Move down"
 msgstr "选定的任务移动到底部"
 
 # pan/task-manager.c:743
-#: pan/gui/task-pane.cc:1037
+#: pan/gui/task-pane.cc:1032
 #, fuzzy
 #| msgid "Move Selected Task(s) Down"
 msgid "Move task down"
 msgstr "选定的任务向下移动"
 
 # pan/task-manager.c:747
-#: pan/gui/task-pane.cc:1038
+#: pan/gui/task-pane.cc:1033
 #, fuzzy
 msgid "Move to bottom"
 msgstr "选定的任务移动到底部"
 
 # pan/save-ui.c:452
-#: pan/gui/task-pane.cc:1039
+#: pan/gui/task-pane.cc:1034
 #, fuzzy
 #| msgid "Add to the front of the queue"
 msgid "Move task to the bottom of the download queue"
 msgstr "添加到队列的前面"
 
-#: pan/gui/task-pane.cc:1041
+#: pan/gui/task-pane.cc:1036
 #, fuzzy
 msgid "Restart"
 msgstr "重启任务"
 
-#: pan/gui/task-pane.cc:1042
+#: pan/gui/task-pane.cc:1037
 msgid "Restart Tasks"
 msgstr "重启任务"
 
-#: pan/gui/task-pane.cc:1043
+#: pan/gui/task-pane.cc:1038
 #, fuzzy
 #| msgid "Stopped"
 msgid "Stop"
 msgstr "已停止"
 
 # pan/gui.c:1719
-#: pan/gui/task-pane.cc:1044
+#: pan/gui/task-pane.cc:1039
 msgid "Stop Tasks"
 msgstr "停止任务"
 
 # pan/rules/rule-manager.c:108
-#: pan/gui/task-pane.cc:1046
+#: pan/gui/task-pane.cc:1041
 msgid "Delete Tasks"
 msgstr "删除任务"
 
 # pan/prefs.c:1921 pan/prefs.c:2074
-#: pan/gui/task-pane.cc:1048
+#: pan/gui/task-pane.cc:1043
 #, fuzzy
 msgid "Close"
 msgstr "颜色"
 
-#: pan/gui/task-pane.cc:1052
+#: pan/gui/task-pane.cc:1047
 msgid "Show popups"
 msgstr ""
 
-#: pan/gui/url.cc:121
+#: pan/gui/url.cc:143
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "启动 URL 失败：%s (命令为：%s)"
 
 # pan/base/util-file.c:224
-#: pan/tasks/decoder.cc:126
+#: pan/tasks/decoder.cc:124
 #, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "无法保存“%s”文件：%s"
 
-#: pan/tasks/decoder.cc:148 pan/tasks/encoder.cc:146
+#: pan/tasks/decoder.cc:146 pan/tasks/encoder.cc:146
 msgid "Error initializing uulib"
 msgstr "初始化 uulib 出错"
 
 # pan/pan.c:121
-#: pan/tasks/decoder.cc:168 pan/tasks/socket-impl-gio.cc:360
+#: pan/tasks/decoder.cc:166 pan/tasks/socket-impl-gio.cc:360
 #: pan/tasks/socket-impl-openssl.cc:641
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "从 %s 读取出错：%s"
 
 # pan/base/decode.c:458
-#: pan/tasks/decoder.cc:208
+#: pan/tasks/decoder.cc:206
 #, c-format
 msgid "Saved \"%s\""
 msgstr "已保存“%s”"
 
 # pan/base/acache.c:197
-#: pan/tasks/decoder.cc:215
+#: pan/tasks/decoder.cc:213
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -3774,7 +3765,7 @@ msgstr ""
 "%s。"
 
 # pan/base/decode.c:369
-#: pan/tasks/decoder.cc:328 pan/tasks/task-article.cc:351
+#: pan/tasks/decoder.cc:326 pan/tasks/task-article.cc:351
 #, c-format
 msgid "Decoding %s"
 msgstr "正在解码 %s"
@@ -3819,7 +3810,7 @@ msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "发送“%s”给 %s 时返回一个未识别的响应：%s”"
 
 # pan/smtp.c:451
-#: pan/tasks/nntp-pool.cc:235
+#: pan/tasks/nntp-pool.cc:241
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "不能连接到“%s”"
@@ -4326,6 +4317,16 @@ msgstr ""
 #| msgid "Email"
 msgid "no_mail"
 msgstr "电子邮件地址"
+
+# pan/message-window.c:440
+#, fuzzy, c-format
+#~ msgid "Error setting custom spellchecker: %s"
+#~ msgstr "设置拼写检查器出错：%s"
+
+# pan/message-window.c:440
+#, c-format
+#~ msgid "Error setting spellchecker: %s"
+#~ msgstr "设置拼写检查器出错：%s"
 
 #~ msgid "_Tip Jar..."
 #~ msgstr "捐助(_T)..."
