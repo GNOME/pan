@@ -427,7 +427,6 @@ void Article ::clear()
   // subject.clear();
   // TODO: replace time_posted = 0;
   // score = 0;
-  parts.clear();
   // is_binary = false;
 }
 
