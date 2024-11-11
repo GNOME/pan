@@ -105,7 +105,6 @@ namespace pan
 
     public:
       void clear();
-      void set_parts(PartBatch const &parts);
   };
 
   /**

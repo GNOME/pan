@@ -994,11 +994,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
       part_batch.add_part(number, part_mid, part_bytes);
     }
 
-    if (! corrupted)
-    {
-      a.set_parts(part_batch);
-    }
-
     // optional references line
     std::string references(read_article_q.getColumn(i++).getText());
 
