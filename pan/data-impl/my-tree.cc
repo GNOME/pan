@@ -39,7 +39,9 @@ log4cxx::LoggerPtr logger = pan::getLogger("article-tree");
 *****  ArticleTree functions
 ****/
 
-void DataImpl ::MyTree ::get_children(Quark const &mid, articles_t &setme) const
+void DataImpl ::MyTree ::get_children(Quark const &mid,
+                                      Quark const &group,
+                                      articles_t &setme) const
 {
   if (mid.empty()) // get the roots
   {

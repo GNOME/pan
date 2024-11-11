@@ -499,7 +499,7 @@ void HeaderPane ::add_children_to_model(PanTreeStore *store,
 {
   // see if this parent has any children...
   article_v children;
-  atree->get_children(parent_mid, children);
+  atree->get_children(parent_mid, group, children);
   if (children.empty())
   {
     return;

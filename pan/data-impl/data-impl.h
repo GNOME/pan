@@ -428,7 +428,7 @@ public:
 
         Article &alloc_new_article()
         {
-          static const Article blank_article;
+          static Article const blank_article;
           _art_chunk.push_back(blank_article);
           return _art_chunk.back();
         }
@@ -476,13 +476,15 @@ public:
         MyTree(DataImpl &data_impl,
                Quark const &group,
                Quark const &save_path, // for auto-download
-               const Data::ShowType show_type,
+               Data::ShowType const show_type,
                FilterInfo const *filter_info = nullptr,
                RulesInfo const *rules = nullptr);
         virtual ~MyTree();
 
       public: // from ArticleTree
-        void get_children(Quark const &mid, articles_t &setme) const override;
+        void get_children(Quark const &mid,
+                          Quark const &group,
+                          articles_t &setme) const override;
         Article const *get_parent(Quark const &mid) const override;
         Article const *get_article(Quark const &mid) const override;
         size_t size() const override;

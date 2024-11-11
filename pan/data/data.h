@@ -615,6 +615,7 @@ class Data :
          * if message_id is empty, the root nodes are returned.
          */
         virtual void get_children(Quark const &mid,
+                                  Quark const &group,
                                   articles_t &setme) const = 0;
 
         virtual size_t size() const = 0;
