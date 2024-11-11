@@ -362,9 +362,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
   {
     int const number(part_count < 2 ? 1 : part_index);
-    load_part (group, art_mid,
-               number, message_id,
-               line_count, byte_count);
     insert_part_in_db (group, art_mid,
                number, message_id,
                line_count, byte_count);
