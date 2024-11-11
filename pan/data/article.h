@@ -53,11 +53,6 @@ namespace pan {
 class Article
 {
   public:
-    void set_parts(PartBatch const &b)
-    {
-      parts.set_parts(b);
-    }
-
     Parts::number_t get_total_part_count() const;
 
     Parts::number_t get_found_part_count() const;
