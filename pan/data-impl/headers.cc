@@ -412,9 +412,6 @@ void DataImpl ::load_part(Quark const &group,
   GroupHeaders *h = get_group_headers(group);
   Article *a(h->find_article(mid));
   pan_return_if_fail(a != nullptr);
-
-  // line_count addition is handled in insert_part_in_db
-  a->add_part(number, part_mid, bytes);
 }
 
 void DataImpl ::insert_part_in_db(Quark const &group,

@@ -58,13 +58,6 @@ class Article
       parts.set_parts(b);
     }
 
-    bool add_part(Parts::number_t num,
-                  StringView const &mid,
-                  Parts::bytes_t bytes)
-    {
-      return parts.add_part(num, mid, bytes, message_id);
-    }
-
     Parts::number_t get_total_part_count() const;
 
     Parts::number_t get_found_part_count() const;

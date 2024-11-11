@@ -241,36 +241,6 @@ void Parts ::set_parts(PartBatch const &p)
   assert(pch == part_mid_buf + part_mid_buf_len);
 }
 
-bool Parts ::add_part(number_t num,
-                      StringView const &mid,
-                      bytes_t bytes,
-                      Quark const &reference_mid)
-{
-  Part findme;
-  findme.number = num;
-  part_v::iterator p = std::lower_bound(parts.begin(), parts.end(), findme);
-  if (p != parts.end() && p->number == num) // we have it already
-  {
-    return false;
-  }
-
-  findme.bytes = bytes;
-  findme.mid_offset = part_mid_buf_len;
-  parts.insert(p, findme);
-
-  Packer packer;
-  pack_message_id(packer, mid, reference_mid);
-  const size_t midlen = packer.size();
-  char *mbuf = new char[part_mid_buf_len + midlen];
-  memcpy(mbuf, part_mid_buf, part_mid_buf_len);
-  packer.pack(mbuf + part_mid_buf_len);
-  delete[] part_mid_buf;
-  part_mid_buf = mbuf;
-  part_mid_buf_len += midlen;
-
-  return true; // yes, we added it
-}
-
 /****
 *****
 ****/

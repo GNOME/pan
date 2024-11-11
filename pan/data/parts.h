@@ -104,12 +104,8 @@ namespace pan
       Parts& operator= (const Parts&);
 
     public:
-      void clear ();
-      bool add_part (number_t num,
-                     const StringView& mid,
-                     bytes_t bytes,
-                     const Quark& reference_mid);
-      void set_parts (const PartBatch& parts);
+      void clear();
+      void set_parts(PartBatch const &parts);
   };
 
   /**
