@@ -490,6 +490,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
 }
 
 void HeaderPane ::add_children_to_model(PanTreeStore *store,
+                                        Quark const &group,
                                         PanTreeStore::Row *parent_row,
                                         Quark const &parent_mid,
                                         Data::ArticleTree const *atree,
@@ -516,8 +517,7 @@ void HeaderPane ::add_children_to_model(PanTreeStore *store,
   // recurse
   for (size_t i = 0, n = children.size(); i < n; ++i)
   {
-    add_children_to_model(
-      store, rows[i], children[i]->message_id, atree, date_maker, do_thread);
+    add_children_to_model(store, group, rows[i], children[i]->message_id, atree, date_maker, do_thread);
   }
 }
 
@@ -673,8 +673,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
   {
     const EvolutionDateMaker date_maker;
     bool const do_thread(_prefs.get_flag("thread-headers", true));
-    add_children_to_model(
-      store, nullptr, Quark(), atree, date_maker, do_thread);
+    add_children_to_model(store, group, nullptr, Quark(), atree, date_maker, do_thread);
   }
 
   return store;

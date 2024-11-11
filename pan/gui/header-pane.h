@@ -420,6 +420,7 @@ class HeaderPane :
     int find_highest_followup_score(GtkTreeModel *, GtkTreeIter *) const;
     Row *create_row(EvolutionDateMaker const &, Article const *);
     void add_children_to_model(PanTreeStore *store,
+                               Quark const &group,
                                PanTreeStore::Row *parent_row,
                                Quark const &parent_mid,
                                Data::ArticleTree const *atree,
