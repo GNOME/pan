@@ -78,16 +78,6 @@ class Article
 
     typedef Parts::const_iterator part_iterator;
 
-    part_iterator pbegin() const
-    {
-      return parts.begin(message_id);
-    }
-
-    part_iterator pend() const
-    {
-      return parts.end(message_id);
-    }
-
     typedef std::vector<Quark> mid_sequence_t;
     // get list of message ids of all parts
     mid_sequence_t get_part_mids() const;
