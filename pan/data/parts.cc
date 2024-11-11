@@ -216,35 +216,6 @@ void Parts ::unpack_message_id(std::string &setme,
 ****
 ***/
 
-void Parts ::set_parts(PartBatch const &p)
-{
-  clear();
-
-  unsigned int n_parts_found = p.n_parts_found;
-  n_parts_total = p.n_parts_total;
-  part_mid_buf_len = p.packed_mids_len;
-  parts.reserve(n_parts_total);
-
-  char *pch = part_mid_buf = new char[part_mid_buf_len];
-  Part part;
-  PartBatch::parts_t::const_iterator in = p.parts.begin();
-  for (size_t i = 0; i < n_parts_found; ++i, ++in)
-  {
-    part.number = in->number;
-    part.bytes = in->bytes;
-    part.mid_offset = pch - part_mid_buf;
-    parts.push_back(part);
-    memcpy(pch, in->packed_mid, in->len_used);
-    pch += in->len_used;
-  }
-
-  assert(pch == part_mid_buf + part_mid_buf_len);
-}
-
-/****
-*****
-****/
-
 PartBatch::PartBatch() :
   n_parts_found(0),
   n_parts_total(0),
