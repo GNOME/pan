@@ -402,18 +402,6 @@ void DataImpl ::load_article(Quark const &group,
   assert(find_ancestor(article_node, article->message_id) == nullptr);
 }
 
-void DataImpl ::load_part(Quark const &group,
-                          Quark const &mid,
-                          int number,
-                          StringView const &part_mid,
-                          unsigned long lines,
-                          unsigned long bytes)
-{
-  GroupHeaders *h = get_group_headers(group);
-  Article *a(h->find_article(mid));
-  pan_return_if_fail(a != nullptr);
-}
-
 void DataImpl ::insert_part_in_db(Quark const &group,
                           Quark const &article_mid,
                           int number,
