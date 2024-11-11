@@ -350,16 +350,6 @@ public:
                       Article *article,
                       StringView const &references);
 
-    /** the contents of `part' are given up wholesale to our
-        local GroupHeaders.  As a side-effect, the value of `part'
-        after this call is undefined.  This is an ugly interface,
-        but it's fast and only called by one client. */
-    void load_part(Quark const &g,
-                   Quark const &mid,
-                   int number,
-                   StringView const &part_mid,
-                   unsigned long lines,
-                   unsigned long bytes);
     void insert_part_in_db(Quark const &g,
                            Quark const &mid,
                            int number,
