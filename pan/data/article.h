@@ -65,11 +65,6 @@ class Article
       return parts.add_part(num, mid, bytes, message_id);
     }
 
-    void set_part_count(Parts::number_t num)
-    {
-      parts.set_part_count(num);
-    }
-
     Parts::number_t get_total_part_count() const;
 
     Parts::number_t get_found_part_count() const;
