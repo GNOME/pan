@@ -104,7 +104,6 @@ namespace pan
       Parts& operator= (const Parts&);
 
     public:
-      void set_part_count (number_t num) { n_parts_total = num; parts.reserve(num); }
       void clear ();
       bool add_part (number_t num,
                      const StringView& mid,
