@@ -223,11 +223,10 @@ void DataImpl ::MyTree ::apply_rules(const_nodes_v &candidates)
   // apply the rules to the whole tree.
   foreach (const_nodes_v, candidates, it)
   {
-    if (! (*it)->_article)
+    if ((*it)->_article)
     {
-      continue;
+      _data._article_rules.apply_rules(_data, _rules, _group, *(*it)->_article);
     }
-    _data._article_rules.apply_rules(_data, _rules, _group, *(*it)->_article);
   }
 
   // now act on result of applied rules
