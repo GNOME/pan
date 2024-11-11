@@ -59,8 +59,6 @@ class Article
 
     void get_missing_part_numbers(std::set<Parts::number_t> &setme) const;
 
-    typedef Parts::const_iterator part_iterator;
-
     typedef std::vector<Quark> mid_sequence_t;
     // get list of message ids of all parts
     mid_sequence_t get_part_mids() const;
@@ -117,9 +115,6 @@ class Article
     void toggle_flag();
     bool get_flag() const;
     void set_flag(bool setme);
-
-  private:
-    Parts parts;
 };
 } // namespace pan
 
