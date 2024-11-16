@@ -11,8 +11,6 @@ string(REGEX MATCH "\"[a-zA-Z ]+\"" quoted_pan_title ${news})
 string(REGEX REPLACE "\"" "" VERSION_TITLE ${quoted_pan_title})
 message(STATUS "Building Pan version ${pan_version} (${VERSION_TITLE})")
 
-message(pan_version=${pan_version})
-
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
   VERSION ${pan_version}
