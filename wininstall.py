@@ -94,7 +94,7 @@ class Copier:
         )
         prefix = os.environ['MSYSTEM'].lower()
         for line in output.stdout.splitlines():
-            dll = re.search(r'(/' + prefix + '/.*\.dll)', line)
+            dll = re.search(r'(/' + prefix + r'/.*\.dll)', line)
             if dll:
                 dll = self.convert_name_to_windows(dll.group())
                 if dll not in self._copied_files:
@@ -419,6 +419,14 @@ def main():
             os.environ["MSYSTEM_PREFIX"], "bin/gspawn-win64-helper.exe"
         )
     )
+
+    # We also need to copy the icons. Just moving the .png ones for now
+    print("Copying icons")
+    dest_dir = os.path.join(target_dir, 'pan', 'icons')
+    os.makedirs(dest_dir, exist_ok=True)
+    for file in glob.iglob(os.path.join("pan", "icons", "*.png")):
+        if os.path.isfile(file):
+            shutil.copy2(file, dest_dir)
 
     # Arguably we could look at the dlls we now have and load up all the
     # packages they come from and the dependent packages. However, the actual
