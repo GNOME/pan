@@ -441,6 +441,12 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                    StringView const &part_mid,
                    unsigned long lines,
                    unsigned long bytes);
+    void insert_part_in_db(Quark const &g,
+                           Quark const &mid,
+                           int number,
+                           StringView const &part_mid,
+                           unsigned long lines,
+                           unsigned long bytes);
 
     void migrate_headers(DataIO const &, Quark const &group);
     void migrate_read_ranges(Quark const &group);
@@ -759,6 +765,10 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                              unsigned long const line_count,
                              StringView const &xref,
                              bool const is_virtual = false) override;
+    void insert_xref_in_db(Quark const &server,
+                           Quark const msg_id,
+                           StringView const &line);
+
 
     /** useful for xover unit testing */
     virtual void xover_flush(Quark const &group);
