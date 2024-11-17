@@ -20,6 +20,7 @@
 #ifndef _HeaderPane_h_
 #define _HeaderPane_h_
 
+#include "pan/general/string-view.h"
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <pan/data/article-cache.h>
@@ -262,9 +263,9 @@ class HeaderPane :
         bool is_read;
 
       private:
-        static Quark build_short_author(Article const *article)
+        static Quark build_short_author(StringView const &full_author)
         {
-          return Quark(GNKSA ::get_short_author_name(article->get_author().c_str()));
+          return Quark(GNKSA ::get_short_author_name(full_author.str));
         }
 
       private:
@@ -333,12 +334,13 @@ class HeaderPane :
       public:
         Row(Data const &data,
             Article const *a,
+            Quark const full_author,
             char *date_str_in,
             int action_in,
             int state_in) :
           article(a),
           date_str(date_str_in),
-          short_author(build_short_author(a)),
+          short_author(build_short_author(full_author.c_str())),
           action(action_in),
           state(state_in),
           is_read(data.is_read(a)),
