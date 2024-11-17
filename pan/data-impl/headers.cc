@@ -562,6 +562,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 
   char const *groupname(group.c_str());
   LineReader *in(data_io.read_group_headers(group));
+  bool in_transaction(0);
   if (in && ! in->fail())
   {
     do
@@ -612,10 +613,21 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 
       const time_t now(time(nullptr));
       PartBatch part_batch;
-      SQLite::Transaction store_article(pan_db);
 
       for (;;)
       {
+        if ((item_count & 0x3FFF) == 0) {
+          if (item_count != 0) {
+            LOG4CXX_INFO(logger, "Migrated " << item_count <<
+                         " items of group " << group.c_str());
+          }
+          if (in_transaction)
+            pan_db.exec("end transaction");
+
+          pan_db.exec("begin transaction");
+          in_transaction = true;
+        }
+
         // look for the beginning of an Article record.
         // it'll be a message-id line with no leading whitespace.
         StringView s;
@@ -820,7 +832,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         }
       }
 
-      store_article.commit();
       success = ! in->fail();
     }
     else
@@ -832,6 +843,10 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
     }
   }
   delete in;
+
+  if (in_transaction) {
+    pan_db.exec("end transaction");
+  }
 
   int part_count = item_count - article_count;
   LOG4CXX_INFO(logger, "Migrated " << article_count << " articles and "
