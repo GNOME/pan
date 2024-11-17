@@ -1025,7 +1025,7 @@ namespace {
 gboolean nrc_as_cb(gpointer ptr)
 {
   DataImpl *data = static_cast<DataImpl *>(ptr);
-  data->save_newsrc_files();
+  data->save_server_groups();
 
   return FALSE;
 }
