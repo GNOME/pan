@@ -36,6 +36,9 @@ create table if not exists article_xref (
   id integer primary key asc autoincrement,
   article_group_id integer not null references article_group (id) on delete cascade,
   server_id integer not null references server (id) on delete cascade,
+
+  -- article number in server. Can be set to 0, in which case the
+  -- article is retrieved by message_id
   number integer not null
 );
 
@@ -51,6 +54,10 @@ create table if not exists article_part (
 
 create index if not exists article_part_article_id
   on `article_part` (article_id);
+create unique index if not exists article_part_msg_id
+  on `article_part` (part_message_id);
+create unique index if not exists article_part_art_id_pt_nb
+  on `article_part` (article_id, part_number);
 
 -- Local Variables:
 -- mode: sql

@@ -19,9 +19,10 @@
 
 #include <config.h>
 #include <cmath>
-#include <fstream>
+#include <cstdint>
 #include <glib/gi18n.h>
 #include <gmime/gmime.h>
+#include <log4cxx/logger.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -34,8 +35,9 @@
 
 using namespace pan;
 
-namespace
-{
+namespace {
+log4cxx::LoggerPtr logger = pan::getLogger("xover");
+
 bool parse_multipart_subject(StringView const &subj,
                              int &part,
                              int &parts,
@@ -141,7 +143,7 @@ bool parse_multipart_subject(StringView const &subj,
 
 void DataImpl ::xover_clear_workarea(Quark const &group)
 {
-   pan_debug ("Clearing the XOVER workearea for " << group);
+   LOG4CXX_DEBUG(logger, "Clearing the XOVER workearea for " << group);
 
    _xovers.erase (group);
    if (group == _cached_xover_group) {
@@ -267,6 +269,16 @@ Article const *DataImpl ::xover_add(Quark const &server,
     // to see if there's already an Article allocated to this
     // multipart.  If there is, we use it here instead of adding a new one
 
+    // search the article in DB
+    SQLite::Statement search_article_q(pan_db, R"SQL(
+      select count()
+      from article as art
+      join author as auth on art.author_id == auth.id
+      where art.message_id == ?
+        and auth.author == ?
+        and art.expected_parts == ?
+    )SQL");
+
     typedef XOverEntry::subject_to_mid_t::const_iterator cit;
     const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject_quark));
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
@@ -275,6 +287,20 @@ Article const *DataImpl ::xover_add(Quark const &server,
         if (candidate && (candidate->author == author)
             && ((int)candidate->get_total_part_count() == part_count))
           art_mid = candidate_mid;
+
+        // check operation using DB
+        search_article_q.reset();
+        search_article_q.bind(1, it->second); // aka candidate_mid
+        search_article_q.bind(2, author);
+        search_article_q.bind(3, part_count);
+        while (search_article_q.executeStep()) {
+          if (search_article_q.getColumn(0).getInt() == 1) {
+            // article for this part was found in DB
+            // check that result is consistent with above (temporary)
+            assert(art_mid == candidate_mid );
+            // later:  art_mid = candidate_mid;
+          }
+        }
     }
   }
 
@@ -283,6 +309,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
   {
     art_mid = message_id;
 
+    // TODO: find a similar fuzzy search using DB
     if (part_count > 1)
       workarea._subject_lookup.insert(std::pair<Quark,Quark>(multipart_subject_quark, art_mid));
 
@@ -302,6 +329,32 @@ Article const *DataImpl ::xover_add(Quark const &server,
       new_article = &a;
 
       workarea._added_batch.insert (art_mid);
+
+      // Create author
+      SQLite::Statement set_author_q(pan_db, R"SQL(
+        insert into `author` (author) values (?) on conflict do nothing
+      )SQL");
+      set_author_q.bind(1, author);
+      set_author_q.exec();
+
+      // Create the article in DB
+      SQLite::Statement create_article_q(pan_db, R"SQL(
+        insert into `article` (author_id,subject,message_id, binary, expected_parts,
+                               time_posted, `references`, line_count)
+        values ((select id from author where author = ?),?,?,?,?,?,?,?)
+      )SQL");
+      create_article_q.bind(1, author);
+      create_article_q.bind(2, multipart_subject_quark);
+      create_article_q.bind(3, art_mid);
+      create_article_q.bind(4, part_count >= 1 );
+      create_article_q.bind(5, part_count > 1 ? part_count : 1);
+      create_article_q.bind(6, time_posted);
+      if (!references.empty())
+        create_article_q.bind(7, references);
+      create_article_q.bind(8, static_cast<int64_t>(line_count));
+      create_article_q.exec();
+
+      insert_xref_in_db(server, art_mid, xref);
     }
   }
 
@@ -314,12 +367,16 @@ Article const *DataImpl ::xover_add(Quark const &server,
     load_part (group, art_mid,
                number, message_id,
                line_count, byte_count);
+    insert_part_in_db (group, art_mid,
+               number, message_id,
+               line_count, byte_count);
   }
 
   if (!workarea._added_batch.count(art_mid))
     workarea._changed_batch.insert(art_mid);
 
   // maybe flush the batched changes
+  // TODO: check if the change applied during flush won't clobber what was setup
   if ((time(nullptr) - workarea._last_flush_time) >= 10)
     xover_flush (group);
 
@@ -327,4 +384,68 @@ Article const *DataImpl ::xover_add(Quark const &server,
       unref_group(group);
 
   return new_article;
+}
+
+void DataImpl ::insert_xref_in_db(Quark const &server,
+                                   Quark const msg_id,
+                                   StringView const &line) {
+  pan_return_if_fail(! server.empty());
+
+  LOG4CXX_TRACE(logger, "insert xref on: " << line);
+
+  // trim & cleanup; remove leading "Xref: " if present
+  StringView xref(line);
+  xref.trim();
+  if (xref.len > 6 && ! memcmp(xref.str, "Xref: ", 6))
+  {
+    xref = xref.substr(xref.str + 6, NULL);
+    xref.trim();
+  }
+
+  SQLite::Statement set_article_group_q(pan_db,R"SQL(
+    insert into `article_group` (article_id, group_id)
+    values (
+      (select id from article where message_id = ?),
+      (select id from `group` where name = ?)
+    ) on conflict (article_id, group_id) do nothing;
+  )SQL");
+
+  SQLite::Statement set_xref_q(pan_db,R"SQL(
+    insert into `article_xref` (article_group_id, server_id, number)
+    values (
+      (select ag.id from article_group as ag
+       join `group` as g on g.id == ag.group_id
+       join article as a on a.id == ag.article_id
+       where a.message_id = ? and g.name = ?),
+      (select id from server where pan_id = ?),
+      ?
+    ) on conflict (article_group_id, server_id) do nothing;
+  )SQL");
+
+  // walk through the xrefs, of format "group1:number group2:number"
+  StringView s;
+  while (xref.pop_token(s))
+  {
+    if (s.strchr(':') != nullptr)
+    {
+      StringView group_name;
+      if (s.pop_token(group_name, ':'))
+      {
+        set_article_group_q.reset();
+        set_article_group_q.bind(1,msg_id);
+        set_article_group_q.bind(2,group_name);
+        set_article_group_q.exec();
+
+        // update xref table
+        set_xref_q.reset();
+        set_xref_q.bind(1, msg_id);
+        set_xref_q.bind(2, group_name);
+        set_xref_q.bind(3, server);
+        set_xref_q.bind(4, s);
+        int count = set_xref_q.exec();
+        LOG4CXX_TRACE(logger, "inserted " << count << " xref with msg id " << msg_id.c_str() <<
+                      " group " << group_name << " server " << server.c_str() << " number " << s);
+      }
+    }
+  }
 }
