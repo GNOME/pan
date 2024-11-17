@@ -138,7 +138,7 @@ void DataImpl ::load_db_schema(char const *file) {
 void
 DataImpl :: rebuild_backend ()
 {
-  std::vector<std::string> sql_files { "01-server.sql", "02-group.sql" };
+  std::vector<std::string> sql_files { "01-server.sql", "02-group.sql", "03-article.sql" };
   for (int i = 0; i < sql_files.size(); i++) {
     load_db_schema(sql_files[i].c_str());
   }
