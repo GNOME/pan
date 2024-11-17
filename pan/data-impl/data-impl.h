@@ -356,7 +356,6 @@ public:
     void save_new_groups_in_db(Quark const &server_pan_id,
                                NewGroup const *newgroups,
                                int count);
-    void save_group_in_db(Quark const &server_name);
     void save_group_descriptions_in_db(NewGroup const *new_groups, int count);
 
   public: // mutators
