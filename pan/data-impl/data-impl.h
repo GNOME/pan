@@ -40,6 +40,7 @@
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 #include <pan/data/encode-cache.h>
+#include "pan/general/log4cxx.h"
 #include <pan/general/macros.h>
 #include <pan/general/map-vector.h>
 #include <pan/general/quark.h>
@@ -159,6 +160,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 #endif
   private:
     void rebuild_backend();
+    void rebuild_server_data();
     bool const _unit_test;
     DataIO *_data_io;
     Prefs &_prefs;
@@ -168,8 +170,8 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     **/
 
   private: // implementation
-    void load_server_properties(DataIO const &);
-    void save_server_properties(DataIO &, Prefs &);
+    void migrate_server_properties_into_db(DataIO const &);
+    void save_server_in_db(std::string pan_id, Server *s, Prefs &prefs);
     void load_db_schema(char const *file);
 
     typedef Loki::AssocVector<Quark, Server> servers_t;
@@ -181,9 +183,12 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     Server *find_server(Quark const &server) override;
     bool find_server_by_host_name(std::string const &server,
                                   Quark &setme) const override;
+    Server *read_server(Quark const &pan_id) const;
+    void read_server(Quark const &pan_id, Server *server) const;
 
   public: // mutators
     void delete_server(Quark const &server) override;
+    void delete_server_from_db(std::string host);
 
     Quark add_new_server() override;
 
@@ -216,6 +221,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   public: // accessors
     quarks_t get_servers() const override;
+    quarks_t get_server_ids_from_db () const;
 
     bool get_server_auth(Quark const &server,
                          std::string &setme_username,
