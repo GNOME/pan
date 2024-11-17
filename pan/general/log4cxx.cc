@@ -56,6 +56,7 @@ log4cxx::LoggerPtr getLogger(std::string const &name)
           outfile << "log4j.logger.nzb=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.server=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.task-article=DEBUG, A1" << std::endl;
+          outfile << "log4j.logger.task-xover=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.xover=DEBUG, A1" << std::endl;
         }
         if (PropertyConfigurator::configure(filename)
