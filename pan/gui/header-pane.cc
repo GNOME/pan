@@ -19,6 +19,7 @@
 
 #include "header-pane.h"
 #include "pan/general/log4cxx.h"
+#include "pan/general/string-view.h"
 #include "pan/gui/load-icon.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
@@ -487,7 +488,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
   int const action(get_article_action(a, _cache, _queue, a->message_id));
   int const state(get_article_state(_data, a));
   char *date_str(e.get_date_string(a->get_time_posted()));
-  Row *row = new Row(_data, a, date_str, action, state);
+  Row *row = new Row(_data, a, a->get_author(), date_str, action, state);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   g_assert(result.second);
