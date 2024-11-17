@@ -524,8 +524,23 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
   _scorefile.get_matching_sections(StringView(group), score_sections);
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id,subject,author_id, `references`, time_posted, binary, expected_parts,line_count)
-    values (?,?,?, (select id from author where author = ?),?,?,?,?,?) on conflict do nothing;
+    insert into `article` (flag, message_id,subject,author_id, `references`,
+                            time_posted, binary, expected_parts,line_count)
+    values ($flag,$msg_id, $subject, (select id from author where author = $author), $references,
+            $time_posted, $binary, $expected_parts, $line_count)
+    on conflict (message_id)
+       do update set (flag, subject,author_id, `references`,
+                           time_posted, binary, expected_parts,line_count)
+         = ($flag, $subject, (select id from author where author = $author), $references,
+             $time_posted, $binary, $expected_parts, $line_count)
+  )SQL");
+
+  SQLite::Statement set_dummy_article_q(pan_db,R"SQL(
+    insert into `article` (message_id, time_posted) values (?,?)
+  )SQL");
+
+  SQLite::Statement set_parent_id(pan_db,R"SQL(
+    update `article` set parent_id = (select id from `article` where message_id = ?) where message_id = ?
   )SQL");
 
   SQLite::Statement set_author_q(pan_db,"insert into `author` (author) values (?) on conflict do nothing;");
@@ -724,6 +739,11 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         // at this point we have all required information to create article in DB
         set_article_q.exec();
         item_count++;
+
+        // now we can deal with parent_id extracted from references to
+        // construct a tree of articles, i.e the article threads using
+        // parent_id column to references article.id
+        set_reference_tree_in_db(time_posted, message_id,references);
 
         // Then xref data can also be stored in DB
         foreach_const (Xref::targets_t, targets, it) {
