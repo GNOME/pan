@@ -47,8 +47,8 @@ class ArticleFilter
     Quark const message_Id;
     Quark const message_ID;
 
-    StringView const get_header(Article const &a,
-                                Quark const &header_name) const;
+    std::string const get_header(Article const &a,
+                                 Quark const &header_name) const;
 
   public:
     ArticleFilter() :

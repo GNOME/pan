@@ -183,7 +183,7 @@ void DataImpl ::xover_ref(Quark const &group)
       Article const *a(it->second->_article);
       if (a != nullptr)
         workarea._subject_lookup.insert(
-          std::pair<Quark, Quark>(a->subject, mid));
+          std::pair<Quark, Quark>(a->get_subject(), mid));
   }
 }
 
@@ -311,7 +311,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
       //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
       // load article data in memory. Will be removed
       Article& a (h->alloc_new_article());
-      a.subject = multipart_subject_quark;
       a.message_id = art_mid;
       a.is_binary = part_count >= 1;
       a.set_part_count (a.is_binary ? part_count : 1);

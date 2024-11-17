@@ -31,26 +31,26 @@
 
 using namespace pan;
 
-StringView const ArticleFilter ::get_header(Article const &a,
+std::string const ArticleFilter ::get_header(Article const &a,
                                             Quark const &header_name) const
 {
-  static StringView const empty;
+  static std::string const empty;
 
   if (header_name == subject)
   {
-    return a.subject.to_view();
+    return a.get_subject().to_string();
   }
   if (header_name == from)
   {
-    return a.get_author().to_view();
+    return a.get_author().to_string();
   }
   if (header_name == message_Id)
   {
-    return a.message_id.to_view();
+    return a.message_id.to_string();
   }
   if (header_name == message_ID)
   {
-    return a.message_id.to_view();
+    return a.message_id.to_string();
   }
 
   std::cerr << LINE_ID << ' ' << PACKAGE_STRING << " is misparsing \""
