@@ -370,12 +370,6 @@ public:
     void migrate_headers(DataIO const &, Quark const &group);
     void migrate_read_ranges(Quark const &group);
     void load_headers_from_db(Quark const &group);
-    void save_headers(DataIO &, Quark const &group);
-    bool save_headers(DataIO &,
-                      Quark const &group,
-                      std::vector<Article *> const &,
-                      unsigned long &,
-                      unsigned long &);
 
     /**
      * ArticleNode is a Tree node used for threading Article objects.
