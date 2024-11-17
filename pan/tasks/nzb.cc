@@ -22,17 +22,14 @@
 #include "pan/data/in-memory-article.h"
 #include "pan/data/in-memory-parts.h"
 #include "task-article.h"
-#include "task-upload.h"
 
 #include <config.h>
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
-#include <map>
 #include <regex>
 
 #include <glib.h>
+#include "pan/general/log4cxx.h"
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -42,6 +39,10 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/data-impl/article-rules.h>
+
+namespace  {
+log4cxx::LoggerPtr logger(getLogger("nzb"));
+}
 
 namespace pan {
 
