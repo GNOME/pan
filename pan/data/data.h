@@ -140,13 +140,6 @@ struct Profile
     typedef std::map<std::string, std::string> headers_t;
     headers_t headers;
 
-    std::string const &get_header(char const *key) const
-    {
-      static std::string const nil;
-      headers_t::const_iterator it(headers.find(key));
-      return it == headers.end() ? nil : it->second;
-    }
-
     Profile() :
       use_sigfile(false),
       use_gpgsig(false),

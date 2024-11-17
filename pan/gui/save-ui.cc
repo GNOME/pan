@@ -120,7 +120,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
     foreach_const (std::vector<Article>, self->_articles, it)
     {
       if (subject_in_path)
-        path = expand_download_dir_subject(opath.c_str(), it->subject, sep);
+        path = expand_download_dir_subject(opath.c_str(), it->get_subject(), sep);
       tasks.push_back (new TaskArticle (self->_server_rank,
                                         self->_group_server,
                                         *it,
