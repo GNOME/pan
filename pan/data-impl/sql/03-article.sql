@@ -9,7 +9,10 @@ create table if not exists article (
 
   time_posted integer not null,
 
-  line_count integer,
+  -- default 0 otherwise line_count accumulation does not work
+  -- in SQL null + 3 => null
+  line_count integer default 0,
+
   --  marked boolean check(marked = False or marked = True),
   binary boolean check(binary = False or binary = True),
 
