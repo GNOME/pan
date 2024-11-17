@@ -157,8 +157,8 @@ DataImpl :: rebuild_backend ()
       _scorefile.parse_file (score_filename);
 
     rebuild_server_data();
+    rebuild_group_data();
 
-    load_newsrc_files (*_data_io);
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);
 
@@ -193,6 +193,26 @@ void DataImpl ::rebuild_server_data()
   }
 }
 
+void DataImpl ::rebuild_group_data()
+{
+  // check if DB has group data
+  SQLite::Statement group_q(pan_db, "select count(name) from `group`;");
+  int group_count = 0;
+  while (group_q.executeStep())
+  {
+    group_count = group_q.getColumn(0);
+  }
+
+  if (group_count == 0)
+  {
+    // Migrate group data from newsrc files into DB.
+    migrate_newsrc_files(*_data_io);
+  }
+
+  // now load group data from DB into memory
+  load_groups_from_db();
+}
+
 DataImpl :: ~DataImpl ()
 {
   save_state ();
@@ -203,9 +223,9 @@ DataImpl :: save_state ()
 {
   if (!_unit_test)
   {
-    pan_debug ("data-impl dtor saving xov, newsrc...");
+    pan_debug ("data-impl dtor saving group, xov...");
     save_group_xovers (*_data_io);
-    save_newsrc_files (*_data_io);
+    save_all_server_groups_in_db ();
   }
 }
 
