@@ -161,6 +161,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
   private:
     void rebuild_backend();
     void rebuild_server_data();
+    void rebuild_group_data();
     bool const _unit_test;
     DataIO *_data_io;
     Prefs &_prefs;
@@ -386,12 +387,11 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     void save_group_permissions(DataIO &) const;
 
     std::string get_newsrc_filename(Quark const &server) const;
-    void load_newsrc(Quark const &server,
-                     LineReader *,
-                     alpha_groups_t &,
-                     alpha_groups_t &);
-    void load_newsrc_files(DataIO const &);
-    void save_newsrc_files(DataIO &) const;
+    void migrate_newsrc(Quark const &server, LineReader *);
+    void migrate_newsrc_files(DataIO const &);
+    void load_groups_from_db();
+    void save_all_server_groups_in_db();
+    void save_group_in_db(Quark const &server_name);
 
   public: // mutators
     void add_groups(Quark const &server,
@@ -790,12 +790,12 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       newsrc_autosave_timeout = seconds;
     }
 
-    void save_newsrc_files()
+    void save_server_groups()
     { // Called from  rc_as_cb(...).
       // The newsrc_autosave_id is now (soon) invalid since the timeout will be
       // cancelled when our caller returns FALSE. So forget about it already.
       newsrc_autosave_id = 0;
-      save_newsrc_files(*_data_io);
+      save_all_server_groups_in_db();
     }
 };
 } // namespace pan
