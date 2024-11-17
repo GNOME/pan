@@ -17,7 +17,9 @@
  *
  */
 
+#include <SQLiteCpp/Statement.h>
 #include <config.h>
+#include <log4cxx/logger.h>
 #include <unistd.h>
 #include <fstream>
 #include <iostream>
@@ -27,9 +29,14 @@
 #include <vector>
 #include <glib.h> // for GMarkup
 #include <glib/gi18n.h>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <SQLiteCpp/VariadicBind.h>
+
+
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
+#include "pan/general/log4cxx.h"
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include "data-impl.h"
@@ -46,6 +53,10 @@ using namespace pan;
 ***
 **/
 
+namespace {
+log4cxx::LoggerPtr logger = pan::getLogger("server");
+}
+
 void DataImpl ::delete_server(Quark const &server_in)
 {
   const Quark server (server_in);
@@ -53,8 +64,10 @@ void DataImpl ::delete_server(Quark const &server_in)
   if (_servers.count (server))
   {
     const std::string newsrc_filename (file::absolute_fn("",_servers[server].newsrc_filename));
+    delete_server_from_db(_servers[server].host );
+    // TODO: remove when server structure is removed from memory
     _servers.erase (server);
-    save_server_properties (*_data_io, _prefs);
+    // remove file containing list of groups
     std::remove (newsrc_filename.c_str());
     rebuild_backend ();
   }
@@ -80,10 +93,61 @@ DataImpl :: add_new_server ()
   return new_server;
 }
 
+// Returns a Server pointer. Caller gets ownership of the pointer.
+Data ::Server *DataImpl ::read_server(Quark const &pan_id) const
+{
+  Server * retval = new Server;
+  read_server(pan_id, retval);
+  return retval;
+}
+
+// Returns a Server id.
+void DataImpl ::read_server(Quark const &pan_id, Data::Server *retval) const
+{
+  SQLite::Statement query(pan_db, "select * from 'server' where pan_id = ?;");
+  query.bind(1, pan_id.c_str());
+
+  // host is unique in schema so we should have only one line
+  while (query.executeStep())
+  {
+    retval->host = query.getColumn("host").getText();
+    retval->port = query.getColumn("port");
+    retval->password = query.getColumn("password").getText();
+    retval->username = query.getColumn("username").getText();
+    retval->article_expiration_age = query.getColumn("expiry_days");
+    retval->max_connections = query.getColumn("connection_limit");
+    retval->newsrc_filename = query.getColumn("newsrc_filename").getText();
+    retval->rank = query.getColumn("rank");
+    retval->ssl_support = query.getColumn("use_ssl");
+    retval->trust = query.getColumn("trust_certificate");
+    retval->compression_type = query.getColumn("compression_type");
+    retval->cert = query.getColumn("certificate").getText();
+  }
+
+  LOG4CXX_DEBUG(logger,
+                "read server " << retval->host << " from DB using quark "
+                               << pan_id.c_str());
+}
+
 quarks_t DataImpl ::get_servers () const {
   quarks_t servers;
   foreach_const (servers_t, _servers, it)
     servers.insert (it->first);
+  return servers;
+}
+
+quarks_t DataImpl ::get_server_ids_from_db () const {
+  quarks_t servers;
+
+  SQLite::Statement query (pan_db, "select pan_id from 'server' where host != 'local' order by pan_id asc;");
+  while (query.executeStep()) {
+    const std::string pan_id = query.getColumn(0).getText();
+    Quark id (pan_id);
+    servers.insert(id);
+  }
+
+  LOG4CXX_DEBUG(logger,"get_servers: got " << servers.size() << " servers from DB");
+
   return servers;
 }
 
@@ -214,7 +278,8 @@ void DataImpl ::save_server_info(Quark const &server)
 {
   Server * s (find_server (server));
   assert (s);
-  save_server_properties (*_data_io, _prefs);
+  //save_server_properties (*_data_io, _prefs);
+  save_server_in_db(server.to_string(), s , _prefs);
 }
 
 bool DataImpl ::get_server_auth(Quark const &server,
@@ -225,6 +290,16 @@ bool DataImpl ::get_server_auth(Quark const &server,
   Server * s (find_server (server));
   bool found (s);
   if (found) {
+    get_server_auth(s,setme_username, setme_password, use_gkr);
+  }
+  return found;
+}
+
+void DataImpl ::get_server_auth(Server* s,
+                           std::string &setme_username,
+                           gchar *&setme_password,
+                           bool use_gkr)
+{
     setme_username = s->username;
 #ifdef HAVE_GKR
     if (!use_gkr)
@@ -258,9 +333,6 @@ bool DataImpl ::get_server_auth(Quark const &server,
 #else
     setme_password = g_strdup(s->password.c_str());
 #endif
-  }
-
-  return found;
 
 }
 
@@ -453,9 +525,14 @@ namespace
   }
   }
 
-  void DataImpl ::load_server_properties(DataIO const &source)
+  // parse servers.xml file and load data in DB and in memory (the latter is temporary)
+  void DataImpl ::migrate_server_properties_into_db(DataIO const &source)
   {
     const std::string filename(source.get_server_filename());
+
+    if (!file::file_exists (filename.c_str())) {
+      return;
+    }
 
     std::string txt;
     file ::get_text_file_contents(filename, txt);
@@ -481,10 +558,11 @@ namespace
     g_markup_parse_context_free(c);
 
     // populate the servers from the info we loaded...
-    _servers.clear();
     foreach_const (key_to_keyvals_t, spc.data, it)
     {
-      Server &s(_servers[it->first]);
+      // server id is used to construct quark which is used as key in _servers
+      Server s;
+      LOG4CXX_INFO(logger,"loading server id " << it->first << " from file");
       keyvals_t kv(it->second);
       s.host = kv["host"];
       s.username = kv["username"];
@@ -511,8 +589,12 @@ namespace
         o << "newsrc-" << it->first;
         s.newsrc_filename = o.str();
       }
+      LOG4CXX_INFO(logger, "Migrating server " << s.host );
+      save_server_in_db(it->first, &s, _prefs);
     }
 
+    // remove obsolete file
+    std::remove(filename.c_str());
 }
 
 namespace
@@ -532,51 +614,79 @@ std::string escaped(std::string const &s)
   }
 }
 
-void
-DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
+void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
 {
-  int depth (0);
-  std::ostream * out = data_io.write_server_properties ();
+  LOG4CXX_DEBUG(logger, "saving data of server" << s->host << " in DB");
 
-  *out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
+  std::string user;
+  gchar* pass(NULL);
+  get_server_auth(s, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
 
-  // sort the servers by id
-  typedef std::set<Quark,AlphabeticalQuarkOrdering> alpha_quarks_t;
-  alpha_quarks_t servers;
-  foreach_const (servers_t, _servers, it)
-    servers.insert (it->first);
+  // if needed, create a new entry with mandatory attributes
+  SQLite::Statement create_q(pan_db, R"SQL(
+    insert into server (pan_id, host, newsrc_filename) values (?,?,?)
+      on conflict (pan_id) do nothing
+  )SQL");
 
-  // write the servers to the ostream
-  *out << indent(depth++) << "<server-properties>\n";
-  foreach_const (alpha_quarks_t, servers, it) {
-    const Server* s (find_server (*it));
-    std::string user;
-    gchar* pass(NULL);
-    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
-    *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
-    *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
-         << indent(depth) << "<port>" << s->port << "</port>\n"
-         << indent(depth) << "<username>" << escaped(user) << "</username>\n";
-#ifdef HAVE_GKR
-    if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
-      *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
-    else
-      *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
-#else
-    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
-#endif
-    *out << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
-         << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
-         << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
-         << indent(depth) << "<rank>" << s->rank << "</rank>\n"
-         << indent(depth) << "<use-ssl>" << s->ssl_support << "</use-ssl>\n"
-         << indent(depth) << "<trust>" << s->trust << "</trust>\n"
-         << indent(depth) << "<compression-type>" << s->compression_type << "</compression-type>\n"
-         << indent(depth) << "<cert>"    << s->cert << "</cert>\n";
+  create_q.bind(1, pan_id);
+  create_q.bind(2, s->host);
+  create_q.bind(3, s->newsrc_filename);
+  int nb = create_q.exec();
 
-    *out << indent(--depth) << "</server>\n";
+  if (nb > 0) {
+    LOG4CXX_INFO(logger, "created server " << s->host << " in DB");
   }
-  *out << indent(--depth) << "</server-properties>\n";
 
-  data_io.write_done (out);
+  std::stringstream update_st;
+  // update attributes of an existing entry
+  update_st << "update server set host = ?, newsrc_filename = ?, port = ? , username = ? , password = ? , "
+            << "expiry_days = ? , connection_limit = ? , newsrc_filename = ? , "
+            << "rank = ? , use_ssl = ? , trust_certificate = ? , compression_type = ? , certificate = ? "
+            << "where pan_id = ?";
+
+  SQLite::Statement update_q(pan_db,update_st.str());
+  int i = 1;
+  update_q.bind(i++, s->host);
+  update_q.bind(i++, s->newsrc_filename);
+  update_q.bind(i++, s->port);
+  update_q.bind(i++, user);
+
+#ifdef HAVE_GKR
+  if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT)) {
+    update_q.bind(i++, "HANDLED_BY_PASSWORD_STORAGE");
+  }
+  else {
+    update_q.bind(i++, pass);
+  }
+#else
+  update_q.bind(i++, pass);
+#endif
+  update_q.bind(i++, s->article_expiration_age);
+  update_q.bind(i++, s->max_connections);
+  // already added with create_q, but this enables modification of this value
+  update_q.bind(i++, s->newsrc_filename);
+  update_q.bind(i++, s->rank);
+  update_q.bind(i++, s->ssl_support);
+  update_q.bind(i++, s->trust);
+  update_q.bind(i++, s->compression_type);
+  update_q.bind(i++, s->cert);
+  update_q.bind(i++, pan_id);
+  nb = update_q.exec();
+
+  assert(nb == 1);
 }
+
+void DataImpl :: delete_server_from_db(std::string host)
+{
+  LOG4CXX_DEBUG(logger, "deleting server" << host << " from DB");
+
+  SQLite::Statement query(pan_db,"delete from server where host = ? ;");
+  query.bind(1, host);
+  int nb = query.exec();
+
+  assert(nb == 1);
+
+  LOG4CXX_INFO(logger, "Removed server " << host << "from DB.");
+}
+
+
