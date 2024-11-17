@@ -428,7 +428,7 @@ void HeaderPane ::render_subject(GtkTreeViewColumn *,
 
   Article const *a(self->get_article(model, iter));
 
-  std::string res = a->subject.c_str();
+  std::string res = a->get_subject().c_str();
 
   char buf[512];
 
@@ -1452,7 +1452,7 @@ gboolean HeaderPane ::on_button_pressed(GtkWidget *treeview,
 namespace {
 bool has_image_type_in_subject(Article const &a)
 {
-  const StringView s(a.subject.to_view());
+  const StringView s(a.get_subject().to_view());
   return s.strstr(".jpg") || s.strstr(".JPG") || s.strstr(".gif")
          || s.strstr(".GIF") || s.strstr(".jpeg") || s.strstr(".JPEG")
          || s.strstr(".png") || s.strstr(".PNG");
@@ -3034,8 +3034,8 @@ struct HeaderPane::SimilarWalk : public PanTreeStore::WalkFunctor
     static bool subjects_are_similar(Article const &a, Article const &b)
     {
       // make our own copies of the strings so that we can mutilate them
-      std::string sa(a.subject.c_str());
-      std::string sb(b.subject.c_str());
+      std::string sa(a.get_subject().c_str());
+      std::string sb(b.get_subject().c_str());
 
       // strip out frequent substrings that tend to skew string_likeness too
       // high
