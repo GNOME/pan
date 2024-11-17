@@ -1951,7 +1951,7 @@ void GUI :: do_show_selected_article_info ()
       s << ' ' << *it;
 
     const char* author = iconv_inited ? __g_mime_iconv_strdup(conv, a->get_author().c_str()) : a->get_author().c_str();
-    const char* subject = iconv_inited ? __g_mime_iconv_strdup(conv, a->subject.c_str()) : a->subject.c_str();
+    const char* subject = iconv_inited ? __g_mime_iconv_strdup(conv, a->get_subject().c_str()) : a->get_subject().c_str();
 
     GtkWidget * w = gtk_message_dialog_new_with_markup (
       get_window(_root),
