@@ -31,6 +31,10 @@
 
 using namespace pan;
 
+namespace {
+log4cxx::LoggerPtr logger = pan::getLogger("article-tree");
+}
+
 /****
 *****  ArticleTree functions
 ****/
