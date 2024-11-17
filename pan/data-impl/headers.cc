@@ -17,12 +17,15 @@
  *
  */
 
+#include "pan/general/string-view.h"
 #include <cerrno>
 #include <cmath>
 #include <config.h>
 #include <fstream>
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <iostream>
+#include <log4cxx/logger.h>
 #include <map>
 #include <string>
 #include <vector>
@@ -36,6 +39,7 @@ extern "C"
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
+#include <pan/general/log4cxx.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/quark.h>
@@ -43,6 +47,10 @@ extern "C"
 #include <pan/usenet-utils/filter-info.h>
 
 using namespace pan;
+
+namespace {
+log4cxx::LoggerPtr logger = pan::getLogger("header");
+}
 
 DataImpl ::GroupHeaders ::GroupHeaders() :
   _ref(0),
@@ -199,7 +207,7 @@ void DataImpl ::ref_group(Quark const &group)
   if (! h)
   {
     h = _group_to_headers[group] = new GroupHeaders();
-    load_headers(*_data_io, group);
+    migrate_headers(*_data_io, group);
   }
   ++h->_ref;
   //  std::cerr << LINE_ID << " group " << group << " refcount up to " <<
@@ -468,21 +476,61 @@ unsigned long long view_to_ull(StringView const &view)
 } // namespace
 
 // load headers from internal file in ~/.pan2/groups
-void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
+void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 {
   TimeElapsed timer;
-
-  GroupHeaders *h(get_group_headers(group));
-  assert(h != nullptr);
 
   Article_Count article_count(0);
   Article_Count unread_count(0);
   StringView line;
   bool success(false);
   quarks_t servers;
+  int item_count(0);
 
   ArticleFilter::sections_t score_sections;
   _scorefile.get_matching_sections(StringView(group), score_sections);
+
+  SQLite::Statement set_article_q(pan_db,R"SQL(
+    insert into `article` (flag, message_id,subject,author_id,
+                           time_posted, binary, expected_parts,line_count)
+    values (?,?,?, (select id from author where address = ?),?,?,?,?) on conflict do nothing;
+  )SQL");
+
+  SQLite::Statement set_author_q(pan_db,R"SQL(
+    insert into `author` (name, address) values (?,?) on conflict do nothing;
+  )SQL");
+
+  SQLite::Statement set_article_group_q(pan_db,R"SQL(
+    insert into `article_group` (article_id, group_id)
+    values (
+      (select id from article where message_id = ?),
+      (select id from `group` where name = ?)
+    ) on conflict (article_id, group_id) do nothing;
+  )SQL");
+
+  SQLite::Statement set_xref_q(pan_db,R"SQL(
+    insert into `article_xref` (article_group_id, server_id, number)
+    values (
+      (select ag.id from article_group as ag
+       join `group` as g on g.id == ag.group_id
+       join article as a on a.id == ag.article_id
+       where a.message_id = ? and g.name = ?),
+      (select id from server where pan_id = ?),
+      ?
+    ) on conflict (article_group_id, server_id) do nothing;
+  )SQL");
+
+  SQLite::Statement set_part_q(pan_db,R"SQL(
+    insert into `article_part` (article_id, part_number, part_message_id, size)
+    values ((select id from article where message_id = ?), ?, ?, ?) on conflict do nothing;
+  )SQL");
+
+  // speed insert up -- from minutes to seconds
+  // see https://www.sqlite.org/pragma.html#pragma_synchronous
+  pan_db.exec("pragma synchronous = off");
+
+  LOG4CXX_INFO(logger, "Migrating articles of group " << group.c_str()
+               << " in DB. Please wait a few minutes.");
 
   char const *groupname(group.c_str());
   LineReader *in(data_io.read_group_headers(group));
@@ -533,8 +581,6 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
       // each article in this group...
       unsigned int expire_count(0);
       in->getline(line);
-      Article_Count const article_qty{line};
-      h->reserve(article_qty);
 
       const time_t now(time(nullptr));
       PartBatch part_batch;
@@ -548,15 +594,19 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
           break;
         }
 
-        Article &a(h->alloc_new_article());
+        set_article_q.reset();
+        set_author_q.reset();
+
+        int bind_idx = 1;
 
         // flag line
-        a.flag = false;
+        bool flag = false;
         if (version == 3)
         {
-          a.flag = atoi(s.str) == 1 ? true : false;
+          flag = atoi(s.str) == 1 ? true : false;
           in->getline(s);
         }
+        set_article_q.bind(bind_idx++, flag);
 
         if (s.empty() || *s.str != '<') // not a message-id...
         {
@@ -565,18 +615,29 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
 
         // message id
         s.ltrim();
-        a.message_id = s;
+        std::string message_id(s);
+        set_article_q.bind(bind_idx++,message_id.c_str());
 
         // subject line
-
         in->getline(s);
         s.ltrim();
-        a.subject = s;
+        set_article_q.bind(bind_idx++,std::string{s}.c_str());
 
         // author line
         in->getline(s);
         s.ltrim();
-        a.author = s.len == 1 ? author_lookup[(int)*s.str] : Quark(s);
+        // set author in author table
+        StringView author = s.len == 1 ? author_lookup[(int)*s.str].to_view() : s;
+        StringView name, address;
+        author.pop_token(name,'<');
+        name.trim();
+        author.pop_token(address, '>');
+        address.trim();
+        set_author_q.bind(1,name);
+        set_author_q.bind(2,address);
+        set_author_q.exec();
+        // set author id in article table
+        set_article_q.bind(bind_idx++,address);
 
         // optional references line
         std::string references;
@@ -590,13 +651,13 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
         }
 
         // date-posted line
-        a.time_posted = view_to_ull(s);
-        int const days_old((now - a.time_posted) / (24 * 60 * 60));
+        unsigned long long time_posted = view_to_ull(s);
+        set_article_q.bind(bind_idx++, static_cast<int64_t>(time_posted));
 
         // xref line
         in->getline(s);
         s.ltrim();
-        const size_t max_targets(std::count(s.begin(), s.end(), ' ') + 1);
+        size_t const max_targets(std::count(s.begin(), s.end(), ' ') + 1);
         targets_v.resize(max_targets);
         Xref::Target *target_it(&targets_v.front());
         StringView tok, server_tok, group_tok;
@@ -610,9 +671,7 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
                                  Quark(group_tok);
             target_it->number = Article_Number(tok);
             Server const *server(find_server(target_it->server));
-            if (server
-                && ((! server->article_expiration_age)
-                    || (days_old <= server->article_expiration_age)))
+            if (server)
             {
               ++target_it;
             }
@@ -620,17 +679,17 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
         }
         targets_v.resize(target_it - &targets_v.front());
         targets.sort();
-        bool expired(targets.empty());
-        a.xref.swap(targets);
 
-        // is_binary [total_part_count found_part_count]
+        // is_binary [total_part_count found_part_count] lines
         int total_part_count(1);
         int found_part_count(1);
         in->getline(s);
         s.ltrim();
         s.pop_token(tok);
-        a.is_binary = ! tok.empty() && tok.str[0] == 't';
-        if (a.is_binary)
+        bool is_binary = ! tok.empty() && tok.str[0] == 't';
+        set_article_q.bind(bind_idx++, is_binary);
+
+        if (is_binary)
         {
           s.ltrim();
           s.pop_token(tok);
@@ -639,80 +698,95 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
           s.pop_token(tok);
           found_part_count = atoi(tok.str);
         }
+        set_article_q.bind(bind_idx++,
+                           total_part_count); // expected_parts in table
+
         s.ltrim();
+        int lines = 0;
         if (s.pop_token(tok))
         {
-          a.lines = atoi(tok.str); // this field was added in 0.115
+          lines = atoi(tok.str); // this field was added in 0.115
+        }
+        set_article_q.bind(bind_idx++, lines); // line_count in table
+
+        // at this point we have all required information to create article in
+        // DB
+        set_article_q.exec();
+        item_count++;
+        LOG4CXX_TRACE(logger, "Stored article " << message_id);
+
+        // Then xref data can also be stored in DB
+        foreach_const (Xref::targets_t, targets, it)
+        {
+          SQLite::Transaction store_xref_transaction(pan_db);
+
+          // store only xref to migrated group. Xref to other groups
+          // can be retrieved via article table and
+          // message_id. Otherwise we get articles in unsubscribed
+          // groups, which is confusing after migration.
+          if (it->group != group) {
+            continue;
+          }
+          // create group if it's unknown
+          add_group_in_db(it->server, it->group);
+
+          // then the xref can be stored
+          set_article_group_q.reset();
+          set_article_group_q.bind(1,message_id);
+          set_article_group_q.bind(2,it->group);
+          set_article_group_q.exec();
+
+          set_xref_q.reset();
+          set_xref_q.bind(1, message_id.c_str());
+          set_xref_q.bind(2, it->group.c_str());
+          set_xref_q.bind(3, it->server.c_str());
+          set_xref_q.bind(4, static_cast<int64_t>(it->number));
+          set_xref_q.exec();
+          item_count++;
+          store_xref_transaction.commit();
+          LOG4CXX_TRACE(logger, "article " << message_id << " stored xref in group "
+                        << it->group.c_str());
         }
 
         // found parts...
-        part_batch.init(a.message_id, total_part_count);
-        //        std::cerr<<"article "<<a.message_id<<" "<<total_part_count<<"
-        //        "<<found_part_count<<std::endl;
+        LOG4CXX_TRACE(logger, "article " << message_id << " found " << found_part_count
+                      << " out of " << total_part_count);
         for (int i(0), count(found_part_count); i < count; ++i)
         {
           bool const gotline(in->getline(s));
 
-          if (gotline && ! expired)
+          if (gotline)
           {
+            set_part_q.reset();
+            set_part_q.bind(1, message_id);
+
             StringView tok;
             s.ltrim();
             s.pop_token(tok);
-            int const number(atoi(tok.str));
-            if (number > total_part_count)
+            int const part_number(atoi(tok.str));
+            if (part_number > total_part_count)
             { // corrupted entry
-              expired = true;
               break;
             }
+            set_part_q.bind(2, part_number);
+
             StringView part_mid;
             unsigned long part_bytes(0);
             s.ltrim();
             s.pop_token(part_mid);
             if (part_mid.len == 1 && *part_mid.str == '"')
             {
-              part_mid = a.message_id.to_view();
+              part_mid = message_id;
             }
+            set_part_q.bind(3, part_mid);
             s.pop_token(tok);
+
             part_bytes = view_to_ull(tok);
-            part_batch.add_part(number, part_mid, part_bytes);
+            set_part_q.bind(4, static_cast<int64_t>(part_bytes));
 
-            if (s.pop_token(tok))
-            {
-              a.lines += atoi(tok.str); // this field was removed in 0.115
-            }
+            set_part_q.exec();
           }
         }
-        if (! expired)
-        {
-          a.set_parts(part_batch);
-        }
-
-        // add the article to the group if it hasn't all expired
-        if (expired)
-        {
-          ++expire_count;
-        }
-        else
-        {
-          load_article(group, &a, references);
-          a.score = _article_filter.score_article(
-            *this,
-            score_sections,
-            group,
-            a); // score _after_ threading, so References: works
-          ++article_count;
-          if (! is_read(&a))
-          {
-            ++unread_count;
-          }
-        }
-      }
-
-      if (expire_count)
-      {
-        Log::add_info_va(_("Expired %lu old articles from \"%s\""),
-                         expire_count,
-                         group.c_str());
       }
 
       success = ! in->fail();
@@ -727,11 +801,16 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
   }
   delete in;
 
+  pan_db.exec("pragma synchronous = normal");
+
   // update the group's article count...
   ReadGroup &g(_read_groups[group]);
   g._unread_count = unread_count;
   g._article_count = article_count;
   fire_group_counts(group, unread_count, article_count);
+
+  LOG4CXX_INFO(logger, "Migrated " << item_count << " articles and parts of groups " << group.c_str()
+               << " in DB in " << timer.get_seconds_elapsed() << "s.");
 
   if (success)
   {
@@ -744,6 +823,26 @@ void DataImpl ::load_headers(DataIO const &data_io, Quark const &group)
       static_cast<uint64_t>(article_count)
         / (fabs(seconds) < 0.001 ? 0.001 : seconds));
   }
+}
+
+void DataImpl ::load_headers_from_db(DataIO const &data_io, Quark const &group)
+{
+  TimeElapsed timer;
+
+  GroupHeaders *h(get_group_headers(group));
+  assert(h != nullptr);
+
+  Article_Count article_count(0);
+  Article_Count unread_count(0);
+  StringView line;
+  bool success(false);
+  quarks_t servers;
+
+  ArticleFilter::sections_t score_sections;
+  _scorefile.get_matching_sections(StringView(group), score_sections);
+
+  char const *groupname(group.c_str());
+  LineReader *in(data_io.read_group_headers(group));
 }
 
 namespace {
@@ -1402,10 +1501,9 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
 
     foreach (std::set<MyTree *>, _trees, it)
     {
-      pan_debug("This tree has a group " << (*it)->_group);
       if ((*it)->_group == group)
       {
-        pan_debug("trying to add the articles to tree " << *it);
+        LOG4CXX_DEBUG(logger,"Adding " << mids.size() << " articles to group " << group);
         (*it)->add_articles(mids);
       }
     }
