@@ -28,6 +28,7 @@
 #include <glib/gi18n.h>
 #include <glib.h> // for g_build_filename
 #include <gio/gio.h>
+#include <log4cxx/logger.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -36,6 +37,7 @@
 #include <sstream>
 #include <string>
 #include "data-impl.h"
+#include "pan/general/log4cxx.h"
 
 #ifdef HAVE_GKR
   #define GCR_API_SUBJECT_TO_CHANGE
@@ -53,6 +55,7 @@ using namespace pan;
 
 namespace
 {
+log4cxx::LoggerPtr logger(pan::getLogger("server"));
 
   std::string get_cache_path ()
   {
@@ -151,7 +154,8 @@ DataImpl :: rebuild_backend ()
     if (file :: file_exists (score_filename.c_str()))
       _scorefile.parse_file (score_filename);
 
-    load_server_properties (*_data_io);
+    rebuild_server_data();
+
     load_newsrc_files (*_data_io);
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);
@@ -161,6 +165,29 @@ DataImpl :: rebuild_backend ()
 
     //load_group_descriptions (*_data_io);
     Log::add_info_va (_("Loaded data backend in %.1f seconds"), timer.get_seconds_elapsed());
+  }
+}
+
+void DataImpl ::rebuild_server_data()
+{
+  quarks_t server_list = get_server_ids_from_db();
+  if (server_list.empty())
+  {
+    // load servers from file only if SQL db is empty
+    migrate_server_properties_into_db(*_data_io);
+    server_list = get_server_ids_from_db();
+  }
+
+  // populate the servers from database information into
+  // memory. Which is a bit dumb since the DB should be the
+  // reference. This is duplicated information. But this cannot be
+  // removed until groups are also managed in DB.
+  _servers.clear();
+  foreach_const (quarks_t, server_list, it)
+  {
+    LOG4CXX_DEBUG(logger, "loading server with pan_id " << it->c_str() << " from DB");
+    Server &server(_servers[it->c_str()]);
+    read_server(it->c_str(), &server);
   }
 }
 
@@ -187,8 +214,7 @@ DataImpl :: get_scorefile_name() const
 }
 
 #ifdef HAVE_GKR
-gboolean
-DataImpl :: password_encrypt (const PasswordData& pw)
+gboolean DataImpl ::password_encrypt(PasswordData const &pw)
 {
 GError *error_c = nullptr;
 
