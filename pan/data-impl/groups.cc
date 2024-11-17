@@ -21,11 +21,14 @@
 ***************
 **************/
 
+#include <SQLiteCpp/Statement.h>
+#include <SQLiteCpp/Transaction.h>
 #include <config.h>
 #include <cassert>
 #include <iostream>
 #include <map>
 #include <set>
+#include <sstream>
 #include <vector>
 
 #include <glib.h>
@@ -37,6 +40,7 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
+#include <pan/general/log4cxx.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/time-elapsed.h>
@@ -53,6 +57,8 @@ using namespace pan;
 
 namespace
 {
+log4cxx::LoggerPtr logger = pan::getLogger("group");
+
 bool parse_newsrc_line(StringView const &line,
                        StringView &setme_group_name,
                        bool &setme_subscribed,
@@ -94,115 +100,245 @@ bool parse_newsrc_line(StringView const &line,
 #include <ext/algorithm>
 #endif
 
-void DataImpl ::load_newsrc(Quark const &server,
-                            LineReader *in,
-                            alpha_groups_t &sub,
-                            alpha_groups_t &unsub)
-{
-  Server * s = find_server (server);
+void DataImpl ::migrate_newsrc(Quark const &server_name, LineReader *in) {
+  TimeElapsed timer;
+  Server * s = find_server (server_name);
   if (!s) {
-    Log::add_err_va (_("Skipping newsrc file for server \"%s\""), server.c_str());
+    Log::add_err_va (_("Skipping newsrc file for server \"%s\""), server_name.c_str());
     return;
   }
 
   std::vector<Quark>& groups (s->groups.get_container());
 
-  AlphabeticalQuarkOrdering o;
+  Server const *server = find_server(server_name);
+  LOG4CXX_DEBUG(logger, "saving groups of server " << server->host << " in DB");
+
+  SQLite::Statement get_id_q(pan_db, "select id from server where host = ?");
+  get_id_q.bind(1, server->host );
+  int server_id;
+  while (get_id_q.executeStep()) {
+    server_id = get_id_q.getColumn(0);
+  }
+
+  std::stringstream create_st;
+  create_st << "insert into `group` (name, subscribed) values (?,?) on conflict do nothing; ";
+  SQLite::Statement create_q(pan_db,create_st.str());
+
+  std::stringstream link_st;
+  link_st << "insert into `server_group` (server_id, group_id, read_ranges) "
+          << "select ?,`group`.id,? from `group` where `group`.`name` = ?;";
+  SQLite::Statement link_q(pan_db,link_st.str());
+
+  // speed insert up -- from minutes to seconds
+  // see https://www.sqlite.org/pragma.html#pragma_synchronous
+  pan_db.exec("pragma synchronous = off");
+
   StringView line, name, numbers;
-  bool needs_sort (false);
-  Quark prev;
-  std::vector<Quark> tmp_sub, tmp_unsub;
-  tmp_sub.reserve (1000);
-  tmp_unsub.reserve (120000); // giganews has ~100k; anyone have more?
+  int count = 0;
   while (!in->fail() && in->getline (line))
   {
     bool subscribed;
     if (parse_newsrc_line (line, name, subscribed, numbers))
     {
-      Quark const &group(name);
+      SQLite::Transaction store_group_transaction(pan_db);
 
-      needs_sort |= (!prev.empty() && !o(prev,group));
-      groups.push_back (group);
+      create_q.reset();
+      create_q.bind(1,name);
+      create_q.bind(2,subscribed);
+      create_q.exec();
 
-      if (subscribed)
-        tmp_sub.push_back (group);
-      else
-        tmp_unsub.push_back (group);
+      link_q.reset();
+      link_q.bind(1, server_id);
+      link_q.bind(2,numbers);
+      link_q.bind(3, name);
+      link_q.exec();
 
-      if (!numbers.empty())
-        _read_groups[group][server]._read.mark_str (numbers);
-
-      prev = group;
+      store_group_transaction.commit();
+      count++;
     }
   }
 
-  // sub += tmp_sub
-  if (needs_sort)
-    std::sort (tmp_sub.begin(), tmp_sub.end(), AlphabeticalQuarkOrdering());
-  if (sub.empty())
-    sub.get_container().swap (tmp_sub);
-  else {
-    std::vector<Quark> tmp;
-    tmp.reserve (sub.size() + tmp_sub.size());
-    std::set_union (sub.begin(), sub.end(),
-                    tmp_sub.begin(), tmp_sub.end(),
-                    std::inserter (tmp, tmp.begin()), o);
-    sub.get_container().swap (tmp);
-  }
+  pan_db.exec("pragma synchronous = normal");
 
-  // unsub += tmp_unsub
-  if (needs_sort)
-    std::sort (tmp_unsub.begin(), tmp_unsub.end(), AlphabeticalQuarkOrdering());
-  if (unsub.empty())
-    unsub.get_container().swap (tmp_unsub);
-  else {
-    std::vector<Quark> tmp;
-    tmp.reserve (unsub.size() + tmp_unsub.size());
-    std::set_union (unsub.begin(), unsub.end(),
-                    tmp_unsub.begin(), tmp_unsub.end(),
-                    std::inserter (tmp, tmp.begin()), o);
-    unsub.get_container().swap (tmp);
-  }
+  double const seconds = timer.get_seconds_elapsed();
+
+  LOG4CXX_INFO(logger, "Migrated " << count << " groups of server " << server->host
+                << " in DB in " << seconds << "s.");
 }
 
-void DataImpl ::load_newsrc_files(DataIO const &data_io)
+void DataImpl ::migrate_newsrc_files(DataIO const &data_io)
 {
-  alpha_groups_t& s(_subscribed);
-  alpha_groups_t& u(_unsubscribed);
-
-  s.clear ();
-  u.clear ();
-
   foreach_const (servers_t, _servers, sit) {
     const Quark key (sit->first);
     const std::string filename = file::absolute_fn("", sit->second.newsrc_filename);
     pan_debug("reading " << sit->second.host << " groups from " << filename);
     if (file::file_exists (filename.c_str())) {
       LineReader * in (data_io.read_file (filename));
-      load_newsrc (key, in, s, u);
+      migrate_newsrc (key, in);
       delete in;
+      // remove obsolete file
+      std::remove(filename.c_str());
     }
   }
+}
 
-  // remove duplicates
-  s.erase (std::unique(s.begin(), s.end()), s.end());
-  u.erase (std::unique(u.begin(), u.end()), u.end());
+void DataImpl ::load_groups_from_db() {
+  alpha_groups_t& s(_subscribed);
+  alpha_groups_t& u(_unsubscribed);
+  StringView line, name, numbers;
 
-  // unsub -= sub
-  AlphabeticalQuarkOrdering o;
-  std::vector<Quark> tmp;
-  tmp.reserve (u.size());
-  std::set_difference (u.begin(), u.end(), s.begin(), s.end(), inserter (tmp, tmp.begin()), o);
-  u.get_container().swap (tmp);
+  s.clear ();
+  u.clear ();
 
-  // shrink-to-fit
-  alpha_groups_t (s).swap(s);
-  alpha_groups_t (u).swap(u);
+  // sqlitebrowser returns 110k groups in 210ms (57 without ordering)
+  SQLite::Statement read_group_q(pan_db,R"SQL(
+    select name, read_ranges
+      from `group` as g join server as s, server_group as sg
+      where s.host = ? and s.id == sg.server_id and g.id == sg.group_id
+            and s.host != "local"
+      order by name asc;
+)SQL");
+
+  // load groups of each server
+  foreach_const (servers_t, _servers, sit) {
+    TimeElapsed timer;
+    Quark const &server(sit->first);
+    Server * s = find_server (server);
+    std::vector<Quark>& groups (s->groups.get_container());
+    int i = 0;
+
+    read_group_q.reset();
+    read_group_q.bind(1, s->host);
+
+    while (read_group_q.executeStep()) {
+      i++;
+      name = read_group_q.getColumn(0).getText();
+      numbers = read_group_q.getColumn(1).getText();
+
+      Quark const &group(name);
+      groups.push_back (group);
+
+      if (!numbers.empty())
+        _read_groups[group][server]._read.mark_str (numbers);
+
+    }
+    LOG4CXX_INFO(logger, "Loaded " << i << " groups from server with pan_id " << server.c_str() << " from DB in "
+                 << timer.get_seconds_elapsed() << "s.");
+  }
+
+  TimeElapsed timer;
+
+  SQLite::Statement group_q(pan_db, R"SQL(
+    select name from `group` as g join server_group as sg
+      where g.subscribed == ? and g.id = sg.group_id and sg.server_id != (select id from `server` where host = "local")
+      order by name asc;
+)SQL" );
+
+  // load subcribed groups
+  int s_count = 0;
+  group_q.bind(1,true);
+  while (group_q.executeStep()) {
+    name = group_q.getColumn(0).getText();
+    s.insert(name);
+    s_count++;
+  }
+  LOG4CXX_DEBUG(logger, "loaded " << s_count << " subscribed groups from DB");
+
+  // load unsubcribed groups
+  int u_count = 0;
+  group_q.reset();
+  group_q.bind(1,false);
+  while (group_q.executeStep()) {
+    name = group_q.getColumn(0).getText();
+    u.insert(name);
+    u_count ++;
+  }
+  LOG4CXX_DEBUG(logger,"loaded " << u_count << " unsubscribed groups from DB");
+
+  LOG4CXX_INFO(logger, "Loaded " << s_count + u_count << " group subscription info from DB in "
+               << timer.get_seconds_elapsed() << "s." );
   fire_grouplist_rebuilt ();
 }
 
+void DataImpl::save_group_in_db(Quark const &server_name) {
+  TimeElapsed timer;
+  std::string newsrc_string;
+  alpha_groups_t::const_iterator sub_it(_subscribed.begin());
+  const alpha_groups_t::const_iterator sub_end(_subscribed.end());
+  Server const *server = find_server(server_name);
+
+  LOG4CXX_INFO(logger, "Saving groups of server " << server->host << " in DB...") ;
+
+  // speed insert up -- from minutes to seconds
+  // see https://www.sqlite.org/pragma.html#pragma_synchronous
+  pan_db.exec("pragma synchronous = off");
+
+  // get server id
+  SQLite::Statement get_id_q(pan_db, "select id from server where host = ?");
+  get_id_q.bind(1, server->host );
+  int server_id;
+  while (get_id_q.executeStep()) {
+    server_id = get_id_q.getColumn(0);
+  }
+
+  std::stringstream group_st;
+  group_st << "insert into `group` (name, subscribed) values ($name, $subscribed) "
+           << "on conflict (name) do update set subscribed = $subscribed ;";
+  SQLite::Statement group_q(pan_db, group_st.str());
+
+  std::stringstream link_st;
+  link_st << "with ids(gid) as (select id from `group` where name = $gname) "
+          << "insert  into `server_group` (server_id, group_id, read_ranges) select $sid, gid, $rg from ids where true "
+          << "on conflict (server_id, group_id) do update set read_ranges = $rg;";
+  SQLite::Statement link_q(pan_db,link_st.str());
+
+  // overly-complex optimization: both sit->second.groups and _subscribed
+  // are both ordered by AlphabeticalQuarkOrdering.
+  // Where N==sit->second.groups.size() and M==_subscribed.size(),
+  // "bool subscribed = _subscribed.count (group)" is N*log(M),
+  // but a sorted set comparison is M+N comparisons.
+  AlphabeticalQuarkOrdering o;
+
+  // for the groups in this server...
+  int count = 0;
+  foreach_const (Server::groups_t, server->groups, group_iter) {
+    Quark const &group(*group_iter);
+
+    while (sub_it!=sub_end && o (*sub_it, group)) ++sub_it; // see comment for 'o' above
+    bool const subscribed(sub_it != sub_end && *sub_it == group);
+
+    // insert or update group
+    group_q.reset();
+    group_q.bind(1,group.c_str() );
+    group_q.bind(2,subscribed);
+    group_q.exec();
+
+    // if the group's been read, save its read number ranges...
+    ReadGroup::Server const *rgs(find_read_group_server(group, server_name));
+    newsrc_string.clear ();
+    if (rgs != nullptr) {
+      rgs->_read.to_string (newsrc_string);
+    }
+
+    link_q.reset();
+    link_q.bind(1,group_iter->c_str());
+    link_q.bind(2,server_id);
+    link_q.bind(3,newsrc_string);
+    link_q.exec();
+
+    count++;
+  }
+
+  double const seconds = timer.get_seconds_elapsed();
+
+  LOG4CXX_INFO(logger, "Saved " << count << " groups "
+               << "in " << seconds << "s in DB.");
+  pan_db.exec("pragma synchronous = normal");
+}
+
+
 void
-DataImpl :: save_newsrc_files (DataIO& data_io) const
+DataImpl :: save_all_server_groups_in_db ()
 {
   if (newsrc_autosave_id) {
     g_source_remove( newsrc_autosave_id );
@@ -212,49 +348,11 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
   if (_unit_test)
     return;
 
-  // overly-complex optimization: both sit->second.groups and _subscribed
-  // are both ordered by AlphabeticalQuarkOrdering.
-  // Where N==sit->second.groups.size() and M==_subscribed.size(),
-  // "bool subscribed = _subscribed.count (group)" is N*log(M),
-  // but a sorted set comparison is M+N comparisons.
-  AlphabeticalQuarkOrdering o;
-
   // save all the servers' newsrc files
   foreach_const (servers_t, _servers, sit)
   {
-    const Quark& server (sit->first);
-
-    // write this server's newsrc
-    const std::string filename = file::absolute_fn("", sit->second.newsrc_filename);
-
-    std::ostream& out (*data_io.write_file (filename));
-    std::string newsrc_string;
-    alpha_groups_t::const_iterator sub_it (_subscribed.begin());
-    const alpha_groups_t::const_iterator sub_end(_subscribed.end());
-    foreach_const (Server::groups_t, sit->second.groups, git) // for the groups in this server...
-    {
-      const Quark& group (*git);
-
-      //const bool subscribed (_subscribed.count (group));
-      while (sub_it!=sub_end && o (*sub_it, group)) ++sub_it; // see comment for 'o' above
-      const bool subscribed (sub_it!=sub_end && *sub_it==group);
-      out << group;
-      out.put (subscribed ? ':' : '!');
-
-      // if the group's been read, save its read number ranges...
-      const ReadGroup::Server * rgs (find_read_group_server (group, server));
-      if (rgs != nullptr) {
-        newsrc_string.clear ();
-        rgs->_read.to_string (newsrc_string);
-        if (!newsrc_string.empty()) {
-          out.put (' ');
-          out << newsrc_string;
-        }
-      }
-
-      out.put ('\n');
-    }
-    data_io.write_done (&out);
+    Quark const &server(sit->first);
+    save_group_in_db(server);
   }
 }
 
@@ -262,8 +360,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
 ****
 ***/
 
-void
-DataImpl :: load_group_permissions (const DataIO& data_io)
+void DataImpl ::load_group_permissions(DataIO const &data_io)
 {
   std::vector<Quark> m, n;
 
@@ -280,7 +377,7 @@ DataImpl :: load_group_permissions (const DataIO& data_io)
     }
 
     const Quark group (line);
-    const char ch = *s.str;
+    char const ch = *s.str;
 
     if (ch == 'm')
       m.push_back (group);
