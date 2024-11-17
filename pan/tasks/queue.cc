@@ -18,6 +18,7 @@
  */
 
 #include "queue.h"
+#include "pan/general/log4cxx.h"
 #include "task.h"
 #include <config.h>
 #include <pan/data/server-info.h>
@@ -30,6 +31,10 @@
 ***/
 
 // TODO Mulithreading downloads!
+
+namespace  {
+log4cxx::LoggerPtr logger(getLogger("nzb"));
+}
 
 using namespace pan;
 
