@@ -397,45 +397,6 @@ void DataImpl::save_new_groups_in_db(Quark const &server_pan_id, NewGroup const 
                " groups in " << timer.get_seconds_elapsed() << "s.");
 }
 
-void DataImpl::save_group_in_db(Quark const &server_name) {
-  TimeElapsed timer;
-  std::string newsrc_string;
-  Server const *server = find_server(server_name);
-
-  LOG4CXX_INFO(logger, "Saving groups of server " << server->host << " in DB...") ;
-
-  // get server id
-  SQLite::Statement get_id_q(pan_db, "select id from server where host = ?");
-  get_id_q.bind(1, server->host );
-  int server_id;
-  while (get_id_q.executeStep()) {
-    server_id = get_id_q.getColumn(0);
-  }
-
-  std::stringstream link_st;
-  link_st << "with ids(gid) as (select id from `group` where name = $gname) "
-          << "insert  into `server_group` (server_id, group_id) select $sid, gid from ids where true "
-          << "on conflict (server_id, group_id) do nothing;";
-  SQLite::Statement link_q(pan_db,link_st.str());
-
-  // for the groups in this server...
-  int count = 0;
-  foreach_const (Server::groups_t, server->groups, group_iter) {
-    Quark const &group(*group_iter);
-
-    link_q.reset();
-    link_q.bind(1,group_iter->c_str());
-    link_q.bind(2,server_id);
-    count += link_q.exec();
-  }
-
-  double const seconds = timer.get_seconds_elapsed();
-
-  LOG4CXX_WARN(logger, "Saved " << count << " groups "
-               << "in " << seconds << "s in DB. They should already be in there");
-}
-
-
 void
 DataImpl :: save_all_server_groups_in_db ()
 {
@@ -447,12 +408,7 @@ DataImpl :: save_all_server_groups_in_db ()
   if (_unit_test)
     return;
 
-  // save all the servers' newsrc files
-  foreach_const (servers_t, _servers, sit)
-  {
-    Quark const &server(sit->first);
-    save_group_in_db(server);
-  }
+  // TODO: remove
 }
 
 /***
