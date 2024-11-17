@@ -50,6 +50,7 @@ log4cxx::LoggerPtr getLogger(std::string const &name)
             << "# Other loggers will come and should be listed in README.org"
             << std::endl;
           outfile << "log4j.logger.article=WARN, A1" << std::endl;
+          outfile << "log4j.logger.decoder=WARN, A1" << std::endl;
           outfile << "log4j.logger.group=WARN, A1" << std::endl;
           outfile << "log4j.logger.group-pane=WARN, A1" << std::endl;
           outfile << "log4j.logger.header=WARN, A1" << std::endl;

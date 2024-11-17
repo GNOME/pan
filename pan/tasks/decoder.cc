@@ -27,6 +27,7 @@
 #include <config.h>
 #include <fstream>
 #include <glib/gi18n.h>
+#include "pan/general/log4cxx.h"
 #include <ostream>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -34,6 +35,10 @@
 #include <pan/general/utf8-utils.h>
 #include <pan/general/worker-pool.h>
 #include <uulib/uudeview.h>
+
+namespace  {
+log4cxx::LoggerPtr logger(pan::getLogger("decoder"));
+}
 
 namespace pan {
 
