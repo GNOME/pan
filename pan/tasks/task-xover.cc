@@ -17,9 +17,11 @@
  *
  */
 
+#include "pan/general/log4cxx.h"
 #include <cassert>
 #include <cerrno>
 #include <config.h>
+#include <log4cxx/logger.h>
 
 extern "C"
 {
@@ -43,6 +45,8 @@ extern "C"
 using namespace pan;
 
 namespace {
+log4cxx::LoggerPtr logger(pan::getLogger("task-xover"));
+
 std::string get_short_name(StringView const &in)
 {
   static StringView const moderated("moderated");
@@ -118,7 +122,7 @@ TaskXOver::TaskXOver(Data &data,
   _total_minitasks(0)
 {
 
-  pan_debug("ctor for " << group);
+  LOG4CXX_DEBUG(logger, "TaskXOver ctor for " << group);
 
   // add a ``GROUP'' MiniTask for each server that has this group
   // initialize the _high lookup table to boundaries
@@ -163,7 +167,7 @@ void TaskXOver::use_nntp(NNTP *nntp)
   CompressionType comp;
   _data.get_server_compression_type(server, comp);
 
-  pan_debug("got an nntp from " << nntp->_server);
+  LOG4CXX_DEBUG(logger, "got an nntp from " << nntp->_server);
 
   // if this is the first nntp we've gotten, ref the xover data
   if (! _group_xover_is_reffed)
@@ -175,8 +179,8 @@ void TaskXOver::use_nntp(NNTP *nntp)
   MiniTasks_t &minitasks(_server_to_minitasks[server]);
   if (minitasks.empty())
   {
-    pan_debug("That's interesting, I got a socket for "
-              << server << " but have no use for it!");
+    LOG4CXX_DEBUG(logger, "That's interesting, I got a socket for "
+                    << server << " but have no use for it!");
     _state._servers.erase(server);
     check_in(nntp, OK);
   }
@@ -187,11 +191,12 @@ void TaskXOver::use_nntp(NNTP *nntp)
     switch (mt._type)
     {
       case MiniTask::GROUP:
-        pan_debug("GROUP " << _group << " command to " << server);
+        LOG4CXX_DEBUG(logger, "GROUP " << _group << " command to " << server);
         nntp->group(_group, this);
         break;
       case MiniTask::XOVER:
-        pan_debug("XOVER " << mt._low << '-' << mt._high << " to " << server);
+        LOG4CXX_DEBUG(
+          logger, "XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
         if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
         {
@@ -232,13 +237,15 @@ void TaskXOver::on_nntp_group(NNTP *nntp,
 
   _servers_that_got_xover_minitasks.insert(servername);
 
-  pan_debug("got GROUP result from " << nntp->_server << " (" << nntp
-                                     << "): " << " qty " << qty << " low "
-                                     << low << " high " << high);
+  LOG4CXX_DEBUG(logger,
+                "got GROUP result from " << nntp->_server << " (" << nntp
+                                         << "): " << " qty " << qty << " low "
+                                         << low << " high " << high);
 
   Article_Number l(low), h(high);
-  // std::cerr << LINE_ID << " This group's range is [" << low << "..." << high
-  // << ']' << std::endl;
+  LOG4CXX_TRACE(logger,
+                LINE_ID << " This group's range is [" << low << "..." << high
+                        << ']');
 
   if (_mode == ALL || _mode == DAYS)
   {
@@ -282,8 +289,10 @@ void TaskXOver::on_nntp_group(NNTP *nntp,
       // existence on the server while it is working out the response to the
       // xover. So be safe.
       MiniTask const mt(MiniTask::XOVER, m, std::min(h, m + INCREMENT));
-      pan_debug("adding MiniTask for " << servername << ": xover [" << mt._low
-                                       << '-' << mt._high << "]");
+      LOG4CXX_DEBUG(logger,
+                    "adding MiniTask for " << servername << ": xover ["
+                                           << mt._low << '-' << mt._high
+                                           << "]");
       if (_mode == DAYS)
       {
         minitasks.push_front(mt);
