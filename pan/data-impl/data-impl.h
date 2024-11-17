@@ -60,6 +60,9 @@ namespace pan {
 typedef std::vector<Article const *> articles_t;
 typedef Data::PasswordData PasswordData;
 
+void load_db_schema_file(SQLiteDb &pan_db, char const *file);
+void load_db_schema(SQLiteDb &pan_db);
+
 /**
  * File-based implementation of the `Data' backend interface.
  *
@@ -179,7 +182,6 @@ public:
   private: // implementation
     void migrate_server_properties_into_db(DataIO const &);
     void save_server_in_db(std::string pan_id, Server *s, Prefs &prefs);
-    void load_db_schema(char const *file);
 
     typedef Loki::AssocVector<Quark, Server> servers_t;
 

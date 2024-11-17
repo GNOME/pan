@@ -53,52 +53,35 @@ using namespace pan;
 ***
 **/
 
-namespace
-{
+namespace {
 log4cxx::LoggerPtr logger(pan::getLogger("server"));
 
-  std::string get_cache_path ()
-  {
-    char * pch (g_build_filename (file::get_pan_home().c_str(), "article-cache", nullptr));
-    file :: ensure_dir_exists (pch);
-    std::string path (pch);
-    g_free (pch);
-    return path;
-  }
-
-  std::string get_encode_cache_path ()
-  {
-    char * pch (g_build_filename (file::get_pan_home().c_str(), "encode-cache", nullptr));
-    file :: ensure_dir_exists (pch);
-    std::string path (pch);
-    g_free (pch);
-    return path;
-  }
-}
-
-DataImpl ::DataImpl(StringView const &cache_ext,
-                    Prefs &prefs,
-                    SQLiteDb &my_pan_db,
-                    bool unit_test,
-                    int cache_megs,
-                    DataIO *io) :
-  ProfilesImpl(*io),
-  _cache(get_cache_path(), cache_ext, cache_megs),
-  _encode_cache(get_encode_cache_path(), cache_megs),
-  _certstore(*this),
-  _queue(nullptr),
-  pan_db(my_pan_db),
-  _unit_test(unit_test),
-  _data_io(io),
-  _prefs(prefs),
-  _cached_xover_entry(nullptr),
-  _article_rules(prefs.get_flag("rules-autocache-mark-read", false),
-                prefs.get_flag("rules-auto-dl-mark-read", false))
+std::string get_cache_path()
 {
-  rebuild_backend ();
+  char *pch(
+    g_build_filename(file::get_pan_home().c_str(), "article-cache", nullptr));
+  file ::ensure_dir_exists(pch);
+  std::string path(pch);
+  g_free(pch);
+  return path;
 }
 
-void DataImpl ::load_db_schema(char const *file) {
+std::string get_encode_cache_path()
+{
+  char *pch(
+    g_build_filename(file::get_pan_home().c_str(), "encode-cache", nullptr));
+  file ::ensure_dir_exists(pch);
+  std::string path(pch);
+  g_free(pch);
+  return path;
+}
+
+} // namespace
+
+namespace pan {
+
+void load_db_schema_file(SQLiteDb &pan_db, char const *file)
+{
   GError *error;
   char* contents;
   gsize length;
@@ -133,16 +116,45 @@ void DataImpl ::load_db_schema(char const *file) {
   g_free(contents);
 }
 
-void
-DataImpl :: rebuild_backend ()
-{
+void load_db_schema(SQLiteDb &pan_db) {
   // this may not be portable across distributions
   pan_db.loadExtension("/usr/lib/sqlite3/pcre.so", nullptr);
 
   std::vector<std::string> sql_files { "01-server.sql", "02-group.sql", "03-article.sql" };
   for (int i = 0; i < sql_files.size(); i++) {
-    load_db_schema(sql_files[i].c_str());
+    load_db_schema_file(pan_db, sql_files[i].c_str());
   }
+}
+}
+
+using namespace pan;
+
+DataImpl ::DataImpl(StringView const &cache_ext,
+                    Prefs &prefs,
+                    SQLiteDb &my_pan_db,
+                    bool unit_test,
+                    int cache_megs,
+                    DataIO *io) :
+  ProfilesImpl(*io),
+  _cache(get_cache_path(), cache_ext, cache_megs),
+  _encode_cache(get_encode_cache_path(), cache_megs),
+  _certstore(*this),
+  _queue(nullptr),
+  pan_db(my_pan_db),
+  _unit_test(unit_test),
+  _data_io(io),
+  _prefs(prefs),
+  _cached_xover_entry(nullptr),
+  _article_rules(prefs.get_flag("rules-autocache-mark-read", false),
+                 prefs.get_flag("rules-auto-dl-mark-read", false))
+{
+  rebuild_backend ();
+}
+
+void
+DataImpl :: rebuild_backend ()
+{
+  load_db_schema(pan_db);
 
   if (_unit_test)
   {
