@@ -1139,23 +1139,36 @@ void DataImpl ::mark_read(Article const **articles,
 
   SQLite::Statement set_read_q(pan_db, R"SQL(
     update `article` set is_read = $read where message_id = ? and is_read != $read
-)SQL");
+  )SQL");
+
+  SQLite::Statement read_group_q(pan_db, R"SQL(
+    select g.name from `group` as g
+    join article_group as ag on ag.group_id == g.id
+    join article as a on ag.article_id == a.id
+    where message_id = ?
+  )SQL");
 
   // set them to `read'...
   for (Article const **it(articles), **end(articles + article_count); it != end;
        ++it)
   {
     Article const *article(*it);
-    foreach_const (Xref, article->xref, xit)
-    {
-      set_read_q.reset();
-      set_read_q.bind(1, read);
-      set_read_q.bindNoCopy(2, article->message_id.c_str());
+    set_read_q.reset();
+    set_read_q.bind(1, read);
+    set_read_q.bindNoCopy(2, article->message_id);
 
-      if (set_read_q.exec() == 1) {
-        LOG4CXX_TRACE(logger,  "Changed read status of article "
-                      << article->message_id << " to " << read);
-        group_to_changed_mids[xit->group].insert(article->message_id);
+    if (set_read_q.exec() == 1)
+    {
+      LOG4CXX_TRACE(logger,
+                    "Changed read status of article " << article->message_id
+                                                      << " to " << read);
+      // get affected groups
+      read_group_q.reset();
+      read_group_q.bindNoCopy(1, article->message_id);
+      while (read_group_q.executeStep())
+      {
+        Quark grp (Quark(read_group_q.getColumn(0).getText()));
+        group_to_changed_mids[grp].insert(article->message_id);
       }
     }
   }
