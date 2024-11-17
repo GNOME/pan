@@ -454,10 +454,8 @@ void DataImpl ::load_part(Quark const &group,
   Article *a(h->find_article(mid));
   pan_return_if_fail(a != nullptr);
 
-  if (a->add_part(number, part_mid, bytes))
-  {
-    a->lines += lines;
-  }
+  // line_count addition is handled in insert_part_in_db
+  a->add_part(number, part_mid, bytes);
 }
 
 void DataImpl ::insert_part_in_db(Quark const &group,
@@ -934,7 +932,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(group_id != 0);
 
   SQLite::Statement read_article_q(pan_db,R"SQL(
-    select flag,message_id, time_posted, binary, expected_parts, line_count, `references`
+    select flag,message_id, time_posted, binary, expected_parts, `references`
       from article
       join article_group as ag on ag.article_id = article.id
       where ag.group_id = ?;
@@ -1002,7 +1000,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     // is_binary [total_part_count found_part_count]
     a.is_binary = read_article_q.getColumn(i++).getInt() == 1 ;
     int total_part_count(read_article_q.getColumn(i++).getInt());
-    a.lines = read_article_q.getColumn(i++).getInt();
 
     // found parts...
     part_batch.init(a.message_id, total_part_count);
@@ -1161,8 +1158,8 @@ bool DataImpl ::save_headers(DataIO &data_io,
 )SQL");
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id, `references`, binary, expected_parts,line_count)
-    values (?,?,?,?,?,?) on conflict do nothing;
+    insert into `article` (flag, message_id, `references`, binary, expected_parts)
+    values (?,?,?,?,?) on conflict do nothing;
   )SQL");
 
   SQLite::Statement set_article_group_q(pan_db,R"SQL(
@@ -1232,7 +1229,6 @@ bool DataImpl ::save_headers(DataIO &data_io,
       set_article_q.bind(i++, a->is_binary);
       // text article always have 1 part
       set_article_q.bind(i++, a->is_binary ? a->get_total_part_count() : 1);
-      set_article_q.bind(i++, a->lines);
       set_article_q.exec();
 
       // xref
