@@ -103,7 +103,6 @@ class Article
 
   public:
     Quark message_id;
-    Quark subject;
     unsigned int lines;
     int score;
     bool is_binary;
@@ -122,6 +121,8 @@ class Article
     void set_time_posted(time_t) const;
     Quark get_author() const;
     void set_author(Quark) const;
+    Quark get_subject() const;
+    void set_subject(Quark) const;
     Xref xref;
 
   public:

@@ -1067,7 +1067,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(group_id != 0);
 
   SQLite::Statement read_article_q(pan_db,R"SQL(
-    select flag,message_id, subject, time_posted, binary, expected_parts, line_count, `references`
+    select flag,message_id, time_posted, binary, expected_parts, line_count, `references`
       from article
       join article_xref as xrf on xrf.article_id = article.id
       where xrf.group_id = ?;
@@ -1107,7 +1107,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     a.flag = read_article_q.getColumn(i++).getInt() == 1 ? true : false;
     char const *message_id = read_article_q.getColumn(i++);
     a.message_id = Quark(message_id);
-    a.subject = Quark(read_article_q.getColumn(i++).getText());
 
     // date-posted line
     int time_posted = read_article_q.getColumn(i++).getInt64();
@@ -1294,8 +1293,8 @@ bool DataImpl ::save_headers(DataIO &data_io,
 )SQL");
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id,subject, `references`, binary, expected_parts,line_count)
-    values (?,?,?,?,?,?,?) on conflict do nothing;
+    insert into `article` (flag, message_id, `references`, binary, expected_parts,line_count)
+    values (?,?,?,?,?,?) on conflict do nothing;
   )SQL");
 
   SQLite::Statement set_xref_q(pan_db,R"SQL(
@@ -1351,7 +1350,6 @@ bool DataImpl ::save_headers(DataIO &data_io,
       int i(1);
       set_article_q.bind(i++, a->flag);
       set_article_q.bind(i++, message_id);
-      set_article_q.bind(i++, a->subject);
       set_article_q.bind(i++, references); // don't care if references is empty
       set_article_q.bind(i++, a->is_binary);
       // text article always have 1 part
@@ -1494,8 +1492,7 @@ bool DataImpl ::is_read(Article const *a) const
   }
 
   // article was not found, bail out
-  LOG4CXX_FATAL(logger, "Article not found in DB "
-                << a->message_id.c_str() << " '" << a->subject.c_str() <<"'");
+  LOG4CXX_FATAL(logger, "Article not found in DB " << a->message_id.c_str() );
   // trigger a core dump so the pb can be debugged
   assert(0);
 }
