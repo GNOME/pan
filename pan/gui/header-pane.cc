@@ -18,6 +18,7 @@
  */
 
 #include "header-pane.h"
+#include "pan/general/log4cxx.h"
 #include "pan/gui/load-icon.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
@@ -29,6 +30,7 @@
 #include <gdk/gdk.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <log4cxx/logger.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
@@ -46,6 +48,10 @@ using namespace pan;
 /****
 *****
 ****/
+
+namespace  {
+log4cxx::LoggerPtr logger(getLogger("header-pane"));
+}
 
 namespace {
 enum
