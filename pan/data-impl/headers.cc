@@ -638,6 +638,8 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 
       const time_t now(time(nullptr));
       PartBatch part_batch;
+      SQLite::Transaction store_article(pan_db);
+
       for (;;)
       {
         // look for the beginning of an Article record.
@@ -776,8 +778,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         // Then xref data can also be stored in DB
         foreach_const (Xref::targets_t, targets, it)
         {
-          SQLite::Transaction store_xref_transaction(pan_db);
-
           // store only xref to migrated group. Xref to other groups
           // can be retrieved via article table and
           // message_id. Otherwise we get articles in unsubscribed
@@ -801,7 +801,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
           set_xref_q.bind(4, static_cast<int64_t>(it->number));
           set_xref_q.exec();
           item_count++;
-          store_xref_transaction.commit();
           LOG4CXX_TRACE(logger, "article " << message_id << " stored xref in group "
                         << it->group.c_str());
         }
@@ -847,6 +846,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         }
       }
 
+      store_article.commit();
       success = ! in->fail();
     }
     else
