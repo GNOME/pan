@@ -22,9 +22,9 @@
  */
 
 #include <config.h>
-#include <algorithm>
 #include <cassert>
 #include <glib/gi18n.h>
+#include <log4cxx/logger.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/utf8-utils.h>
@@ -34,6 +34,7 @@
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/article-cache.h>
 #include "decoder.h"
+#include "pan/general/log4cxx.h"
 #include "task-article.h"
 
 using namespace pan;
@@ -44,6 +45,8 @@ using namespace pan;
 
 namespace
 {
+log4cxx::LoggerPtr logger = getLogger("task-article");
+
   std::string get_description (const Article& article, bool save)
   {
     std::string stripped;
