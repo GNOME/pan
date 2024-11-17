@@ -20,6 +20,7 @@
 #include "group-pane.h"
 #include "pad.h"
 #include "pan/general/article_number.h"
+#include "pan/general/log4cxx.h"
 #include "tango-colors.h"
 #include <cassert>
 #include <config.h>
@@ -27,6 +28,7 @@
 #include <gdk/gdk.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <log4cxx/logger.h>
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
@@ -68,6 +70,8 @@ struct MyRow : public PanTreeStore::Row
 Quark *virtual_title_quark(nullptr);
 Quark *sub_title_quark(nullptr);
 Quark *other_title_quark(nullptr);
+
+log4cxx::LoggerPtr logger(pan::getLogger("group-pane"));
 
 bool is_group(Quark const &name)
 {
