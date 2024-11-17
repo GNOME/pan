@@ -78,6 +78,7 @@ namespace
     std::string path;
     std::string paused;
     std::string author;
+    std::string subject;
     PartBatch parts;
     int64_t time_posted;
     tasks_t tasks;
@@ -110,6 +111,7 @@ namespace
       path.clear ();
       paused.clear ();
       author.clear();
+      subject.clear();
       a.clear ();
       bytes = 0;
       number = 0;
@@ -133,7 +135,7 @@ namespace
       mc.file_clear ();
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
         if (!strcmp (*k,"poster"))       mc.author = *v;
-        else if (!strcmp (*k,"subject")) mc.a.subject = *v;
+        else if (!strcmp (*k,"subject")) mc.subject = *v;
         else if (!strcmp (*k,"date"))    mc.time_posted = strtoul(*v,nullptr,10);
       }
     }
@@ -299,7 +301,7 @@ std::ostream &print_article(
   out  << "\" date=\"" << a.get_time_posted() << "\" subject=\"";
   //This is nasty. pan munges the article title of a multipart article to
   //xxxxxxxxx (/<parts>), but nzb wants (1/<parts>)
-  std::string subject(a.subject);
+  std::string subject(a.get_subject());
   //Not doing this for task dump as I'm not entirely sure what task dump expects
   //to load
   if (not task_dump)

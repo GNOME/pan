@@ -36,7 +36,7 @@ ArticleFilter :: get_header (const Article& a, const Quark& header_name) const
 {
   static const StringView empty;
 
-  if (header_name == subject)    return a.subject.to_view ();
+  if (header_name == subject)    return a.get_subject().to_view ();
   if (header_name == from)       return a.get_author().to_view ();
   if (header_name == message_Id) return a.message_id.to_view ();
   if (header_name == message_ID) return a.message_id.to_view ();

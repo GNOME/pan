@@ -314,7 +314,7 @@ class HeaderPane :
         {
           if (! collated_subject)
           {
-            collated_subject = do_collate(article->subject.to_view());
+            collated_subject = do_collate(article->get_subject().to_view());
           }
           return collated_subject;
         }
