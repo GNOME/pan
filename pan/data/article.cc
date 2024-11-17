@@ -42,7 +42,7 @@ Article ::PartState Article ::get_part_state() const
   }
 
   // someone's posted a followup to a multipart
-  else if (! is_line_count_ge(250) && has_reply_leader(subject.to_view()))
+  else if (! is_line_count_ge(250) && has_reply_leader(get_subject().to_view()))
   {
     part_state = SINGLE;
   }
@@ -196,18 +196,35 @@ void Article::set_author(Quark a) const {
   assert(q.exec() == 1);
 }
 
-// const Quark&
-// Article :: get_attachment () const
-//{
-//   for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
-//     if (it.mid() == search)
-// }
+Quark Article::get_subject() const {
+  SQLite::Statement q(pan_db, R"SQL(
+    select subject from article where message_id = ?
+  )SQL");
+  q.bindNoCopy(1,message_id.c_str());
+  Quark result;
+  int count = 0;
+  while (q.executeStep()) {
+    result = Quark(q.getColumn(0).getText());
+    count ++;
+  }
+  assert(count > 0);
+  return result;
+}
+
+void Article::set_subject(Quark a) const {
+  SQLite::Statement q(pan_db, R"SQL(
+    update article set subject = ? where message_id = ?
+  )SQL");
+  q.bind(1,a);
+  q.bind(2,message_id);
+  assert( q.exec() == 1);
+}
 
 void Article ::clear()
 {
   message_id.clear();
   // author.clear();
-  subject.clear();
+  // subject.clear();
   // TODO: replace time_posted = 0;
   xref.clear();
   score = 0;

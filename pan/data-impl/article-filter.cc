@@ -38,7 +38,7 @@ StringView const ArticleFilter ::get_header(Article const &a,
 
   if (header_name == subject)
   {
-    return a.subject.to_view();
+    return a.get_subject().to_view();
   }
   if (header_name == from)
   {
