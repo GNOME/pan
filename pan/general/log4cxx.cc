@@ -49,6 +49,7 @@ log4cxx::LoggerPtr getLogger(std::string const &name)
           outfile
             << "# Other loggers will come and should be listed in README.org"
             << std::endl;
+          outfile << "log4j.logger.article=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.group=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.group-pane=DEBUG, A1" << std::endl;
           outfile << "log4j.logger.header=DEBUG, A1" << std::endl;

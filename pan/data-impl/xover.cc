@@ -421,11 +421,11 @@ Article const *DataImpl ::xover_add(Quark const &server,
     }
 
     if (count == 0) {
-      // Create the article in DB
+      // Create the article in DB, line_count is updated in insert_part_in_db()
       SQLite::Statement create_article_q(pan_db, R"SQL(
         insert into `article` (author_id,subject,message_id, binary, expected_parts,
-                               time_posted, `references`, line_count)
-        values ((select id from author where author = ?),?,?,?,?,?,?,?)
+                               time_posted, `references`)
+        values ((select id from author where author = ?),?,?,?,?,?,?)
       )SQL");
       create_article_q.bind(1, author);
       create_article_q.bind(2, multipart_subject_quark);
@@ -434,16 +434,15 @@ Article const *DataImpl ::xover_add(Quark const &server,
       create_article_q.bind(5, part_count > 1 ? part_count : 1);
       create_article_q.bind(6, time_posted);
       create_article_q.bind(7, references);
-      create_article_q.bind(8, static_cast<int64_t>(line_count));
       create_article_q.exec();
 
       insert_xref_in_db(server, art_mid, xref);
     } else if (is_zombie) {
-      // update article data in DB
+      // update article data in DB, line_count is updated in insert_part_in_db()
       SQLite::Statement update_article_q(pan_db, R"SQL(
         update `article` set (author_id,subject, binary, expected_parts,
-                               time_posted, `references`, line_count)
-        = ((select id from author where author = ?),?,?,?,?,?,?)
+                               time_posted, `references`)
+        = ((select id from author where author = ?),?,?,?,?,?)
         where message_id == ?
       )SQL");
       update_article_q.bind(1, author);
@@ -452,7 +451,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
       update_article_q.bind(4, part_count > 1 ? part_count : 1);
       update_article_q.bind(5, time_posted);
       update_article_q.bind(6, references);
-      update_article_q.bind(7, static_cast<int64_t>(line_count));
       update_article_q.exec();
 
       insert_xref_in_db(server, art_mid, xref);
