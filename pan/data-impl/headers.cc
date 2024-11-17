@@ -486,6 +486,37 @@ void DataImpl ::load_part(Quark const &group,
   }
 }
 
+void DataImpl ::insert_part_in_db(Quark const &group,
+                          Quark const &article_mid,
+                          int number,
+                          StringView const &part_mid,
+                          unsigned long lines,
+                          unsigned long bytes)
+{
+  SQLite::Statement insert_q(pan_db,R"SQL(
+    insert into `article_part` (article_id, part_number, part_message_id, size)
+    values ((select id from article where message_id = ?), ?, ?, ?)
+    on conflict do nothing;
+  )SQL");
+
+  insert_q.bind(1,article_mid.c_str());
+  insert_q.bind(2,number);
+  insert_q.bind(3,part_mid);
+  insert_q.bind(4,static_cast<int64_t>(bytes));
+  int res = insert_q.exec();
+
+  // update line_count only if the part is new
+  if (res > 0) {
+    SQLite::Statement update_q(pan_db,R"SQL(
+      update article set line_count = line_count + ?
+      where message_id = ?
+    )SQL");
+    update_q.bind(1, static_cast<int64_t>(lines));
+    update_q.bind(2, article_mid.c_str());
+    update_q.exec();
+  }
+}
+
 namespace {
 unsigned long long view_to_ull(StringView const &view)
 {
