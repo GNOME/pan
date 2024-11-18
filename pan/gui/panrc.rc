@@ -9,28 +9,19 @@
 #  define IS_NLS_ENABLED "no"
 #endif
 
-//You can come in here with any of the variables set to null value or a
-//positive version number.  Set the empty ones to zero. And yes, this is nasty.
-
-#define IS_UNSET(VAL) ((7 - VAL -7) == 14)
-
-#if IS_UNSET(VERSION_MAJOR)
-#undef VERSION_MAJOR
+#ifndef VERSION_MAJOR
 #define VERSION_MAJOR 0
 #endif
 
-#if IS_UNSET(VERSION_MINOR)
-#undef VERSION_MINOR
+#ifndef VERSION_MINOR
 #define VERSION_MINOR 0
 #endif
 
-#if IS_UNSET(VERSION_PATCH)
-#undef VERSION_PATCH
+#ifndef VERSION_PATCH
 #define VERSION_PATCH 0
 #endif
 
-#if IS_UNSET(VERSION_TWEAK)
-#undef VERSION_TWEAK
+#ifndef VERSION_TWEAK
 #define VERSION_TWEAK 0
 #endif
 

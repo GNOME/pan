@@ -134,11 +134,10 @@
 #define PAN_VERSION "@PROJECT_VERSION@"
 
 /* Version numbers so that windows build can find them. DO NOT REMOVE */
-/* Note: cmakedefine doesn't work with these variables. I have no idea why */
-#define VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define VERSION_PATCH @PROJECT_VERSION_PATCH@
-#define VERSION_TWEAK @PROJECT_VERSION_TWEAK@
+#cmakedefine VERSION_MAJOR @VERSION_MAJOR@
+#cmakedefine VERSION_MINOR @VERSION_MINOR@
+#cmakedefine VERSION_PATCH @VERSION_PATCH@
+#cmakedefine VERSION_TWEAK @VERSION_TWEAK@
 
 /* Release Name */
 #define VERSION_TITLE "@VERSION_TITLE@"

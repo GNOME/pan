@@ -18,6 +18,13 @@ project(Pan
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
 
+# #cmakedefine completely refuses to recognise CMAKE_PROJECT_VERSION_xxxx or
+# PROJECT_VERSION_xxxx
+set(VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(VERSION_TWEAK ${PROJECT_VERSION_TWEAK})
+
 set(PAN_DBUS_SERVICE_NAME      "org.gnome.pan")
 set(PAN_DBUS_SERVICE_PATH      "/news/pan/NZB")
 
