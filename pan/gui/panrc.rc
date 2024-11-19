@@ -9,9 +9,25 @@
 #  define IS_NLS_ENABLED "no"
 #endif
 
+#ifndef VERSION_MAJOR
+#define VERSION_MAJOR 0
+#endif
+
+#ifndef VERSION_MINOR
+#define VERSION_MINOR 0
+#endif
+
+#ifndef VERSION_PATCH
+#define VERSION_PATCH 0
+#endif
+
+#ifndef VERSION_TWEAK
+#define VERSION_TWEAK 0
+#endif
+
 1 VERSIONINFO
-FILEVERSION    VERSION_MAJOR,VERSION_MINOR,VERSION_REVISION,0
-PRODUCTVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_REVISION,0
+FILEVERSION    VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH,VERSION_TWEAK
+PRODUCTVERSION VERSION_MAJOR,VERSION_MINOR,VERSION_PATCH,VERSION_TWEAK
 FILEFLAGSMASK  0x3fL
 #ifdef _DEBUG
 FILEFLAGS 0x1L
@@ -30,7 +46,7 @@ FILETYPE VFT_APP
             VALUE "FileDescription", "Pan Newsreader"
             VALUE "FileVersion", PACKAGE_VERSION
             VALUE "InternalName", "pan"
-            VALUE "LegalCopyright", "Copyright (C) 2002-2017 Charles Kerr and others"
+            VALUE "LegalCopyright", "Copyright (C) 2002-2024 Charles Kerr and others"
             VALUE "LegalTrademarks", "GPL 2"
             VALUE "OriginalFilename", "pan.exe"
             VALUE "ProductName", "pan"

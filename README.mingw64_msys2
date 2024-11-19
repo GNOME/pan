@@ -5,18 +5,12 @@ See https://www.mingw-w64.org/
     https://www.msys2.org/
 
 Install msys2 as per instructions. You will also need to install
-$ pacman -S mingw-w64-x86_64-pcre mingw-w64-x86_64-gmime autoconf-archive
+$ pacman -S mingw-w64-x86_64-pcre mingw-w64-x86_64-gmime gspell
 
 To run wininstall, you will also need mingw-w64-x86_64-python-pip
 
 Also for the sake of your own sanity, add 'export MSYS=winsymlinks:native' to your .bash_profile
 
-Note that the installed glib at the time of writing is slightly broken, and you should download version 2.70.4-1 or 2.72.0-2 from https://repo.msys2.org/mingw/mingw64/ or clicking links in news articles won't work.
-
-For gtk2 builds,
-$ pacman -S mingw-w64-x86_64-gtkspell
-
-For gtk3 builds,
 $ pacman -S mingw-w64-x86_64-gtkspell3
 
 You also need some dictionaries to spell check against!
@@ -25,19 +19,11 @@ $ pacman -S mingw-w64-x86_64-hunspell-en
 and this (possibly optional, but...)
 $ pacman -S mingw-w64-x86_64-iso-codes
 
-Then you can create an msys2 x64 window and run
-
-`autogen`
-
-or
-
-`autogen --with-gtk2`
-
-Personally I think the gtk2 version looks a *lot* better
+Then you can create an msys2 x64 window and build with cmake as per README.org instructions.
 
 NOTE: enchant is somewhat broken under mingw64 and cannot find the appropriate libraries as it appears to expect to find at least 'lib/enchant-2' in the the same directory as the executable. You might want to create a soft link or copy. If you run wininstall, it copies the appropriate directories to the same place as the executable, and works fine. Go figure.
 
-Haven't tried these yet:
+Haven't tried these yet (these are the automake switches so not quite cmake):
 
 1. --with-dbus
 

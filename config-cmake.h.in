@@ -101,7 +101,7 @@
 #cmakedefine HAVE_ZLIB 1
 
 /* Define as const if the declaration of iconv() needs const. */
-// #define ICONV_CONST 
+// #define ICONV_CONST
 
 /* Name of package */
 #cmakedefine PACKAGE "@PACKAGE@"
@@ -132,6 +132,12 @@
 
 /* Version number of package */
 #define PAN_VERSION "@PROJECT_VERSION@"
+
+/* Version numbers so that windows build can find them. DO NOT REMOVE */
+#cmakedefine VERSION_MAJOR @VERSION_MAJOR@
+#cmakedefine VERSION_MINOR @VERSION_MINOR@
+#cmakedefine VERSION_PATCH @VERSION_PATCH@
+#cmakedefine VERSION_TWEAK @VERSION_TWEAK@
 
 /* Release Name */
 #define VERSION_TITLE "@VERSION_TITLE@"
