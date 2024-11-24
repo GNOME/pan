@@ -41,47 +41,41 @@ namespace  {
 log4cxx::LoggerPtr logger(getLogger("article"));
 }
 
-Article ::PartState Article ::get_part_state() const
+Article::PartState Article::char_to_state(char const c) const
 {
   PartState part_state(SINGLE);
 
-  // not a multipart
-  if (! is_binary())
+  switch (c)
   {
-    part_state = SINGLE;
+    case 'I':
+      part_state = INCOMPLETE;
+      break;
+    case 'C':
+      part_state = COMPLETE;
+      break;
+    case 'S':
+      part_state = SINGLE;
+      break;
+    default:
+      // part state should be computed when loading headers
+      LOG4CXX_WARN(logger,
+                   "Internal error: article " << message_id
+                                              << " has null part state.");
   }
+  return part_state;
+}
 
-  // someone's posted a followup to a multipart
-  else if (! is_line_count_ge(250) && has_reply_leader(get_subject().to_view()))
-  {
-    part_state = SINGLE;
-  }
-
-  else
-  {
-    SQLite::Statement q(pan_db, R"SQL(
-      select expected_parts,
-           (select count() from article_part as p
-            where p.article_id == a.id) as found_nb
-      from article as a
-      where a.message_id = ?
+Article ::PartState Article ::get_part_state() const
+{
+  SQLite::Statement q(pan_db, R"SQL(
+      select part_state from article where message_id = ?
   )SQL");
   q.bindNoCopy(1, message_id.c_str());
 
-  int total(0), found(0);
+  PartState part_state;
   while (q.executeStep()) {
-    total = q.getColumn(0).getInt64();
-    found = q.getColumn(0).getInt64();
-  }
-
-  if (! found) // someone's posted a "000/124" info message
-    {
-      part_state = SINGLE;
-    }
-  else // a multipart..
-    {
-      part_state = total == found ? COMPLETE : INCOMPLETE;
-    }
+    const char* c = q.getColumn(0).getText();
+    part_state = char_to_state(*c);
   }
 
   return part_state;
