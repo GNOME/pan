@@ -19,6 +19,9 @@ create table if not exists article (
   --  marked boolean check(marked = False or marked = True),
   binary boolean check(binary = False or binary = True),
 
+  -- Single, Incomplete, Complete
+  part_state text check( part_state in ('S','I','C')),
+
   -- 1 for text article, potentially a lot for binaries
   expected_parts integer,
 
