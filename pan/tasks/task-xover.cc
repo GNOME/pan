@@ -17,6 +17,7 @@
  *
  */
 
+#include "pan/data-impl/data-impl.h"
 #include "pan/general/log4cxx.h"
 #include <cassert>
 #include <cerrno>
@@ -156,6 +157,7 @@ TaskXOver::~TaskXOver()
     }
     _data.xover_unref(_group);
   }
+  _data.update_part_states(_group);
   _data.fire_group_entered(
     _group, static_cast<Article_Count>(1), static_cast<Article_Count>(0));
 }
