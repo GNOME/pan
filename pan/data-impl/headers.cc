@@ -186,6 +186,7 @@ void DataImpl ::ref_group(Quark const &group)
 
     if (!migrated) {
       migrate_headers(*_data_io, group);
+      update_part_states(group);
       migrate_read_ranges(group);
 
       SQLite::Statement set_q(pan_db, "update `group` set migrated = True where name = ?");
@@ -449,6 +450,57 @@ unsigned long long view_to_ull(StringView const &view)
   return val;
 }
 } // namespace
+
+
+// update part state of all articles of a given group. The state is
+// updated only if it is null or incomplete
+void DataImpl ::update_part_states(Quark const &group)
+{
+  TimeElapsed timer;
+
+  SQLite::Statement q(pan_db,R"SQL(
+    update article
+    set part_state = case
+       -- not a multipart
+       when upd.binary is false
+       then 'S'
+
+       -- someone's posted a followup to a multipart
+       when upd.line_count < 250 and upd.subject like 're: %'
+       then 'S'
+
+       --  someone's posted a "000/124" info message
+       when upd.found_parts == 0
+       then 'S'
+
+       -- complete multipart
+       when upd.found_parts == upd.expected_parts
+       then 'C'
+
+       -- incomplete multipart
+       else 'I'
+    end
+    from (
+       select a.id, binary, subject, line_count, expected_parts,
+             (select count() from article_part as p2 where p2.article_id == a.id) as found_parts
+       from article as a
+       join article_group as ag on ag.article_id == a.id
+       join `group`       as g  on ag.group_id == g.id
+       where g.name == ?
+         and (part_state is null or part_state is "I")
+         and subject is not null
+    ) as upd
+    where article.id == upd.id
+  )SQL");
+
+  pan_db.exec("begin transaction");
+  q.bind(1,group.c_str());
+  int count(q.exec());
+  pan_db.exec("end transaction");
+
+  LOG4CXX_INFO(logger, "Updated " << count << " articles part states of group " << group.c_str()
+               << " in " << timer.get_seconds_elapsed() << "s.");
+}
 
 // load headers from internal file in ~/.pan2/groups
 void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
