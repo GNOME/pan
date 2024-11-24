@@ -429,6 +429,8 @@ class Data :
                             NewGroup const *new_groups,
                             size_t new_group_count) = 0;
 
+    virtual void update_part_states(Quark const &group) = 0;
+
     /**
      * This will call listeners' on_group_counts().
      */
