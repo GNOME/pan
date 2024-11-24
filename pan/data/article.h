@@ -71,6 +71,7 @@ class Article
     };
 
     PartState get_part_state() const;
+    PartState char_to_state(char const) const;
 
   public:
     Quark message_id;
