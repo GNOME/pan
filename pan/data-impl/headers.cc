@@ -1130,7 +1130,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   h->reserve(article_qty);
 
   const time_t now(time(nullptr));
-  PartBatch part_batch;
   while (read_article_q.executeStep()) {
     Article &a(h->alloc_new_article());
 
@@ -1142,7 +1141,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     int total_part_count(read_article_q.getColumn(i++).getInt());
 
     // found parts...
-    part_batch.init(a.message_id, total_part_count);
     read_part_q.reset();
     read_part_q.bind(1, message_id);
 
@@ -1162,7 +1160,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
         part_mid = a.message_id.to_view();
       }
       part_bytes = read_part_q.getColumn(2).getInt();
-      part_batch.add_part(number, part_mid, part_bytes);
     }
 
     // optional references line
