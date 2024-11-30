@@ -938,9 +938,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   StringView line;
   quarks_t servers;
 
-  ArticleFilter::sections_t score_sections;
-  _scorefile.get_matching_sections(StringView(group), score_sections);
-
   LOG4CXX_INFO(logger, "Loading headers for group " << group.c_str());
 
   int group_id(0), total_article_count(0);
@@ -1025,8 +1022,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
 
     // build article tree in memory.
     load_article(group, &a, references);
-    // score _after_ threading, so References: works
-    a.set_score(_article_filter.score_article(*this, score_sections, group, a));
     ++article_count;
     if (! is_read(&a)) {
       ++unread_count;
