@@ -132,11 +132,9 @@ struct Icon
                       {"icon_red_flag.png", nullptr},
                       {"icon_get_flagged.png", nullptr}};
 
-int get_article_state(Data const &data, Article const *a)
+int get_article_state_icon(bool read, int part_state)
 {
   int retval;
-  bool const read(data.is_read(a));
-  int const part_state(a->get_part_state());
 
   if (part_state == Article::COMPLETE && read)
   {
@@ -484,7 +482,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
                                          Article const *a)
 {
   int const action(get_article_action(a->get_flag(), _cache, _queue, a->message_id));
-  int const state(get_article_state(_data, a));
+  int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
   char *date_str(e.get_date_string(a->get_time_posted()));
   Row *row = new Row(_data, a, a->get_author(), date_str, action, state);
 
@@ -824,7 +822,7 @@ void HeaderPane ::rebuild_article_state(Quark const &message_id)
   Row *row(get_row(message_id));
   Article const *article(row->article);
   int const is_read(_data.is_read(article));
-  int const state(get_article_state(_data, article));
+  int const state(get_article_state_icon(is_read, article->get_flag()));
   bool const changed((state != row->state) || (is_read != row->is_read));
   row->state = state;
   row->is_read = is_read;
