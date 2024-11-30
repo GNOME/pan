@@ -1000,13 +1000,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
                      group.c_str());
   }
 
-  SQLite::Statement read_part_q(pan_db,R"SQL(
-    select ap.part_number, ap.part_message_id, ap.size
-      from article_part as ap
-      join article as a on ap.article_id = a.id
-      where a.message_id = ?;
-)SQL");
-
   Article_Count const article_qty{static_cast<unsigned long>(total_article_count)};
   h->reserve(article_qty);
 
@@ -1021,42 +1014,16 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     // is_binary [total_part_count found_part_count]
     int total_part_count(read_article_q.getColumn(i++).getInt());
 
-    // found parts...
-    read_part_q.reset();
-    read_part_q.bind(1, message_id);
-
-    bool corrupted(false);
-    // loop around found parts (i.e. the one in DB)
-    while (read_part_q.executeStep()) {
-      StringView tok;
-      int const number(read_part_q.getColumn(0).getInt());
-      if (number > total_part_count) {
-        // corrupted entry
-        corrupted = true;
-        break;
-      }
-      StringView part_mid(read_part_q.getColumn(1).getText());
-      unsigned long part_bytes(0);
-      if (part_mid.len == 1 && *part_mid.str == '"') {
-        part_mid = a.message_id.to_view();
-      }
-      part_bytes = read_part_q.getColumn(2).getInt();
-    }
-
     // optional references line
     std::string references(read_article_q.getColumn(i++).getText());
 
-    // add the article to the group if it hasn't all expired
-    if (! corrupted)
-    {
-      // build article tree in memory.
-      load_article(group, &a, references);
-      // score _after_ threading, so References: works
-      a.set_score(_article_filter.score_article(*this, score_sections, group, a));
-      ++article_count;
-      if (! is_read(&a)) {
-        ++unread_count;
-      }
+    // build article tree in memory.
+    load_article(group, &a, references);
+    // score _after_ threading, so References: works
+    a.set_score(_article_filter.score_article(*this, score_sections, group, a));
+    ++article_count;
+    if (! is_read(&a)) {
+      ++unread_count;
     }
   }
 
