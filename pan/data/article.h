@@ -110,6 +110,11 @@ class Article
     {
     }
 
+    Article(Quark mid) :
+      message_id(mid)
+    {
+    }
+
     void clear();
 
     /* Functions to bookmark an article */
