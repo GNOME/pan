@@ -1219,22 +1219,20 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
 
 void DataImpl ::rescore_group_articles(Quark const &group)
 {
-
-  GroupHeaders *gh(get_group_headers(group));
-  if (! gh) // group isn't loaded
-  {
-    return;
-  }
-
   ArticleFilter::sections_t sections;
   _scorefile.get_matching_sections(group.to_view(), sections);
-  foreach (nodes_t, gh->_nodes, it)
-  {
-    if (it->second->_article)
-    {
-      Article &a(*(it->second->_article));
-      a.set_score(_article_filter.score_article(*this, sections, group, a));
-    }
+
+  SQLite::Statement q(pan_db, R"SQL(
+    select message_id from `article` as a
+    join article_group as ag on ag.article_id == a.id
+    join `group` as g on g.id == ag.group_id
+    where g.name = ?
+  )SQL");
+
+  q.bind(1, group.c_str());
+  while (q.executeStep()) {
+    Article a(Quark(q.getColumn(0).getText()));
+    a.set_score(_article_filter.score_article(*this, sections, group, a));
   }
 }
 
