@@ -1203,24 +1203,12 @@ void DataImpl ::get_article_scores(Quark const &group,
 
 void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
 {
-
-  GroupHeaders *gh(get_group_headers(group));
-  if (! gh) // group isn't loaded
-  {
-    return;
-  }
-
   ArticleFilter::sections_t sections;
   _scorefile.get_matching_sections(group.to_view(), sections);
-  nodes_v nodes;
-  find_nodes(mids, gh->_nodes, nodes);
-  foreach (nodes_v, nodes, it)
+  foreach (quarks_t, mids, it)
   {
-    if ((*it)->_article)
-    {
-      Article &a(*(*it)->_article);
-      a.set_score(_article_filter.score_article(*this, sections, group, a));
-    }
+    Article a(*it);
+    a.set_score(_article_filter.score_article(*this, sections, group, a));
   }
 }
 
