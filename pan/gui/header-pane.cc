@@ -166,7 +166,7 @@ int get_article_state(Data const &data, Article const *a)
   return retval;
 }
 
-int get_article_action(Article const *article,
+int get_article_action(bool flag,
                        ArticleCache const &cache,
                        Queue const &queue,
                        Quark const &message_id)
@@ -182,12 +182,9 @@ int get_article_action(Article const *article,
     offset = ICON_CACHED;
   }
 
-  if (article)
+  if (flag)
   {
-    if (article->get_flag())
-    {
-      offset = ICON_FLAGGED;
-    }
+    offset = ICON_FLAGGED;
   }
 
   return offset;
@@ -486,7 +483,7 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
 HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
                                          Article const *a)
 {
-  int const action(get_article_action(a, _cache, _queue, a->message_id));
+  int const action(get_article_action(a->get_flag(), _cache, _queue, a->message_id));
   int const state(get_article_state(_data, a));
   char *date_str(e.get_date_string(a->get_time_posted()));
   Row *row = new Row(_data, a, a->get_author(), date_str, action, state);
@@ -2931,7 +2928,13 @@ void HeaderPane ::rebuild_article_action(Quark const &message_id)
   Row *row(get_row(message_id));
   if (row)
   {
-    row->action = get_article_action(row->article, _cache, _queue, message_id);
+    const Article* a = row->article;
+    bool flag(false);
+    if (a) {
+      flag = a->get_flag();
+    }
+
+    row->action = get_article_action(flag, _cache, _queue, message_id);
     _tree_store->row_changed(row);
   }
 }
