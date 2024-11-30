@@ -934,7 +934,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(h != nullptr);
 
   Article_Count article_count(0);
-  Article_Count unread_count(0);
   StringView line;
   quarks_t servers;
 
@@ -1020,9 +1019,6 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     // build article tree in memory.
     load_article(group, &a, references);
     ++article_count;
-    if (! is_read(&a)) {
-      ++unread_count;
-    }
   }
 
   fire_group_counts(group);
