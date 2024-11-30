@@ -20,6 +20,7 @@
 #include "header-pane.h"
 #include "pan/general/log4cxx.h"
 #include "pan/general/string-view.h"
+#include "pan/general/time-elapsed.h"
 #include "pan/gui/load-icon.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
@@ -496,7 +497,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
   return row;
 }
 
-void HeaderPane ::add_children_to_model(PanTreeStore *store,
+int HeaderPane ::add_children_to_model(PanTreeStore *store,
                                         Quark const &group,
                                         PanTreeStore::Row *parent_row,
                                         Quark const &parent_mid,
@@ -505,16 +506,18 @@ void HeaderPane ::add_children_to_model(PanTreeStore *store,
                                         bool const do_thread)
 {
   // see if this parent has any children...
+  int count(0);
   article_v children;
   atree->get_children(parent_mid, group, children);
   if (children.empty())
   {
-    return;
+    return count;
   }
 
   // add all these children...
   PanTreeStore::rows_t rows;
   rows.reserve(children.size());
+  count += children.size();
   foreach_const (article_v, children, it)
   {
     rows.push_back(create_row(date_maker, *it));
@@ -524,8 +527,9 @@ void HeaderPane ::add_children_to_model(PanTreeStore *store,
   // recurse
   for (size_t i = 0, n = children.size(); i < n; ++i)
   {
-    add_children_to_model(store, group, rows[i], children[i]->message_id, atree, date_maker, do_thread);
+    count += add_children_to_model(store, group, rows[i], children[i]->message_id, atree, date_maker, do_thread);
   }
+  return count;
 }
 
 int HeaderPane ::column_compare_func(GtkTreeModel *model,
@@ -657,6 +661,8 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                                        Data::ArticleTree *atree,
                                        TextMatch const *)
 {
+  LOG4CXX_DEBUG(logger, "Build model: called on group " << group.c_str());
+  TimeElapsed timer;
   PanTreeStore *store =
     PanTreeStore ::new_tree(N_COLUMNS,
                             G_TYPE_STRING,  // date string
@@ -678,11 +684,14 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
   }
   if (! group.empty())
   {
+    int count(0);
     const EvolutionDateMaker date_maker;
     bool const do_thread(_prefs.get_flag("thread-headers", true));
-    add_children_to_model(store, group, nullptr, Quark(), atree, date_maker, do_thread);
-  }
+    count = add_children_to_model(store, group, nullptr, Quark(), atree, date_maker, do_thread);
 
+    LOG4CXX_INFO(logger, "Build model: added " << count << " articles of group " << group.c_str()
+                 << " in " << timer.get_seconds_elapsed() << "s.");
+  }
   return store;
 }
 
