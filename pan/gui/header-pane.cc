@@ -3161,3 +3161,40 @@ void HeaderPane ::select_similar()
     _tree_store->walk(similar);
   }
 }
+
+void HeaderPane::Row::get_value(int column, GValue *setme)
+{
+  switch (column)
+  {
+    case COL_DATE_STR:
+      set_value_static_string(setme, date_str);
+      break;
+    case COL_STATE:
+      set_value_int(setme, state);
+      break;
+    case COL_ACTION:
+      set_value_int(setme, action);
+      break;
+    case COL_SCORE:
+      set_value_int(setme, article->get_score());
+      break;
+    case COL_LINES:
+      set_value_ulong(setme, article->get_line_count());
+      break;
+    case COL_BYTES:
+      set_value_ulong(setme, article->get_byte_count());
+      break;
+    case COL_DATE:
+      set_value_ulong(setme, (unsigned long)article->get_time_posted());
+      break;
+    case COL_ARTICLE_POINTER:
+      set_value_pointer(setme, (void *)article);
+      break;
+    case COL_SUBJECT:
+      set_value_static_string(setme, article->get_author().c_str());
+      break;
+    case COL_SHORT_AUTHOR:
+      set_value_static_string(setme, short_author.c_str());
+      break;
+  }
+}
