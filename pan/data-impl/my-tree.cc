@@ -20,6 +20,7 @@
 #include "article-filter.h"
 #include "data-impl.h"
 #include "memchunk.h"
+#include "pan/general/time-elapsed.h"
 #include <cassert>
 #include <config.h>
 #include <pan/data/article.h>
@@ -99,7 +100,8 @@ size_t DataImpl ::MyTree ::size() const
 
 void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
 {
-
+  TimeElapsed timer;
+  LOG4CXX_DEBUG(logger, "set_rules called");
   if (rules)
   {
     //    std::cerr<<"set rules "<<rules<<std::endl;
@@ -125,11 +127,16 @@ void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
   }
 
   apply_rules(candidates);
+  LOG4CXX_INFO(logger, "set_rules done in " << timer.get_seconds_elapsed() << "s.");
+
 }
 
 void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
                                     FilterInfo const *criteria)
 {
+  LOG4CXX_DEBUG(logger, "set_filter called ");
+  TimeElapsed timer;
+
   // set the filter...
   if (criteria)
   {
@@ -155,7 +162,9 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
     }
   }
 
+  LOG4CXX_TRACE(logger, "set_filter calls apply_filter in " << timer.get_seconds_elapsed() << "s.");
   apply_filter(candidates);
+  LOG4CXX_DEBUG(logger, "set_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
