@@ -385,7 +385,7 @@ class HeaderPane :
     static Article const *get_article(GtkTreeModel *, GtkTreeIter *);
     int get_article_action(bool flag, Quark const &message_id) const;
     int find_highest_followup_score(GtkTreeModel *, GtkTreeIter *) const;
-    Row *create_row(EvolutionDateMaker const &, Article const *);
+    Row *create_row(Article const *);
     // return numbers of added children
     int add_children_to_model(PanTreeStore *store,
                               Quark const &group,
