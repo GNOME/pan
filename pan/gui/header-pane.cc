@@ -484,7 +484,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
   int const action(get_article_action(a->get_flag(), _cache, _queue, a->message_id));
   int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
   char *date_str(e.get_date_string(a->get_time_posted()));
-  Row *row = new Row(_data, a, a->get_author(), date_str, action, state);
+  Row *row = new Row(_data, a, date_str, action, state);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   g_assert(result.second);
@@ -3194,7 +3194,7 @@ void HeaderPane::Row::get_value(int column, GValue *setme)
       set_value_static_string(setme, article->get_author().c_str());
       break;
     case COL_SHORT_AUTHOR:
-      set_value_static_string(setme, short_author.c_str());
+      set_value_static_string(setme, get_short_author().c_str());
       break;
   }
 }

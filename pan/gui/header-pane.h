@@ -257,7 +257,6 @@ class HeaderPane :
       public:
         Article const *article;
         char *date_str;
-        Quark short_author;
         int action;
         int state;
         bool is_read;
@@ -326,21 +325,24 @@ class HeaderPane :
         {
           if (! collated_author)
           {
-            collated_author = do_collate(short_author.to_view());
+            collated_author = do_collate(get_short_author().to_view());
           }
           return collated_author;
+        }
+
+        Quark get_short_author() const
+        {
+          return build_short_author(article->get_author().c_str());
         }
 
       public:
         Row(Data const &data,
             Article const *a,
-            Quark const full_author,
             char *date_str_in,
             int action_in,
             int state_in) :
           article(a),
           date_str(date_str_in),
-          short_author(build_short_author(full_author.c_str())),
           action(action_in),
           state(state_in),
           is_read(data.is_read(a)),
