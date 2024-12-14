@@ -475,8 +475,7 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
   return it == _mid_to_row.end() ? nullptr : *it;
 }
 
-HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
-                                         Article const *a)
+HeaderPane::Row *HeaderPane ::create_row(Article const *a)
 {
   int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
   Row *row = new Row(*this, _data, a, state);
@@ -510,7 +509,7 @@ int HeaderPane ::add_children_to_model(PanTreeStore *store,
   count += children.size();
   foreach_const (article_v, children, it)
   {
-    rows.push_back(create_row(date_maker, *it));
+    rows.push_back(create_row(*it));
   }
   store->append(do_thread ? parent_row : nullptr, rows);
 
@@ -977,11 +976,10 @@ void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   if (! diffs.added.empty())
   {
-    const EvolutionDateMaker date_maker;
     PanTreeStore::parent_to_children_t tmp;
     foreach_const (Data::ArticleTree::Diffs::added_t, diffs.added, it)
     {
-      create_row(date_maker, _atree->get_article(it->first));
+      create_row(_atree->get_article(it->first));
     }
     foreach_const (Data::ArticleTree::Diffs::added_t, diffs.added, it)
     {
