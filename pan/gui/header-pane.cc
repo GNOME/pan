@@ -477,8 +477,8 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
 
 HeaderPane::Row *HeaderPane ::create_row(Article const *a)
 {
-  int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
-  Row *row = new Row(*this, _data, a, state);
+  int const state(get_article_state_icon(a->is_read(), a->get_part_state()));
+  Row *row = new Row(*this, a, state);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   g_assert(result.second);
@@ -813,7 +813,7 @@ void HeaderPane ::rebuild_article_state(Quark const &message_id)
 {
   Row *row(get_row(message_id));
   Article const *article(row->article);
-  int const is_read(_data.is_read(article));
+  int const is_read(article->is_read());
   int const state(get_article_state_icon(is_read, article->get_flag()));
   bool const changed((state != row->state) || (is_read != row->is_read));
   row->state = state;
@@ -2543,7 +2543,7 @@ struct ArticleIsUnread : public ArticleTester
 
     bool operator()(Article const &a) const override
     {
-      return ! _data.is_read(&a);
+      return ! a.is_read();
     }
 };
 
