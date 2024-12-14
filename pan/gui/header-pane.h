@@ -392,7 +392,6 @@ class HeaderPane :
                               PanTreeStore::Row *parent_row,
                               Quark const &parent_mid,
                               Data::ArticleTree const *atree,
-                              EvolutionDateMaker const &date_maker,
                               bool const do_thread);
     PanTreeStore *build_model(Quark const &,
                               Data::ArticleTree *,
