@@ -262,6 +262,7 @@ class HeaderPane :
         bool is_read;
 
       private:
+        HeaderPane const &_header_pane;
         static Quark build_short_author(StringView const &full_author)
         {
           return Quark(GNKSA ::get_short_author_name(full_author.str));
@@ -336,16 +337,16 @@ class HeaderPane :
         }
 
       public:
-        Row(Data const &data,
+        Row(HeaderPane const &h_pane,
+            Data const &data,
             Article const *a,
             char *date_str_in,
-            int action_in,
             int state_in) :
           article(a),
           date_str(date_str_in),
-          action(action_in),
           state(state_in),
           is_read(data.is_read(a)),
+          _header_pane(h_pane),
           collated_subject(nullptr),
           collated_author(nullptr)
         {
@@ -386,18 +387,17 @@ class HeaderPane :
 
   private:
     static Article const *get_article(GtkTreeModel *, GtkTreeIter *);
-    int get_article_action(bool flag,
-                           Quark const &message_id) const;
+    int get_article_action(bool flag, Quark const &message_id) const;
     int find_highest_followup_score(GtkTreeModel *, GtkTreeIter *) const;
     Row *create_row(EvolutionDateMaker const &, Article const *);
     // return numbers of added children
     int add_children_to_model(PanTreeStore *store,
-                               Quark const &group,
-                               PanTreeStore::Row *parent_row,
-                               Quark const &parent_mid,
-                               Data::ArticleTree const *atree,
-                               EvolutionDateMaker const &date_maker,
-                               bool const do_thread);
+                              Quark const &group,
+                              PanTreeStore::Row *parent_row,
+                              Quark const &parent_mid,
+                              Data::ArticleTree const *atree,
+                              EvolutionDateMaker const &date_maker,
+                              bool const do_thread);
     PanTreeStore *build_model(Quark const &,
                               Data::ArticleTree *,
                               TextMatch const *);
