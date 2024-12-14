@@ -96,6 +96,7 @@ class Article
     void set_score(int) const;
     bool is_binary() const;
     void is_binary(bool) const;
+    bool is_read() const;
 
     std::string get_rebuilt_xref() const;
     std::string get_xrefed_groups() const;

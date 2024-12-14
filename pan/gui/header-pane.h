@@ -337,12 +337,11 @@ class HeaderPane :
 
       public:
         Row(HeaderPane const &h_pane,
-            Data const &data,
             Article const *a,
             int state_in) :
           article(a),
           state(state_in),
-          is_read(data.is_read(a)),
+          is_read(a->is_read()),
           _header_pane(h_pane),
           collated_subject(nullptr),
           collated_author(nullptr)
