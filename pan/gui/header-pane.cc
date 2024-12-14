@@ -164,26 +164,25 @@ int get_article_state_icon(bool read, int part_state)
   return retval;
 }
 
-int get_article_action(bool flag,
-                       ArticleCache const &cache,
-                       Queue const &queue,
-                       Quark const &message_id)
+}; // namespace
+
+int HeaderPane::get_article_action(bool flag,
+                       Quark const &message_id) const
 {
   if (flag)
   {
     return ICON_FLAGGED;
   }
-  else if (queue.contains(message_id))
+  else if (_queue.contains(message_id))
   {
     return ICON_QUEUED;
   }
-  else if (cache.contains(message_id))
+  else if (_cache.contains(message_id))
   {
     return ICON_CACHED;
   }
   return ICON_EMPTY;
 }
-}; // namespace
 
 void HeaderPane ::render_action(GtkTreeViewColumn *,
                                 GtkCellRenderer *renderer,
@@ -477,7 +476,7 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
 HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
                                          Article const *a)
 {
-  int const action(get_article_action(a->get_flag(), _cache, _queue, a->message_id));
+  int const action(get_article_action(a->get_flag(), a->message_id));
   int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
   char *date_str(e.get_date_string(a->get_time_posted()));
   Row *row = new Row(_data, a, date_str, action, state);
@@ -2928,7 +2927,7 @@ void HeaderPane ::rebuild_article_action(Quark const &message_id)
       flag = a->get_flag();
     }
 
-    row->action = get_article_action(flag, _cache, _queue, message_id);
+    row->action = get_article_action(flag, message_id);
     _tree_store->row_changed(row);
   }
 }
