@@ -169,23 +169,19 @@ int get_article_action(bool flag,
                        Queue const &queue,
                        Quark const &message_id)
 {
-  int offset(ICON_EMPTY);
-
-  if (queue.contains(message_id))
+  if (flag)
   {
-    offset = ICON_QUEUED;
+    return ICON_FLAGGED;
+  }
+  else if (queue.contains(message_id))
+  {
+    return ICON_QUEUED;
   }
   else if (cache.contains(message_id))
   {
-    offset = ICON_CACHED;
+    return ICON_CACHED;
   }
-
-  if (flag)
-  {
-    offset = ICON_FLAGGED;
-  }
-
-  return offset;
+  return ICON_EMPTY;
 }
 }; // namespace
 
