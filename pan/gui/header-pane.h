@@ -256,7 +256,6 @@ class HeaderPane :
     {
       public:
         Article const *article;
-        char *date_str;
         int action;
         int state;
         bool is_read;
@@ -340,10 +339,8 @@ class HeaderPane :
         Row(HeaderPane const &h_pane,
             Data const &data,
             Article const *a,
-            char *date_str_in,
             int state_in) :
           article(a),
-          date_str(date_str_in),
           state(state_in),
           is_read(data.is_read(a)),
           _header_pane(h_pane),
@@ -356,7 +353,6 @@ class HeaderPane :
         {
           g_free(collated_subject);
           g_free(collated_author);
-          g_free(date_str);
         }
 
       public:

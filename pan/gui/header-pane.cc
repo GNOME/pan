@@ -55,6 +55,8 @@ namespace  {
 log4cxx::LoggerPtr logger(getLogger("header-pane"));
 }
 
+EvolutionDateMaker const date_maker;
+
 namespace {
 enum
 {
@@ -477,8 +479,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
                                          Article const *a)
 {
   int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
-  char *date_str(e.get_date_string(a->get_time_posted()));
-  Row *row = new Row(*this, _data, a, date_str, state);
+  Row *row = new Row(*this, _data, a, state);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   g_assert(result.second);
@@ -3161,7 +3162,7 @@ void HeaderPane::Row::get_value(int column, GValue *setme)
   switch (column)
   {
     case COL_DATE_STR:
-      set_value_static_string(setme, date_str);
+      set_value_string(setme, date_maker.get_date_string(article->get_time_posted()));
       break;
     case COL_STATE:
       set_value_int(setme, state);
