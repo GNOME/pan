@@ -402,6 +402,21 @@ bool Article::is_in_db_article_table() const {
   return(count > 0);
 }
 
+bool Article::is_read() const
+{
+  SQLite::Statement is_read_q(pan_db, R"SQL(
+    select is_read from article where message_id = ?
+  )SQL");
+
+  is_read_q.bind(1, message_id);
+  while (is_read_q.executeStep()) {
+    return is_read_q.getColumn(0).getInt() == 1;
+  }
+
+  // trigger a core dump if article is not found so the pb can be debugged
+  assert(0);
+}
+
 bool Article::is_binary() const {
   SQLite::Statement q(pan_db, R"SQL(
     select binary from article where message_id = ?

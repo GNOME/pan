@@ -96,6 +96,7 @@ class Article
     void set_score(int) const;
     bool is_binary() const;
     void is_binary(bool) const;
+    bool is_read() const;
 
     bool is_in_db_article_table() const;
 

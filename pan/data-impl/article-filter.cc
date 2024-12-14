@@ -124,11 +124,11 @@ bool ArticleFilter ::test_article(Data const &data,
       break;
 
     case FilterInfo::IS_READ:
-      pass = data.is_read(&article);
+      pass = article.is_read ();
       break;
 
     case FilterInfo::IS_UNREAD:
-      pass = ! data.is_read(&article);
+      pass = !article.is_read ();
       break;
 
     case FilterInfo::BYTE_COUNT_GE:
