@@ -476,10 +476,9 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
 HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
                                          Article const *a)
 {
-  int const action(get_article_action(a->get_flag(), a->message_id));
   int const state(get_article_state_icon(_data.is_read(a), a->get_part_state()));
   char *date_str(e.get_date_string(a->get_time_posted()));
-  Row *row = new Row(_data, a, date_str, action, state);
+  Row *row = new Row(*this, _data, a, date_str, state);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   g_assert(result.second);
@@ -3168,7 +3167,7 @@ void HeaderPane::Row::get_value(int column, GValue *setme)
       set_value_int(setme, state);
       break;
     case COL_ACTION:
-      set_value_int(setme, action);
+      set_value_int(setme, _header_pane.get_article_action(article->get_flag(), article->message_id));
       break;
     case COL_SCORE:
       set_value_int(setme, article->get_score());
