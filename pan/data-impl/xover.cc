@@ -17,6 +17,7 @@
  *
  */
 
+#include <SQLiteCpp/Transaction.h>
 #include <config.h>
 #include <cmath>
 #include <cstdint>
@@ -299,6 +300,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
   if (art_mid.empty())
   {
+    SQLite::Transaction add_article(pan_db);
+
     art_mid = message_id;
 
     // TODO: find a similar fuzzy search using DB
@@ -313,6 +316,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
       Article& a (h->alloc_new_article());
       a.group = group;
       a.message_id = art_mid;
+      // build article tree in memory. Will be removed
       load_article (group, &a, references);
       new_article = &a;
 
@@ -368,6 +372,14 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
       insert_xref_in_db(server, art_mid, xref);
     }
+
+    // now update the article thread from references. i.e. set
+    // parent_id and ghost articles according to references values to
+    // construct a tree of articles (missing articles are stored in
+    // `ghost` table)
+    store_references(message_id, references);
+
+    add_article.commit();
   }
 
   /**
