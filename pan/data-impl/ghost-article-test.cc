@@ -122,6 +122,15 @@ public:
       data->store_references(msg_id, references);
     }
 
+    void deleteArticle(std::string msg_id)
+    {
+      SQLite::Statement setup(pan_db, R"SQL(
+           delete from article where message_id = ?
+        )SQL");
+      setup.bind(1, msg_id);
+      setup.exec();
+    }
+
     void test_normal_insertion()
     {
       // create an article tree from ancestor to child: a1 -> a2 -> a3
@@ -213,10 +222,76 @@ public:
       checkGhostPresence(d2,false);
       checkGhostTree("d2", d2, {d2,b1,"",""});
     }
+
+    void test_article_delete()
+    {
+      // Test delete on the same tree as above. -> means parent to child
+      // b1 -> d2 -> d3 -> d4 -> d5 -> d6
+      //   \-> b2 -> c3
+      //         \-> b3
+
+      std::string b1("<b1>"), b2("<b2>"), b3("<b3>"), c3("<c3>"), d2("<d2>"),
+          d3("<d3>"), d4("<d4>"), d5("<d5>"), d6 ("<d6>");
+      addArticle(b3, b1 + " " + b2);
+      addArticle(c3, b1 + " " + b2);
+      addArticle(b2, b1);
+      addArticle(b1, "");
+      addArticle(d4, b1 + " " + d2 + " " + d3);
+      addArticle(d3, b1 + " " + d2);
+      addArticle(d2, b1);
+      addArticle(d5, b1 + " " + d2 + " " + d3 + " " + d4 );
+      addArticle(d6, b1 + " " + d2 + " " + d3 + " " + d4 + " " + d5);
+
+      deleteArticle(d3);
+      checkGhostPresence(d3, true);
+      checkGhostTree("del d3->d4", d4, {d4,d2,d3,d2});
+
+      deleteArticle(d2);
+      checkGhostPresence(d2, true);
+      checkGhostTree("del d2->d4", d4, {d4,b1,d3,d2});
+
+      deleteArticle(d4);
+      checkGhostPresence(d4, true);
+      checkGhostTree("del d4->d5", d5, {d5,b1,d4,d3});
+
+      deleteArticle(b2);
+      checkGhostPresence(b2, true);
+      checkGhostTree("del b2->c3", c3, {c3,b1,b2,b1});
+      checkGhostTree("del b2->b3", b3, {b3,b1,b2,b1});
+
+      deleteArticle(b1);
+      checkGhostPresence(b1, true);
+      checkGhostTree("del b1->c3", c3, {c3,"",b2,b1});
+      checkGhostTree("del b1->b3", b3, {b3,"",b2,b1});
+
+      // triggers a complete deletion of c3 since there's no other child
+      deleteArticle(c3);
+      checkGhostPresence(c3, false);
+      checkGhostPresence(b2, true);
+
+      // triggers a complete deletion of b3 and b2 since there's no
+      // other child
+      deleteArticle(b3);
+      checkGhostPresence(b3, false);
+      checkGhostPresence(b2, false);
+
+      deleteArticle(d6);
+      checkGhostPresence(d6, false);
+
+      // delete last article which shoould suppress remaining ghosts
+      deleteArticle(d5);
+      checkGhostPresence(d5, false);
+      checkGhostPresence(d4, false);
+      checkGhostPresence(d3, false);
+      checkGhostPresence(d2, false);
+      checkGhostPresence(b1, false);
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_normal_insertion);
     CPPUNIT_TEST(test_reverse_insertion);
     CPPUNIT_TEST(test_complex_tree);
+    CPPUNIT_TEST(test_article_delete);
     CPPUNIT_TEST_SUITE_END();
 };
 
