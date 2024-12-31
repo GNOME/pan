@@ -46,6 +46,8 @@ create table if not exists ghost (
   ghost_parent_msg_id integer
 );
 
+create index if not exists ghost_parent_msg_id on ghost (ghost_parent_msg_id);
+
 create trigger if not exists article_delete_create_ghost before delete on article
   when (
     -- the deleted article has a real children
