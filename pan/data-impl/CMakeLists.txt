@@ -47,5 +47,5 @@ foreach(test ${data-impl-test-programs})
     uulib
     SQLiteCpp
     PkgConfig::CPPUNIT)
-  add_test(NAME ${test}-test COMMAND ${test})
+  add_test(NAME ${test}-test COMMAND ${test} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 endforeach()
