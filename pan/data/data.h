@@ -20,12 +20,12 @@
 #ifndef __Data_h__
 #define __Data_h__
 
-#include <SQLiteCpp/Database.h>
 #include <list>
 #include <map>
 #include <string>
 #include <vector>
 
+#include <pan/data/pan-db.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/article.h>
 #include <pan/data/in-memory-article.h>
@@ -48,8 +48,6 @@ class FilterInfo;
 class RulesInfo;
 class Queue;
 class CertStore;
-
-typedef SQLite::Database SQLiteDb;
 
 /**
  * Data Interface class for seeing the mapping between groups and servers.
@@ -335,8 +333,6 @@ class Data :
     std::string get_server_cert(Quark const &server) const override = 0;
 
     int get_server_limits(Quark const &server) const override = 0;
-
-    virtual SQLiteDb &get_db() = 0;
 
     /*****************************************************************
     ***
