@@ -21,10 +21,12 @@
 
 using namespace pan;
 
+char const *db_file("/tmp/data-impl.db");
+SQLiteDb pan_db(db_file, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+
 class DataImplTest : public CppUnit::TestFixture
 {
 private:
-    SQLiteDb *my_db;
     DataImpl *data;
 
     struct CheckRef {
@@ -37,17 +39,16 @@ private:
 public:
     void setUp()
     {
-      // always start from an empty db
-      char const *db_file("/tmp/data-impl.db");
-      std::remove(db_file);
-      my_db = new SQLiteDb(db_file, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-      std::cout << "Creating DB";
-
       StringView cache;
       Prefs prefs;
-      data = new DataImpl(cache, prefs, *my_db);
-      load_db_schema(*my_db);
-      my_db->exec("insert into author (author) values (\"me\")");
+      // cleanup whatever may be left from previous test runs
+      pan_db.exec(R"SQL(
+         delete from ghost;
+         delete from article;
+      )SQL");
+      load_db_schema(pan_db);
+      data = new DataImpl(cache, prefs);
+      pan_db.exec("insert into author (author) values (\"me\") on conflict do nothing");
     }
 
     void tearDown()
@@ -57,7 +58,7 @@ public:
     void checkGhostPresence(std::string msg_id,
                             bool present)
     {
-        SQLite::Statement query(*my_db, R"SQL(
+        SQLite::Statement query(pan_db, R"SQL(
           select count() from ghost where ghost_msg_id = ?
         )SQL");
         query.bind(1, msg_id);
@@ -72,7 +73,7 @@ public:
                         std::string test_msg_id,
                         CheckRef expect)
     {
-      SQLite::Statement query(*my_db, R"SQL(
+      SQLite::Statement query(pan_db, R"SQL(
             select a.message_id,
                    (select message_id from article where id == a.parent_id) as parent_msg_id,
                    g.ghost_msg_id,
@@ -104,7 +105,7 @@ public:
 
     void addArticle(std::string msg_id, std::string references)
     {
-      SQLite::Statement setup(*my_db, R"SQL(
+      SQLite::Statement setup(pan_db, R"SQL(
         insert into article (message_id,subject,author_id, time_posted) values (?, "plop",1, 1234)
       )SQL");
       setup.bind(1, msg_id);
@@ -114,7 +115,7 @@ public:
 
     void deleteArticle(std::string msg_id)
     {
-      SQLite::Statement setup(*my_db, R"SQL(
+      SQLite::Statement setup(pan_db, R"SQL(
            delete from article where message_id = ?
         )SQL");
       setup.bind(1, msg_id);
