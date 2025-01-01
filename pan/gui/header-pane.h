@@ -171,8 +171,6 @@ class HeaderPane :
   private:
     void rebuild();
     void rebuild_article_action(Quark const &message_id);
-    void rebuild_article_state(Quark const &message_id);
-    void rebuild_all_article_states();
 
   private:
     void on_group_read(Quark const &group) override;
@@ -257,7 +255,6 @@ class HeaderPane :
       public:
         Article const *article;
         int action;
-        bool is_read;
 
       private:
         HeaderPane const &_header_pane;
@@ -335,10 +332,8 @@ class HeaderPane :
         }
 
       public:
-        Row(HeaderPane const &h_pane,
-            Article const *a) :
+        Row(HeaderPane const &h_pane, Article const *a) :
           article(a),
-          is_read(a->is_read()),
           _header_pane(h_pane),
           collated_subject(nullptr),
           collated_author(nullptr)
@@ -354,6 +349,11 @@ class HeaderPane :
       public:
         virtual void get_value(int column, GValue *setme) override;
         virtual int get_state() const;
+
+        bool is_read() const
+        {
+          return article->is_read();
+        };
     };
 
     struct RowLessThan
