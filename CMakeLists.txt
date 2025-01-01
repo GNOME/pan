@@ -248,6 +248,7 @@ target_link_libraries(pan
   usenet-utils
   generalutils
   uulib
+  pan-db
   ${CMAKE_THREAD_LIBS_INIT}
   PkgConfig::GTK3
   PkgConfig::GMIME

@@ -409,7 +409,7 @@ PanTreeStore *build_model(Data &data,
 
   LOG4CXX_DEBUG(logger, "Count group query: " << count_group_str << " with param: " << sql_param);
 
-  SQLite::Statement count_group_q(data.get_db(), count_group_str);
+  SQLite::Statement count_group_q(pan_db, count_group_str);
   int64_t count_sub, count_unsub;
 
   // find subscribed group count
@@ -500,7 +500,7 @@ PanTreeStore *build_model(Data &data,
 
   LOG4CXX_DEBUG(logger, "Group query: " << group_str << " with param: " << sql_param);
 
-  SQLite::Statement group_q(data.get_db(), group_str);
+  SQLite::Statement group_q(pan_db, group_str);
 
   row = &headers[1];
   store->append(nullptr, row);
