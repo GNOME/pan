@@ -403,7 +403,7 @@ struct HeaderPane::CountUnread : public PanTreeStore::WalkFunctor
                             GtkTreePath *)
     {
       Row const *row(dynamic_cast<Row *>(r));
-      if (row != top_row && ! row->is_read)
+      if (row != top_row && ! row->is_read())
       {
         ++unread_children;
       }
@@ -424,7 +424,7 @@ void HeaderPane ::render_subject(GtkTreeViewColumn *,
   CountUnread counter(row);
   self->_tree_store->prefix_walk(counter, iter);
 
-  bool const bold(! row->is_read);
+  bool const bold(! row->is_read());
 
   Article const *a(self->get_article(model, iter));
 
@@ -444,7 +444,7 @@ void HeaderPane ::render_subject(GtkTreeViewColumn *,
 
     if (! expanded)
     {
-      unread = row->is_read;
+      unread = row->is_read();
       snprintf(
         buf, sizeof(buf), "%s (%lu)", res.c_str(), counter.unread_children);
       res = buf;
@@ -808,32 +808,10 @@ bool HeaderPane ::set_group(Quark const &new_group)
 *****
 ****/
 
-void HeaderPane ::rebuild_article_state(Quark const &message_id)
-{
-  Row *row(get_row(message_id));
-  Article const *article(row->article);
-  int const is_read(article->is_read());
-  bool const changed(is_read != row->is_read);
-  row->is_read = is_read;
-  if (changed)
-  {
-    _tree_store->row_changed(row);
-  }
-}
-
-void HeaderPane ::rebuild_all_article_states()
-{
-  foreach (mid_to_row_t, _mid_to_row, it)
-  {
-    rebuild_article_state((*it)->article->message_id);
-  }
-}
-
 void HeaderPane ::on_group_read(Quark const &group)
 {
   if (group == _group)
   {
-    rebuild_all_article_states();
     gtk_widget_queue_draw(_tree_view);
   }
 }
@@ -1031,12 +1009,6 @@ void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
     _mid_to_row.get_container().swap(keep);
-  }
-
-  // changed...
-  foreach_const (quarks_t, diffs.changed, it)
-  {
-    rebuild_article_state(*it);
   }
 
   if (! diffs.added.empty()
