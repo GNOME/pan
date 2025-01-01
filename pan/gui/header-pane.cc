@@ -477,8 +477,7 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
 
 HeaderPane::Row *HeaderPane ::create_row(Article const *a)
 {
-  int const state(get_article_state_icon(a->is_read(), a->get_part_state()));
-  Row *row = new Row(*this, a, state);
+  Row *row = new Row(*this, a);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   g_assert(result.second);
@@ -543,7 +542,7 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
   switch (sortcol)
   {
     case COL_STATE:
-      ret = row_a.state - row_b.state;
+      ret = row_a.get_state() - row_b.get_state();
       break;
 
     case COL_ACTION:
@@ -814,9 +813,7 @@ void HeaderPane ::rebuild_article_state(Quark const &message_id)
   Row *row(get_row(message_id));
   Article const *article(row->article);
   int const is_read(article->is_read());
-  int const state(get_article_state_icon(is_read, article->get_flag()));
-  bool const changed((state != row->state) || (is_read != row->is_read));
-  row->state = state;
+  bool const changed(is_read != row->is_read);
   row->is_read = is_read;
   if (changed)
   {
@@ -3153,6 +3150,11 @@ void HeaderPane ::select_similar()
   }
 }
 
+int HeaderPane::Row::get_state() const
+{
+  return get_article_state_icon(article->is_read(), article->get_part_state());
+}
+
 void HeaderPane::Row::get_value(int column, GValue *setme)
 {
   switch (column)
@@ -3161,7 +3163,7 @@ void HeaderPane::Row::get_value(int column, GValue *setme)
       set_value_string(setme, date_maker.get_date_string(article->get_time_posted()));
       break;
     case COL_STATE:
-      set_value_int(setme, state);
+      set_value_int(setme, get_state());
       break;
     case COL_ACTION:
       set_value_int(setme, _header_pane.get_article_action(article->get_flag(), article->message_id));
