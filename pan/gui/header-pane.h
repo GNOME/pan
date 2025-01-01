@@ -178,7 +178,7 @@ class HeaderPane :
     void on_group_read(Quark const &group) override;
 
   private:
-    virtual void on_tree_change(Data::ArticleTree::Diffs const &);
+    virtual void on_tree_change(Data::ArticleTree::Diffs const &) override;
 
   private:
     void on_prefs_flag_changed(StringView const &, bool) override;
@@ -257,7 +257,6 @@ class HeaderPane :
       public:
         Article const *article;
         int action;
-        int state;
         bool is_read;
 
       private:
@@ -337,10 +336,8 @@ class HeaderPane :
 
       public:
         Row(HeaderPane const &h_pane,
-            Article const *a,
-            int state_in) :
+            Article const *a) :
           article(a),
-          state(state_in),
           is_read(a->is_read()),
           _header_pane(h_pane),
           collated_subject(nullptr),
@@ -356,6 +353,7 @@ class HeaderPane :
 
       public:
         virtual void get_value(int column, GValue *setme) override;
+        virtual int get_state() const;
     };
 
     struct RowLessThan
