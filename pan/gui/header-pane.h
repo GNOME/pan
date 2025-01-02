@@ -254,7 +254,6 @@ class HeaderPane :
     {
       public:
         Article const *article;
-        int action;
 
       private:
         HeaderPane const &_header_pane;
