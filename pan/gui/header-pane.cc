@@ -2939,13 +2939,7 @@ void HeaderPane ::rebuild_article_action(Quark const &message_id)
   Row *row(get_row(message_id));
   if (row)
   {
-    const Article* a = row->article;
-    bool flag(false);
-    if (a) {
-      flag = a->get_flag();
-    }
-
-    row->action = get_article_action(flag, message_id);
+    // still needed to update action column right after change.
     _tree_store->row_changed(row);
   }
 }
@@ -3005,7 +2999,7 @@ struct HeaderPane::SimilarWalk : public PanTreeStore::WalkFunctor
 {
   private:
     GtkTreeSelection *selection;
-    const Article source;
+    Article const source;
 
   public:
     virtual ~SimilarWalk()
