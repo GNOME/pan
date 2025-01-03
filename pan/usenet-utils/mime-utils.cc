@@ -1088,8 +1088,8 @@ mime :: construct_message (GMimeStream    ** istreams,
           g_mime_message_set_mime_part(messages[i], GMIME_OBJECT(new_mp));
         }
 #endif
-        g_object_unref(o);
-
+        if (o != nullptr)
+          g_object_unref(o);
       }
       else if (multipart)
       {
