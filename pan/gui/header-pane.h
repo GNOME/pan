@@ -253,7 +253,7 @@ class HeaderPane :
     class Row : public PanTreeStore::Row
     {
       public:
-        Article const *article;
+        Article const article;
 
       private:
         HeaderPane const &_header_pane;
@@ -309,7 +309,7 @@ class HeaderPane :
         {
           if (! collated_subject)
           {
-            collated_subject = do_collate(article->get_subject().to_view());
+            collated_subject = do_collate(article.get_subject().to_view());
           }
           return collated_subject;
         }
@@ -327,11 +327,11 @@ class HeaderPane :
 
         Quark get_short_author() const
         {
-          return build_short_author(article->get_author().c_str());
+          return build_short_author(article.get_author().c_str());
         }
 
       public:
-        Row(HeaderPane const &h_pane, Article const *a) :
+        Row(HeaderPane const &h_pane, Article a) :
           article(a),
           _header_pane(h_pane),
           collated_subject(nullptr),
@@ -351,7 +351,7 @@ class HeaderPane :
 
         bool is_read() const
         {
-          return article->is_read();
+          return article.is_read();
         };
     };
 
@@ -359,17 +359,17 @@ class HeaderPane :
     {
         bool operator()(Row const *a, Row const *b) const
         {
-          return a->article->message_id < b->article->message_id;
+          return a->article.message_id < b->article.message_id;
         }
 
         bool operator()(Row const *a, Quark const &b) const
         {
-          return a->article->message_id < b;
+          return a->article.message_id < b;
         }
 
         bool operator()(Quark const &a, Row const *b) const
         {
-          return a < b->article->message_id;
+          return a < b->article.message_id;
         }
     };
 
@@ -378,10 +378,11 @@ class HeaderPane :
     mid_to_row_t _mid_to_row;
 
   private:
-    static Article const *get_article(GtkTreeModel *, GtkTreeIter *);
+    static Article const *get_article_ptr(GtkTreeModel *, GtkTreeIter *);
+    static Article get_article(GtkTreeModel *, GtkTreeIter *);
     int get_article_action(bool flag, Quark const &message_id) const;
     int find_highest_followup_score(GtkTreeModel *, GtkTreeIter *) const;
-    Row *create_row(Article const *);
+    Row *create_row(Article);
     // return numbers of added children
     int add_children_to_model(PanTreeStore *store,
                               Quark const &group,
