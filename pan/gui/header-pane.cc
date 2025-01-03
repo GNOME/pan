@@ -77,13 +77,19 @@ namespace {
 PanColors const &colors(PanColors::get());
 } // namespace
 
-Article const *HeaderPane ::get_article(GtkTreeModel *model, GtkTreeIter *iter)
+Article const *HeaderPane ::get_article_ptr(GtkTreeModel *model, GtkTreeIter *iter)
 {
   Article const *a =
-    dynamic_cast<Row *>(PAN_TREE_STORE(model)->get_row(iter))->article;
+    &dynamic_cast<Row *>(PAN_TREE_STORE(model)->get_row(iter))->article;
   g_assert(a != nullptr);
   return a;
 }
+
+Article HeaderPane ::get_article(GtkTreeModel *model, GtkTreeIter *iter)
+{
+  return dynamic_cast<Row *>(PAN_TREE_STORE(model)->get_row(iter))->article;
+}
+
 
 /****
 *****
@@ -215,8 +221,8 @@ int HeaderPane ::find_highest_followup_score(GtkTreeModel *model,
   {
     do
     {
-      Article const *a(get_article(model, &child));
-      score = std::max(score, a->get_score());
+      Article a(get_article(model, &child));
+      score = std::max(score, a.get_score());
       score = std::max(score, find_highest_followup_score(model, &child));
     } while (gtk_tree_model_iter_next(model, &child));
   }
@@ -302,11 +308,11 @@ void HeaderPane ::render_author(GtkTreeViewColumn *,
                                 gpointer user_data)
 {
   HeaderPane const *self(static_cast<HeaderPane *>(user_data));
-  Article const *a(self->get_article(model, iter));
+  Article a(self->get_article(model, iter));
 
   g_object_set(renderer,
                "text",
-               a->get_author().c_str(),
+               a.get_author().c_str(),
                "background",
                self->_bg.c_str(),
                "foreground",
@@ -424,9 +430,9 @@ void HeaderPane ::render_subject(GtkTreeViewColumn *,
 
   bool const bold(! row->is_read());
 
-  Article const *a(self->get_article(model, iter));
+  Article a(self->get_article(model, iter));
 
-  std::string res = a->get_subject().c_str();
+  std::string res = a.get_subject().c_str();
 
   char buf[512];
 
@@ -473,7 +479,7 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
   return it == _mid_to_row.end() ? nullptr : *it;
 }
 
-HeaderPane::Row *HeaderPane ::create_row(Article const *a)
+HeaderPane::Row *HeaderPane ::create_row(Article a)
 {
   Row *row = new Row(*this, a);
 
@@ -505,7 +511,7 @@ int HeaderPane ::add_children_to_model(PanTreeStore *store,
   count += children.size();
   foreach_const (article_v, children, it)
   {
-    rows.push_back(create_row(*it));
+    rows.push_back(create_row(**it));
   }
   store->append(do_thread ? parent_row : nullptr, rows);
 
@@ -554,13 +560,13 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
       break;
 
     case COL_SCORE:
-      ret = row_a.article->get_score() - row_b.article->get_score();
+      ret = row_a.article.get_score() - row_b.article.get_score();
       break;
 
     case COL_BYTES:
     {
-      unsigned long const a_bytes(row_a.article->get_byte_count());
-      unsigned long const b_bytes(row_b.article->get_byte_count());
+      unsigned long const a_bytes(row_a.article.get_byte_count());
+      unsigned long const b_bytes(row_b.article.get_byte_count());
       if (a_bytes < b_bytes)
       {
         ret = -1;
@@ -578,8 +584,8 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
 
     case COL_LINES:
     {
-      unsigned long const a_lines(row_a.article->get_line_count());
-      unsigned long const b_lines(row_b.article->get_line_count());
+      unsigned long const a_lines(row_a.article.get_line_count());
+      unsigned long const b_lines(row_b.article.get_line_count());
       if (a_lines < b_lines)
       {
         ret = -1;
@@ -601,8 +607,8 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
 
     default:
     { // COL_DATE
-      const time_t a_time(row_a.article->get_time_posted());
-      const time_t b_time(row_b.article->get_time_posted());
+      const time_t a_time(row_a.article.get_time_posted());
+      const time_t b_time(row_b.article.get_time_posted());
       if (a_time < b_time)
       {
         ret = -1;
@@ -950,7 +956,7 @@ void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
     PanTreeStore::parent_to_children_t tmp;
     foreach_const (Data::ArticleTree::Diffs::added_t, diffs.added, it)
     {
-      create_row(_atree->get_article(it->first));
+      create_row(*_atree->get_article(it->first));
     }
     foreach_const (Data::ArticleTree::Diffs::added_t, diffs.added, it)
     {
@@ -1066,7 +1072,7 @@ void HeaderPane ::get_full_selection_v_foreach(GtkTreeModel *model,
                                                GtkTreeIter *iter,
                                                gpointer data)
 {
-  static_cast<article_v *>(data)->push_back(get_article(model, iter));
+  static_cast<article_v *>(data)->push_back(get_article_ptr(model, iter));
 }
 
 std::vector<Article const *> HeaderPane ::get_full_selection_v() const
@@ -1145,7 +1151,7 @@ void HeaderPane ::walk_and_collect_flagged(GtkTreeModel *model,
 {
   for (;;)
   {
-    Article const *a(get_article(model, cur));
+    Article const *a(get_article_ptr(model, cur));
     if (a->get_flag())
     {
       gtk_tree_selection_select_iter(setme, cur);
@@ -1168,7 +1174,7 @@ void HeaderPane ::walk_and_collect(GtkTreeModel *model,
 {
   for (;;)
   {
-    setme.insert(get_article(model, cur));
+    setme.insert(get_article_ptr(model, cur));
     GtkTreeIter child;
     if (gtk_tree_model_iter_children(model, &child, cur))
     {
@@ -1197,7 +1203,7 @@ void HeaderPane ::get_nested_foreach(GtkTreeModel *model,
 {
   NestedData &ndata(*static_cast<NestedData *>(data));
   articles_set &articles(ndata.articles);
-  articles.insert(get_article(model, iter));
+  articles.insert(get_article_ptr(model, iter));
   bool const expanded(
     gtk_tree_view_row_expanded(GTK_TREE_VIEW(_tree_view), path));
   GtkTreeIter child;
@@ -2696,7 +2702,7 @@ void HeaderPane ::find_next_iterator_from(GtkTreeModel *model,
   g_assert(start_pos != nullptr);
   GtkTreeIter march = *start_pos;
   bool success(false);
-  Article const *article(nullptr);
+  Article article;
   for (;;)
   {
     if (test_the_start_pos)
@@ -2716,14 +2722,14 @@ void HeaderPane ::find_next_iterator_from(GtkTreeModel *model,
       }
     }
     article = get_article(model, &march);
-    if ((success = test_func(*article)))
+    if ((success = test_func(article)))
     {
       break;
     }
   }
   if (success)
   {
-    success_func(model, &march, *article);
+    success_func(model, &march, article);
   }
 }
 
@@ -3016,7 +3022,7 @@ struct HeaderPane::SimilarWalk : public PanTreeStore::WalkFunctor
                             GtkTreeIter *iter,
                             GtkTreePath *)
     {
-      Article const *article(get_article(GTK_TREE_MODEL(store), iter));
+      Article const *article(get_article_ptr(GTK_TREE_MODEL(store), iter));
       if (similar(*article))
       {
         gtk_tree_selection_select_iter(selection, iter);
@@ -3169,7 +3175,7 @@ void HeaderPane ::select_similar()
 
 int HeaderPane::Row::get_state() const
 {
-  return get_article_state_icon(article->is_read(), article->get_part_state());
+  return get_article_state_icon(article.is_read(), article.get_part_state());
 }
 
 void HeaderPane::Row::get_value(int column, GValue *setme)
@@ -3177,31 +3183,31 @@ void HeaderPane::Row::get_value(int column, GValue *setme)
   switch (column)
   {
     case COL_DATE_STR:
-      set_value_string(setme, date_maker.get_date_string(article->get_time_posted()));
+      set_value_string(setme, date_maker.get_date_string(article.get_time_posted()));
       break;
     case COL_STATE:
       set_value_int(setme, get_state());
       break;
     case COL_ACTION:
-      set_value_int(setme, _header_pane.get_article_action(article->get_flag(), article->message_id));
+      set_value_int(setme, _header_pane.get_article_action(article.get_flag(), article.message_id));
       break;
     case COL_SCORE:
-      set_value_int(setme, article->get_score());
+      set_value_int(setme, article.get_score());
       break;
     case COL_LINES:
-      set_value_ulong(setme, article->get_line_count());
+      set_value_ulong(setme, article.get_line_count());
       break;
     case COL_BYTES:
-      set_value_ulong(setme, article->get_byte_count());
+      set_value_ulong(setme, article.get_byte_count());
       break;
     case COL_DATE:
-      set_value_ulong(setme, (unsigned long)article->get_time_posted());
+      set_value_ulong(setme, (unsigned long)article.get_time_posted());
       break;
     case COL_ARTICLE_POINTER:
-      set_value_pointer(setme, (void *)article);
+      set_value_pointer(setme, (void *)&article);
       break;
     case COL_SUBJECT:
-      set_value_static_string(setme, article->get_author().c_str());
+      set_value_static_string(setme, article.get_author().c_str());
       break;
     case COL_SHORT_AUTHOR:
       set_value_static_string(setme, get_short_author().c_str());
