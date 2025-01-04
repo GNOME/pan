@@ -56,6 +56,7 @@ using namespace pan;
 
 namespace {
 log4cxx::LoggerPtr logger = pan::getLogger("header");
+log4cxx::LoggerPtr tree_logger = pan::getLogger("header-tree");
 }
 
 DataImpl ::GroupHeaders ::GroupHeaders() :
