@@ -32,6 +32,8 @@ create table if not exists article_group (
 
 create unique index if not exists article_group_ag on article_group (article_id, group_id);
 
+create index if not exists article_group_id on `article_group` (group_id);
+
 create table if not exists article_xref (
   id integer primary key asc autoincrement,
   article_group_id integer not null references article_group (id) on delete cascade,
