@@ -329,19 +329,26 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
       // Create the article in DB, line_count is updated in insert_part_in_db()
       SQLite::Statement create_article_q(pan_db, R"SQL(
-        insert into `article` (author_id,subject,message_id, binary, expected_parts,
+        insert into `article` (author_id,message_id, binary, expected_parts,
                                time_posted, `references`)
-        values ((select id from author where author = ?),?,?,?,?,?,?)
+        values ((select id from author where author = ?),?,?,?,?,?)
       )SQL");
       create_article_q.bind(1, author);
-      create_article_q.bind(2, multipart_subject_quark);
-      create_article_q.bind(3, art_mid);
-      create_article_q.bind(4, part_count >= 1 );
-      create_article_q.bind(5, part_count > 1 ? part_count : 1);
-      create_article_q.bind(6, time_posted);
+      create_article_q.bind(2, art_mid);
+      create_article_q.bind(3, part_count >= 1 );
+      create_article_q.bind(4, part_count > 1 ? part_count : 1);
+      create_article_q.bind(5, time_posted);
       if (!references.empty())
-        create_article_q.bind(7, references);
+        create_article_q.bind(6, references);
       create_article_q.exec();
+
+      SQLite::Statement set_subject_q(pan_db, R"SQL(
+        insert into `subject` (article_id,subject)
+        values ((select id from article where message_id = $msg_id), $subject)
+        on conflict (article_id) do nothing
+      )SQL");
+      set_subject_q.bind(1, art_mid);
+      set_subject_q.bind(2, multipart_subject_quark);
 
       insert_xref_in_db(server, art_mid, xref);
     }

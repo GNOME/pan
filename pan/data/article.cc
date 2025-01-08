@@ -340,7 +340,9 @@ void Article::set_author(Quark a) const {
 
 Quark Article::get_subject() const {
   SQLite::Statement q(pan_db, R"SQL(
-    select subject from article where message_id = ?
+    select subject from subject as s
+    join article as a on s.article_id == a.id
+    where message_id = ?
   )SQL");
   q.bindNoCopy(1,message_id.c_str());
   Quark result;

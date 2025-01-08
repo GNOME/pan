@@ -3,7 +3,6 @@ create table if not exists article (
   id integer primary key asc autoincrement,
   flag boolean check(flag in (false,true)) default false, 
   message_id text not null unique, 
-  subject text not null,
   author_id integer not null references author (id) on delete restrict,
   `references` text, -- json data
 
@@ -33,6 +32,14 @@ create unique index if not exists article_message_id on `article` (message_id);
 create table if not exists author (
   id integer primary key asc autoincrement,
   author text not null unique
+);
+
+-- offload subject in its own table, because its seldom used and quite big.
+-- article subject are seldom identical, so we keep one line per article
+create table if not exists subject (
+  id integer primary key asc autoincrement,
+  article_id integer not null unique references article (id) on delete cascade,
+  subject text not null
 );
 
 create table if not exists article_group (
