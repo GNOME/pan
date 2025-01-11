@@ -21,70 +21,78 @@
 
 extern "C"
 {
-  #include <errno.h>
-  #include <sys/types.h>
-  #include <sys/stat.h>
-  #include <unistd.h>
-  #include <dirent.h>
+#include <dirent.h>
+#include <errno.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 }
 
-#include <gmime/gmime.h>
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gmime/gmime.h>
 
+#include "article-cache.h"
+#include "article.h"
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
+#include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
-#include <pan/general/log.h>
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/mime-utils.h>
-#include "article.h"
-#include "article-cache.h"
 
 using namespace pan;
-/**
-* Message-IDs are transformed via message_id_to_filename()
-* to play nicely with some filesystems, so to extract the Message-ID
-* from a filename we need to reverse the transform.
-*
-* @return string length, or 0 on failure
-*/
 
-int
-ArticleCache :: filename_to_message_id (char * buf, int len, const char * basename)
+/**
+ * Message-IDs are transformed via message_id_to_filename()
+ * to play nicely with some filesystems, so to extract the Message-ID
+ * from a filename we need to reverse the transform.
+ *
+ * @return string length, or 0 on failure
+ */
+
+int ArticleCache ::filename_to_message_id(char *buf,
+                                          int len,
+                                          char const *basename)
 {
-  const char * in;
-  char * out;
-  char * pch;
+  char const *in;
+  char *out;
+  char *pch;
   char tmp_basename[PATH_MAX];
 
   // sanity clause
-  pan_return_val_if_fail (basename && *basename, 0);
-  pan_return_val_if_fail (buf!=NULL, 0);
-  pan_return_val_if_fail (len>0, 0);
+  pan_return_val_if_fail(basename && *basename, 0);
+  pan_return_val_if_fail(buf != NULL, 0);
+  pan_return_val_if_fail(len > 0, 0);
 
   // remove the trailing ".msg" or similar
-  g_strlcpy (tmp_basename, basename, sizeof(tmp_basename));
-//  if ((pch = g_strrstr (tmp_basename, msg_extension.c_str())))
-//     *pch = '\0';
-  if ((pch = g_strrstr (tmp_basename, ".")))
-     *pch = '\0';
-  g_strstrip (tmp_basename);
+  g_strlcpy(tmp_basename, basename, sizeof(tmp_basename));
+  //  if ((pch = g_strrstr (tmp_basename, msg_extension.c_str())))
+  //     *pch = '\0';
+  if ((pch = g_strrstr(tmp_basename, ".")))
+  {
+    *pch = '\0';
+  }
+  g_strstrip(tmp_basename);
 
   // transform
   out = buf;
   *out++ = '<';
-  for (in=tmp_basename; *in; ++in) {
-     if (in[0]!='%' || !g_ascii_isxdigit(in[1]) || !g_ascii_isxdigit(in[2]))
-        *out++ = *in;
-     else {
-        char buf[3];
-        buf[0] = *++in;
-        buf[1] = *++in;
-        buf[2] = '\0';
-        *out++ = (char) strtoul (buf, NULL, 16);
-     }
+  for (in = tmp_basename; *in; ++in)
+  {
+    if (in[0] != '%' || ! g_ascii_isxdigit(in[1]) || ! g_ascii_isxdigit(in[2]))
+    {
+      *out++ = *in;
+    }
+    else
+    {
+      char buf[3];
+      buf[0] = *++in;
+      buf[1] = *++in;
+      buf[2] = '\0';
+      *out++ = (char)strtoul(buf, NULL, 16);
+    }
   }
   *out++ = '>';
   *out = '\0';
@@ -93,86 +101,105 @@ ArticleCache :: filename_to_message_id (char * buf, int len, const char * basena
 }
 
 /**
-* Some characters in message-ids don't work well in filenames,
-* so we transform them to a safer name.
-*/
-char*
-ArticleCache :: message_id_to_filename (char * buf, int len, const StringView& mid) const
+ * Some characters in message-ids don't work well in filenames,
+ * so we transform them to a safer name.
+ */
+char *ArticleCache ::message_id_to_filename(char *buf,
+                                            int len,
+                                            StringView const &mid) const
 {
   // sanity clause
-  pan_return_val_if_fail (!mid.empty(), nullptr);
-  pan_return_val_if_fail (buf!=nullptr, NULL);
-  pan_return_val_if_fail (len>0, NULL);
+  pan_return_val_if_fail(! mid.empty(), nullptr);
+  pan_return_val_if_fail(buf != nullptr, NULL);
+  pan_return_val_if_fail(len > 0, NULL);
 
   // some characters in message-ids are illegal on older Windows boxes,
   // so we transform those illegal characters using URL encoding
-  char * out = buf;
-  for (const char *in=mid.begin(), *end=mid.end(); in!=end; ++in) {
-     switch (*in) {
-        case '%': /* this is the escape character */
-        case '"': case '*': case '/': case ':': case '?': case '|':
-        case '\\': /* these are illegal on vfat, fat32 */
-           g_snprintf (out, len-(out-buf), "%%%02x", (int)*in);
-           out += 3;
-           break;
-        case '<': case '>': /* these are illegal too, but rather than encoding
-                               them, follow the convention of omitting them */
-           break;
-        default:
-           *out++ = *in;
-           break;
-     }
+  char *out = buf;
+  for (char const *in = mid.begin(), *end = mid.end(); in != end; ++in)
+  {
+    switch (*in)
+    {
+      case '%': /* this is the escape character */
+      case '"':
+      case '*':
+      case '/':
+      case ':':
+      case '?':
+      case '|':
+      case '\\': /* these are illegal on vfat, fat32 */
+        g_snprintf(out, len - (out - buf), "%%%02x", (int)*in);
+        out += 3;
+        break;
+      case '<':
+      case '>': /* these are illegal too, but rather than encoding
+                   them, follow the convention of omitting them */
+        break;
+      default:
+        *out++ = *in;
+        break;
+    }
   }
 
   // add the filename extension
-  g_snprintf (out, len-(out-buf), ".%s", msg_extension.c_str());
+  g_snprintf(out, len - (out - buf), ".%s", msg_extension.c_str());
 
   return buf;
 }
 
-ArticleCache :: ArticleCache (const StringView& path, const StringView& extension, size_t max_megs):
-   msg_extension(extension),
-   _path (path.str, path.len),
-   _max_megs (max_megs),
-   _current_bytes (0ul)
+ArticleCache ::ArticleCache(StringView const &path,
+                            StringView const &extension,
+                            size_t max_megs) :
+  msg_extension(extension),
+  _path(path.str, path.len),
+  _max_megs(max_megs),
+  _current_bytes(0ul)
 {
 
-   GError * err = NULL;
-   GDir * dir = g_dir_open (_path.c_str(), 0, &err);
-   if (err != NULL)
-   {
-      Log::add_err_va (_("Error opening directory: \"%s\": %s"), _path.c_str(), err->message);
-      g_clear_error (&err);
-   }
-   else
-   {
-      char filename[PATH_MAX];
-      const char * fname;
-      while ((fname = g_dir_read_name (dir)))
+  GError *err = NULL;
+  GDir *dir = g_dir_open(_path.c_str(), 0, &err);
+  if (err != NULL)
+  {
+    Log::add_err_va(
+      _("Error opening directory: \"%s\": %s"), _path.c_str(), err->message);
+    g_clear_error(&err);
+  }
+  else
+  {
+    char filename[PATH_MAX];
+    char const *fname;
+    while ((fname = g_dir_read_name(dir)))
+    {
+      struct stat stat_p;
+      g_snprintf(filename,
+                 sizeof(filename),
+                 "%s%c%s",
+                 _path.c_str(),
+                 G_DIR_SEPARATOR,
+                 fname);
+      if (! stat(filename, &stat_p))
       {
-         struct stat stat_p;
-         g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
-         if (!stat (filename, &stat_p))
-         {
-            char str[2048];
-            const int len (filename_to_message_id (str, sizeof(str), fname));
-            if (len != 0)
-            {
-               MsgInfo info;
-               info._message_id = StringView (str, len);
-               info._size = stat_p.st_size;
-               info._date = stat_p.st_mtime;
-               _current_bytes += info._size;
-               _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
-            }
-         }
+        char str[2048];
+        int const len(filename_to_message_id(str, sizeof(str), fname));
+        if (len != 0)
+        {
+          MsgInfo info;
+          info._message_id = StringView(str, len);
+          info._size = stat_p.st_size;
+          info._date = stat_p.st_mtime;
+          _current_bytes += info._size;
+          _mid_to_info.insert(
+            mid_to_info_t::value_type(info._message_id, info));
+        }
       }
-      g_dir_close (dir);
-      debug ("loaded " << _mid_to_info.size() << " articles into cache from " << _path);
-   }
+    }
+    g_dir_close(dir);
+    debug("loaded " << _mid_to_info.size() << " articles into cache from "
+                    << _path);
+  }
 }
 
-ArticleCache :: ~ArticleCache ()
+ArticleCache ::~ArticleCache()
 {
 }
 
@@ -180,8 +207,7 @@ ArticleCache :: ~ArticleCache ()
 ******
 *****/
 
-void
-ArticleCache :: fire_added (const Quark& mid)
+void ArticleCache ::fire_added(Quark const &mid)
 {
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_cache_added (mid);

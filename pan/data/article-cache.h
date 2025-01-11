@@ -20,12 +20,12 @@
 #ifndef _ArticleCache_h_
 #define _ArticleCache_h_
 
-#include <map>
-#include <vector>
 #include <config.h>
 #include <glib.h> // for guint64
-#include <pan/general/string-view.h>
+#include <map>
 #include <pan/general/quark.h>
+#include <pan/general/string-view.h>
+#include <vector>
 
 #include <pan/usenet-utils/gpg.h>
 
@@ -35,55 +35,57 @@ extern "C"
   typedef struct _GMimeStream GMimeStream;
 }
 
-namespace pan
+namespace pan {
+
+class Article;
+class StringView;
+
+/**
+ * A disk cache for article bodies.
+ *
+ * This allows a cache to be set to a certain maximum size, where
+ * the oldest articles will be aged out when the cache is full.
+ *
+ * It also has a lock/unlock mechanism to allow the cache to grow
+ * past its limit briefly to allow large multipart articles' pieces
+ * to all be held at once (for decoding).
+ *
+ * FIXME: This should probably be an interface class implemented in
+ * data-impl in the same way profiles was.
+ *
+ * @ingroup data
+ */
+class ArticleCache
 {
+  public:
+    enum CacheResponse_types
+    {
+      CACHE_IO_ERR,
+      CACHE_DISK_FULL,
+      CACHE_OK
+    };
 
-  class Article;
-  class StringView;
-
-  /**
-   * A disk cache for article bodies.
-   *
-   * This allows a cache to be set to a certain maximum size, where
-   * the oldest articles will be aged out when the cache is full.
-   *
-   * It also has a lock/unlock mechanism to allow the cache to grow
-   * past its limit briefly to allow large multipart articles' pieces
-   * to all be held at once (for decoding).
-   *
-   * FIXME: This should probably be an interface class implemented in
-   * data-impl in the same way profiles was.
-   *
-   * @ingroup data
-   */
-  class ArticleCache
-  {
-    public:
-
-      enum CacheResponse_types
-      {
-        CACHE_IO_ERR,
-        CACHE_DISK_FULL,
-        CACHE_OK
-      };
-
-      struct CacheResponse
-      {
+    struct CacheResponse
+    {
         CacheResponse_types type;
         std::string err; // perhaps use gerror here??
-      };
+    };
 
-      ArticleCache (const StringView& path, const StringView& extension, size_t max_megs=10);
-      ~ArticleCache ();
+    ArticleCache(StringView const &path,
+                 StringView const &extension,
+                 size_t max_megs = 10);
+    ~ArticleCache();
 
-      typedef std::vector<Quark> mid_sequence_t;
+    typedef std::vector<Quark> mid_sequence_t;
 
-      bool contains (const Quark& message_id) const;
-      CacheResponse add (const Quark& message_id, const StringView& article, const bool virtual_file = false);
-      void reserve (const mid_sequence_t& mids);
-      void release (const mid_sequence_t& mids);
-      void resize ();
-      void clear ();
+    bool contains(Quark const &message_id) const;
+    CacheResponse add(const Quark &message_id,
+                      const StringView &article,
+                      const bool virtual_file = false);
+    void reserve(const mid_sequence_t &mids);
+    void release(const mid_sequence_t &mids);
+    void resize();
+    void clear();
 #ifdef HAVE_GMIME_CRYPTO
       GMimeMessage* get_message (const mid_sequence_t&, GPGDecErr&) const;
 #else
@@ -150,9 +152,7 @@ namespace pan
 
       int filename_to_message_id (char * buf, int len, const char * basename);
       char* message_id_to_filename (char * buf, int len, const StringView& mid) const;
-
-  };
-}
-
+};
+} // namespace pan
 
 #endif // __ArticleCache_h__
