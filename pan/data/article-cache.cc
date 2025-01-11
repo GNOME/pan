@@ -17,6 +17,7 @@
  *
  */
 
+#include "pan/general/log4cxx.h"
 #include <config.h>
 
 extern "C"
@@ -33,7 +34,6 @@ extern "C"
 #include <gmime/gmime.h>
 
 #include "article-cache.h"
-#include "article.h"
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -43,6 +43,11 @@ extern "C"
 #include <pan/usenet-utils/mime-utils.h>
 
 using namespace pan;
+
+namespace  {
+log4cxx::LoggerPtr logger(getLogger("article-cache"));
+}
+
 
 /**
  * Message-IDs are transformed via message_id_to_filename()
@@ -194,8 +199,8 @@ ArticleCache ::ArticleCache(StringView const &path,
       }
     }
     g_dir_close(dir);
-    pan_debug("loaded " << _mid_to_info.size() << " articles into cache from "
-                    << _path);
+    LOG4CXX_DEBUG(logger, "loaded " << _mid_to_info.size() << " articles into cache from "
+                  << _path);
   }
 }
 
@@ -243,7 +248,7 @@ ArticleCache :: get_filename (char * buf, int buflen, const Quark& mid) const
 ArticleCache :: CacheResponse
 ArticleCache :: add (const Quark& message_id, const StringView& article, const bool virtual_file)
 {
-  pan_debug ("adding " << message_id << ", which is " << article.len << " bytes long");
+  LOG4CXX_TRACE(logger, "adding " << message_id << ", which is " << article.len << " bytes long");
 
   CacheResponse res;
   res.type = CACHE_IO_ERR;
@@ -353,13 +358,13 @@ ArticleCache :: resize (guint64 max_bytes)
         unlink (buf);
         _current_bytes -= it->_size;
         removed.insert (mid);
-        pan_debug ("removing [" << mid << "] as we resize the queue");
+        LOG4CXX_TRACE(logger, "removing [" << mid << "] as we resize the queue");
         _mid_to_info.erase (mid);
       }
     }
   }
 
-  pan_debug ("cache expired " << removed.size() << " articles, "
+  LOG4CXX_DEBUG(logger, "cache expired " << removed.size() << " articles, "
          "has " << _mid_to_info.size() << " active "
          "and " << _locks.size() << " locked.");
 
@@ -393,26 +398,26 @@ ArticleCache :: get_message_file_stream (const Quark& mid) const
       }
    }
 
-   pan_debug ("file stream for " << mid << ": " << retval);
+   LOG4CXX_TRACE(logger, "file stream for " << mid << ": " << retval);
    return retval;
 }
 
 /*private*/ GMimeStream*
 ArticleCache :: get_message_mem_stream (const Quark& mid) const
 {
-   pan_debug ("mem stream got quark " << mid);
+   LOG4CXX_TRACE(logger, "mem stream got quark " << mid);
    GMimeStream * retval (nullptr);
 
    char filename[PATH_MAX];
    if (get_filename (filename, sizeof(filename), mid))
    {
-      pan_debug ("mem stream loading filename " << filename);
+      LOG4CXX_TRACE(logger, "mem stream loading filename " << filename);
       gsize len (0);
       char * buf (nullptr);
       GError * err (nullptr);
 
       if (g_file_get_contents (filename, &buf, &len, &err)) {
-         pan_debug ("got the contents, calling mem_new_with_buffer");
+         LOG4CXX_TRACE(logger, "got the contents, calling mem_new_with_buffer");
          retval = g_mime_stream_mem_new_with_buffer (buf, len);
          g_free (buf);
       } else {
@@ -421,7 +426,7 @@ ArticleCache :: get_message_mem_stream (const Quark& mid) const
       }
    }
 
-   pan_debug ("mem stream for " << mid << ": " << retval);
+   LOG4CXX_TRACE(logger, "mem stream for " << mid << ": " << retval);
    return retval;
 }
 
@@ -433,7 +438,7 @@ GMimeMessage*
 ArticleCache :: get_message (const mid_sequence_t& mids) const
 #endif
 {
-   pan_debug ("trying to get a message with " << mids.size() << " parts");
+   LOG4CXX_TRACE(logger, "trying to get a message with " << mids.size() << " parts");
    GMimeMessage * retval = NULL;
 
    // load the streams
