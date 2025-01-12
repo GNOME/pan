@@ -13,9 +13,6 @@ create table if not exists article (
   -- in SQL null + 3 => null
   line_count integer default 0,
 
-  -- score is computed by pan.
-  score integer default 0,
-
   --  marked boolean check(marked = False or marked = True),
   binary boolean check(binary = False or binary = True),
 
@@ -44,7 +41,10 @@ create table if not exists subject (
 create table if not exists article_group (
   id integer primary key asc autoincrement,
   article_id integer not null references article (id) on delete cascade,
-  group_id integer not null  references `group` (id) on delete cascade
+  group_id integer not null  references `group` (id) on delete cascade,
+
+  -- score is computed by pan.
+  score integer default 0
 );
 
 create unique index if not exists article_group_ag on article_group (article_id, group_id);
