@@ -307,6 +307,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
       //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
       // load article data in memory. Will be removed
       Article& a (h->alloc_new_article());
+      a.group = group;
       a.message_id = art_mid;
       load_article (group, &a, references);
       new_article = &a;
