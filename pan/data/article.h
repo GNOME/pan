@@ -74,6 +74,7 @@ class Article
     PartState char_to_state(char const) const;
 
   public:
+    Quark group;
     Quark message_id;
 
   public:
@@ -108,12 +109,14 @@ class Article
     {
     }
 
-    Article(std::string mid) :
+    Article(std::string g, std::string mid) :
+      group(g),
       message_id(mid)
     {
     }
 
-    Article(Quark mid) :
+    Article(Quark g, Quark mid) :
+      group(g),
       message_id(mid)
     {
     }

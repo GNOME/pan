@@ -373,7 +373,7 @@ namespace
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
       /// TODO get action mark read from prefs (?)
-      Article dba(mc.article_message_id);
+      Article dba(*mc.groups.begin(), mc.article_message_id);
 
       // TODO: test nzb download with ./debug-build/pan/gui/pan  --nzb ../x-men.nzb -o /tmp
       TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, dba, mc.cache, mc.read, TaskArticle::NO_ACTION, nullptr, TaskArticle::DECODE, p);
