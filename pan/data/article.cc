@@ -369,10 +369,14 @@ void Article::set_subject(Quark a) const {
 }
 
 int Article::get_score() const {
+  assert(!group.empty());
   SQLite::Statement q(pan_db, R"SQL(
-    select score from article where message_id = ?
+    select score from article_group
+    where group_id = (select id from `group` where name = ?)
+      and article_id = (select id from article where message_id = ?)
   )SQL");
-  q.bind(1,message_id);
+  q.bind(1,group);
+  q.bind(2,message_id);
   int result;
   int count = 0;
   while (q.executeStep()) {
@@ -383,13 +387,20 @@ int Article::get_score() const {
   return result;
 }
 
-void Article::set_score(int s) const {
+void Article::set_score(int s) const
+{
+  assert(!group.empty());
   SQLite::Statement q(pan_db, R"SQL(
-    update article set score = ? where message_id = ?
+    update article_group set score = ?
+    where group_id = (select id from `group` where name = ?)
+      and article_id = (select id from article where message_id = ?)
   )SQL");
-  q.bind(1,s);
-  q.bind(2,message_id);
-  assert( q.exec() == 1);
+  q.bind(1, s);
+  q.bind(2, group);
+  q.bind(3, message_id);
+  int n(q.exec());
+  LOG4CXX_TRACE(logger, "Set score of " << n << " articles " << message_id << " group " << group << " to " << s);
+  assert(n == 1);
 }
 
 bool Article::is_in_db_article_table() const {
