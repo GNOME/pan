@@ -827,8 +827,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         }
 
         // Now the article is loaded in DB. It's time to score it
-        Article a;
-        a.message_id = Quark(message_id);
+        Article a(group, message_id);
         a.set_score(
           _article_filter.score_article(*this, score_sections, group, a));
       }
@@ -1009,6 +1008,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
 
     int i(0);
     char const *message_id = read_article_q.getColumn(i++);
+    a.group = group;
     a.message_id = Quark(message_id);
 
     // optional references line
@@ -1200,7 +1200,7 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
   _scorefile.get_matching_sections(group.to_view(), sections);
   foreach (quarks_t, mids, it)
   {
-    Article a(*it);
+    Article a(group, *it);
     a.set_score(_article_filter.score_article(*this, sections, group, a));
   }
 }
@@ -1219,7 +1219,7 @@ void DataImpl ::rescore_group_articles(Quark const &group)
 
   q.bind(1, group.c_str());
   while (q.executeStep()) {
-    Article a(Quark(q.getColumn(0).getText()));
+    Article a(group, Quark(q.getColumn(0).getText()));
     a.set_score(_article_filter.score_article(*this, sections, group, a));
   }
 }
