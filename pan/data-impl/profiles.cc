@@ -222,7 +222,7 @@ void ProfilesImpl ::clear()
   active_profile.clear();
 }
 
-void ProfilesImpl ::load(StringView const &filename)
+bool ProfilesImpl ::load(StringView const &filename)
 {
   std::string txt;
   if (file ::get_text_file_contents(filename, txt))
@@ -244,9 +244,12 @@ void ProfilesImpl ::load(StringView const &filename)
                       filename.to_string().c_str(),
                       gerr->message);
       g_clear_error(&gerr);
+      return false;
     }
     g_markup_parse_context_free(c);
+    return true;
   }
+  return false;
 }
 
 namespace {
