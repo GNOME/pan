@@ -172,7 +172,7 @@ ProfileDialog ::ProfileDialog(Data const &data,
   HIG ::workarea_add_section_title(t, &row, _("Signature"));
   HIG ::workarea_add_section_spacer(t, row, 3);
 
-  w = _signature_file_check =
+  w = _use_signature_check =
     gtk_check_button_new_with_mnemonic(_("_Use a Signature"));
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), profile.use_sigfile);
   HIG ::workarea_add_wide_control(t, &row, w);
@@ -180,7 +180,7 @@ ProfileDialog ::ProfileDialog(Data const &data,
   w = _signature_file =
     pan::file_entry_new(_("Signature File"), GTK_FILE_CHOOSER_ACTION_OPEN);
   g_signal_connect(
-    _signature_file_check, "toggled", G_CALLBACK(on_sig_file_toggled), w);
+    _use_signature_check, "toggled", G_CALLBACK(on_sig_file_toggled), w);
   file_entry_set(w, profile.signature_file.c_str());
 
   GtkTreeIter iter;
@@ -400,7 +400,7 @@ void ProfileDialog ::get_profile(std::string &profile_name, Profile &profile)
   from_entry(_attribution_entry, profile.attribution);
 
   profile.use_sigfile =
-    gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_signature_file_check));
+    gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_use_signature_check));
 
   int type;
   GtkTreeIter iter;
