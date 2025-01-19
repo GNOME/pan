@@ -54,7 +54,7 @@ class ProfileDialog
     GtkWidget *_face_entry;
     GtkWidget *_xface_entry;
     GtkWidget *_attribution_entry;
-    GtkWidget *_signature_file_check;
+    GtkWidget *_use_signature_check;
     GtkWidget *_server_combo;
     GtkWidget *_extra_headers_tv;
     GtkWidget *_signature_file_combo;
