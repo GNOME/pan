@@ -21,13 +21,15 @@
 ***************
 **************/
 
+#include "data-impl.h"
+#include "pan/general/log4cxx.h"
 #include <SQLiteCpp/Exception.h>
 #include <cassert>
 #include <config.h>
 #include <cstddef>
-#include <glib/gi18n.h>
-#include <glib.h> // for g_build_filename
 #include <gio/gio.h>
+#include <glib.h> // for g_build_filename
+#include <glib/gi18n.h>
 #include <log4cxx/logger.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -36,16 +38,13 @@
 #include <pan/general/time-elapsed.h>
 #include <sstream>
 #include <string>
-#include "data-impl.h"
-#include "pan/general/log4cxx.h"
 
 #ifdef HAVE_GKR
-  #define GCR_API_SUBJECT_TO_CHANGE
-  #include <libsecret/secret.h>
-  #include <gcr/gcr.h>
-  #undef GCR_API_SUBJECT_TO_CHANGE
+#define GCR_API_SUBJECT_TO_CHANGE
+#include <gcr/gcr.h>
+#include <libsecret/secret.h>
+#undef GCR_API_SUBJECT_TO_CHANGE
 #endif
-
 
 using namespace pan;
 
@@ -83,29 +82,38 @@ namespace pan {
 void load_db_schema_file(SQLiteDb &pan_db, char const *file)
 {
   GError *error;
-  char* contents;
+  char *contents;
   gsize length;
 
   // try local path
-  gchar *sql_path = g_build_filename((gchar*) "pan/data-impl/sql", file, NULL);
-  GFile *sql_file = g_file_new_for_path((char*) sql_path);
+  gchar *sql_path = g_build_filename((gchar *)"pan/data-impl/sql", file, NULL);
+  GFile *sql_file = g_file_new_for_path((char *)sql_path);
 
   // does local path exists
-  if (g_file_query_exists(sql_file, nullptr)) {
-    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
-  } else {
+  if (g_file_query_exists(sql_file, nullptr))
+  {
+    g_file_load_contents(
+      sql_file, nullptr, &contents, &length, nullptr, &error);
+  }
+  else
+  {
     // free local data
     g_free(sql_path);
     g_free(sql_file);
     // try system path
-    sql_path = g_build_filename((gchar*) PAN_SYSTEM_SQL_PATH, file, NULL);
-    sql_file = g_file_new_for_path((char*) sql_path);
+    sql_path = g_build_filename((gchar *)PAN_SYSTEM_SQL_PATH, file, NULL);
+    sql_file = g_file_new_for_path((char *)sql_path);
   }
 
-  if (g_file_query_exists(sql_file, nullptr)) {
-    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
-  } else {
-    std::cerr << "Fatal error: cannot find SQL schema file " << file << std::endl;
+  if (g_file_query_exists(sql_file, nullptr))
+  {
+    g_file_load_contents(
+      sql_file, nullptr, &contents, &length, nullptr, &error);
+  }
+  else
+  {
+    std::cerr << "Fatal error: cannot find SQL schema file " << file
+              << std::endl;
     exit(EXIT_FAILURE);
   }
 
@@ -125,7 +133,7 @@ void load_db_schema(SQLiteDb &pan_db) {
     load_db_schema_file(pan_db, sql_files[i].c_str());
   }
 }
-}
+} // namespace pan
 
 using namespace pan;
 
