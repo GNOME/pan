@@ -55,7 +55,7 @@ class ProfilesImpl : public virtual Profiles
 
   private:
     void clear();
-    void load(const StringView &filename);
+    bool load(const StringView &filename);
     void serialize(std::ostream &) const;
     void save() const;
 
