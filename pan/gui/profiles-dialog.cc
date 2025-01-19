@@ -63,7 +63,7 @@ void from_entry(GtkWidget *w, std::string &setme)
   setme.assign(v.str, v.len);
 }
 
-void on_sig_file_toggled(GtkToggleButton *tb, gpointer sensitize)
+void on_use_sig_check_toggled(GtkToggleButton *tb, gpointer sensitize)
 {
   gtk_widget_set_sensitive(GTK_WIDGET(sensitize),
                            gtk_toggle_button_get_active(tb));
@@ -180,7 +180,7 @@ ProfileDialog ::ProfileDialog(Data const &data,
   w = _signature_file =
     pan::file_entry_new(_("Signature File"), GTK_FILE_CHOOSER_ACTION_OPEN);
   g_signal_connect(
-    _use_signature_check, "toggled", G_CALLBACK(on_sig_file_toggled), w);
+    _use_signature_check, "toggled", G_CALLBACK(on_use_sig_check_toggled), w);
   file_entry_set(w, profile.signature_file.c_str());
 
   GtkTreeIter iter;
