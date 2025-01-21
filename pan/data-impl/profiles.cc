@@ -18,7 +18,6 @@
  */
 
 #include <config.h>
-#include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
@@ -222,7 +221,7 @@ void ProfilesImpl ::clear()
   active_profile.clear();
 }
 
-bool ProfilesImpl ::load(StringView const &filename)
+bool ProfilesImpl ::load_posting_profiles(StringView const &filename)
 {
   std::string txt;
   if (file ::get_text_file_contents(filename, txt))
@@ -354,7 +353,7 @@ ProfilesImpl ::ProfilesImpl(DataIO &data_io) :
   _data_io(data_io)
 {
   // load from file...
-  if (load (_data_io.get_posting_name()))
+  if (load_posting_profiles (_data_io.get_posting_name()))
     {
       // migrate data in DB
     }
@@ -399,18 +398,18 @@ void
 ProfilesImpl :: delete_profile (const std::string& profile_name)
 {
   profiles.erase (profile_name);
-  save ();
+  save_posting_profiles ();
 }
 
 void
 ProfilesImpl :: add_profile (const std::string& profile_name, const Profile& profile)
 {
   profiles[profile_name] = profile;
-  save ();
+  save_posting_profiles ();
 }
 
 void
-ProfilesImpl :: save () const
+ProfilesImpl :: save_posting_profiles () const
 {
   const std::string f (_data_io.get_posting_name());
   std::ofstream out (f.c_str());
@@ -421,6 +420,6 @@ ProfilesImpl :: save () const
 
 ProfilesImpl :: ~ProfilesImpl ()
 {
-  save ();
+  save_posting_profiles ();
   delete &_data_io;     // we own the DataIO
 }
