@@ -33,6 +33,7 @@ extern "C"
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
+#include "pan/general/log4cxx.h"
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>
 
@@ -43,6 +44,8 @@ using namespace pan;
 ///
 namespace {
 typedef std::map<std::string, Profile> profiles_t;
+
+log4cxx::LoggerPtr logger(pan::getLogger("profiles"));
 
 struct MyContext
 {
