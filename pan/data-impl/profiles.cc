@@ -18,7 +18,7 @@
  */
 
 #include <config.h>
-#include <iostream>
+#include <log4cxx/logger.h>
 #include <map>
 #include <string>
 extern "C"
@@ -224,11 +224,13 @@ void ProfilesImpl ::clear()
   active_profile.clear();
 }
 
-bool ProfilesImpl ::load_posting_profiles(StringView const &filename)
+bool ProfilesImpl ::migrate_posting_profiles(std::string const &filename)
 {
   std::string txt;
   if (file ::get_text_file_contents(filename, txt))
   {
+    LOG4CXX_INFO(logger, "Migrating posting profiles...");
+
     MyContext mc(profiles, active_profile);
     GMarkupParser p;
     p.start_element = start_element;
@@ -243,109 +245,107 @@ bool ProfilesImpl ::load_posting_profiles(StringView const &filename)
     if (gerr)
     {
       Log::add_err_va(_("Error reading file \"%s\": %s"),
-                      filename.to_string().c_str(),
+                      filename.data(),
                       gerr->message);
       g_clear_error(&gerr);
       return false;
     }
     g_markup_parse_context_free(c);
+
+    LOG4CXX_DEBUG(logger, "Removing " << filename << "...");
+    std::remove(filename.data());
+
     return true;
   }
   return false;
 }
 
-namespace {
-int const indent_char_len(2);
-
-std::string indent(int depth)
+void ProfilesImpl ::load_posting_profiles()
 {
-  return std::string(depth * indent_char_len, ' ');
-}
+  SQLite::Statement read(pan_db, R"SQL(
+    select p.name, s.host, a.author, face, xface, attribution, fqdn
+    from profile as p
+    join author as a on p.author_id == a.id
+    join server as s on p.server_id == s.id
+  )SQL");
 
-std::string escaped(std::string const &s)
-{
-  char *pch = g_markup_escape_text(s.c_str(), s.size());
-  std::string const ret(pch);
-  g_free(pch);
-  return ret;
-}
-} // namespace
+  SQLite::Statement read_header(pan_db, R"SQL(
+    select name, value from profile_header
+    where profile_id = (select id from profile where name = ?)
+  )SQL");
 
-void ProfilesImpl ::serialize(std::ostream &out) const
-{
-  int depth(0);
+  SQLite::Statement read_signature(pan_db, R"SQL(
+    select type, active, content, gpg_sig_uid from signature
+    where profile_id = (select id from profile where name = ?)
+  )SQL");
 
-  // xml header...
-  out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
-  out << indent(depth++) << "<posting>\n";
-
-  // profiles...
-  out << indent(depth++) << "<profiles>\n";
-  foreach_const (profiles_t, profiles, it)
+  while (read.executeStep())
   {
-    out << indent(depth++) << "<profile name=\"" << escaped(it->first)
-        << "\">\n";
-    out << indent(depth) << "<username>" << escaped(it->second.username)
-        << "</username>\n";
-    out << indent(depth) << "<address>" << escaped(it->second.address)
-        << "</address>\n";
-    out << indent(depth) << "<server>"
-        << escaped(it->second.posting_server.to_view()) << "</server>\n";
-    out << indent(depth) << "<face>" << escaped(it->second.face) << "</face>\n";
-    out << indent(depth) << "<xface>" << escaped(it->second.xface)
-        << "</xface>\n";
-    if (! it->second.signature_file.empty()
-        && it->second.sig_type != Profile::GPGSIG)
+    int i(0);
+    std::string name(read.getColumn(i++).getText());
+    LOG4CXX_DEBUG(logger, "Reading posting profile " << name);
+
+    Profile &p(profiles[name]);
+    p.posting_server = Quark(read.getColumn(i++).getText());
+    StringView auth_name, auth_address, author( read.getColumn(i++).getText());
+
+    author.trim();
+    if (author.strrchr('<'))
     {
-      char const *type;
-      switch (it->second.sig_type)
+      author.pop_token(auth_name, '<');
+      auth_name.trim();
+      p.username = auth_name;
+      author.pop_token(auth_address, '>');
+      auth_address.trim();
+      p.address = auth_address;
+    }
+    else if (author.strrchr('@'))
+    {
+      p.username.clear();
+      p.address = author;
+    }
+    else
+    {
+      p.address.clear();
+      p.username = author;
+    }
+
+    p.face = read.getColumn(i++).getText();
+    p.xface = read.getColumn(i++).getText();
+    p.attribution = read.getColumn(i++).getText();
+    p.fqdn = read.getColumn(i++).getText();
+
+    read_header.reset();
+    read_header.bind(1, name);
+    while (read_header.executeStep())
+    {
+      std::string key(read_header.getColumn(0).getText());
+      p.headers[key] = read_header.getColumn(1).getText();
+    }
+
+    read_signature.reset();
+    read_signature.bind(1, name);
+    while (read_signature.executeStep())
+    {
+      std::string type(read_signature.getColumn(0).getText());
+      p.use_gpgsig = false;
+      if (type == "gpgsig")
       {
-        case Profile::FILE:
-          type = "file";
-          break;
-        case Profile::COMMAND:
-          type = "command";
-          break;
-        default:
-          type = "text";
-          break;
+        p.use_gpgsig = true;
+        p.sig_type = p.GPGSIG;
       }
-      out << indent(depth) << "<signature-file"
-          << " active=\"" << (it->second.use_sigfile ? "true" : "false") << '"'
-          << " type=\"" << type << '"' << ">"
-          << escaped(it->second.signature_file) << "</signature-file>\n";
+      else if (type == "text")
+        p.sig_type = p.TEXT;
+      else if (type == "command")
+        p.sig_type = p.COMMAND;
+      else // file
+        p.sig_type = p.FILE;
+
+      p.use_sigfile = read_signature.getColumn(1).getInt();
+      p.signature_file = read_signature.getColumn(2).getText();
+      p.gpg_sig_uid = read_signature.getColumn(3).getText();
     }
-    if (it->second.use_gpgsig && ! it->second.gpg_sig_uid.empty())
-    {
-      out << indent(depth) << "<gpg-signature"
-          << " active=\"" << (it->second.use_sigfile ? "true" : "false") << '"'
-          << ">" << escaped(it->second.gpg_sig_uid) << "</gpg-signature>\n";
-    }
-    if (! it->second.attribution.empty())
-    {
-      out << indent(depth) << "<attribution>" << escaped(it->second.attribution)
-          << "</attribution>\n";
-    }
-    if (! it->second.fqdn.empty())
-    {
-      out << indent(depth) << "<fqdn>" << escaped(it->second.fqdn)
-          << "</fqdn>\n";
-    }
-    if (! it->second.headers.empty())
-    {
-      out << indent(depth++) << "<headers>\n";
-      foreach_const (Profile::headers_t, it->second.headers, hit)
-      {
-        out << indent(depth) << "<header><name>" << escaped(hit->first)
-            << "</name><value>" << escaped(hit->second)
-            << "</value></header>\n";
-      }
-      out << indent(--depth) << "</headers>\n";
-    }
-    out << indent(--depth) << "</profile>\n";
   }
-  out << indent(--depth) << "</profiles>\n";
-  out << indent(--depth) << "</posting>\n";
 }
 
 /***
@@ -409,11 +409,96 @@ ProfilesImpl :: add_profile (const std::string& profile_name, const Profile& pro
 void
 ProfilesImpl :: save_posting_profiles () const
 {
-  const std::string f (_data_io.get_posting_name());
-  std::ofstream out (f.c_str());
-  serialize (out);
-  out.close ();
-  chmod (f.c_str(), 0600);
+  SQLite::Statement save_author(pan_db, R"SQL(
+    insert into author (author) values ($a)
+    on conflict do nothing;
+  )SQL");
+
+  SQLite::Statement save(pan_db, R"SQL(
+    insert into profile (name, server_id, author_id, face, xface, attribution, fqdn)
+    values ($n, $s_id, (select id from author where author == $author), $f, $xf, $atr, $fqdn)
+    on conflict (name)
+    do update set author_id = (select id from author where author == $author),
+              server_id = $s_id, face= $f, xface = $xf, attribution = $atr, fqdn = $fqdn
+    where name = $name
+  )SQL");
+
+  SQLite::Statement delete_header(pan_db, R"SQL(
+    delete from profile_header
+    where profile_id = (select id from profile where name = $pf_name)
+  )SQL");
+
+  SQLite::Statement save_header(pan_db, R"SQL(
+    insert into profile_header (profile_id, name, value)
+    values ((select id from profile where name = $pf_name), ?,?)
+  )SQL");
+
+  SQLite::Statement save_sig(pan_db, R"SQL(
+    insert into signature
+    (profile_id, active, type, content, gpg_sig_uid)
+    values (
+      (select id from profile where name = $pf_name),
+      $a, $t, $c, $gpg)
+    on conflict (profile_id)
+    do update set ( active, type, content, gpg_sig_uid) = ($a, $t, $c, $gpg)
+    where profile_id = (select id from profile where name = $pf_name)
+  )SQL");
+
+  foreach_const (profiles_t, profiles, it)
+  {
+    std::string author(it->second.username + " <" + it->second.address + ">");
+    save_author.reset();
+    save_author.bind(1, author);
+    save_author.exec();
+
+    save.reset();
+    int i(1);
+    save.bind(i++, it->first);
+    save.bind(i++, it->second.posting_server.to_view());
+    save.bind(i++, author);
+    save.bind(i++, it->second.face);
+    save.bind(i++, it->second.xface);
+    save.bind(i++, it->second.attribution);
+    save.bind(i++, it->second.fqdn);
+    save.exec();
+
+    delete_header.reset();
+    delete_header.bind(1, it->first);
+    delete_header.exec();
+
+    foreach_const (Profile::headers_t, it->second.headers, hit)
+    {
+      save_header.reset();
+      save_header.bind(1, it->first);
+      save_header.bind(2, hit->first);
+      save_header.bind(3, hit->second);
+      save_header.exec();
+    }
+
+    save_sig.reset();
+    i = 1;
+    bool active(it->second.use_sigfile);
+    save_sig.bind(i++, it->first);
+    save_sig.bind(i++, active);
+    switch (it->second.sig_type)
+    {
+      case Profile::FILE:
+        save_sig.bind(i++, "file");
+        break;
+      case Profile::COMMAND:
+        save_sig.bind(i++, "command");
+        break;
+      case Profile::GPGSIG:
+        save_sig.bind(i++, "gpgsig");
+        break;
+      default:
+        save_sig.bind(i++, "text");
+        break;
+    }
+    save_sig.bind(i++, it->second.signature_file); // content
+    save_sig.bind(i++, it->second.gpg_sig_uid);
+    save_sig.exec();
+  }
 }
 
 ProfilesImpl :: ~ProfilesImpl ()
