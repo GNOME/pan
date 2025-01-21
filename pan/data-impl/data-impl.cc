@@ -161,12 +161,6 @@ DataImpl ::DataImpl(StringView const &cache_ext,
 {
   load_db_schema(pan_db);
 
-  if (load_posting_profiles(_data_io->get_posting_name()))
-  {
-    save_posting_profiles();
-    // TODO: remove file
-  }
-
   rebuild_backend ();
 }
 
@@ -186,6 +180,17 @@ DataImpl :: rebuild_backend ()
       _scorefile.parse_file (score_filename);
 
     rebuild_server_data();
+
+    std::string profile_file(_data_io->get_posting_name());
+    if (migrate_posting_profiles(profile_file))
+    {
+      save_posting_profiles();
+    }
+    else
+    {
+      load_posting_profiles();
+    }
+
     rebuild_group_data();
     rebuild_group_xover_data();
     rebuild_group_permission_data();
