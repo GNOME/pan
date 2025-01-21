@@ -52,12 +52,12 @@ class ProfilesImpl : public virtual Profiles
     void delete_profile(const std::string &profile_name) override;
     void add_profile(const std::string &profile_name,
                      const Profile &profile) override;
+    bool load_posting_profiles(const StringView &filename);
+    void save_posting_profiles() const;
 
   private:
     void clear();
-    bool load_posting_profiles(const StringView &filename);
     void serialize(std::ostream &) const;
-    void save_posting_profiles() const;
 
   private:
     typedef std::map<std::string, Profile> profiles_t;
