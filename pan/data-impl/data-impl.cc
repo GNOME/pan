@@ -156,14 +156,20 @@ DataImpl ::DataImpl(StringView const &cache_ext,
                 prefs.get_flag("rules-auto-dl-mark-read", false),
                 prefs.get_flag("rules-autocache-mark-read", false))
 {
+  load_db_schema(pan_db);
+
+  if (load_posting_profiles (_data_io->get_posting_name()))
+    {
+      save_posting_profiles();
+      // TODO: remove file
+    }
+
   rebuild_backend ();
 }
 
 void
 DataImpl :: rebuild_backend ()
 {
-  load_db_schema(pan_db);
-
   if (_unit_test)
   {
     pan_debug ("data-impl not loading anything because we're in unit test mode");
