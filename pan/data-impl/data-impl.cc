@@ -133,7 +133,8 @@ void load_db_schema(SQLiteDb &pan_db)
                                      "02-group.sql",
                                      "03-article.sql",
                                      "04-posting-profile.sql"};
-  for (int i = 0; i < sql_files.size(); i++) {
+  for (int i = 0; i < sql_files.size(); i++)
+  {
     load_db_schema_file(pan_db, sql_files[i].c_str());
   }
 }
@@ -158,14 +159,20 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _article_rules(prefs.get_flag("rules-autocache-mark-read", false),
                  prefs.get_flag("rules-auto-dl-mark-read", false))
 {
+  load_db_schema(pan_db);
+
+  if (load_posting_profiles(_data_io->get_posting_name()))
+  {
+    save_posting_profiles();
+    // TODO: remove file
+  }
+
   rebuild_backend ();
 }
 
 void
 DataImpl :: rebuild_backend ()
 {
-  load_db_schema(pan_db);
-
   if (_unit_test)
   {
     pan_debug ("data-impl not loading anything because we're in unit test mode");

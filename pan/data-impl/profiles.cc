@@ -352,11 +352,6 @@ void ProfilesImpl ::serialize(std::ostream &out) const
 ProfilesImpl ::ProfilesImpl(DataIO &data_io) :
   _data_io(data_io)
 {
-  // load from file...
-  if (load_posting_profiles(_data_io.get_posting_name()))
-  {
-    // migrate data in DB
-  }
 }
 
 bool
