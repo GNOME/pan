@@ -20,43 +20,44 @@
 #ifndef __RulesFilter_h__
 #define __RulesFilter_h__
 
+#include <pan/data/article.h>
+#include <pan/data/data.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/scorefile.h>
-#include <pan/data/article.h>
-#include <pan/data/data.h>
 
-
-namespace pan
+namespace pan {
+/**
+ * @ingroup data_impl
+ */
+class RulesFilter
 {
-  /**
-   * @ingroup data_impl
-   */
-  class RulesFilter
-  {
 
-    public:
+  public:
+    RulesFilter(bool cache, bool dl, bool del) :
+      _auto_cache_mark_read(cache),
+      _auto_dl_mark_read(dl),
+      _auto_delete_mark_read(del)
+    {
+    }
 
-      RulesFilter(bool cache, bool dl, bool del) : _auto_cache_mark_read(cache), _auto_dl_mark_read(dl), _auto_delete_mark_read(del) {  }
+    bool test_article(Data &data,
+                      RulesInfo &rules,
+                      Quark const &group,
+                      Article &article);
 
-      bool test_article (Data        & data,
-                         RulesInfo   & rules,
-                         const Quark& group,
-                         Article& article);
+  private:
+    std::set<Article const *> _mark_read;
+    std::set<Article const *> _delete;
+    bool _auto_cache_mark_read, _auto_dl_mark_read, _auto_delete_mark_read;
 
-      private:
-        std::set<const Article*> _mark_read;
-        std::set<const Article*> _delete;
-        bool _auto_cache_mark_read, _auto_dl_mark_read, _auto_delete_mark_read;
-
-      public:
-
-        std::set<const Article*> _cached;
-        std::set<const Article*> _downloaded;
-        void finalize (Data& data) ;
-  };
-}
+  public:
+    std::set<Article const *> _cached;
+    std::set<Article const *> _downloaded;
+    void finalize(Data &data);
+};
+} // namespace pan
 
 #endif
