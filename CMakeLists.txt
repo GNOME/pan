@@ -41,7 +41,7 @@ set(PACKAGE "pan")
 set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 
 # see https://gitlab.gnome.org/GNOME/pan/-/issues/175
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # see https://cmake.org/cmake/help/latest/module/FindThreads.html
