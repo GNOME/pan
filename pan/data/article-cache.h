@@ -76,6 +76,7 @@ class ArticleCache
                  size_t max_megs = 10);
     ~ArticleCache();
 
+    void rebuild_article_cache();
     typedef std::vector<Quark> mid_sequence_t;
 
     bool contains(Quark const &message_id) const;
@@ -86,6 +87,7 @@ class ArticleCache
     void release(const mid_sequence_t &mids);
     void resize();
     void clear();
+    void set_cached_status_in_db(Quark const &message_id, bool cached);
 #ifdef HAVE_GMIME_CRYPTO
       GMimeMessage* get_message (const mid_sequence_t&, GPGDecErr&) const;
 #else
