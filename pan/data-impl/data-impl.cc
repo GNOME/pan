@@ -197,6 +197,8 @@ DataImpl :: rebuild_backend ()
 
     rebuild_group_description_data();
 
+    _cache.rebuild_article_cache();
+
     Log::add_info_va (_("Loaded data backend in %.1f seconds"), timer.get_seconds_elapsed());
   }
 }

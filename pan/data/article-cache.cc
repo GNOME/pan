@@ -18,6 +18,7 @@
  */
 
 #include "pan/general/log4cxx.h"
+#include <SQLiteCpp/Statement.h>
 #include <config.h>
 
 extern "C"
@@ -35,6 +36,7 @@ extern "C"
 
 #include "article-cache.h"
 #include <pan/general/debug.h>
+#include "pan/data/pan-db.h"
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -160,7 +162,10 @@ ArticleCache ::ArticleCache(StringView const &path,
   _max_megs(max_megs),
   _current_bytes(0ul)
 {
+}
 
+void ArticleCache::rebuild_article_cache()
+{
   GError *err = NULL;
   GDir *dir = g_dir_open(_path.c_str(), 0, &err);
   if (err != NULL)
@@ -195,6 +200,8 @@ ArticleCache ::ArticleCache(StringView const &path,
           _current_bytes += info._size;
           _mid_to_info.insert(
             mid_to_info_t::value_type(info._message_id, info));
+          LOG4CXX_TRACE(logger, "constructor adds article [" << info._message_id << "] in cache");
+          set_cached_status_in_db(info._message_id, true);
         }
       }
     }
@@ -292,10 +299,22 @@ ArticleCache :: add (const Quark& message_id, const StringView& article, const b
       if (virtual_file) ++_locks[message_id];
       resize ();
       res.type = CACHE_OK;
+
+      LOG4CXX_TRACE(logger, "adding [" << info._message_id << "] in cache");
+      set_cached_status_in_db(info._message_id, true);
     }
-    fclose (fp);
+    fclose(fp);
   }
   return res;
+}
+
+void ArticleCache::set_cached_status_in_db(Quark const &message_id, bool cached)
+{
+  // record cached status in DB
+  SQLite::Statement q(pan_db, "update article set cached = ? where message_id == ?");
+  q.bind(1, cached);
+  q.bind(2, message_id);
+  q.exec();
 }
 
 /***
@@ -360,6 +379,7 @@ ArticleCache :: resize (guint64 max_bytes)
         removed.insert (mid);
         LOG4CXX_TRACE(logger, "removing [" << mid << "] as we resize the queue");
         _mid_to_info.erase (mid);
+        set_cached_status_in_db(mid, false);
       }
     }
   }
