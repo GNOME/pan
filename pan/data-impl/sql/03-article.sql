@@ -22,6 +22,7 @@ create table if not exists article (
   -- 1 for text article, potentially a lot for binaries
   expected_parts integer,
 
+  cached boolean check(cached = False or cached = True) default False,
   is_read boolean check(is_read = False or is_read = True) default False
 );
 
