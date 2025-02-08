@@ -5,6 +5,7 @@ add_library(data-impl
  data-impl.cc
  groups.cc
  headers.cc
+ header-filter.cc
  profiles.cc
  server.cc
  my-tree.cc
@@ -30,6 +31,8 @@ if(WANT_GKR)
   target_link_libraries(data-impl PUBLIC PkgConfig::LIBSECRET)
   target_link_libraries(data-impl PUBLIC PkgConfig::GCR3)
 endif()
+
+set(data-impl-test-programs header-filter-test)
 
 foreach(test ${data-impl-test-programs})
   add_executable(${test} ${test}.cc)

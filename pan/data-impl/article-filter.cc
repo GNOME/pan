@@ -67,6 +67,8 @@ std::string const ArticleFilter ::get_header(Article const &a,
   return empty;
 }
 
+// TODO: cannot test article by article. Need a way to test all in one query
+// need to modify caller of test_article.
 bool ArticleFilter ::test_article(Data const &data,
                                   FilterInfo const &criteria,
                                   Quark const &group,
