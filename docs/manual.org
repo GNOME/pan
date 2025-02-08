@@ -1,0 +1,1102 @@
+# this file is written with org-mode. See https://orgmode.org/org.html
+# there are org-mode extension to popular editor like vscode.
+
+* Contents                                                              :TOC:
+- [[#getting-started][Getting Started]]
+  - [[#to-start-pan][To Start Pan]]
+  - [[#when-you-start-pan][When You Start Pan]]
+- [[#usenet-in-a-nutshell][Usenet in a Nutshell]]
+  - [[#description][Description]]
+  - [[#organization][Organization]]
+  - [[#article-headers][Article Headers]]
+  - [[#binary-data][Binary Data]]
+- [[#basic-usage][Basic Usage]]
+  - [[#set-up-a-news-server][Set Up a News Server]]
+  - [[#selecting-a-news-group][Selecting a News Group]]
+  - [[#reading-articles][Reading Articles]]
+  - [[#posting-articles][Posting Articles]]
+  - [[#replying-to-articles][Replying to Articles]]
+  - [[#downloading-binaries][Downloading Binaries]]
+- [[#groups][Groups]]
+  - [[#group-views][Group Views]]
+  - [[#group-actions][Group Actions]]
+  - [[#the-newsrc-file][The Newsrc File]]
+- [[#headers][Headers]]
+  - [[#header-view][Header View]]
+  - [[#header-movement][Header Movement]]
+  - [[#header-selection][Header Selection]]
+  - [[#header-action][Header Action]]
+- [[#body][Body]]
+  - [[#digital-images][Digital Images]]
+  - [[#body-views][Body Views]]
+- [[#posting][Posting]]
+  - [[#actions][Actions]]
+  - [[#posting-profiles-dialog][Posting Profiles Dialog]]
+  - [[#post-article-dialog][Post Article Dialog]]
+- [[#tasks][Tasks]]
+  - [[#cancel-last-task][Cancel Last Task]]
+  - [[#task-manager][Task Manager]]
+  - [[#nzb-files][NZB Files]]
+- [[#scoring][Scoring]]
+  - [[#scoring-actions][Scoring Actions]]
+  - [[#adding-scoring-rules][Adding Scoring Rules]]
+  - [[#editing-or-deleting-scoring-rules][Editing or Deleting Scoring Rules]]
+  - [[#advanced-scoring][Advanced Scoring]]
+- [[#customization][Customization]]
+  - [[#behavior][Behavior]]
+  - [[#gui-composition][GUI Composition]]
+  - [[#external-applications][External Applications]]
+  - [[#article-cache-size][Article Cache Size]]
+  - [[#news-servers][News Servers]]
+
+* Getting Started
+:PROPERTIES:
+:CUSTOM_ID: getting-started
+:CLASS: title
+:END:
+
+This section provides information on how to start Pan, and describes the
+Pan user interface.
+
+** To Start Pan
+:PROPERTIES:
+:CUSTOM_ID: to-start-pan
+:CLASS: title
+:END:
+
+How to start Pan depends on your desktop environment.
+
+- The GNOME Desktop Environment :: Press the Super key to enter the
+  Activities Overview, type pan, and then press Enter.
+
+- Command line :: To start Pan from a command line, type the following
+  command, then press Enter:
+
+  #+begin_src contents
+  pan
+  #+end_src
+
+** When You Start Pan
+:PROPERTIES:
+:CUSTOM_ID: when-you-start-pan
+:CLASS: title
+:END:
+
+When you start Pan, the following window is displayed:
+
+[[./mainwindow.png]]
+
+The main Pan window contains the following elements:
+
+- Menubar :: The menubar contains all the commands that you need to run
+  Pan.
+- Toolbar :: The toolbar contains a subset of the commands that you can
+  access from the menubar. It also contains two textboxes that allow you
+  to limit the number of groups and/or the number of articles displayed.
+- Group Pane :: The Group Pane displays a list of all the newsgroups
+  available on the server. This list is split into two groups:
+  Subscribed Groups are a user-selected list of favorite groups, Other
+  Groups are the rest of the available groups from the server.
+- Header Pane :: The Header Pane displays a list of all the individual
+  article headers available in the selected group. The Header Pane is
+  highly customizable via sorting, threading and scoring.
+- Body Pane :: The Body Pane displays the text of the selected article
+  header.
+- Status Bar :: The Status Bar displays information about current Pan
+  activity:
+  - Current number of connections to the server
+  - Number of uncompleted tasks in the Task Manager
+  - Completed percentage of current tasks
+  - Error status of the event log
+
+When you right-click in the Pan window, the application displays a popup
+menu. The popup menu contains the most common commands for whichever
+pane you clicked.
+
+Like other applications, actions in Pan can be performed in several
+ways: with the menu, with the toolbar or with shortcut keys. The
+shortcut key for most menu items is shown in the menu itself, following
+the menu command.
+
+* Usenet in a Nutshell
+:PROPERTIES:
+:CUSTOM_ID: usenet-in-a-nutshell
+:CLASS: title
+:END:
+
+Knowledge about how Usenet works will make using Pan easier.
+
+** Description
+:PROPERTIES:
+:CUSTOM_ID: description
+:CLASS: title
+:END:
+
+Usenet is a distributed discussion system. Using a special program
+called a newsreader, a user accesses a news server to read and post
+email-like messages called articles. These articles are then exchanged
+back and forth with other news servers throughout the world. In this
+way, articles propagate from one news server to another throughout the
+entire Usenet system.
+
+** Organization
+:PROPERTIES:
+:CUSTOM_ID: organization
+:CLASS: title
+:END:
+
+Articles are organized into categories called groups. In discussion
+groups, most articles are responses to another article. The set of
+articles which can be traced to one single non-reply article is called a
+thread. When articles are organized into threads, it is much easier to
+follow a single discussion.
+
+** Article Headers
+:PROPERTIES:
+:CUSTOM_ID: article-headers
+:CLASS: title
+:END:
+
+Articles are routed around Usenet based on the information contained in
+the article header, which is the first part of an article that contains
+information like the subject, author, date and routing information. To
+save time and bandwidth, most newsreaders first download just the
+article headers to sort and thread them. The user selects an article of
+interest from the list of headers and then downloads the article body to
+read.
+
+** Binary Data
+:PROPERTIES:
+:CUSTOM_ID: binary-data
+:CLASS: title
+:END:
+
+Usenet was originally created to distribute text content encoded in
+7-bit ASCII. With additional encoding programs, multiple posts per chunk
+and other various tricks, it became possible to send binary data through
+Usenet. Groups that allow for binary content or binaries are called
+binary groups.
+
+* Basic Usage
+:PROPERTIES:
+:CUSTOM_ID: basic-usage
+:CLASS: title
+:END:
+
+This section is an overview on how to perform basic Usenet actions with
+Pan.
+
+** Set Up a News Server
+:PROPERTIES:
+:CUSTOM_ID: set-up-a-news-server
+:CLASS: title
+:END:
+
+When you start Pan for the first time, the Add a Server dialog is
+displayed.
+
+At this point, you must enter the connection information for the server
+you wish to access. After you enter this information, Pan will contact
+the server and download a list of all the groups the server carries and
+save it to disk.
+
+Refer to [[#news-servers][News Servers]] for more detailed information.
+
+** Selecting a News Group
+:PROPERTIES:
+:CUSTOM_ID: selecting-a-news-group
+:CLASS: title
+:END:
+
+The Group Pane contains a list of all the news groups available on the
+server. Scroll through the list and enter a group by clicking on its
+name.
+
+If this is the first time you have entered this group, you will be
+prompted on how many article headers you wish to retrieve from the
+server. You can choose to retrieve all article headers available for
+that group or limit the retrieval by either quantity of articles or
+number of days.
+
+After making a selection from this dialog, Pan will download the article
+headers for the selected group and save them locally on the computer.
+
+📃 Depending on the news server, certain groups might be "dead" and have no
+headers available for download.
+
+After article header retrieval, the group name in the Group Pane will
+turn bold, which means there are unread articles in that particular
+group. Also the number of unread articles in the group will be displayed
+in parenthesis following the group name.
+
+It's not unusual for a server to have tens of thousands of groups, but
+usually a user is only interested in a few. To better keep track of the
+interesting groups, select the group name by middle-clicking on it and
+choose Groups ▸ Subscribe. Scroll the group window to the top if
+necessary and you will see that the selected newsgroup is listed
+directly under the Subscribed Groups section.
+
+** Reading Articles
+:PROPERTIES:
+:CUSTOM_ID: reading-articles
+:CLASS: title
+:END:
+
+After entering a group, the header pane will be filled with article
+headers. The header pane can be sorted by clicking on the topmost row of
+a column, where the column name is located. Clicking again will reverse
+the sort. The column that is used for sorting will have a downward arrow
+after the column name and the entire column will darken.
+
+Pan defaults to showing collapsed threads. Only the first article of the
+thread is shown with a number in parenthesis indicating how many posts
+are hidden. Clicking on the right-facing arrow before the header text
+will expand the thread, showing the hidden articles in the thread.
+Reading the first article of the thread will also expand the thread. The
+keyboard shortcut for expanding threads is /Shift + →/. /Shift + ←/ will
+collapse the thread.
+
+Clicking on a header will download the article from the server, store it
+in the article cache and display it in the article pane. The article is
+then marked as read. Read articles are distinguished in the header pane
+by using a normal (not bold) font and by showing an open envelope icon
+in the state column.
+
+You can scroll the message in the Article Pane by using the scrollbar or
+by pressing /Space/. Whenever the bottom of the retrieved article is
+already displayed, pressing /Space/ will download the next article.
+
+** Posting Articles
+:PROPERTIES:
+:CUSTOM_ID: posting-articles
+:CLASS: title
+:END:
+
+To post an article in a group and start a new thread, select the group
+you wish to post to in the Group Pane and then choose
+*Post ▸ Post to Newsgroup*. If this is the first time you have posted an article to a
+newsgroup, the Posting Profile dialog will appear and you will be
+required to fill in some information. Next, the Post Article dialog will
+appear. Type in a subject and then enter the body of the message at the
+bottom. When done, choose *File ▸ Send Article* to send the article to the
+news server and out to the rest of Usenet.
+
+Refer to [[#posting-profiles-dialog][Posting Profiles Dialog]] and [[#post-article-dialog][Post Article Dialog]] for more
+detailed information.
+
+** Replying to Articles
+:PROPERTIES:
+:CUSTOM_ID: replying-to-articles
+:CLASS: title
+:END:
+
+If you want to post a reply to a specific article and have your followup
+appear in that article's thread, highlight that article in the Header
+Pane with the middle mouse button and use *Post ▸ Followup* to Newsgroup.
+The highlighted article's text will appear as quoted text (each line is
+preceded by a ">") in the editor window. Type in your response and then
+choose *File ▸ Send Article* to send the article to the news server.
+
+If you want to send a reply to a specific article via email, highlight
+that article in the Header Pane with the middle mouse button and choose
+*Post ▸ Reply to Author in Mail* . The highlighted article's text will
+appear as quoted text (each line is preceded by a ">") in the editor
+window. Type in your response and then choose *File ▸ Send Article* and
+the text will be sent to the default external email application.
+Double-check the =To:= field and then send the email as you normally would
+with that application.
+
+** Downloading Binaries
+:PROPERTIES:
+:CUSTOM_ID: downloading-binaries
+:CLASS: title
+:END:
+
+A binary file in Usenet is usually composed of many smaller articles.
+Pan automatically organizes all these articles under one special article
+header. If all the data that comprises the binary header made it through
+the Usenet network successfully, a green, full puzzle-piece is displayed
+in the first column. To save the data, select the special header in the
+header window and use *Articles ▸ Save Articles* to download and save the
+binary data to disk.
+
+If the binary posts are corrupted by missing or incorrect data, a red,
+incomplete puzzle-piece is displayed in the first column. The file may
+be saved, but it will probably be corrupt in some way.
+
+📃 Supporting binary newsgroups takes a large amount of bandwidth. Unless
+you are using a premium news server provider, it is not unusual for many
+binary files to be missing or corrupt.
+
+* Groups
+:PROPERTIES:
+:CUSTOM_ID: groups
+:CLASS: title
+:END:
+
+Working with groups in Pan.
+
+** Group Views
+:PROPERTIES:
+:CUSTOM_ID: group-views
+:CLASS: title
+:END:
+
+The total number of groups on a news server can be quite extensive. An
+easy way to find a specific group is to use the Group text box in the
+toolbar. Only groups that match the characters typed in the box will be
+displayed in the Group Pane. If you wish to return the Group Pane to its
+original state, simply delete the characters in the box by clicking the
+X icon to the right of the box.
+
+The group names presented in the Group Pane can be shortened by choosing
+*View ▸ Group Pane ▸ Abbreviate Names* in Group Pane . This only alters
+the way the names are presented in this pane.
+
+** Group Actions
+:PROPERTIES:
+:CUSTOM_ID: group-actions
+:CLASS: title
+:END:
+
+While a news group is selected, you can perform the following actions:
+
+- Groups ▸ Mark Group Read :: Mark all articles in a group read.
+  A typical way to read news is to read all the interesting threads and
+  when done mark the group read. The next time you start the news
+  reader, choose Groups ▸ Get New Headers in Selected Group . With
+  View ▸ Header Pane ▸ Match only Unread Articles , the only headers you
+  will see will be the new headers you just downloaded.
+- Groups ▸ Get New Headers in Subscribed Groups :: Grab new headers for
+  all the groups in the Subscribed Groups section.
+- Groups ▸ Edit Group Preferences :: Opens the Group Preferences dialog.
+  Within this dialog you can customize certain Pan features per group:
+  - Character encoding
+  - Location in the file hierarchy where attachments are saved
+  - The posting profile.
+- Groups ▸ Subscribe :: Add a favorite group to the Subscribed Groups
+  section of the Group Pane. Unsubscribe is the opposite of this
+  command.
+- Groups ▸ Refresh Group List :: Resync the local group list that Pan
+  uses with the current listing on the news server.
+- Groups ▸ Delete Group's Articles :: Delete all the articles for the
+  selected group from the article index.
+
+** The Newsrc File
+:PROPERTIES:
+:CUSTOM_ID: the-newsrc-file
+:CLASS: title
+:END:
+
+The group list, subscribe/unsubscribe status of each group and the
+articles marked read in each group are stored in the newsrc file at
+=$HOME/.pan2/newsrc-1=.
+
+The newsrc file format is standard among many Unix newsreaders and can
+be used to import and export this information between these
+applications.
+
+* Headers
+:PROPERTIES:
+:CUSTOM_ID: headers
+:CLASS: title
+:END:
+
+Users will spend most of their time in Pan interacting with the article
+headers in the Header Pane. Pan has many features to optimize header
+viewing and article retrieval.
+
+** Header View
+:PROPERTIES:
+:CUSTOM_ID: header-view
+:CLASS: title
+:END:
+
+Since the total number of all the available article headers in a group
+might be enormous, Pan has several options to limit the number of
+visible headers to a more manageable number.
+
+In the toolbar, the Subject or Author text box is a filter than can be
+used to limit the visible headers. Usually this is used to search for a
+specific article or a group of articles. Click on the magnifying glass
+icon to choose which header field to base the filter. Only the article
+headers that match the characters typed into the text box will be
+displayed. Click the X to erase and reset.
+
+- Choose Edit ▸ Preferences ▸ Headers :: To hide or change the display
+  order of the Header Pane columns.
+- Choose View ▸ Header Pane ▸ Thread Headers :: To enable or disable
+  header threading in the Header Pane.
+
+*** Replies of Matched Articles
+:PROPERTIES:
+:CUSTOM_ID: replies-of-matched-articles
+:CLASS: title
+:END:
+
+The user can pick one of the next three options to control how Pan will
+display replies of matched articles.
+
+- In View ▸ Header Pane :: 
+  - Show Matching Articles :: Show only articles that match the
+    article view options..
+  - Show Matching Articles' Threads ::   Not only show articles that
+    match the article view options, but also show all the articles in
+    the entire thread of the matched article.  This option will force
+    read headers to be visible regardless of the view options.
+  - Show Matching Articles Subthreads :: Not only show articles
+    that match the article view options, but also show articles that
+    are replies of any matched article.
+
+*** Article View Matches
+:PROPERTIES:
+:CUSTOM_ID: article-view-matches
+:CLASS: title
+:END:
+
+These options control which article headers are displayed in the Header
+Pane.
+
+- In View ▸ Header Pane :: 
+  - Match Only Unread Articles :: Only display articles that haven't
+    been marked read.
+  - Match Only Cached Articles :: Only display articles that are
+    available in the local article cache in the computer's hard drive.
+  - Match Only Complete Articles :: Only binary articles that are
+    complete (full, green puzzle piece in the state column) will be
+    displayed. This also hides text articles.
+  - Match Only My Articles :: Only articles that the user has posted
+    will be displayed.
+  - Match Scores of xxxx :: These options deal with scoring where you
+    choose to display an article based on its score. Refer to [[#scoring][Scoring]]
+    for more information.
+
+** Header Movement
+:PROPERTIES:
+:CUSTOM_ID: header-movement
+:CLASS: title
+:END:
+
+Movement around the Header Pane can be controlled by several methods,
+allowing the user to easily jump around complicated discussion threads
+with minimal input. Pan was designed for mouse-less article viewing, so
+most people use the keyboard shortcuts associated with these menu
+actions. The keyboard shortcut for most menu actions is displayed after
+the menu command.
+
+- Go ▸ Read More :: Scroll the article in the Article Pane. If the
+  article is already scrolled to the bottom, grab the next article. You
+  can customize the function of this key by changing Preferences ▸
+  Articles ▸ Space selects next article rather than next unread .
+- Go ▸ Read Back :: Scroll the article up in the Article Pane. If it's
+  already scrolled to the top, grab the previous article displayed in
+  the Thread Pane.
+- Go ▸ Next Unread Group :: Skip down to the next subscribed group in
+  the Group Pane with unread articles and read the first article.
+- Go ▸ Next Group :: Skip down to the next subscribed group in the Group
+  Pane and read the first article.
+- Go ▸ Next Unread Article :: Read the next unread article in the Thread
+  Pane.
+- Go ▸ Next Article :: Read the next article, regardless of its
+  read/unread state.
+- Go ▸ Next Watched Article :: Read the next watched article. A
+  watched article is an article with a score of at least 9999. Refer
+  to [[#scoring][Scoring]] for more information.
+- Go ▸ Previous Article :: Read the previous article in the Thread Pane.
+  This doesn't scroll the Article Pane like Go ▸ Read Back .
+- Go ▸ Parent Article :: Read the article for which the currently
+  selected article is a reply.
+- Go ▸ Next Unread Thread :: Skip to the next unread thread and read the
+  first article.
+- Go ▸ Next Thread :: Skip to the next thread and read the first article
+  in that thread.
+- Go ▸ Previous Thread :: Skip back to the last thread and read the last
+  article in that thread.
+
+** Header Selection
+:PROPERTIES:
+:CUSTOM_ID: header-selection
+:CLASS: title
+:END:
+
+In order to perform an action on an article header, you must select it
+first. Use the middle mouse button to select an article. Drag the
+selection field with the mouse to select multiple articles. Hold down
+the Ctrl key while clicking articles with the middle mouse button to add
+individual articles to the selection.
+
+Pan also offers a number of other ways to efficiently select articles.
+
+- Edit ▸ Select All Articles :: Select all articles in the Header Pane.
+- Edit ▸ Add Subthreads to Selection :: Add all articles that are a
+  reply to the selected article to the selection.
+- Edit ▸ Add Threads to Selection :: Add the entire thread of the
+  selected article to the selection.
+- Edit ▸ Add Similar Articles to Selection :: With one article selected,
+  add others articles with the same author and from the current thread
+  to the selection.
+- Edit ▸ Deselect All Articles :: Cancel the current selection.
+- Edit ▸ Select Article Body :: Select the entire article body. You must
+  retrieve the article first.
+
+** Header Action
+:PROPERTIES:
+:CUSTOM_ID: header-action
+:CLASS: title
+:END:
+
+Whenever Pan downloads an article body, the data is saved to disk in the
+article cache. The article cache is a fixed-size buffer and when the
+cache has been filled, the older articles are erased to make room for
+newer ones.
+
+These are the actions you can perform on an article selected in the
+Header Pane.
+
+- Articles ▸ Save Article :: Save the highlighted article to disk. When
+  you select this option, the Save Articles dialog will open. From here,
+  you can choose:
+  - Save Text :: Save the text of the displayed article.
+  - Save Attachments :: Save the binary attachments of the selected
+    article to disk.
+  - Path :: Where in the file hierarchy to save the binary attachment
+    or text.
+  - Priority :: Where to add the file in the Task Manager queue.
+- Articles ▸ Read Article :: Download the body of the selected article
+  in the Header Pane and display it in the Article Pane.
+- Articles ▸ Cache Article :: Download the body of the selected article
+  in the Header Pane but do NOT display it in the Article Pane.
+- Articles ▸ Mark Article as Read :: Change the state of the article to
+  read.
+- Articles ▸ Mark Article as Unread :: Change the state of the article
+  to unread.
+- Articles ▸ Delete Article :: Delete the selected article in the
+  current group from the article index.
+
+* Body
+:PROPERTIES:
+:CUSTOM_ID: body
+:CLASS: title
+:END:
+
+The Body Pane displays the text of a selected article header.
+
+** Digital Images
+:PROPERTIES:
+:CUSTOM_ID: digital-images
+:CLASS: title
+:END:
+
+Some groups specialize in digital images where each binary post is a
+separate image. Pan can automatically decode and display these images.
+To display the image, select and view the article header as you normally
+would for text and the image will be displayed in the Body Pane.
+
+** Body Views
+:PROPERTIES:
+:CUSTOM_ID: body-views
+:CLASS: title
+:END:
+
+The way information is presented in the Body Pane can be customized in
+several ways.
+
+- In View ▸ Body Pane :: 
+  - Wrap Article Body :: Will force the text to flow into paragraphs
+    instead of running off the edge of the text window. This is useful
+    to fix badly formatted articles.
+
+  - Show All Headers in Body Pane :: The headers displayed in the
+    Header Pane are only a small subset of the all the article
+    headers. This commands will display the complete list of article
+    headers in the Body Pane before the article text.
+  - Rot 13 Selected Text ::  A simple cipher used to hide story
+    spoilers, joke punchlines, etc.  Select a block of encrypted text
+    and use this option to decode it to clear text.
+  - Use Monospace Font ::  Sometimes Usenet authors will create simple
+    ASCII artwork or diagrams. By default, Pan uses proportional fonts
+    for all text which renders ASCII artwork unreadable. By choosing
+    this option, the text of the Body Pane will be displayed using the
+    Monospace Font.  You can configure the monospace font in *Edit ▸
+    Preferences ▸ Font* .
+  - Show Smilies as Graphics ::  Change ASCII emoticons like :) into
+    graphical versions.
+  - Show *Bold*, _Underlined_ and /Italiced/ ::  Over the years, Usenet
+    authors have devised several strategies to overcome the limited
+    typographic ability of ASCII. Enabling this option will format the
+    article text following these typographic hints.
+  - Size Pictures to Fit ::  Size digital images so they will display
+    in the Body Pane without scrolling. Click on the image to view it
+    in its original size.
+
+* Posting
+:PROPERTIES:
+:CUSTOM_ID: posting
+:CLASS: title
+:END:
+
+How to post articles in Pan.
+
+** Actions
+:PROPERTIES:
+:CUSTOM_ID: actions
+:CLASS: title
+:END:
+
+- Post ▸ Post to Newsgroup :: Post an article to the selected newsgroup.
+- Post ▸ Followup to Newsgroup :: Post a reply to the selected article
+  and continue the thread.
+- Post ▸ Reply to Author in Mail :: Post a reply to the selected article
+  via email.
+
+While highlighting in the Header Pane the article header of a post that
+you posted to the news server, you can perform these two actions:
+- Post ▸ Supersede Article :: This allows you to supersede an earlier
+  article with another newer post.
+- Post ▸ Cancel Article :: This allows you to cancel a earlier article.
+
+Most public news servers disable the supersede and cancel commands for
+security reasons. Make sure you are comfortable with your article before
+you post it to the news server, because in most cases it will be
+impossible to take back or alter what you have said.
+
+** Posting Profiles Dialog
+:PROPERTIES:
+:CUSTOM_ID: posting-profiles-dialog
+:CLASS: title
+:END:
+
+Posting Profiles allow the user to configure different Usenet personas
+that may be customized for particular groups.
+
+The Posting Profiles dialog displays a list of currently configured
+Posting Profiles. From here you can Remove or Edit a profile by clicking
+on the profile's name and press the appropriate button. Clicking add
+will start a new profile.
+
+*** Mandatory Information
+:PROPERTIES:
+:CUSTOM_ID: mandatory-information
+:CLASS: title
+:END:
+
+Each profile contains the following information:
+
+- Profile Name :: The name of this profile.
+- Full Name :: The author name that will be used in the article's header.
+- Email Address :: The email address that will be used in the article's header.
+- Post Articles via :: If multiple news servers are configured, choose
+  which server will receive the article.
+
+*** Signatures
+:PROPERTIES:
+:CUSTOM_ID: signatures
+:CLASS: title
+:END:
+
+A signature is a block of text that is appended to the end of every
+outgoing article. Generally it is contact information, a personal motto
+or a witty saying.
+
+Click Use a Signature to activate signature support.
+
+- Text :: Type in the text you wish to use as a signature.
+- Text File :: Enter the location of the file in the disk hierarchy. The Browse
+  button can assist in this.
+- Command :: Type in the command you wish to run and the output of that command
+  will be captured and used as the signature text.  Example: =fortune -s=
+- PGP Signature :: Choose this if you want to sign or encrypt your
+  message with PGP. The given email address has to match the PGP email
+  address for this method to work. PGP support is an optional feature
+  and may not be available in your Pan build.
+
+*** Optional Information
+:PROPERTIES:
+:CUSTOM_ID: optional-information
+:CLASS: title
+:END:
+
+- Attribution :: When you reply to a post, the text in the
+  attribution box precedes the quoted text. The %d flag is replaced
+  the by the date of the selected post while the %n flag is replaced
+  with the author of the selected post.
+- Extra Headers :: This is a advanced option to add extra headers to the article.
+
+** Post Article Dialog
+:PROPERTIES:
+:CUSTOM_ID: post-article-dialog
+:CLASS: title
+:END:
+
+Whenever you post an article you use the Post Article Dialog.
+
+*** Composition
+:PROPERTIES:
+:CUSTOM_ID: composition
+:CLASS: title
+:END:
+
+The Post Article Dialog is composed of the following parts:
+
+- Menubar :: The menubar contains all the commands that you need to post
+  an article.
+- Toolbar :: The toolbar contains a subset of the commands that you can
+  access from the menubar.
+- From :: Select which Posting Profile to use.
+- Subject :: Type in the subject of your post. If this post is a reply,
+  this line is already filled-in.
+- Newsgroups :: A comma separated list of all the groups that will
+  receive this article.
+- Mail To :: Enter an email address to send the article.
+- More Headers :: An advanced option to manually add more headers.
+- Text Area :: Where you enter the text of the article.
+
+*** File Commands
+:PROPERTIES:
+:CUSTOM_ID: file-commands
+:CLASS: title
+:END:
+
+These file commands are available from within the Post Article dialog.
+
+- File ▸ Send Article :: When you are done entering the article, use
+  this command to send the article to the news server.
+- File ▸ Save Draft :: Save your current work on the article to disk.
+- File ▸ Open Draft :: Load a previous draft and continue editing.
+
+*** Editing Commands
+:PROPERTIES:
+:CUSTOM_ID: editing-commands
+:CLASS: title
+:END:
+
+This option is available from within the Post Article Dialog.
+
+- Edit ▸ Manage Posting Profiles :: See Posting Profiles.
+- Edit ▸ Run Editor :: Starts an external editor. Type in your post in
+  the external editor as you normally would and save your work. The
+  external editor will close and the text that was entered into that
+  editor will be located in the text area.
+- Edit ▸ Set Editor :: Choose which external editor to use.
+- Edit ▸ Manage Editor List :: Setup another external editor.
+- Edit ▸ Cut, Copy and Paste :: The standard GUI text functions.
+- Edit ▸ Wrap Now :: Force the text flow into paragraphs instead of
+  running off the edge of the text area.
+- Edit ▸ Wrap Text :: Set this option to have text automatically wrap
+  when entered.
+- Edit ▸ Check Spelling :: Set this option and possible spelling errors
+  in the text area will marked with a red wavy line.
+- Edit ▸ ROT 13 :: ROT13 is a simple cipher to hide story spoilers, joke
+  punchlines, etc. Select the text to cipher and use this command.
+
+* Tasks
+:PROPERTIES:
+:CUSTOM_ID: tasks
+:CLASS: title
+:END:
+
+Certain tasks performed by Pan, like downloading binary posts or
+grabbing new headers for a group, can take a long time. These tasks are
+queued and performed in the background while Pan is processing other
+tasks like grabbing an article.
+
+** Cancel Last Task
+:PROPERTIES:
+:CUSTOM_ID: cancel-last-task
+:CLASS: title
+:END:
+
+You can quickly cancel the last task added to the task queue by
+selecting: *File ▸ Cancel Last Task* .
+
+** Task Manager
+:PROPERTIES:
+:CUSTOM_ID: task-manager
+:CLASS: title
+:END:
+
+Background tasks can be manipulated by using the Task Manager. The Task
+Manager can be accessed with *File ▸ Task Manger* or by left-clicking in
+the task area of the Status Bar at the bottom of the Pan screen.
+
+The Task Manger window is composed of the following parts:
+- Toolbar :: The toolbar contains all the commands you need to
+  manipulate the tasks in the Task Manger Window.
+- Informational Area :: The Informational Area displays the number of
+  queued tasks, the amount of data that needs to downloaded to complete
+  the queued tasks, the current download rate and the estimated time
+  needed to complete the queued tasks.
+- Task List :: A list of queued tasks. Each row is a separate task.
+
+In order to manipulate a task, click on it and the row will be
+highlighted. Then click on one of the buttons in the toolbar.
+
+If Pan is shutdown whiles tasks are still waiting in the task manager,
+the task list is saved to disk and resumed when Pan is restarted. This,
+however, is not true for upload tasks in the current version.
+
+** NZB Files
+:PROPERTIES:
+:CUSTOM_ID: nzb-files
+:CLASS: title
+:END:
+
+Pan saves its task list in =$HOME/.pan2/tasks.nzb= file. You can import
+other task lists into Pan by choosing *File ▸ Import NZB Files* .
+
+* Scoring
+:PROPERTIES:
+:CUSTOM_ID: scoring
+:CLASS: title
+:END:
+
+Scoring allows the user to give an article a rating based on
+user-defined scoring rules. This rating can then be used by Pan to
+perform score-based actions.
+
+When a group's article headers are first downloaded from the news
+server, all the articles have a score of 0. Then the list of scoring
+rules in the score file are applied to each article. The score file
+rules might give an article from John Smith a high score, while articles
+with a subject line containing the phrase "For Sale" a negative score.
+
+** Scoring Actions
+:PROPERTIES:
+:CUSTOM_ID: scoring-actions
+:CLASS: title
+:END:
+
+Pan can perform two actions based on an article's score:
+
+- View an article by using *View ▸ Header Pane ▸ Match Scores of xxxx* .
+  The default is to hide articles (by not matching) with a score of
+  -9999. and view all other scores.
+- Change the background and text color of the score column in the Header
+  Pane. This is defined in *Edit ▸ Preferences ▸ Colors*.
+
+** Adding Scoring Rules
+:PROPERTIES:
+:CUSTOM_ID: adding-scoring-rules
+:CLASS: title
+:END:
+
+There are several ways to add rules to the score file. Select an article
+in the Header Pane and then select *Articles ▸ Watch Thread* . This rule
+sets the score of any post located in the thread of the selected article
+to 9999.
+
+The opposite of the above rule is *Articles ▸ Ignore Thread*. This rule
+sets the score of any post located in the thread of the selected article
+to -9999.
+
+Both of these scoring rules only work in the selected group and expire
+in one month.
+
+Selecting an article and selecting *Articles ▸ Ignore Author* will open
+the New Scoring Rule dialog.
+
+The default of this scoring rule is to score all the posts of the author
+of the selected article -9999 for the next month in the selected group.
+By clicking on various fields and selecting different options in the New
+Scoring Rule dialog, you can customize the rule further. For instance,
+instead of having the rule expire in one month, you can have the rule
+last forever. Also note that you can make the rule add to the score of
+an article, making it a watch rule. So the name "Ignore Author" can be
+somewhat of a misnomer.
+
+When finished, click Add and Rescore to close the dialog box.
+
+Selecting an article and selecting *Articles ▸ Add a Scoring Rule* is very
+similar to the Ignore Author section described above as it opens the
+same New Scoring Rule dialog, just with different defaults. Construct a
+rule in the same fashion as described above.
+
+** Editing or Deleting Scoring Rules
+:PROPERTIES:
+:CUSTOM_ID: editing-or-deleting-scoring-rules
+:CLASS: title
+:END:
+
+Selecting an article that is currently being scored and choosing
+*Articles ▸ Edit Article's Watch/Ignore/Score* will open the Article's
+Scores dialog box. From this dialog you can manipulate the scoring rule
+for the currently selected article. Each rule will have its own row
+describing the scoring action (plus or minus points), locations and line
+number of this rule in the score file and the texts of the rule. Select
+the rule and click Add button to alter the rule or Remove button to
+delete the rule from the score file. Click Close and Rescore when
+finished.
+
+** Advanced Scoring
+:PROPERTIES:
+:CUSTOM_ID: advanced-scoring
+:CLASS: title
+:END:
+
+The scoring file is located at =$HOME/.pan2/Scoring=. Advanced users might
+want to edit this file directly with a text editor to create advanced
+scoring rules that are difficult or impossible to construct from the New
+Scoring Rule dialog. The format of the scoring rules is similar to the
+application slrn, but be aware that not all slrn scoring functions will
+work in Pan.
+
+The slrn scoring functions are described in the document
+[[http://www.slrn.org/docs/score.html][slrn - Scoring]].
+
+* Customization
+:PROPERTIES:
+:CUSTOM_ID: customization
+:CLASS: title
+:END:
+
+This section describes how certain features or actions in Pan can be
+customized.
+
+** Behavior
+:PROPERTIES:
+:CUSTOM_ID: behavior
+:CLASS: title
+:END:
+
+Many of the default actions of Pan, such as mouse clicks, actions when
+entering or leaving a group and the action of /Space/ can be altered.
+
+- In Edit ▸ Preferences ▸ Behavior :: 
+  - Mouse :: The two boxes of the mouse section change the default
+    action of the left mouse button. If unselected, you would have to
+    double click on a group or article to activate it.
+  - Groups :: The selections in the group section control what
+    commands Pan will automatically run when manipulating groups.
+    - The first box, when activated, will automatically get new headers
+      for all subscribed groups whenever Pan is started. This is the
+      equivalent of using *Groups ▸ Get New Headers* in *Subscribed Groups*
+      from the menubar.
+    - The next box, when activated, will automatically get new headers
+      when entering a group. This is the equivalent of using
+       *Groups ▸ Get New Headers* in *Selected Group* from the menubar.
+    - The next box, when activated, will mark the entire group read when
+      leaving a group. This is the equivalent of using
+      *Groups ▸ Mark Group Read* from the menubar.
+    - The last box in the Groups section, when activated, will expand
+      all threads in the Header Pane when entering a group.
+  - Articles ::
+    - The first option, when activated, makes Space select
+     the next article rather than the next unread article. This is
+     handy if you are viewing a thread with read and unread articles
+     mixed together.
+    - The next option activates smooth scrolling in the Article Pane.
+
+** GUI Composition
+:PROPERTIES:
+:CUSTOM_ID: gui-composition
+:CLASS: title
+:END:
+
+The layout and view of the Group, Header and Body Panes in Pan can be
+customized in several ways.
+
+- Pane Layout :: In *Edit ▸ Preferences ▸ Layout* the orientation of the
+  Groups, Header and Body Panes can be manipulated.
+- Tabbed Layout :: Instead of having all three panes share the Pan main
+  window at one time, another view, called Tabbed Layout, can be
+  activated by choosing *View ▸ Layout ▸ Tabbed Layout*. Now, only one of
+  the three Panes will be displayed at a time. Each Pane is brought to
+  the front of other Panes by clicking on its tab located directly under
+  the tool bar or by pressing "1", "2" or "3" for the Group, Header or
+  Body Pane respectively.
+- Show/Hide Panes :: You can hide a specific Pane by choosing from
+  *View ▸ Layout* and using the selection box to show/hide each of the
+  Panes.
+- Fonts :: Choose *Edit ▸ Preferences ▸ Fonts* to select a font. Pan can
+  use the monospace font in the article Pane, if activated.
+- Colors :: Choose *Edit ▸ Preferences ▸ Colors* to customize the colors
+  used in Pan.  The first section allows you to customize the colors used by scoring
+  in the Header Pane. See [[#scoring][Scoring]] for more information on how to use this feature.
+  The second section allows you to customize the colors used in the Body
+  Pane.
+
+** External Applications
+:PROPERTIES:
+:CUSTOM_ID: external-applications
+:CLASS: title
+:END:
+
+In this section you set up external applications that Pan can use.
+
+- In Edit ▸ Preferences ▸ Applications: :: 
+  - Web Browser :: Click the Web Button to choose which external
+    application to launch when clicking on an HTML link.
+  - Mail Reader :: Choose which external application to launch when
+    clicking on an email address or when sending a post via email.
+
+To set up an external text editor, choose *Post ▸ Post to Newsgroup* .
+From the *Post Article* dialog menubar, choose *Edit ▸ Set Editor*
+
+** Article Cache Size
+:PROPERTIES:
+:CUSTOM_ID: article-cache-size
+:CLASS: title
+:END:
+
+The article cache is a fixed-size disk buffer where Pan stores articles
+when they are downloaded from a news server. If the user downloads a
+large amount of binary attachments, the default cache size might be
+inadequate.
+
+The article cache size can be changed in *Edit ▸ Preferences ▸ Behavior ▸ Article Cache*
+
+** News Servers
+:PROPERTIES:
+:CUSTOM_ID: news-servers
+:CLASS: title
+:END:
+
+Pan must connect to a special computer called a news server. The news
+server is the gateway used to access Usenet.
+
+Choose *Edit ▸ Edit News Servers* and the Servers dialog will appear.
+Click on a server name and you can edit or remove it via the buttons.
+Click the Add button to add another server.
+
+When you add or edit an existing server, the Edit a Server's Settings
+dialog will appear.
+
+In the location section:
+
+- Address :: The internet address of the server.
+- Port :: The port of the server. Port 119 is the standard port number for
+  unsecured NNTP connections, port 563 is for TLS/SSL connections.
+
+The next section is the login information for the server. If you server
+requires a username and password, enter them here. If the server allows
+anonymous login or does not require authentication, just let these
+fields blank.
+
+- Username :: Enter the login name if required.
+- Password :: Enter the password if required.
+
+The next section allows you to enter certain Pan settings that are
+server specific.
+
+- Connection Limit :: Pan can open multiple connections to a server so
+  the user can perform simultaneous actions like download a binary
+  attachment will reading articles in a text group. In order to follow
+  the [[https://gnksa.org/][GNKSA]] rules, the maximum number of connections Pan can have open
+  with a server is 4.
+- Expire Old Articles :: From this toggle box, you can pick a time
+  when Pan will expire old articles and remove them from its article
+  index.
+- Server Rank :: When you have more than 1 server configured, Pan uses
+  server rank to decide from which server to download the
+  article. Only after all primary servers have been tried for the
+  article will Pan use the fallback servers.  The reason for this
+  feature is that a user might have access to a free server and also
+  have access to a byte-limited premium server. Server ranking allows
+  Pan to use the fallback server as little as possible.
+- TLS (SSL) Options :: If security and privacy are of concern, choose
+  secured connections if the server supports it. TLS (SSL) support is
+  an optional feature and may not be available in your Pan build.
+- Always trust this server's certificate :: If you want to trust the
+  server regardless of the authenticity of its certificate, you can
+  enable this option. Use with caution!
+
