@@ -1263,20 +1263,21 @@ namespace
     Article const *a(pane->get_first_selected_article());
     if (a) {
       const size_t lines = a->get_line_count();
-      bool const is_smallish = lines <= 5000;
-      bool const is_mediumish = lines <= 20000;
+      bool const is_bigish = lines >= 20000;
       bool const image_subject = has_image_type_in_subject(*a);
       bool const is_pictures_newsgroup =
         pane->get_group().to_view().strstr("pictures") != nullptr;
       // This is not the number of MIME parts
       int const part_count = a->get_found_part_count();
 
-      if (is_smallish || image_subject || part_count < 2)
-        pane->_action_manager.activate_action ("read-selected-article");
-      else if (is_mediumish && is_pictures_newsgroup)
-        pane->_action_manager.activate_action ("read-selected-article");
-      else
-        pane->_action_manager.activate_action ("save-articles");
+      // update body pane with article information
+      pane->_action_manager.activate_action ("read-selected-article");
+
+      if (is_bigish && ! is_pictures_newsgroup && ! image_subject
+          && part_count > 1)
+      {
+        pane->_action_manager.activate_action("save-articles");
+      }
     }
     return false;
   }
