@@ -395,10 +395,10 @@ PanTreeStore *build_model(Data &data,
   // count groups, to be able to reserver arrays with  the right size
   std::string count_group_str(R"SQL(
     select count()
-      from `group` as g
-      join `server_group` as sg on sg.group_id == g.id
+      from `group` as grp
+      join `server_group` as sg on sg.group_id == grp.id
       join `server` as s on s.id == sg.server_id
-      where pseudo == False and s.host != "local" and g.subscribed == ?
+      where pseudo == False and s.host != "local" and grp.subscribed == ?
     )SQL");
 
   // add user filter to get correct count
