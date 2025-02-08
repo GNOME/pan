@@ -26,8 +26,11 @@
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/scorefile.h>
+#include <string>
 
 namespace pan {
+
+
 /**
  * This private class should only be used by data-impl classes.
  *
