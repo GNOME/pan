@@ -72,11 +72,76 @@ SQLite::Statement HeaderFilter::get_sql_query(Data const &data,
   return q;
 };
 
-std::vector<SqlCond> HeaderFilter::get_sql_filter
-(
- Data const &data,
- FilterInfo const &criteria
- ) const
+SqlCond HeaderFilter::get_xref_sql_cond(Data const &data,
+                                        FilterInfo const &criteria
+
+) const
+{
+  // user is filtering by groupname?
+  if (criteria._text._impl_type == TextMatch::CONTAINS)
+  {
+    std::string sql, param;
+    if (criteria._text.create_sql_search(sql, param))
+    {
+      SqlCond sc(sql, param);
+      sc.join = "join `article_group` as ag on ag.article_id = article.id "
+                "join `group` as g on ag.group_id == g.id";
+      return sc;
+    }
+    return SqlCond();
+  }
+  // user is filtering by # of crossposts
+  else if (criteria._text._impl_text.find("(.*:){") != std::string::npos)
+  {
+    // Scoring rule like: «Xref: (.*:){3}» or «~Xref: (.*:){11}» (at most)
+    char const *search = "(.*:){"; //}
+    std::string::size_type pos =
+      criteria._text._impl_text.find(search) + strlen(search);
+    int const ge = atoi(criteria._text._impl_text.c_str() + pos);
+    FilterInfo tmp;
+    tmp.set_type_crosspost_count_ge(ge);
+    auto in_res = get_sql_filter(data, tmp);
+    return in_res.at(0);
+  }
+  // user is filtering by crossposts? - not available via dialog
+  // this filter is dumb. criteria is supposed to have one .*:.*
+  // and several : to make the crosspost count.  This not part
+  // of slrn specification and probably never used. not tested
+  else if (criteria._text._impl_text.find(".*:.*") != std::string::npos)
+  {
+    StringView const v(criteria._text._impl_text);
+    int const ge = std::count(v.begin(), v.end(), ':');
+    FilterInfo tmp;
+    tmp.set_type_crosspost_count_ge(ge);
+    auto in_res = get_sql_filter(data, tmp);
+    return in_res.at(0);
+  }
+  else
+  // oh fine, then, user is doing some other damn thing with the xref
+  // header.  build one for them.
+  // Probably not used either
+  {
+    std::string sql, param;
+    bool ok = criteria._text.create_sql_search(sql, param);
+    std::string query = R"SQL(
+             (
+               select s.host || " " || group_concat(g.name || ":" || xr.number, " ") as xref
+               from `group` as g
+               join article_xref as xr on article_group_id = ag.id
+               join server as s on xr.server_id == s.id
+               join article_group as ag on ag.group_id == g.id
+               join article as inner_a on inner_a.id == ag.article_id
+               where inner_a.message_id == article.message_id
+               group by s.host
+               order by g.name asc
+             ) like ?
+          )SQL";
+    return SqlCond(query, "%" + criteria._text._impl_text + "%");
+  }
+}
+
+std::vector<SqlCond> HeaderFilter::get_sql_filter(
+  Data const &data, FilterInfo const &criteria) const
 {
 
   std::vector<SqlCond> res;
@@ -84,21 +149,21 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter
 
   switch (criteria._type)
   {
-    // case FilterInfo::AGGREGATE_AND:
-    //   pass = true;
-    //   foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it)
-    //   {
-    //     // assume test passes if test needs body but article not cached
-    //     if (! (*it)->_needs_body || cache.contains(article.message_id))
-    //     {
-    //       if (! test_article(data, **it, group, article))
-    //       {
-    //         pass = false;
-    //         break;
-    //       }
-    //     }
-    //   }
-    //   break;
+      // case FilterInfo::AGGREGATE_AND:
+      //   pass = true;
+      //   foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it)
+      //   {
+      //     // assume test passes if test needs body but article not cached
+      //     if (! (*it)->_needs_body || cache.contains(article.message_id))
+      //     {
+      //       if (! test_article(data, **it, group, article))
+      //       {
+      //         pass = false;
+      //         break;
+      //       }
+      //     }
+      //   }
+      //   break;
 
     case FilterInfo::AGGREGATE_OR:
       if (criteria._aggregates.empty())
@@ -169,8 +234,8 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter
     }
 
       //     case FilterInfo::DAYS_OLD_GE:
-      //       pass = (time(NULL) - article.get_time_posted()) > (criteria._ge *
-      //       86400); break;
+      //       pass = (time(NULL) - article.get_time_posted()) > (criteria._ge
+      //       * 86400); break;
 
       //     case FilterInfo::LINE_COUNT_GE:
       //       pass = article.is_line_count_ge((unsigned int)criteria._ge);
@@ -179,117 +244,58 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter
     case FilterInfo::TEXT:
       if (criteria._header == xref)
       {
-        // user is filtering by groupname?
-        if (criteria._text._impl_type == TextMatch::CONTAINS)
-        {
-          std::string sql, param;
-          if (criteria._text.create_sql_search(sql, param))
-          {
-            SqlCond sc(sql, param);
-            sc.join = "join `article_group` as ag on ag.article_id = article.id "
-                "join `group` as g on ag.group_id == g.id";
-            res.push_back(sc);
-          }
-        }
-        // user is filtering by # of crossposts
-        else if (criteria._text._impl_text.find("(.*:){") != std::string::npos)
-        {
-            // Scoring rule like: «Xref: (.*:){3}» or «~Xref: (.*:){11}» (at most)
-          char const *search = "(.*:){"; //}
-          std::string::size_type pos =
-            criteria._text._impl_text.find(search) + strlen(search);
-          int const ge = atoi(criteria._text._impl_text.c_str() + pos);
-          FilterInfo tmp;
-          tmp.set_type_crosspost_count_ge(ge);
-          auto in_res = get_sql_filter(data, tmp);
-          res.push_back(in_res.at(0));
-        }
-        // user is filtering by crossposts? - not available via dialog
-        // this filter is dumb. criteria is supposed to have one .*:.*
-        // and several : to make the crosspost count.  This not part
-        // of slrn specification and probably never used. not tested
-        else if (criteria._text._impl_text.find(".*:.*") != std::string::npos)
-        {
-          StringView const v(criteria._text._impl_text);
-          int const ge = std::count(v.begin(), v.end(), ':');
-          FilterInfo tmp;
-          tmp.set_type_crosspost_count_ge(ge);
-          auto in_res = get_sql_filter(data, tmp);
-          res.push_back(in_res.at(0));
-        }
-        else
-        // oh fine, then, user is doing some other damn thing with the xref
-        // header.  build one for them.
-        // Probably not used either
-        {
-          std::string sql, param;
-          bool ok = criteria._text.create_sql_search(sql, param);
-          std::string query = R"SQL(
-             (
-               select s.host || " " || group_concat(g.name || ":" || xr.number, " ") as xref
-               from `group` as g
-               join article_xref as xr on article_group_id = ag.id
-               join server as s on xr.server_id == s.id
-               join article_group as ag on ag.group_id == g.id
-               join article as inner_a on inner_a.id == ag.article_id
-               where inner_a.message_id == article.message_id
-               group by s.host
-               order by g.name asc
-             ) like ?
-          )SQL";
-          res.push_back(SqlCond(query, "%" + criteria._text._impl_text + "%"));
-        }
-        //       else if (criteria._header == newsgroups)
-        //       {
-        //         pass = criteria._text.test (article.get_xrefed_groups());
-        //       }
-        //       else if (criteria._header == references)
-        //       {
-        //         std::string s;
-        //         data.get_article_references(&article, s);
-        //         pass = criteria._text.test(s);
-        //       }
-        //       else if (! criteria._needs_body)
-        //       {
-        //         pass = criteria._text.test(get_header(article,
-        //         criteria._header));
-        //       }
-        //       else
-        //       {
-        //         if (cache.contains(article.message_id))
-        //         {
-        //           ArticleCache::mid_sequence_t mid(1, article.message_id);
-        // #ifdef HAVE_GMIME_CRYPTO
-        //           GPGDecErr err;
-        //           GMimeMessage *msg = cache.get_message(mid, err);
-        // #else
-        //           GMimeMessage *msg = cache.get_message(mid);
-        // #endif
-        //           const char *hdr =
-        //             g_mime_object_get_header(GMIME_OBJECT(msg),
-        //             criteria._header);
-        //           pass = criteria._text.test(hdr);
-        //           g_object_unref(msg);
-        //         }
-        //         else
-        //         {
-        //           pass = false;
-        //         }
-        break;
+        res.push_back(get_xref_sql_cond(data, criteria));
       }
+      //       else if (criteria._header == newsgroups)
+      //       {
+      //         pass = criteria._text.test (article.get_xrefed_groups());
+      //       }
+      //       else if (criteria._header == references)
+      //       {
+      //         std::string s;
+      //         data.get_article_references(&article, s);
+      //         pass = criteria._text.test(s);
+      //       }
+      //       else if (! criteria._needs_body)
+      //       {
+      //         pass = criteria._text.test(get_header(article,
+      //         criteria._header));
+      //       }
+      //       else
+      //       {
+      //         if (cache.contains(article.message_id))
+      //         {
+      //           ArticleCache::mid_sequence_t mid(1, article.message_id);
+      // #ifdef HAVE_GMIME_CRYPTO
+      //           GPGDecErr err;
+      //           GMimeMessage *msg = cache.get_message(mid, err);
+      // #else
+      //           GMimeMessage *msg = cache.get_message(mid);
+      // #endif
+      //           const char *hdr =
+      //             g_mime_object_get_header(GMIME_OBJECT(msg),
+      //             criteria._header);
+      //           pass = criteria._text.test(hdr);
+      //           g_object_unref(msg);
+      //         }
+      //         else
+      //         {
+      //           pass = false;
+      //         }
+      break;
 
-      //     case FilterInfo::SCORE_GE:
-      //       pass = article.get_score() >= criteria._ge;
-      //       break;
+  //     case FilterInfo::SCORE_GE:
+  //       pass = article.get_score() >= criteria._ge;
+  //       break;
 
-      //     case FilterInfo::IS_CACHED:
-      //       pass = data.get_cache().contains(article.message_id);
-      //       break;
+  //     case FilterInfo::IS_CACHED:
+  //       pass = data.get_cache().contains(article.message_id);
+  //       break;
 
-      //     case FilterInfo::TYPE_ERR:
-      //       assert(0 && "invalid type!");
-      //       pass = false;
-      //       break;
+  //     case FilterInfo::TYPE_ERR:
+  //       assert(0 && "invalid type!");
+  //       pass = false;
+  //       break;
   }
 
   if (criteria._negate)
