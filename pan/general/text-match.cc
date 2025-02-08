@@ -464,11 +464,11 @@ bool TextMatch::create_sql_search(std::string &set_sql,
     switch (_impl_type)
     {
       case REGEX:
-        set_sql = "name regexp ?";
+        set_sql = "grp.name regexp ?";
         break;
 
       case IS:
-        set_sql = "name == ?";
+        set_sql = "grp.name == ?";
         if (! state.case_sensitive)
         {
           set_sql += " collate nocase";
@@ -480,11 +480,11 @@ bool TextMatch::create_sql_search(std::string &set_sql,
       case CONTAINS:
         if (state.case_sensitive)
         {
-          set_sql = "name like ?";
+          set_sql = "grp.name like ?";
         }
         else
         {
-          set_sql = "lower(name) like ?";
+          set_sql = "lower(grp.name) like ?";
         }
         break;
     }
