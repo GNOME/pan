@@ -94,8 +94,10 @@ class HeaderFilter
 
     std::vector<SqlCond> get_sql_filter(Data const &data,
                                         FilterInfo const &criteria) const;
-   SQLite::Statement get_sql_query(Data const &data,
-                                   FilterInfo const &criteria) const;
+    SqlCond get_xref_sql_cond(Data const &data,
+                              FilterInfo const &criteria) const;
+    SQLite::Statement get_sql_query(Data const &data,
+                                    FilterInfo const &criteria) const;
 };
 
 } // namespace pan
