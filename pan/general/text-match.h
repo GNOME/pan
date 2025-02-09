@@ -86,7 +86,8 @@ class TextMatch
 
     static std::string create_regex(StringView const &, Type);
 
-    bool create_sql_search(std::string &set_sql,
+    bool create_sql_search(std::string const &to_test,
+                           std::string &set_sql,
                            std::string &set_param) const;
 
     static bool validate_regex(char const *regex);

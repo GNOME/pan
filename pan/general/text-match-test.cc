@@ -10,10 +10,10 @@ int
 main (void)
 {
    TextMatch m;
-   std::string fill_sql, fill_param;
+   std::string fill_sql, fill_param, to_test("grp.name");
 
    m.set ("fillyjonk", m.CONTAINS, false);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "lower(grp.name) like ?");
    check_eq(fill_param, "%fillyjonk%");
 
@@ -31,7 +31,7 @@ main (void)
 
 
    m.set ("fillyjonk", m.CONTAINS, true);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "grp.name like ?");
    check_eq(fill_param, "%fillyjonk%");
    check (m.test ("Can we find fillyjonk when it's by itself?"));
@@ -48,7 +48,7 @@ main (void)
    check (!m.test ("WTF is a Fillyjonk?"));
 
    m.set ("fillyjonk", m.BEGINS_WITH, false);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "lower(grp.name) like ?");
    check_eq(fill_param, "fillyjonk%");
    check (m.test ("fillyjonk at the front"));
@@ -66,7 +66,7 @@ main (void)
    check (!m.test ("the fillyjonk comes before the mymble"));
 
    m.set ("fillyjonk", m.ENDS_WITH, false);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "lower(grp.name) like ?");
    check_eq(fill_param, "%fillyjonk");
    check (!m.test ("fillyjonk at the front"));
@@ -75,7 +75,7 @@ main (void)
    check (!m.test ("the fillyjonk comes before the mymble"));
 
    m.set ("fillyjonk$", m.REGEX, false);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "lower(grp.name) like ?");
    check_eq(fill_param, "%fillyjonk");
    check (!m.test ("fillyjonk at the front"));
@@ -84,7 +84,7 @@ main (void)
    check (!m.test ("the fillyjonk comes before the mymble"));
 
    m.set ("fillyjonk", m.IS, false);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "grp.name == ? collate nocase");
    check_eq(fill_param, "fillyjonk");
    check (!m.test ("fillyjonk at the front"));
@@ -109,7 +109,7 @@ main (void)
    check (!m.test ("fillyjonk "));
 
    m.set ("(filly|jonk)", m.REGEX, false);
-   m.create_sql_search(fill_sql, fill_param);
+   m.create_sql_search(to_test, fill_sql, fill_param);
    check_eq(fill_sql, "grp.name regexp ?");
    check_eq(fill_param, "(filly|jonk)");
    check (!m.test ("illyonking"));
