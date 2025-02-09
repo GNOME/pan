@@ -266,6 +266,21 @@ public:
       assert_result({"g1m1", "g1m2", "g2m3"});
     }
 
+    void test_by_references()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set `references` = "g1m1" where message_id = "g1m2"
+      )SQL");
+
+      // test that g2 is not part of xref
+      TextMatch::Description d;
+      d.text = "g1m1";
+      criteria.set_type_text(Quark("References"), d);
+      assert_result({"g1m2"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -274,6 +289,7 @@ public:
     CPPUNIT_TEST(test_by_nb_of_crosspost);
     CPPUNIT_TEST(test_by_xref_test);
     CPPUNIT_TEST(test_by_newsgroup);
+    CPPUNIT_TEST(test_by_references);
     CPPUNIT_TEST_SUITE_END();
 };
 
