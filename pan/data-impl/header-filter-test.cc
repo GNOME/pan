@@ -47,7 +47,7 @@ public:
       )SQL");
       data = new DataImpl(cache, prefs);
       pan_db.exec(R"SQL(
-        insert into author (name, address) values ("Me","me@home") on conflict do nothing;
+        insert into author (name, address) values ("Me","me@home"),("Other", "other@home") on conflict do nothing;
         insert into server (host, port, pan_id, newsrc_filename)
                     values ("dummy", 2, 1, "/dev/null") on conflict do nothing;
         insert into `group` (name) values ("g1"),("g2") on conflict do nothing;
@@ -249,6 +249,38 @@ public:
       assert_result({"g1m2"});
     }
 
+    void test_by_header()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set `author_id` = (select id from author where name = "Me") where message_id = "g1m1";
+        update article set `author_id` = (select id from author where name = "Other") where message_id = "g1m2";
+        insert into subject (article_id, subject) values
+          ((select id from article where message_id = "g1m1"), "m1 subject"),
+          ((select id from article where message_id = "g1m2"), "m2 subject");
+      )SQL");
+
+      // test that g2 is not part of xref
+      TextMatch::Description d;
+      d.text = "m2 subject";
+      criteria.set_type_text(Quark("Subject"), d);
+      assert_result({"g1m2"});
+
+      // default search is not case sensitive
+      d.text = "me@home";
+      criteria.set_type_text(Quark("From"), d);
+      assert_result({"g1m1"});
+
+      d.text = "g1m1";
+      criteria.set_type_text(Quark("Message-Id"), d);
+      assert_result({"g1m1"});
+
+      d.text = "g1m1";
+      criteria.set_type_text(Quark("Message-ID"), d);
+      assert_result({"g1m1"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -258,6 +290,7 @@ public:
     CPPUNIT_TEST(test_by_xref_test);
     CPPUNIT_TEST(test_by_newsgroup);
     CPPUNIT_TEST(test_by_references);
+    CPPUNIT_TEST(test_by_header);
     CPPUNIT_TEST_SUITE_END();
 };
 
