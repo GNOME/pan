@@ -133,9 +133,12 @@ public:
         insert into article (message_id,author_id, time_posted, is_read) values ("<m1>", (select id from author where author like "Me%"), 1234, 1);
         insert into article (message_id,author_id, time_posted, is_read) values ("<m2>", (select id from author where author like "Me%"), 1234, 0);
       )SQL");
-      criteria.set_type_is_read();
 
+      criteria.set_type_is_read();
       assert_result({"<m1>"});
+
+      criteria.set_type_is_unread();
+      assert_result({"<m2>"});
     }
 
     void test_byte_count_ge()
