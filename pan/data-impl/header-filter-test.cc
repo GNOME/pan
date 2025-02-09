@@ -238,6 +238,7 @@ public:
       d.text = "g2";
       criteria.set_negate(true);
       criteria.set_type_text(Quark("Xref"), d);
+      criteria._text._impl_type = TextMatch::CONTAINS;
 
       assert_result({"g1m1"});
     }

@@ -122,21 +122,21 @@ SqlCond HeaderFilter::get_xref_sql_cond(Data const &data,
   // Probably not used either
   {
     std::string sql, param;
-    bool ok = criteria._text.create_sql_search("dummy", sql, param);
-    std::string query = R"SQL(
-             (
-               select s.host || " " || group_concat(g.name || ":" || xr.number, " ") as xref
-               from `group` as g
-               join article_xref as xr on article_group_id = ag.id
-               join server as s on xr.server_id == s.id
-               join article_group as ag on ag.group_id == g.id
-               join article as inner_a on inner_a.id == ag.article_id
-               where inner_a.message_id == article.message_id
-               group by s.host
-               order by g.name asc
-             ) like ?
-          )SQL";
-    return SqlCond(query, "%" + criteria._text._impl_text + "%");
+    std::string to_test = R"SQL(
+      (
+        select s.host || " " || group_concat(grp.name || ":" || xr.number, " ") as xref
+        from `group` as grp
+        join article_group as ag on ag.group_id == grp.id and ag.article_id = article.message_id
+        join article_xref as xr on xr.article_group_id = ag.id
+        join server as s on xr.server_id == s.id
+        group by s.host
+      )
+    )SQL";
+    bool ok = criteria._text.create_sql_search(to_test, sql, param);
+    if (ok)
+        return SqlCond(sql, param);
+    else
+        return SqlCond();
   }
 }
 
