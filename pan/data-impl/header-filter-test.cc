@@ -347,6 +347,19 @@ public:
       assert_result({"g1m1"});
     }
 
+    void test_by_line_count()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set line_count = 10 where message_id == "g1m1";
+        update article set line_count = 20 where message_id == "g1m2";
+      )SQL");
+
+      criteria.set_type_line_count_ge(20);
+      assert_result({"g1m2"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -359,6 +372,7 @@ public:
     CPPUNIT_TEST(test_by_header);
     CPPUNIT_TEST(test_by_score_ge);
     CPPUNIT_TEST(test_by_cache_status);
+    CPPUNIT_TEST(test_by_line_count);
     CPPUNIT_TEST_SUITE_END();
 };
 

@@ -272,9 +272,9 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       //       pass = (time(NULL) - article.get_time_posted()) > (criteria._ge
       //       * 86400); break;
 
-      //     case FilterInfo::LINE_COUNT_GE:
-      //       pass = article.is_line_count_ge((unsigned int)criteria._ge);
-      //       break;
+    case FilterInfo::LINE_COUNT_GE:
+      res.push_back(SqlCond("article.line_count >= ?", criteria._ge));
+      break;
 
     case FilterInfo::TEXT:
       if (criteria._header == xref)
