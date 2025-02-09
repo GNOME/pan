@@ -339,9 +339,16 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       //         }
       break;
 
-  //     case FilterInfo::SCORE_GE:
-  //       pass = article.get_score() >= criteria._ge;
-  //       break;
+    case FilterInfo::SCORE_GE:
+      res.push_back(SqlCond(R"SQL(
+          (
+            select score from article_group as ag
+            where ag.group_id == (select group_id from current_group limit 1)
+            and article_id = article.id
+          ) >= ?
+        )SQL",
+        criteria._ge));
+      break;
 
   //     case FilterInfo::IS_CACHED:
   //       pass = data.get_cache().contains(article.message_id);
