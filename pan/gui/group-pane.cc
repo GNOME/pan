@@ -389,8 +389,10 @@ PanTreeStore *build_model(Data &data,
   // find if matching instruction is required
   std::string sql_snippet, sql_param;
   // match can be nullptr
-  bool do_match =
-    match != nullptr && match->create_sql_search(sql_snippet, sql_param);
+  bool do_match = match != nullptr;
+
+  // grp is defined in the 2 sql queries below
+  do_match = do_match && match->create_sql_search("grp.name", sql_snippet, sql_param);
 
   // count groups, to be able to reserver arrays with  the right size
   std::string count_group_str(R"SQL(
@@ -481,12 +483,12 @@ PanTreeStore *build_model(Data &data,
     select distinct name, (
       select count() from `article` as ia
 		    join `article_group` as ag on ia.id == ag.article_id
-        where ag.group_id = g.id and ia.is_read = False
+        where ag.group_id = grp.id and ia.is_read = False
 			) as count
-      from `group` as g
-      join `server_group` as sg on sg.group_id == g.id
+      from `group` as grp
+      join `server_group` as sg on sg.group_id == grp.id
       join `server` as s on s.id == sg.server_id
-      where pseudo == False and g.subscribed = ? and s.host != "local"
+      where pseudo == False and grp.subscribed = ? and s.host != "local"
   )SQL");
 
   // add user filter to get correct  list of groups
@@ -496,7 +498,7 @@ PanTreeStore *build_model(Data &data,
   }
 
   // sort the group list
-  group_str += " order by g.name asc ";
+  group_str += " order by grp.name asc ";
 
   LOG4CXX_DEBUG(logger, "Group query: " << group_str << " with param: " << sql_param);
 
