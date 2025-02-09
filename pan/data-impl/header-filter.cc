@@ -140,6 +140,41 @@ SqlCond HeaderFilter::get_xref_sql_cond(Data const &data,
   }
 }
 
+SqlCond HeaderFilter::get_header_sql_cond(Data const &data,
+                                          FilterInfo const &criteria
+
+) const {
+  std::string sql, param, to_test, join;
+  Quark header_name(criteria._header);
+
+  if (header_name == subject) {
+    to_test = "subject";
+    join = "join subject on subject.id == article.subject_id";
+  }
+
+  if (header_name == from) {
+    to_test = "author";
+    join = "join author on author.id == article.author_id";
+  }
+
+  if (header_name == message_Id || header_name == message_ID) {
+    to_test = "message_id";
+  }
+
+  if (to_test.empty()) {
+    LOG4CXX_ERROR(logger, "Cannot parse header «"
+                              << header_name
+                              << "». Please file a bug report to "
+                                 "https://gitlab.gnome.org/GNOME/pan/issues");
+  } else if (criteria._text.create_sql_search(to_test, sql, param)) {
+    SqlCond sc(sql, param);
+    sc.join = join;
+    return sc;
+  }
+
+  return SqlCond();
+}
+
 std::vector<SqlCond> HeaderFilter::get_sql_filter(
   Data const &data, FilterInfo const &criteria) const
 {
@@ -271,11 +306,10 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
           res.push_back(SqlCond(sql_snippet, param));
         }
       }
-      //       else if (! criteria._needs_body)
-      //       {
-      //         pass = criteria._text.test(get_header(article,
-      //         criteria._header));
-      //       }
+      else if (! criteria._needs_body)
+      {
+        res.push_back(get_header_sql_cond(data, criteria));
+      }
       //       else
       //       {
       //         if (cache.contains(article.message_id))

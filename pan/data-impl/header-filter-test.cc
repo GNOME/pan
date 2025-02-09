@@ -281,6 +281,40 @@ public:
       assert_result({"g1m2"});
     }
 
+    void test_by_header()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        insert into subject (subject) values ("m1 subject"), ("m2 subject");
+        update article set author_id = (select id from author where author like "Me%"),
+                           subject_id = (select id from subject where subject like "m1%")
+          where message_id = "g1m1";
+        update article set author_id = (select id from author where author like "Other%"),
+                           subject_id = (select id from subject where subject like "m2%")
+          where message_id = "g1m2";
+      )SQL");
+
+      // test that g2 is not part of xref
+      TextMatch::Description d;
+      d.text = "m2 subject";
+      criteria.set_type_text(Quark("Subject"), d);
+      assert_result("subject",{"g1m2"});
+
+      // default search is not case sensitive
+      d.text = "me <me@home>";
+      criteria.set_type_text(Quark("From"), d);
+      assert_result("from", {"g1m1"});
+
+      d.text = "g1m1";
+      criteria.set_type_text(Quark("Message-Id"), d);
+      assert_result("message id", {"g1m1"});
+
+      d.text = "g1m1";
+      criteria.set_type_text(Quark("Message-ID"), d);
+      assert_result("message ID",{"g1m1"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -290,6 +324,7 @@ public:
     CPPUNIT_TEST(test_by_xref_test);
     CPPUNIT_TEST(test_by_newsgroup);
     CPPUNIT_TEST(test_by_references);
+    CPPUNIT_TEST(test_by_header);
     CPPUNIT_TEST_SUITE_END();
 };
 
