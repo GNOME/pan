@@ -350,9 +350,9 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
         criteria._ge));
       break;
 
-  //     case FilterInfo::IS_CACHED:
-  //       pass = data.get_cache().contains(article.message_id);
-  //       break;
+    case FilterInfo::IS_CACHED:
+      res.push_back(SqlCond("article.cached == True"));
+      break;
 
   //     case FilterInfo::TYPE_ERR:
   //       assert(0 && "invalid type!");

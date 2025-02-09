@@ -335,6 +335,18 @@ public:
       assert_result({"g1m2"});
     }
 
+    void test_by_cache_status()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set cached = True where message_id == "g1m1";
+      )SQL");
+
+      criteria.set_type_cached();
+      assert_result({"g1m1"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -346,6 +358,7 @@ public:
     CPPUNIT_TEST(test_by_references);
     CPPUNIT_TEST(test_by_header);
     CPPUNIT_TEST(test_by_score_ge);
+    CPPUNIT_TEST(test_by_cache_status);
     CPPUNIT_TEST_SUITE_END();
 };
 
