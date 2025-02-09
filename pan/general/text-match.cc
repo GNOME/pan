@@ -452,7 +452,8 @@ bool TextMatch ::test(StringView const &text_in) const
 }
 
 // TODO: set SQL snippet and param to bind. Return false if there's no need to perform search
-bool TextMatch::create_sql_search(std::string &set_sql,
+bool TextMatch::create_sql_search(std::string const &to_test,
+                                  std::string &set_sql,
                                   std::string &set_param) const
 {
   bool ret(false);
@@ -464,11 +465,11 @@ bool TextMatch::create_sql_search(std::string &set_sql,
     switch (_impl_type)
     {
       case REGEX:
-        set_sql = "grp.name regexp ?";
+        set_sql = to_test + " regexp ?";
         break;
 
       case IS:
-        set_sql = "grp.name == ?";
+        set_sql = to_test + " == ?";
         if (! state.case_sensitive)
         {
           set_sql += " collate nocase";
@@ -480,11 +481,11 @@ bool TextMatch::create_sql_search(std::string &set_sql,
       case CONTAINS:
         if (state.case_sensitive)
         {
-          set_sql = "grp.name like ?";
+          set_sql = to_test + " like ?";
         }
         else
         {
-          set_sql = "lower(grp.name) like ?";
+          set_sql = "lower(" + to_test + ") like ?";
         }
         break;
     }
