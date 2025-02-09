@@ -248,9 +248,9 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       res.push_back(SqlCond("article.is_read == True"));
       break;
 
-      //     case FilterInfo::IS_UNREAD:
-      //       pass = !article.is_read ();
-      //       break;
+    case FilterInfo::IS_UNREAD:
+      res.push_back(SqlCond("article.is_read == False"));
+      break;
 
     case FilterInfo::BYTE_COUNT_GE:
     {
