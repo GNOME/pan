@@ -242,6 +242,29 @@ public:
       assert_result({"g1m1"});
     }
 
+    void test_by_newsgroup()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      add_article("g2m3", "g2");
+      add_article_in_group("g1m1", "g2");
+
+      // test that g2 is not part of xref
+      TextMatch::Description d;
+      d.text = "g2";
+      criteria.set_type_text(Quark("Newsgroups"), d);
+      assert_result({"g1m1", "g2m3"});
+
+      d.text = "g1";
+      criteria.set_type_text(Quark("Newsgroups"), d);
+      assert_result({"g1m1", "g1m2"});
+
+      d.text = "g";
+      criteria.set_type_text(Quark("Newsgroups"), d);
+      criteria._text._impl_type = TextMatch::BEGINS_WITH;
+      assert_result({"g1m1", "g1m2", "g2m3"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -249,6 +272,7 @@ public:
     CPPUNIT_TEST(test_by_group_name);
     CPPUNIT_TEST(test_by_nb_of_crosspost);
     CPPUNIT_TEST(test_by_xref_test);
+    CPPUNIT_TEST(test_by_newsgroup);
     CPPUNIT_TEST_SUITE_END();
 };
 

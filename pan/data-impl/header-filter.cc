@@ -85,7 +85,7 @@ SqlCond HeaderFilter::get_xref_sql_cond(Data const &data,
     {
       SqlCond sc(sql, param);
       sc.join = "join `article_group` as ag on ag.article_id = article.id "
-                "join `group` as g on ag.group_id == g.id";
+                "join `group` as grp on ag.group_id == grp.id";
       return sc;
     }
     return SqlCond();
@@ -246,10 +246,22 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       {
         res.push_back(get_xref_sql_cond(data, criteria));
       }
-      //       else if (criteria._header == newsgroups)
-      //       {
-      //         pass = criteria._text.test (article.get_xrefed_groups());
-      //       }
+      else if (criteria._header == newsgroups)
+      {
+          std::string sql_snippet, param;
+          if (criteria._text.create_sql_search(sql_snippet, param))
+          {
+
+            std::string sql(R"SQL(
+            (
+              select count() from `group` as grp
+              join article_group as ag on ag.group_id == grp.id
+              where ag.article_id == article.id
+                    and 
+            )SQL" + sql_snippet + ") >0 ");
+            res.push_back(SqlCond(sql, param));
+          }
+      }
       //       else if (criteria._header == references)
       //       {
       //         std::string s;
