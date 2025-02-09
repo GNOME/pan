@@ -81,7 +81,7 @@ SqlCond HeaderFilter::get_xref_sql_cond(Data const &data,
   if (criteria._text._impl_type == TextMatch::CONTAINS)
   {
     std::string sql, param;
-    if (criteria._text.create_sql_search(sql, param))
+    if (criteria._text.create_sql_search("grp.name", sql, param))
     {
       SqlCond sc(sql, param);
       sc.join = "join `article_group` as ag on ag.article_id = article.id "
@@ -122,7 +122,7 @@ SqlCond HeaderFilter::get_xref_sql_cond(Data const &data,
   // Probably not used either
   {
     std::string sql, param;
-    bool ok = criteria._text.create_sql_search(sql, param);
+    bool ok = criteria._text.create_sql_search("dummy", sql, param);
     std::string query = R"SQL(
              (
                select s.host || " " || group_concat(g.name || ":" || xr.number, " ") as xref
@@ -249,7 +249,7 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       else if (criteria._header == newsgroups)
       {
           std::string sql_snippet, param;
-          if (criteria._text.create_sql_search(sql_snippet, param))
+          if (criteria._text.create_sql_search("grp.name", sql_snippet, param))
           {
 
             std::string sql(R"SQL(
@@ -257,8 +257,8 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
               select count() from `group` as grp
               join article_group as ag on ag.group_id == grp.id
               where ag.article_id == article.id
-                    and 
-            )SQL" + sql_snippet + ") >0 ");
+                    and )SQL" + sql_snippet
+            + ") >0 ");
             res.push_back(SqlCond(sql, param));
           }
       }
