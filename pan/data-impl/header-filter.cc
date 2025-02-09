@@ -237,17 +237,20 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       //   pass = article.get_part_state() == Article::COMPLETE;
       //   break;
 
-      // case FilterInfo::IS_POSTED_BY_ME:
-      //   pass = data.has_from_header(article.get_author().to_view());
-      //   break;
+    case FilterInfo::IS_POSTED_BY_ME:
+    {
+      SqlCond sc("article.author_id in (select author_id from profile)");
+      res.push_back(sc);
+      break;
+    }
 
     case FilterInfo::IS_READ:
       res.push_back(SqlCond("article.is_read == True"));
       break;
 
-      //     case FilterInfo::IS_UNREAD:
-      //       pass = !article.is_read ();
-      //       break;
+    case FilterInfo::IS_UNREAD:
+      res.push_back(SqlCond("article.is_read == False"));
+      break;
 
     case FilterInfo::BYTE_COUNT_GE:
     {
