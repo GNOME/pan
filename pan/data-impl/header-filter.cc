@@ -268,9 +268,13 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       break;
     }
 
-      //     case FilterInfo::DAYS_OLD_GE:
-      //       pass = (time(NULL) - article.get_time_posted()) > (criteria._ge
-      //       * 86400); break;
+    case FilterInfo::DAYS_OLD_GE:
+    {
+      SqlCond sc("unixepoch('now', '-' || ? || ' days') > article.time_posted",
+                 criteria._ge);
+      res.push_back(sc);
+      break;
+    }
 
     case FilterInfo::LINE_COUNT_GE:
       res.push_back(SqlCond("article.line_count >= ?", criteria._ge));

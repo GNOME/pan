@@ -360,6 +360,27 @@ public:
       assert_result({"g1m2"});
     }
 
+    void test_by_days_old()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set time_posted = unixepoch('now', '-10 days')
+               where message_id == "g1m1";
+        update article set time_posted = unixepoch('now', '-5 days')
+               where message_id == "g1m2";
+      )SQL");
+
+      criteria.set_type_days_old_ge(9);
+      assert_result({"g1m1"});
+
+      criteria.set_type_days_old_ge(4);
+      assert_result({"g1m1", "g1m2"});
+
+      criteria.set_type_days_old_ge(15);
+      assert_result({});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -373,6 +394,7 @@ public:
     CPPUNIT_TEST(test_by_score_ge);
     CPPUNIT_TEST(test_by_cache_status);
     CPPUNIT_TEST(test_by_line_count);
+    CPPUNIT_TEST(test_by_days_old);
     CPPUNIT_TEST_SUITE_END();
 };
 
