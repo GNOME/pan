@@ -262,12 +262,15 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
             res.push_back(SqlCond(sql, param));
           }
       }
-      //       else if (criteria._header == references)
-      //       {
-      //         std::string s;
-      //         data.get_article_references(&article, s);
-      //         pass = criteria._text.test(s);
-      //       }
+      else if (criteria._header == references)
+      {
+        std::string sql_snippet, param;
+        if (criteria._text.create_sql_search(
+              "article.`references`", sql_snippet, param))
+        {
+          res.push_back(SqlCond(sql_snippet, param));
+        }
+      }
       //       else if (! criteria._needs_body)
       //       {
       //         pass = criteria._text.test(get_header(article,
