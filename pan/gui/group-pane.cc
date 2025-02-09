@@ -390,7 +390,7 @@ PanTreeStore *build_model(Data &data,
   std::string sql_snippet, sql_param;
   // match can be nullptr
   bool do_match =
-    match != nullptr && match->create_sql_search(sql_snippet, sql_param);
+    match != nullptr && match->create_sql_search("to_test", sql_snippet, sql_param);
 
   // count groups, to be able to reserver arrays with  the right size
   std::string count_group_str(R"SQL(
