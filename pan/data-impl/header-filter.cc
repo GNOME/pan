@@ -310,6 +310,12 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       {
         res.push_back(get_header_sql_cond(data, criteria));
       }
+      // Cannot test for header value present only in cached
+      // article. The whole idea of header filter is to perform the
+      // search only in DB. The only alternative is to cache article
+      // *in* a DB with headers stored as columns (or json, but that
+      // may be slow). Let's avoid that unless people ask for it.
+
       //       else
       //       {
       //         if (cache.contains(article.message_id))
