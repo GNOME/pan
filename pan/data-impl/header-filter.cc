@@ -354,10 +354,10 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       res.push_back(SqlCond("article.cached == True"));
       break;
 
-  //     case FilterInfo::TYPE_ERR:
-  //       assert(0 && "invalid type!");
-  //       pass = false;
-  //       break;
+    case FilterInfo::TYPE_ERR:
+      assert(0 && "invalid type!");
+      res.push_back(SqlCond("False"));
+      break;
   }
 
   if (criteria._negate)
