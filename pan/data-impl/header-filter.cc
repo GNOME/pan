@@ -283,19 +283,19 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       }
       else if (criteria._header == newsgroups)
       {
-          std::string sql_snippet, param;
-          if (criteria._text.create_sql_search("grp.name", sql_snippet, param))
-          {
+        std::string sql_snippet, param;
+        if (criteria._text.create_sql_search("grp.name", sql_snippet, param))
+        {
 
-            std::string sql(R"SQL(
+          std::string sql(R"SQL(
             (
               select count() from `group` as grp
               join article_group as ag on ag.group_id == grp.id
               where ag.article_id == article.id
-                    and )SQL" + sql_snippet
-            + ") >0 ");
-            res.push_back(SqlCond(sql, param));
-          }
+                    and )SQL"
+                          + sql_snippet + ") >0 ");
+          res.push_back(SqlCond(sql, param));
+        }
       }
       else if (criteria._header == references)
       {
