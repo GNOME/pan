@@ -5,6 +5,7 @@
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
 #include <config.h>
+#include <cstdio>
 #include <pan/data-impl/data-impl.h>
 #include <pan/data/article.h>
 #include <pan/general/file-util.h>
@@ -58,6 +59,12 @@ public:
         insert into `group` (name) values ("g1"),("g2");
         insert into current_group ( group_id )
           select id from `group` as g where g.name = "g1";
+        insert into profile (name, author_id, server_id)
+                    values (
+                      "my_profile",
+                      (select id from author where author like "Me%"),
+                      (select id from server where host = "dummy")
+                    );
       )SQL");
       criteria.clear();
     }
@@ -138,9 +145,12 @@ public:
         insert into article (message_id,author_id, time_posted, is_read)
           values ("<m2>", (select id from author where author like "Me%"), 1234, 0);
       )SQL");
-      criteria.set_type_is_read();
 
+      criteria.set_type_is_read();
       assert_result({"<m1>"});
+
+      criteria.set_type_is_unread();
+      assert_result({"<m2>"});
     }
 
     void test_byte_count_ge()
@@ -303,6 +313,9 @@ public:
       d.text = "g1m1";
       criteria.set_type_text(Quark("Message-ID"), d);
       assert_result("message ID",{"g1m1"});
+
+      criteria.set_type_posted_by_me();
+      assert_result("posted by me",{"g1m1"});
     }
 
     void test_by_score_ge()
