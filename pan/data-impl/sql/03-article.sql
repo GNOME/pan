@@ -5,15 +5,15 @@ create table if not exists article (
   message_id text not null unique, 
   subject text not null, 
   author_id integer not null, 
+  `references` text,
   time_posted integer not null, 
   line_count integer not null, 
- --  marked boolean check(marked = False or marked = True), 
+  --  marked boolean check(marked = False or marked = True),
   binary boolean check(binary = False or binary = True), 
   expected_parts integer not null, -- 1 for text article
- --  -- in there in another table ?
- --  refs text not null,
- --
- --  is_read boolean check(is_read = False or is_read = True),
+
+  is_read boolean check(is_read = False or is_read = True) default False,
+
   foreign key(author_id) references author (id) on delete restrict
 );
 
@@ -47,6 +47,9 @@ create table if not exists article_part (
   part_message_id text not null,
   size integer not null
 );
+
+create index if not exists article_part_article_id
+  on `article_part` (article_id);
 
 -- Local Variables:
 -- mode: sql
