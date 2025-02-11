@@ -142,17 +142,27 @@ namespace
     set_author_q.exec();
 
     SQLite::Statement set_article_q(pan_db, R"SQL(
-      insert into `article` (message_id,subject,author_id,time_posted, binary)
-      values ($msg_id, $subject, (select id from author where address = $addr),
+      insert into `article` (message_id,author_id,time_posted, binary)
+      values ($msg_id, (select id from author where address = $addr),
               $time_posted, true)
       on conflict (message_id) do nothing
     )SQL");
     set_article_q.bindNoCopy(1, mc.article_message_id);
-    set_article_q.bindNoCopy(2, mc.subject);
-    set_article_q.bind(3, address);
-    set_article_q.bind(4, mc.time_posted);
+    set_article_q.bind(2, address);
+    set_article_q.bind(3, mc.time_posted);
     LOG4CXX_TRACE(logger, "create nzb article " << mc.article_message_id << " (" << mc.subject <<")");
     set_article_q.exec();
+
+    SQLite::Statement set_subject_q(pan_db, R"SQL(
+      insert into `subject` (article_id,subject)
+      values ((select id from article where message_id = $msg_id),
+              $subject)
+      on conflict (article_id) do nothing
+    )SQL");
+    set_subject_q.bindNoCopy(1, mc.article_message_id);
+    set_subject_q.bindNoCopy(2, mc.subject);
+    LOG4CXX_TRACE(logger, "create nzb article " << mc.article_message_id << " (" << mc.subject <<")");
+    set_subject_q.exec();
   }
 
   void change_article_id(std::string old_id, std::string new_id)
