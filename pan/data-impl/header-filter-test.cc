@@ -5,6 +5,7 @@
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
 #include <config.h>
+#include <cstdio>
 #include <pan/data-impl/data-impl.h>
 #include <pan/data/article.h>
 #include <pan/general/file-util.h>
@@ -47,10 +48,14 @@ public:
       )SQL");
       data = new DataImpl(cache, prefs);
       pan_db.exec(R"SQL(
-        insert into author (name, address) values ("Me","me@home"),("Other", "other@home") on conflict do nothing;
+        insert into author (name, address)
+               values ("Me","me@home"),("Other", "other@home")
+          on conflict do nothing;
         insert into server (host, port, pan_id, newsrc_filename)
                     values ("dummy", 2, 1, "/dev/null") on conflict do nothing;
         insert into `group` (name) values ("g1"),("g2") on conflict do nothing;
+        insert into profile (name, author_id)
+                    values ("my_profile",1) on conflict do nothing;
       )SQL");
       criteria.clear();
     }
@@ -257,7 +262,7 @@ public:
       add_article("g1m1", "g1");
       add_article("g1m2", "g1");
       pan_db.exec(R"SQL(
-        update article set `author_id` = (select id from author where name = "Me") where message_id = "g1m1";
+        update article set `author_id` = (select id from author where name = "Me")    where message_id = "g1m1";
         update article set `author_id` = (select id from author where name = "Other") where message_id = "g1m2";
         insert into subject (article_id, subject) values
           ((select id from article where message_id = "g1m1"), "m1 subject"),
@@ -281,6 +286,9 @@ public:
 
       d.text = "g1m1";
       criteria.set_type_text(Quark("Message-ID"), d);
+      assert_result({"g1m1"});
+
+      criteria.set_type_posted_by_me();
       assert_result({"g1m1"});
     }
 
