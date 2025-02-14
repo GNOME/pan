@@ -233,9 +233,9 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       }
       break;
 
-      // case FilterInfo::IS_BINARY:
-      //   pass = article.get_part_state() == Article::COMPLETE;
-      //   break;
+    case FilterInfo::IS_BINARY:
+      res.push_back(SqlCond("article.part_state == 'C'"));
+      break;
 
     case FilterInfo::IS_POSTED_BY_ME:
     {

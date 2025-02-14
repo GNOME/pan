@@ -394,6 +394,18 @@ public:
       assert_result({});
     }
 
+    void test_by_is_binary()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set part_state = 'C' where message_id == "g1m1";
+      )SQL");
+
+      criteria.set_type_binary();
+      assert_result({"g1m1"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -408,6 +420,7 @@ public:
     CPPUNIT_TEST(test_by_cache_status);
     CPPUNIT_TEST(test_by_line_count);
     CPPUNIT_TEST(test_by_days_old);
+    CPPUNIT_TEST(test_by_is_binary);
     CPPUNIT_TEST_SUITE_END();
 };
 
