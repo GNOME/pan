@@ -36,7 +36,7 @@ SQLite::Statement HeaderFilter::get_sql_query(Data const &data,
                   sql.append(sc.where + " ");
                 });
 
-  LOG4CXX_TRACE(logger, "SQL for header filter: " << sql);
+  LOG4CXX_TRACE(logger, "SQL for header filter: «" << sql << "»");
 
   SQLite::Statement q(pan_db, sql);
   int i(1);
@@ -184,21 +184,33 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
 
   switch (criteria._type)
   {
-      // case FilterInfo::AGGREGATE_AND:
-      //   pass = true;
-      //   foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it)
-      //   {
-      //     // assume test passes if test needs body but article not cached
-      //     if (! (*it)->_needs_body || cache.contains(article.message_id))
-      //     {
-      //       if (! test_article(data, **it, group, article))
-      //       {
-      //         pass = false;
-      //         break;
-      //       }
-      //     }
-      //   }
-      //   break;
+    case FilterInfo::AGGREGATE_AND:
+      if (! criteria._aggregates.empty())
+      {
+        res.push_back(SqlCond("("));
+        foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it)
+        {
+          // assume test passes if test needs body but article not cached
+          if ((*it)->_needs_body)
+          {
+            res.push_back(SqlCond("article.cached = False"));
+          }
+          else
+          {
+            auto in_res = get_sql_filter(data, **it);
+            std::for_each(in_res.begin(),
+                          in_res.end(),
+                          [&res](SqlCond const sc)
+                          {
+                            res.push_back(sc);
+                          });
+          }
+          res.push_back(SqlCond("and"));
+        }
+        res.pop_back(); // remove last "and"
+        res.push_back(SqlCond(")"));
+      }
+      break;
 
     case FilterInfo::AGGREGATE_OR:
       if (criteria._aggregates.empty())

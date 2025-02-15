@@ -69,6 +69,8 @@ public:
                     );
       )SQL");
       criteria.clear();
+      // That's dumb but that how it's done in header-pane.cc.
+      criteria.set_type_aggregate_and();
     }
 
     void tearDown()
@@ -406,6 +408,35 @@ public:
       assert_result({"g1m1"});
     }
 
+    void test_byte_count_ge_and_is_read()
+    {
+      pan_db.exec(R"SQL(
+        insert into article (message_id,author_id, subject_id, time_posted, is_read)
+          values ("m1", (select id from author where author like "Me%"),
+                        (select id from subject where subject = "blah"), 1234,1);
+        insert into article (message_id,author_id, subject_id, time_posted, is_read)
+          values ("m2", (select id from author where author like "Me%"),
+                        (select id from subject where subject = "blah"), 1234,1);
+        insert into article (message_id,author_id, subject_id, time_posted, is_read)
+          values ("m3", (select id from author where author like "Me%"),
+                        (select id from subject where subject = "blah"), 1234,0);
+        insert into article_part (article_id, part_number, part_message_id, size)
+           values ((select id from article where message_id == "m1"),1,"m1p1", 1000);
+        insert into article_part (article_id, part_number, part_message_id, size)
+           values ((select id from article where message_id == "m2"),1,"m2p1", 2000);
+        insert into article_part (article_id, part_number, part_message_id, size)
+           values ((select id from article where message_id == "m3"),1,"m3p1", 1200);
+      )SQL");
+      FilterInfo *f1 = new FilterInfo, *f2 = new FilterInfo;
+      criteria.set_type_aggregate_and();
+      f1->set_type_byte_count_ge(1500);
+      f2->set_type_is_read();
+      criteria._aggregates.push_back(f1);
+      criteria._aggregates.push_back(f2);
+
+      assert_result({"m2"});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -421,6 +452,7 @@ public:
     CPPUNIT_TEST(test_by_line_count);
     CPPUNIT_TEST(test_by_days_old);
     CPPUNIT_TEST(test_by_is_binary);
+    CPPUNIT_TEST(test_byte_count_ge_and_is_read);
     CPPUNIT_TEST_SUITE_END();
 };
 
