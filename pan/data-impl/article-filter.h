@@ -67,13 +67,6 @@ class ArticleFilter
 
     typedef std::vector<Article const *> articles_t;
 
-    void test_articles(Data const &data,
-                       FilterInfo const &criteria,
-                       Quark const &group,
-                       articles_t const &in,
-                       articles_t &setme_pass,
-                       articles_t &setme_fail) const;
-
     bool test_article(Data const &data,
                       FilterInfo const &criteria,
                       Article const &article) const;
