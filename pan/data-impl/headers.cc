@@ -1200,6 +1200,7 @@ void DataImpl ::get_article_scores(Quark const &group,
   _article_filter.get_article_scores(*this, sections, group, article, setme);
 }
 
+// Compute the score of a list of articles
 void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
 {
   ArticleFilter::sections_t sections;
@@ -1215,6 +1216,7 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
   }
 }
 
+// compute the score of all articles of a group
 void DataImpl ::rescore_group_articles(Quark const &group)
 {
   ArticleFilter::sections_t sections;
