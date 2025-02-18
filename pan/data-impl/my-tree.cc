@@ -335,7 +335,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
         continue;
       }
       else if (_data._article_filter.test_article(
-                 _data, _filter, _group, *(*it)->_article))
+                 _data, _filter, *(*it)->_article))
       {
         pass.push_back(*it);
       }
@@ -380,7 +380,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
     {
       Article const *a((*it)->_article);
       if (a->get_score() > -9999
-          || _data._article_filter.test_article(_data, _filter, _group, *a))
+          || _data._article_filter.test_article(_data, _filter, *a))
       {
         pass.push_back(*it); // pass is now sorted by mid because d was too
       }
