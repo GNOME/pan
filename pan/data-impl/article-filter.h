@@ -76,7 +76,6 @@ class ArticleFilter
 
     bool test_article(Data const &data,
                       FilterInfo const &criteria,
-                      Quark const &group,
                       Article const &article) const;
 
     typedef std::vector<Scorefile::Section const *> sections_t;
