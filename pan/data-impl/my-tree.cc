@@ -351,6 +351,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
   //  maybe include threads or subthreads...
   if (_show_type == Data::SHOW_THREADS)
   {
+    // add all parent of passed articles
     const_nodes_v passcopy = pass;
     foreach (const_nodes_v, passcopy, it)
     {
@@ -360,6 +361,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
         pass.push_back(n);
       }
     }
+    // remove redudant articles
     std::sort(pass.begin(), pass.end(), compare);
     pass.erase(std::unique(pass.begin(), pass.end()), pass.end());
     // std::cerr << LINE_ID << " reduces to " << pass.size() << " threads\n";
@@ -367,6 +369,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
 
   if (_show_type == Data::SHOW_THREADS || _show_type == Data::SHOW_SUBTHREADS)
   {
+    // add all descendants of passed articles
     unique_nodes_t d;
     foreach_const (const_nodes_v, pass, it)
     {
@@ -376,6 +379,7 @@ void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
 
     const_nodes_v fail2;
     pass.clear();
+    // re-apply filter on all passed and descendants articles
     foreach_const (unique_nodes_t, d, it)
     {
       Article const *a((*it)->_article);
@@ -509,11 +513,11 @@ void DataImpl ::MyTree ::remove_articles(quarks_t const &mids)
   }
 }
 
+// if this node has an article and wasn't already in `descendants',
+// then add it and its children.
 void DataImpl ::MyTree ::accumulate_descendants(unique_nodes_t &descendants,
                                                 ArticleNode const *node) const
 {
-  // if this node has an article and wasn't already in `descendants',
-  // then add it and its children.
 
   if (node->_article && descendants.insert(node).second || ! node->_article)
   {
