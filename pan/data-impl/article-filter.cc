@@ -248,27 +248,6 @@ bool ArticleFilter ::test_article(Data const &data,
   return pass;
 }
 
-void ArticleFilter ::test_articles(Data const &data,
-                                   FilterInfo const &criteria,
-                                   Quark const &group,
-                                   articles_t const &in,
-                                   articles_t &setme_pass,
-                                   articles_t &setme_fail) const
-{
-  foreach_const (articles_t, in, it)
-  {
-    Article const *a(*it);
-    if (test_article(data, criteria, *a))
-    {
-      setme_pass.push_back(a);
-    }
-    else
-    {
-      setme_fail.push_back(a);
-    }
-  }
-}
-
 int ArticleFilter ::score_article(Data const &data,
                                   sections_t const &sections,
                                   Quark const &group,
