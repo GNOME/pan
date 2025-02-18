@@ -71,7 +71,6 @@ std::string const ArticleFilter ::get_header(Article const &a,
 // need to modify caller of test_article.
 bool ArticleFilter ::test_article(Data const &data,
                                   FilterInfo const &criteria,
-                                  Quark const &group,
                                   Article const &article) const
 {
   ArticleCache const &cache(data.get_cache());
@@ -85,7 +84,7 @@ bool ArticleFilter ::test_article(Data const &data,
         // assume test passes if test needs body but article not cached
         if (! (*it)->_needs_body || cache.contains(article.message_id))
         {
-          if (! test_article(data, **it, group, article))
+          if (! test_article(data, **it, article))
           {
             pass = false;
             break;
@@ -107,7 +106,7 @@ bool ArticleFilter ::test_article(Data const &data,
           // assume test fails if test needs body but article not cached
           if (! (*it)->_needs_body || cache.contains(article.message_id))
           {
-            if (test_article(data, **it, group, article))
+            if (test_article(data, **it, article))
             {
               pass = true;
               break;
@@ -173,7 +172,7 @@ bool ArticleFilter ::test_article(Data const &data,
           int const ge = atoi(criteria._text._impl_text.c_str() + pos);
           FilterInfo tmp;
           tmp.set_type_crosspost_count_ge(ge);
-          pass = test_article(data, tmp, group, article);
+          pass = test_article(data, tmp, article);
         }
         else if (criteria._text._impl_text.find(".*:.*")
                  != std::string::npos) // user is filtering by # of crossposts?
@@ -182,7 +181,7 @@ bool ArticleFilter ::test_article(Data const &data,
           int const ge = std::count(v.begin(), v.end(), ':');
           FilterInfo tmp;
           tmp.set_type_crosspost_count_ge(ge);
-          pass = test_article(data, tmp, group, article);
+          pass = test_article(data, tmp, article);
         }
         else // oh fine, then, user is doing some other damn thing with the xref
              // header.  build one for them.
@@ -259,7 +258,7 @@ void ArticleFilter ::test_articles(Data const &data,
   foreach_const (articles_t, in, it)
   {
     Article const *a(*it);
-    if (test_article(data, criteria, group, *a))
+    if (test_article(data, criteria, *a))
     {
       setme_pass.push_back(a);
     }
@@ -287,7 +286,7 @@ int ArticleFilter ::score_article(Data const &data,
       {
         continue;
       }
-      if (! test_article(data, it->test, group, article))
+      if (! test_article(data, it->test, article))
       {
         continue;
       }
@@ -316,7 +315,7 @@ void ArticleFilter ::get_article_scores(Data const &data,
       {
         continue;
       }
-      if (! test_article(data, it->test, group, article))
+      if (! test_article(data, it->test, article))
       {
         continue;
       }
