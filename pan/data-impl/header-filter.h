@@ -99,6 +99,11 @@ class HeaderFilter
     SqlCond get_xref_sql_cond(Data const &data,
                               FilterInfo const &criteria) const;
     SQLite::Statement get_sql_query(Data const &data,
+                                    std::string const &select_str,
+                                    SqlCond const &pre_cond,
+                                    FilterInfo const &criteria) const;
+    SQLite::Statement get_sql_query(Data const &data,
+                                    std::string const &select_str,
                                     FilterInfo const &criteria) const;
 };
 

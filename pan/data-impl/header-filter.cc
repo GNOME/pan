@@ -12,11 +12,21 @@ log4cxx::LoggerPtr logger(getLogger("header-filter"));
 }
 
 SQLite::Statement HeaderFilter::get_sql_query(Data const &data,
+                                              std::string const &select_str,
+                                              FilterInfo const &criteria) const
+{
+  return get_sql_query(data, select_str, SqlCond(), criteria);
+}
+
+SQLite::Statement HeaderFilter::get_sql_query(Data const &data,
+                                              std::string const &select_str,
+                                              SqlCond const &pre_cond,
                                               FilterInfo const &criteria) const
 {
   auto sqlf = get_sql_filter(data, criteria);
+  sqlf.insert(sqlf.begin(), pre_cond);
 
-  std::string sql("select message_id from article ");
+  std::string sql("select " + select_str + " from article ");
   // add join clauses warning: there's a risk of adding identical join
   // clauses which may degrade perf or trigger errors
   std::for_each(sqlf.begin(),
