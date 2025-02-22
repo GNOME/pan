@@ -437,6 +437,33 @@ public:
       assert_result({"m2"});
     }
 
+    void test_single_article()
+    {
+      add_article("g1m1", "g1");
+      add_article("g1m2", "g1");
+      pan_db.exec(R"SQL(
+        update article set part_state = 'C' where message_id == "g1m1";
+      )SQL");
+
+      criteria.set_type_binary();
+
+      SqlCond precond("message_id = ? and", "g1m1");
+      auto q = hf.get_sql_query(*data, "count()", precond, criteria);
+      while (q.executeStep())
+      {
+        int count = q.getColumn(0);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("is g1m1 binary", 1, count);
+      }
+
+      precond.str_param = "g2m2";
+      q = hf.get_sql_query(*data, "count()", precond, criteria);
+      while (q.executeStep())
+      {
+        int count = q.getColumn(0);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("is g2m2 binary", 0, count);
+      }
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -453,6 +480,7 @@ public:
     CPPUNIT_TEST(test_by_days_old);
     CPPUNIT_TEST(test_by_is_binary);
     CPPUNIT_TEST(test_byte_count_ge_and_is_read);
+    CPPUNIT_TEST(test_single_article);
     CPPUNIT_TEST_SUITE_END();
 };
 
