@@ -837,8 +837,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 
         // Now the article is loaded in DB. It's time to score it
         Article a(group, message_id);
-        a.set_score(
-          _article_filter.score_article(*this, score_sections, group, a));
+        _header_filter.score_article(*this,score_sections,a);
       }
 
       success = ! in->fail();
