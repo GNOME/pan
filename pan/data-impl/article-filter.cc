@@ -248,37 +248,6 @@ bool ArticleFilter ::test_article(Data const &data,
   return pass;
 }
 
-int ArticleFilter ::score_article(Data const &data,
-                                  sections_t const &sections,
-                                  Quark const &group,
-                                  Article const &article) const
-{
-  int score(0);
-  LOG4CXX_DEBUG(logger, "Scoring article " << article.message_id);
-
-  foreach_const (sections_t, sections, sit)
-  {
-    Scorefile::Section const *section(*sit);
-    foreach_const (Scorefile::items_t, section->items, it)
-    {
-      if (it->expired)
-      {
-        continue;
-      }
-      if (! test_article(data, it->test, article))
-      {
-        continue;
-      }
-      if (it->value_assign_flag)
-      {
-        return it->value;
-      }
-      score += it->value;
-    }
-  }
-  return score;
-}
-
 void ArticleFilter ::get_article_scores(Data const &data,
                                         sections_t const &sections,
                                         Quark const &group,

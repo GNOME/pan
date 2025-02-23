@@ -73,11 +73,6 @@ class ArticleFilter
 
     typedef std::vector<Scorefile::Section const *> sections_t;
 
-    int score_article(Data const &data,
-                      sections_t const &score,
-                      Quark const &group,
-                      Article const &article) const;
-
     void get_article_scores(Data const &data,
                             sections_t const &score,
                             Quark const &group,

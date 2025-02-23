@@ -1227,7 +1227,7 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
     // whose msg_id matches an article message id. A plain article
     // part is not stored in article table but in article_part.
     if (a.is_in_db_article_table())
-      a.set_score(_article_filter.score_article(*this, sections, group, a));
+      _header_filter.score_article(*this, sections, a);
   }
 }
 
@@ -1247,7 +1247,7 @@ void DataImpl ::rescore_group_articles(Quark const &group)
   q.bind(1, group.c_str());
   while (q.executeStep()) {
     Article a(group, Quark(q.getColumn(0).getText()));
-    a.set_score(_article_filter.score_article(*this, sections, group, a));
+    _header_filter.score_article(*this, sections, a);
   }
 }
 
