@@ -1212,7 +1212,7 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
   foreach (quarks_t, mids, it)
   {
     Article a(group, *it);
-    a.set_score(_article_filter.score_article(*this, sections, group, a));
+    _header_filter.score_article(*this, sections, group, a);
   }
 }
 
@@ -1232,7 +1232,7 @@ void DataImpl ::rescore_group_articles(Quark const &group)
   q.bind(1, group.c_str());
   while (q.executeStep()) {
     Article a(group, Quark(q.getColumn(0).getText()));
-    a.set_score(_article_filter.score_article(*this, sections, group, a));
+    _header_filter.score_article(*this, sections, group, a);
   }
 }
 
