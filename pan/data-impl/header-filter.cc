@@ -1,5 +1,6 @@
 #include "header-filter.h"
 #include "pan/general/log4cxx.h"
+#include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Statement.h>
 #include <algorithm>
 #include <log4cxx/logger.h>
@@ -9,6 +10,44 @@ using namespace pan;
 
 namespace  {
 log4cxx::LoggerPtr logger(getLogger("header-filter"));
+}
+
+void HeaderFilter::score_article(
+  Data const &data,
+  std::vector<Scorefile::Section const *> const &sections,
+  Article const &article) const
+{
+  int score(0);
+  for(Scorefile::Section const *sit : sections) {
+    foreach_const (Scorefile::items_t, sit->items, it)
+    {
+      if (it->expired)
+      {
+        continue;
+      }
+      SqlCond precond("message_id = ? and", article.message_id);
+      auto q = get_sql_query(data, "count()", precond, it->test);
+      int count;
+      while (q.executeStep())
+      {
+        count = q.getColumn(0);
+      }
+      if (count == 0)
+      {
+        continue;
+      }
+      if (it->value_assign_flag)
+      {
+        score = it->value;
+        goto endloop;
+      }
+      score += it->value;
+    }
+  }
+
+endloop:
+  LOG4CXX_TRACE(logger, "Article " << article.message_id << " scored to " << score);
+  article.set_score(score);
 }
 
 // returns a SQL statement like
