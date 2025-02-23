@@ -107,6 +107,11 @@ class HeaderFilter
     SQLite::Statement get_sql_query(Data const &data,
                                     std::string const &select_str,
                                     FilterInfo const &criteria) const;
+
+    void score_article(Data const &data,
+                       std::vector<Scorefile::Section const *> const &sections,
+                       Quark const &group,
+                       Article const &article) const;
 };
 
 } // namespace pan
