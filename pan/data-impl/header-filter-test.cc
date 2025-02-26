@@ -33,6 +33,11 @@ private:
     HeaderFilter hf;
     FilterInfo criteria;
 
+    struct FilterResult {
+        std::string msg_id;
+        bool pass;
+    };
+
 public:
     void setUp()
     {
@@ -140,6 +145,28 @@ public:
           CPPUNIT_ASSERT_EQUAL_MESSAGE(step + "article " + msg_id ,expect.at(count++), msg_id);
       }
       CPPUNIT_ASSERT_EQUAL_MESSAGE(step + "article count" ,int(expect.size()), count);
+    }
+
+    void assert_filter_result(
+      std::string label,
+      std::string group,
+      std::function<std::string(std::string, std::string)> c,
+      std::vector<FilterResult> expect)
+    {
+      auto q = hf.get_sql_query(*data, c, criteria);
+      q.bind(q.getBindParameterCount(), group);
+
+      int count(0);
+      auto str = "article " + label;
+      while (q.executeStep())
+      {
+        std::string msg_id = q.getColumn(0);
+        bool pass = q.getColumn(1).getInt();
+        auto xp = expect.at(count++);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " msg_id", xp.msg_id, msg_id);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " pass", xp.pass, pass);
+      }
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " count", int(expect.size()), count);
     }
 
     void test_is_read()
@@ -464,6 +491,38 @@ public:
       }
     }
 
+    void test_article_filter()
+    {
+      add_article("g1m1", "g1");
+      pan_db.exec(R"SQL(
+        update article set part_state = 'C' where message_id == "g1m1";
+      )SQL");
+
+      add_article("g1m2", "g1");
+      add_article("g2m1", "g2");
+
+      auto c = [](std::string join, std::string where) -> std::string
+      {
+        std::string res(
+          "select message_id,(" + where + ") as pass from article "
+          + "join article_group as ag on ag.article_id = article.id "
+          + "join `group` as g on ag.group_id = g.id " + "where g.name == ? ");
+
+        if (! join.empty())
+        {
+          res += "join " + join;
+        }
+
+        res += " order by message_id";
+        return res;
+      };
+
+      criteria.set_type_binary();
+
+      assert_filter_result(
+        "plain filter", "g1", c, {{"g1m1", true}, {"g1m2", false}});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -481,6 +540,7 @@ public:
     CPPUNIT_TEST(test_by_is_binary);
     CPPUNIT_TEST(test_byte_count_ge_and_is_read);
     CPPUNIT_TEST(test_single_article);
+    CPPUNIT_TEST(test_article_filter);
     CPPUNIT_TEST_SUITE_END();
 };
 
