@@ -102,11 +102,20 @@ class HeaderFilter
                                     FilterInfo const &criteria) const;
     SQLite::Statement get_sql_query(Data const &data,
                                     std::string const &select_str,
-                                    SqlCond const &pre_cond,
                                     FilterInfo const &criteria) const;
     SQLite::Statement get_sql_query(Data const &data,
                                     std::string const &select_str,
+                                    SqlCond const &pre_cond,
                                     FilterInfo const &criteria) const;
+    SQLite::Statement get_sql_query(
+      Data const &data,
+      std::function<std::string(std::string join, std::string where)> compose,
+      FilterInfo const &criteria) const;
+    SQLite::Statement get_sql_query(
+      Data const &data,
+      std::function<std::string(std::string join, std::string where)> compose,
+      SqlCond const &pre_cond,
+      FilterInfo const &criteria) const;
 
     void score_article(Data const &data,
                        std::vector<Scorefile::Section const *> const &sections,

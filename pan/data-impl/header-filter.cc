@@ -74,29 +74,69 @@ SQLite::Statement HeaderFilter::get_sql_query(Data const &data,
                                               SqlCond const &pre_cond,
                                               FilterInfo const &criteria) const
 {
+  auto c = [select_str](std::string join, std::string where) -> std::string
+  {
+    std::string q("select " + select_str + " from article");
+    if (! join.empty())
+    {
+      q += " " + join;
+    }
+    if (! where.empty())
+    {
+      q += " where " + where;
+    }
+    return q;
+  };
+
+  return get_sql_query(data, c, pre_cond, criteria);
+}
+
+// returns a SQL statement like
+// select <select_str> from article where <pre_cond> <criteria is matched>
+SQLite::Statement HeaderFilter::get_sql_query(
+  Data const &data,
+  std::function<std::string(std::string join, std::string where)> compose,
+  FilterInfo const &criteria) const
+{
+  return get_sql_query(data, compose, SqlCond(), criteria);
+}
+
+// returns a SQL statement like
+// select <select_str> from article where <pre_cond> <criteria is matched>
+SQLite::Statement HeaderFilter::get_sql_query(
+  Data const &data,
+  std::function<std::string(std::string join, std::string where)> compose,
+  SqlCond const &pre_cond,
+  FilterInfo const &criteria) const
+{
   auto sqlf = get_sql_filter(data, criteria);
   sqlf.insert(sqlf.begin(), pre_cond);
 
-  std::string sql("select " + select_str + " from article ");
+  std::string join, where;
   // add join clauses warning: there's a risk of adding identical join
   // clauses which may degrade perf or trigger errors
   std::for_each(sqlf.begin(),
                 sqlf.end(),
-                [&sql](SqlCond const sc)
+                [&join](SqlCond const sc)
                 {
-                  sql.append(sc.join + " ");
+                  if (! sc.join.empty())
+                  {
+                    join.append(sc.join + " ");
+                  }
                 });
-
-  sql.append("where ");
 
   // add where clause to the SQL string
   std::for_each(sqlf.begin(),
                 sqlf.end(),
-                [&sql](SqlCond const sc)
+                [&where](SqlCond const sc)
                 {
-                  sql.append(sc.where + " ");
+                  if (! sc.where.empty())
+                  {
+                    where.append(sc.where + " ");
+                  }
                 });
 
+  auto sql = compose(join, where);
   LOG4CXX_TRACE(logger, "SQL for header filter: «" << sql << "»");
 
   SQLite::Statement q(pan_db, sql);
