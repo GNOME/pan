@@ -1,4 +1,5 @@
 #include "header-filter.h"
+#include "pan/data/data.h"
 #include "pan/general/log4cxx.h"
 #include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Statement.h>
@@ -49,6 +50,87 @@ endloop:
   LOG4CXX_TRACE(logger, "Article " << article.message_id << " scored to " << score);
   article.set_score(score);
 }
+
+// returns a SQL statement like
+// select message_id, passed from article join <..>
+// where <group and criteria are matched>
+SQLite::Statement HeaderFilter::get_sql_filter(Data const &data,
+                                               Data::ShowType show_type,
+                                               FilterInfo const &criteria) const
+{
+  std::function<std::string(std::string join, std::string where)> c;
+
+  switch (show_type)
+  {
+    case pan::Data::SHOW_ARTICLES:
+      c = [](std::string join, std::string where) -> std::string
+      {
+        std::string res("select message_id,");
+        res += where.empty() ? "True" : "(" + where + ")";
+        res += " from article\n";
+        res += "join article_group as ag on ag.article_id = article.id\n";
+        res += "join `group` as g on ag.group_id = g.id\n" + join;
+        res += "where g.name == ? order by message_id\n";
+        return res;
+      };
+      break;
+
+    case pan::Data::SHOW_THREADS:
+      c = [](std::string join, std::string where) -> std::string
+      {
+        std::string passed(
+          "select article.id, article.parent_id, message_id,(" + where
+          + ") as pass from article "
+          + "join article_group as ag on ag.article_id = article.id "
+          + "join `group` as g on ag.group_id = g.id " + join
+          + "where g.name == ? ");
+
+        std::string cte(R"SQL(
+          with recursive
+          -- list all articles with their test result (in pass)
+          passed (id, parent_id, msg_id, pass) as (
+        )SQL");
+
+        cte += passed;
+        cte += R"SQL(
+          ),
+          -- recursive part for parent
+          parent (id, parent_id, msg_id,pass) as (
+            -- list all articles with their state
+            select id, parent_id, msg_id,pass from passed
+            union ALL
+            -- list all parents of passing articles. This parent were listed above, but now pass is True
+            select article.id, article.parent_id, message_id,pass from parent
+              join article on article.id == parent.parent_id
+              where parent.pass == True
+          ),
+          -- recursive part for children
+          child (id, parent_id, msg_id,pass) as (
+            -- list all articles with their state
+            select id, parent_id, msg_id,pass from passed
+            union ALL
+            -- list all children of passing articles. This parent were listed above, but now pass is True
+            select article.id, article.parent_id, message_id,pass from child
+              join article on article.parent_id == child.id
+              where child.pass == True
+          )
+          -- aggregate the tests result, sum(pass) aggregate the tests result and the parent status
+          select msg_id, sum(pass) > 0 as pass from (
+            select msg_id, pass from parent
+            union ALL
+            select msg_id, pass from child
+          ) group by msg_id
+        )SQL";
+        return cte;
+      };
+      break;
+
+ 
+    }
+    return get_sql_query(data, c, criteria);
+}
+
+
 
 // returns a SQL statement like
 // select message_id from article where <criteria is matched>

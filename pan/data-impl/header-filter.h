@@ -117,6 +117,10 @@ class HeaderFilter
       SqlCond const &pre_cond,
       FilterInfo const &criteria) const;
 
+    SQLite::Statement get_sql_filter(Data const &data,
+                                     Data::ShowType show_type,
+                                     FilterInfo const &criteria) const;
+
     void score_article(Data const &data,
                        std::vector<Scorefile::Section const *> const &sections,
                        Article const &article) const;

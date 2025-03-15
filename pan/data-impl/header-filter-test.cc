@@ -1,5 +1,6 @@
 #include "pan/data-impl/data-impl.h"
 #include "pan/data-impl/header-filter.h"
+#include "pan/data/data.h"
 #include "pan/general/string-view.h"
 #include "pan/general/text-match.h"
 #include <SQLiteCpp/Database.h>
@@ -150,10 +151,10 @@ public:
     void assert_filter_result(
       std::string label,
       std::string group,
-      std::function<std::string(std::string, std::string)> c,
+      Data::ShowType show_type,
       std::vector<FilterResult> expect)
     {
-      auto q = hf.get_sql_query(*data, c, criteria);
+      auto q = hf.get_sql_filter(*data, show_type, criteria);
       q.bind(q.getBindParameterCount(), group);
 
       int count(0);
@@ -164,7 +165,8 @@ public:
         bool pass = q.getColumn(1).getInt();
         auto xp = expect.at(count++);
         CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " msg_id", xp.msg_id, msg_id);
-        CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " pass", xp.pass, pass);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(
+          str + " pass of message " + msg_id, xp.pass, pass);
       }
       CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " count", int(expect.size()), count);
     }
@@ -501,26 +503,57 @@ public:
       add_article("g1m2", "g1");
       add_article("g2m1", "g2");
 
-      auto c = [](std::string join, std::string where) -> std::string
-      {
-        std::string res(
-          "select message_id,(" + where + ") as pass from article "
-          + "join article_group as ag on ag.article_id = article.id "
-          + "join `group` as g on ag.group_id = g.id " + "where g.name == ? ");
-
-        if (! join.empty())
-        {
-          res += "join " + join;
-        }
-
-        res += " order by message_id";
-        return res;
-      };
-
       criteria.set_type_binary();
 
-      assert_filter_result(
-        "plain filter", "g1", c, {{"g1m1", true}, {"g1m2", false}});
+      assert_filter_result("plain filter",
+                           "g1",
+                           pan::Data::SHOW_ARTICLES,
+                           {{"g1m1", true}, {"g1m2", false}});
+    }
+
+    void test_article_filter_with_thread()
+    {
+      // g1m1a -> g1m1b, g1m1b2 => g1m1c1, g1m1c2
+      add_article("g1m1a", "g1");
+      add_article("g1m1b", "g1");
+      data->store_references("g1m1b", "g1m1a"); // add ancestor
+      add_article("g1m1b2", "g1");
+      data->store_references("g1m1b2", "g1m1a"); // add ancestor
+      add_article("g1m1c1", "g1");
+      data->store_references("g1m1c1", "g1m1a g1m1b"); // add ancestors
+      add_article("g1m1c2", "g1");
+      data->store_references("g1m1c2", "g1m1a g1m1b"); // add ancestors
+
+      // g1m2a -> g1m2b -> g1m2c
+      add_article("g1m2a", "g1");
+      add_article("g1m2b", "g1");
+      data->store_references("g1m2b", "g1m2a"); // add ancestor
+      add_article("g1m2c", "g1");
+      data->store_references("g1m2c", "g1m2a g1m2b"); // add ancestors
+
+      add_article("g1m2", "g1"); // no ancestors
+      add_article("g2m1", "g2");
+      pan_db.exec(R"SQL(
+        update article set part_state = 'C' where message_id == "g1m1b";
+        update article set part_state = 'I' where message_id != "g1m1b";
+      )SQL");
+
+      criteria.set_type_binary();
+      // get passing articles and their ancestors
+      assert_filter_result("thread filter (parent and children)",
+                           "g1",
+                           pan::Data::SHOW_THREADS,
+                           {
+                             {"g1m1a", true},
+                             {"g1m1b", true},
+                             {"g1m1b2", false},
+                             {"g1m1c1", true},
+                             {"g1m1c2", true},
+                             {"g1m2", false},
+                             {"g1m2a", false},
+                             {"g1m2b", false},
+                             {"g1m2c", false},
+                           });
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
@@ -541,6 +574,7 @@ public:
     CPPUNIT_TEST(test_byte_count_ge_and_is_read);
     CPPUNIT_TEST(test_single_article);
     CPPUNIT_TEST(test_article_filter);
+    CPPUNIT_TEST(test_article_filter_with_thread);
     CPPUNIT_TEST_SUITE_END();
 };
 
