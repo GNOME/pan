@@ -159,7 +159,7 @@ endif()
 
 option(WANT_GNUTLS "enable GnuTLS support (default: on)" ON)
 if(WANT_GNUTLS)
-  pkg_check_modules(GNUTLS REQUIRED IMPORTED_TARGET gnutls>=3.0.0)
+  pkg_check_modules(GNUTLS REQUIRED IMPORTED_TARGET gnutls>=3.3.6)
   set(HAVE_GNUTLS true)
 endif()
 

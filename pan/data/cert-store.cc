@@ -20,6 +20,7 @@
  *
  */
 
+#include <filesystem>
 #include <string>
 
 extern "C"
@@ -274,7 +275,6 @@ int CertStore::get_all_certs_from_disk()
   int cnt(0);
   quarks_t servers(_data.get_servers());
   int ret(0);
-  GError *err(NULL);
 
   foreach_const (quarks_t, servers, it)
   {
@@ -289,50 +289,36 @@ int CertStore::get_all_certs_from_disk()
     }
   }
 
-  // get certs from ssl certs directory
-  char *ssldir(nullptr);
-  ssldir = getenv("SSL_CERT_DIR");
-  if (! ssldir)
-  {
-    ssldir = getenv("SSL_DIR");
-  }
-  if (! ssldir)
-  {
-    return cnt;
-  }
+  std::vector<std::string> dir_list{
+    // See https://serverfault.com/questions/62496/ssl-certificate-location-on-unix-linux
+    "/etc/ssl/certs",               // SLES10/SLES11, debian and derivatives
+    "/usr/local/share/certs",       // FreeBSD
+    "/etc/pki/tls/certs",           // Fedora/RHEL
+    "/etc/openssl/certs",           // NetBSD
+    "/var/ssl/certs",               // AIX
+  };
 
-  GDir *dir = g_dir_open(ssldir, 0, &err);
-  if (err != NULL)
-  {
-    Log::add_err_va(_("Error opening SSL certificate directory: \"%s\": %s"),
-                    ssldir,
-                    err->message);
-    g_error_free(err);
-  }
-  else
-  {
-    char filename[PATH_MAX];
-    char const *fname;
-    while ((fname = g_dir_read_name(dir)))
+  char* local_dir = getenv("SSL_CERT_DIR"); // pan
+  if (local_dir)
+    dir_list.insert(dir_list.begin(), local_dir);
+
+  local_dir = getenv("SSL_DIR"); // also pan
+  if (local_dir)
+    dir_list.insert(dir_list.begin(), local_dir);
+
+  // get certs from ssl certs directory
+  GDir *dir(nullptr);
+  std::string ssldir("");
+  for (auto & path : dir_list){
+    if (std::filesystem::exists(path))
     {
-      struct stat stat_p;
-      g_snprintf(
-        filename, sizeof(filename), "%s%c%s", ssldir, G_DIR_SEPARATOR, fname);
-      if (! stat(filename, &stat_p))
+      ret = gnutls_certificate_set_x509_trust_dir(
+        _creds, path.c_str(), GNUTLS_X509_FMT_PEM);
+      if (ret > 0)
       {
-        if (! S_ISREG(stat_p.st_mode))
-        {
-          continue;
-        }
-        ret = gnutls_certificate_set_x509_trust_file(
-          _creds, filename, GNUTLS_X509_FMT_PEM);
-        if (ret > 0)
-        {
-          cnt += ret;
-        }
+        cnt += ret;
       }
     }
-    g_dir_close(dir);
   }
 
   return cnt;

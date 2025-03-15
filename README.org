@@ -11,6 +11,7 @@
   - [[#build-options][Build options]]
   - [[#debug-build][Debug build]]
   - [[#cc-language-server-support][CC++ language server support]]
+- [[#tls-support][TLS support]]
 - [[#upgrading][Upgrading]]
 - [[#how-to-report-bugs][How to report bugs]]
 - [[#help-wanted][Help Wanted]]
@@ -83,8 +84,6 @@ See [[file:docs/manual.org][Pan user manual]]
   existing data on your subscribed groups, even though you are
   connecting to the very same server as before. Always edit the existing
   server configuration to preserve your subscriptions.
-- Directories to search for SSL certificates can be defined with
-  environment variables 'SSL_CERT_DIR' or 'SSL_DIR'.
 - To use password storage provided by GNOME Keyring or libsecret, build
   Pan with support for that feature, and then enable it in Edit ->
   Preferences -> Miscellaneous -> 'Save passwords in password storage'.
@@ -104,7 +103,7 @@ The following libraries add extra features but are optional:
 - [[http://www.galago-project.org/news/index.php][libnotify]] 0.4.1 or higher for notifications
 - [[https://developer.gnome.org/libsecret/][libsecret]] 0.16 or higher and [[https://developer.gnome.org/gcr/][gcr]] 3.20 or higher for password storage
 - [[http://www.freedesktop.org/wiki/Software/dbus][D-Bus]] to support running multiple Pan instances
-- [[http://www.gnu.org/software/gnutls/][GnuTLS]] 3.0.0 or higher for encrypted connections (TLS 1.x)
+- [[http://www.gnu.org/software/gnutls/][GnuTLS]] 3.3.6 or higher for encrypted connections (TLS 1.x)
 - [[http://itstool.org/][ITS Tool]] for built-in user manual
   
 The following libraries are experimental and not suitable for any use
@@ -222,6 +221,21 @@ To get language server support (e.g. [[https://github.com/MaskRay/ccls][ccls]]),
 : -- Configuring done (0.2s)
 : -- Generating done (0.1s)
 : -- Build files have been written to: /home/domi/private/debian-dev/pan-stuff/pan-upstream/debug-build
+
+* TLS support
+
+When =WANT_GNUTLS= is set, pan will search for trusted certificates in
+the [[file:pan/data/cert-store.cc][following directories]]:
+- =/etc/ssl/certs=
+- =/usr/local/share/certs=
+- =/etc/pki/tls/certs=
+- =/etc/openssl/certs=
+- =/var/ssl/certs=
+
+Please log a bug if some directories are missing for your environment.
+
+You can also set =SSL_CERT_DIR= or =SSL_CERT= environment variables to
+add more directories containing trusted certificates.
 
 * Upgrading
 
