@@ -20,6 +20,7 @@
 #include <cassert>
 #include <config.h>
 #include <gmime/gmime.h>
+#include <log4cxx/logger.h>
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -28,7 +29,12 @@
 #include <glib.h>
 
 #include "article-filter.h"
+#include "pan/general/log4cxx.h"
 #include "pan/general/string-view.h"
+
+namespace {
+log4cxx::LoggerPtr logger = pan::getLogger("article-filter");
+}
 
 using namespace pan;
 
@@ -268,6 +274,8 @@ int ArticleFilter ::score_article(Data const &data,
                                   Article const &article) const
 {
   int score(0);
+  LOG4CXX_DEBUG(logger, "Scoring article " << article.message_id);
+
   foreach_const (sections_t, sections, sit)
   {
     Scorefile::Section const *section(*sit);
