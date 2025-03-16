@@ -1204,24 +1204,16 @@ void DataImpl ::get_article_scores(Quark const &group,
 
 void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
 {
-
-  GroupHeaders *gh(get_group_headers(group));
-  if (! gh) // group isn't loaded
-  {
-    return;
-  }
-
   ArticleFilter::sections_t sections;
   _scorefile.get_matching_sections(group.to_view(), sections);
-  nodes_v nodes;
-  find_nodes(mids, gh->_nodes, nodes);
-  foreach (nodes_v, nodes, it)
+  foreach (quarks_t, mids, it)
   {
-    if ((*it)->_article)
-    {
-      Article &a(*(*it)->_article);
+    Article a(*it);
+    // score only if article is a real article, i.e. the article part
+    // whose msg_id matches an article message id. A plain article
+    // part is not stored in article table but in article_part.
+    if (a.is_in_db_article_table())
       a.set_score(_article_filter.score_article(*this, sections, group, a));
-    }
   }
 }
 
