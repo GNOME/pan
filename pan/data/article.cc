@@ -390,6 +390,18 @@ void Article::set_score(int s) const {
   assert( q.exec() == 1);
 }
 
+bool Article::is_in_db_article_table() const {
+  SQLite::Statement q(pan_db, R"SQL(
+    select count() from article where message_id = ?
+  )SQL");
+  q.bind(1,message_id);
+  int count = 0;
+  while (q.executeStep()) {
+    count = q.getColumn(0).getInt();
+  }
+  return(count > 0);
+}
+
 bool Article::is_binary() const {
   SQLite::Statement q(pan_db, R"SQL(
     select binary from article where message_id = ?

@@ -97,6 +97,8 @@ class Article
     bool is_binary() const;
     void is_binary(bool) const;
 
+    bool is_in_db_article_table() const;
+
     std::string get_rebuilt_xref() const;
     std::string get_xrefed_groups() const;
 
