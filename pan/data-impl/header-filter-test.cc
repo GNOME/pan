@@ -511,7 +511,7 @@ public:
                            {{"g1m1", true}, {"g1m2", false}});
     }
 
-    void test_article_filter_with_thread()
+    void add_article_tree()
     {
       // g1m1a -> g1m1b, g1m1b2 => g1m1c1, g1m1c2
       add_article("g1m1a", "g1");
@@ -533,6 +533,11 @@ public:
 
       add_article("g1m2", "g1"); // no ancestors
       add_article("g2m1", "g2");
+    }
+
+    void test_article_filter_with_thread()
+    {
+      add_article_tree();
       pan_db.exec(R"SQL(
         update article set part_state = 'C' where message_id == "g1m1b";
         update article set part_state = 'I' where message_id != "g1m1b";
