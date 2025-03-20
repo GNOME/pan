@@ -561,6 +561,33 @@ public:
                            });
     }
 
+    void test_article_filter_with_sub_thread()
+    {
+      add_article_tree();
+      pan_db.exec(R"SQL(
+        update article set part_state = 'C' where message_id == "g1m1b";
+        update article set part_state = 'I' where message_id != "g1m1b";
+      )SQL");
+
+      criteria.set_type_binary();
+
+      // get passing articles and their ancestors
+      assert_filter_result("sub-thread filter (children)",
+                           "g1",
+                           pan::Data::SHOW_SUBTHREADS,
+                           {
+                             {"g1m1a", false},
+                             {"g1m1b", true},
+                             {"g1m1b2", false},
+                             {"g1m1c1", true},
+                             {"g1m1c2", true},
+                             {"g1m2", false},
+                             {"g1m2a", false},
+                             {"g1m2b", false},
+                             {"g1m2c", false},
+                           });
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
@@ -580,6 +607,7 @@ public:
     CPPUNIT_TEST(test_single_article);
     CPPUNIT_TEST(test_article_filter);
     CPPUNIT_TEST(test_article_filter_with_thread);
+    CPPUNIT_TEST(test_article_filter_with_sub_thread);
     CPPUNIT_TEST_SUITE_END();
 };
 

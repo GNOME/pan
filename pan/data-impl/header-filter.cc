@@ -125,12 +125,44 @@ SQLite::Statement HeaderFilter::get_sql_filter(Data const &data,
       };
       break;
 
- 
-    }
+    case pan::Data::SHOW_SUBTHREADS:
+      c = [](std::string join, std::string where) -> std::string
+      {
+        std::string passed(
+          "select article.id, article.parent_id, message_id,(" + where
+          + ") as pass from article "
+          + "join article_group as ag on ag.article_id = article.id "
+          + "join `group` as g on ag.group_id = g.id " + join
+          + "where g.name == ? ");
+
+        std::string cte(R"SQL(
+          with recursive
+          -- list all articles with their test result (in pass)
+          passed (id, parent_id, msg_id, pass) as (
+        )SQL");
+
+        cte += passed;
+        cte += R"SQL(
+          ),
+          -- recursive part for children
+          child (id, parent_id, msg_id,pass) as (
+            -- list all articles with their state
+            select id, parent_id, msg_id,pass from passed
+            union ALL
+            -- list all children of passing articles. This parent were listed above, but now pass is True
+            select article.id, article.parent_id, message_id,pass from child
+              join article on article.parent_id == child.id
+              where child.pass == True
+          )
+          -- aggregate the tests result, sum(pass) aggregate the tests result and the parent status
+          select msg_id, sum(pass) > 0 as pass from child group by msg_id
+        )SQL";
+        return cte;
+      };
+      break;
+  }
     return get_sql_query(data, c, criteria);
 }
-
-
 
 // returns a SQL statement like
 // select message_id from article where <criteria is matched>
