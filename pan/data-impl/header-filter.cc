@@ -1,6 +1,7 @@
 #include "header-filter.h"
 #include "pan/data/data.h"
 #include "pan/general/log4cxx.h"
+#include "pan/usenet-utils/filter-info.h"
 #include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Statement.h>
 #include <algorithm>
@@ -591,6 +592,10 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
     case FilterInfo::TYPE_ERR:
       assert(0 && "invalid type!");
       res.push_back(SqlCond("False"));
+      break;
+
+    case FilterInfo::TYPE_TRUE:
+      res.push_back(SqlCond("True"));
       break;
   }
 

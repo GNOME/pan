@@ -48,6 +48,7 @@ namespace pan
       /** The different type of filters we support. */
       enum Type {
         TYPE_ERR,
+        TYPE_TRUE, // pass through test
         AGGREGATE_AND,
         AGGREGATE_OR,
         IS_BINARY,

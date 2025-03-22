@@ -31,6 +31,7 @@
 #include "article-filter.h"
 #include "pan/general/log4cxx.h"
 #include "pan/general/string-view.h"
+#include "pan/usenet-utils/filter-info.h"
 
 namespace {
 log4cxx::LoggerPtr logger = pan::getLogger("article-filter");
@@ -77,6 +78,10 @@ bool ArticleFilter ::test_article(Data const &data,
   bool pass(false);
   switch (criteria._type)
   {
+    case pan::FilterInfo::TYPE_TRUE:
+      pass = true;
+      break;
+
     case FilterInfo::AGGREGATE_AND:
       pass = true;
       foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it)
@@ -125,11 +130,11 @@ bool ArticleFilter ::test_article(Data const &data,
       break;
 
     case FilterInfo::IS_READ:
-      pass = article.is_read ();
+      pass = article.is_read();
       break;
 
     case FilterInfo::IS_UNREAD:
-      pass = !article.is_read ();
+      pass = ! article.is_read();
       break;
 
     case FilterInfo::BYTE_COUNT_GE:
