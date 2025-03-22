@@ -171,6 +171,20 @@ public:
       CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " count", int(expect.size()), count);
     }
 
+    void test_empty_criteria()
+    {
+      pan_db.exec(R"SQL(
+        insert into article (message_id,author_id, subject_id, time_posted, is_read)
+          values ("<m1>", (select id from author where author like "Me%"),
+                        (select id from subject where subject = "blah"), 1234, 1);
+        insert into article (message_id,author_id, subject_id, time_posted, is_read)
+          values ("<m2>", (select id from author where author like "Me%"),
+                        (select id from subject where subject = "blah"), 1234, 0);
+      )SQL");
+
+      assert_result({"<m1>","<m2>"});
+    }
+
     void test_is_read()
     {
       pan_db.exec(R"SQL(
@@ -589,6 +603,7 @@ public:
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
+    CPPUNIT_TEST(test_empty_criteria);
     CPPUNIT_TEST(test_is_read);
     CPPUNIT_TEST(test_byte_count_ge);
     CPPUNIT_TEST(test_byte_count_ge_or_is_read);
