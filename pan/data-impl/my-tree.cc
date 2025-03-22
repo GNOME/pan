@@ -134,16 +134,17 @@ void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
 void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
                                     FilterInfo const *criteria)
 {
-  LOG4CXX_DEBUG(logger, "set_filter called ");
   TimeElapsed timer;
 
   // set the filter...
   if (criteria)
   {
+    LOG4CXX_DEBUG(logger, "set_filter called with criteria «" << criteria->describe() << "»");
     _filter = *criteria;
   }
   else
   {
+    LOG4CXX_DEBUG(logger, "set_filter called with nullptr criteria");
     _filter.clear();
   }
   _show_type = show_type;
