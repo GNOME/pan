@@ -78,7 +78,7 @@ FilterInfo :: ~FilterInfo ()
 void
 FilterInfo :: clear ()
 {
-  _type = FilterInfo::TYPE_ERR;
+  _type = FilterInfo::TYPE_TRUE;
   _ge = 0;
   _header.clear ();
   _text.clear ();
@@ -210,7 +210,11 @@ FilterInfo :: describe () const
   std::string ret;
   char buf[4096];
 
-  if (_type==IS_BINARY && _negate)
+  if (_type==TYPE_TRUE)
+  {
+    ret = _("the article is always shown");
+  }
+  else if (_type == IS_BINARY && _negate)
   {
     ret = _("article doesn't have attachments");
   }
