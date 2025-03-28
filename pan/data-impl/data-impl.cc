@@ -132,7 +132,9 @@ void load_db_schema(SQLiteDb &pan_db)
   std::vector<std::string> sql_files{"01-server.sql",
                                      "02-group.sql",
                                      "03-article.sql",
-                                     "04-posting-profile.sql"};
+                                     "04-posting-profile.sql",
+                                     "05-article-view.sql"};
+
   for (int i = 0; i < sql_files.size(); i++)
   {
     load_db_schema_file(pan_db, sql_files[i].c_str());

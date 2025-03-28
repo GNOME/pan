@@ -20,7 +20,11 @@
 #include "article-filter.h"
 #include "data-impl.h"
 #include "memchunk.h"
+#include "pan/data-impl/header-filter.h"
+#include "pan/data/data.h"
+#include "pan/data/pan-db.h"
 #include "pan/general/time-elapsed.h"
+#include <SQLiteCpp/Statement.h>
 #include <cassert>
 #include <config.h>
 #include <pan/data/article.h>
@@ -39,6 +43,64 @@ log4cxx::LoggerPtr logger = pan::getLogger("article-tree");
 /****
 *****  ArticleTree functions
 ****/
+
+void DataImpl ::MyTree ::reset_article_view() const
+{
+  pan_db.exec("delete from article_view");
+}
+
+void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
+                                          Quark const &group,
+                                          std::vector<Article> &setme) const
+{
+  if (mid.empty())
+  {
+    LOG4CXX_TRACE(logger, "Initial load on article_view table");
+    reset_article_view();
+
+    // get the roots. called when switching groups
+    // need to fill temp tables
+    auto c = [](std::string join, std::string where) -> std::string
+    {
+      return "insert into article_view (article_id, parent_id, init, status)\n"
+             "select article.id, article.parent_id, True, \"n\" from article\n"
+             "join article_group as ag on ag.article_id = article.id\n"
+             "join `group` as g on ag.group_id = g.id\n"
+             + join + " where " + where + " and g.name == ? "
+             + " order by article.id";
+    };
+
+    auto q = _header_filter.get_sql_query(_data, c, _filter);
+    q.bind(q.getBindParameterCount(), group);
+    int count = q.exec();
+    LOG4CXX_TRACE(logger,
+                  "Initial load on article_view table done with "
+                    << count << " articles");
+  }
+
+  std::string str("select message_id from article "
+                  "join article_view as av on av.article_id == article.id "
+                  "where av.parent_id ");
+  str += mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
+
+  LOG4CXX_TRACE(
+    logger, "query on article_view with «" << str << "»");
+  SQLite::Statement q(pan_db, str);
+
+  if (! mid.empty())
+    q.bind(1, mid);
+
+  int count(0);
+  while (q.executeStep())
+  {
+    std::string msg_id = q.getColumn(0);
+    Article a(group, msg_id);
+    setme.push_back(a);
+    count++;
+  }
+  LOG4CXX_TRACE(
+    logger, "query on article_view table done with " << count << " articles");
+}
 
 void DataImpl ::MyTree ::get_children(Quark const &mid,
                                       Quark const &group,

@@ -32,7 +32,7 @@ if(WANT_GKR)
   target_link_libraries(data-impl PUBLIC PkgConfig::GCR3)
 endif()
 
-set(data-impl-test-programs header-filter-test ghost-article-test)
+set(data-impl-test-programs header-filter-test ghost-article-test my-tree-test)
 
 foreach(test ${data-impl-test-programs})
   add_executable(${test} ${test}.cc)
