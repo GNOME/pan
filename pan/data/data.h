@@ -619,6 +619,9 @@ class Data :
         virtual void get_children(Quark const &mid,
                                   Quark const &group,
                                   articles_t &setme) const = 0;
+        virtual void get_children_sql(Quark const &mid,
+                                      Quark const &group,
+                                      std::vector<Article> &setme) const = 0;
 
         virtual size_t size() const = 0;
 

@@ -487,9 +487,13 @@ public:
         virtual ~MyTree();
 
       public: // from ArticleTree
+        void reset_article_view() const;
         void get_children(Quark const &mid,
                           Quark const &group,
                           articles_t &setme) const override;
+        void get_children_sql(Quark const &mid,
+                              Quark const &group,
+                              std::vector<Article> &setme) const override;
         Article const *get_parent(Quark const &mid) const override;
         Article const *get_article(Quark const &mid) const override;
         size_t size() const override;
@@ -513,6 +517,7 @@ public:
         Data::ShowType _show_type;
         struct NodeMidCompare;
         struct TwoNodes;
+        HeaderFilter _header_filter;
 
       private:
         typedef std::set<ArticleNode const *, NodeMidCompare> unique_nodes_t;
@@ -520,6 +525,7 @@ public:
                                     ArticleNode const *) const;
         void add_articles(const_nodes_v const &);
         void apply_filter(const_nodes_v const &);
+        void apply_sql_filter();
         void apply_rules(const_nodes_v &candidates);
 
       private:
