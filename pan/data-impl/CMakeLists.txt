@@ -1,6 +1,6 @@
 add_library(data-impl
  article-filter.cc
- rules-filter.cc
+ article-rules.cc
  data-io.cc
  data-impl.cc
  groups.cc

@@ -39,7 +39,7 @@
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/general/utf8-utils.h>
-#include <pan/data-impl/rules-filter.h>
+#include <pan/data-impl/article-rules.h>
 
 namespace pan {
 

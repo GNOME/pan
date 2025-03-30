@@ -71,8 +71,8 @@ namespace pan
       /** Convenience typedef. */
       typedef std::deque<RulesInfo *> aggregatesp_t;
 
-      /** When `_type' is AGGREGATE_OR or AGGREGATE_AND,
-          these are the filters being or'ed or and'ed together. */
+      /** When `_type' is AGGREGATE_RULES
+          the aggregated rules are applied one by one. */
       aggregatesp_t _aggregates;
 
       /** When this is true, the results of the test should be negated. */

@@ -26,7 +26,7 @@
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>
-#include <pan/data-impl/rules-filter.h>
+#include <pan/data-impl/article-rules.h>
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"

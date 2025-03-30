@@ -31,7 +31,7 @@
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/memchunk.h>
 #include <pan/data-impl/profiles.h>
-#include <pan/data-impl/rules-filter.h>
+#include <pan/data-impl/article-rules.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
@@ -764,7 +764,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   public:
     const ArticleFilter _article_filter;
-    RulesFilter _rules_filter;
+    ArticleRules _article_rules;
 
   private:
     mutable guint newsrc_autosave_id;

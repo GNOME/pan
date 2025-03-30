@@ -206,7 +206,7 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
   foreach (const_nodes_v, candidates, it) {
     if (!(*it)->_article)
       continue;
-    if (!_data._rules_filter.test_article (_data, _rules, _group, *(*it)->_article))
+    if (!_data._article_rules.apply_rules (_data, _rules, _group, *(*it)->_article))
       pass.push_back (*it);
   }
 
@@ -235,13 +235,13 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
     pass.clear ();
     foreach (unique_nodes_t, d, it) {
       Article * a ((*it)->_article);
-      if (!_data._rules_filter.test_article (_data, _rules, _group, *a))
+      if (!_data._article_rules.apply_rules (_data, _rules, _group, *a))
         pass.push_back (*it);
     }
   }
-  cache_articles(_data._rules_filter._cached);
-  download_articles(_data._rules_filter._downloaded);
-  _data._rules_filter.finalize(_data);
+  cache_articles(_data._article_rules._cached);
+  download_articles(_data._article_rules._downloaded);
+  _data._article_rules.finalize(_data);
 
   quarks_t mids;
   foreach_const (const_nodes_v, pass, it)
