@@ -199,52 +199,62 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
 //  std::cerr<<"apply rules mytree\n";
 
   NodeMidCompare compare;
-  const_nodes_v pass;
-  pass.reserve (candidates.size());
+  const_nodes_v shown_articles;
+  shown_articles.reserve (candidates.size());
 
-  // apply the rules to the whole tree
+  // apply the rules to the whole tree. All articles not impacted by rules are
+  // slated to be shown
   foreach (const_nodes_v, candidates, it) {
     if (!(*it)->_article)
       continue;
     if (!_data._article_rules.apply_rules (_data, _rules, _group, *(*it)->_article))
-      pass.push_back (*it);
+      shown_articles.push_back (*it);
   }
 
-  //  maybe include threads or subthreads...
+  //  maybe also show threads or subthreads...
   if (_show_type == Data::SHOW_THREADS)
   {
-    const_nodes_v passcopy=pass;
-    foreach (const_nodes_v, passcopy, it) {
+    const_nodes_v shown_articles_copy=shown_articles;
+    foreach (const_nodes_v, shown_articles_copy, it) {
       const ArticleNode *n (*it);
       while ((n = n->_parent))
-        pass.push_back(n);
+        shown_articles.push_back(n);
     }
-    std::sort (pass.begin(), pass.end(), compare);
-    pass.erase (std::unique (pass.begin(), pass.end()), pass.end());
-    //std::cerr << LINE_ID << " reduces to " << pass.size() << " threads\n";
+    // removed duplicated article in shown list
+    std::sort (shown_articles.begin(), shown_articles.end(), compare);
+    shown_articles.erase (std::unique (shown_articles.begin(), shown_articles.end()), shown_articles.end());
+    //std::cerr << LINE_ID << " reduces to " << shown_articles.size() << " threads\n";
   }
 
   if (_show_type == Data::SHOW_THREADS || _show_type == Data::SHOW_SUBTHREADS)
   {
     unique_nodes_t d;
-    foreach (const_nodes_v, pass, it)
-      accumulate_descendants (d, *it);
+    foreach (const_nodes_v, shown_articles, it)
+    {
+      // this function does not allow duplicated articles
+      accumulate_descendants(d, *it);
+    }
     //std::cerr << LINE_ID << " expands into " << d.size() << " articles\n";
 
+    // now unique_nodes contains all articles to be shown and their descendants
     const_nodes_v fail2;
-    pass.clear ();
+    shown_articles.clear ();
+    // re-apply rules on all these articles (why ??)
     foreach (unique_nodes_t, d, it) {
       Article * a ((*it)->_article);
       if (!_data._article_rules.apply_rules (_data, _rules, _group, *a))
-        pass.push_back (*it);
+        shown_articles.push_back (*it);
     }
   }
+
+  // now act on result of applied rules
   cache_articles(_data._article_rules._cached);
   download_articles(_data._article_rules._downloaded);
   _data._article_rules.finalize(_data);
 
+  // remove shown articles from my_tree which does not make sense.
   quarks_t mids;
-  foreach_const (const_nodes_v, pass, it)
+  foreach_const (const_nodes_v, shown_articles, it)
     mids.insert (mids.end(), (*it)->_mid);
   remove_articles (mids);
 }
