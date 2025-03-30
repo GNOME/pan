@@ -67,7 +67,7 @@ bool RulesFilter ::test_article(Data &data,
 
   switch (rules._type)
   {
-    case RulesInfo::AGGREGATE__AND:
+    case RulesInfo::AGGREGATE_RULES:
       pass = true;
       foreach (RulesInfo::aggregatesp_t, rules._aggregates, it)
       {

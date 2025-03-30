@@ -120,9 +120,9 @@ RulesInfo :: set_type_bounds (RulesType type, int low, int high)
 }
 
 void
-RulesInfo :: set_type_aggregate_and () {
+RulesInfo :: set_type_aggregate () {
    clear ();
-   _type = AGGREGATE__AND;
+   _type = AGGREGATE_RULES;
 }
 
 /****

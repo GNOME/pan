@@ -1346,7 +1346,7 @@ HeaderPane :: rebuild_rules (bool enable)
   }
 
   RulesInfo &r (_rules);
-  r.set_type_aggregate_and ();
+  r.set_type_aggregate();
   RulesInfo *tmp;
 
   std::pair<int,int> res;
