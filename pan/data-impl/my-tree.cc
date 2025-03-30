@@ -242,8 +242,11 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
     // re-apply rules on all these articles (why ??)
     foreach (unique_nodes_t, d, it) {
       Article * a ((*it)->_article);
-      if (!_data._article_rules.apply_rules (_data, _rules, _group, *a))
-        shown_articles.push_back (*it);
+      // TODO: remove this condition
+      if (! _data._article_rules.apply_rules(_data, _rules, _group, *a))
+      {
+        shown_articles.push_back(*it);
+      }
     }
   }
 
@@ -253,6 +256,7 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
   _data._article_rules.finalize(_data);
 
   // remove shown articles from my_tree which does not make sense.
+  // TODO: remove this block
   quarks_t mids;
   foreach_const (const_nodes_v, shown_articles, it)
     mids.insert (mids.end(), (*it)->_mid);
