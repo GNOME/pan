@@ -124,16 +124,10 @@ RulesInfo :: set_type_aggregate_and () {
    clear ();
    _type = AGGREGATE__AND;
 }
-void
-RulesInfo :: set_type_aggregate_or () {
-   clear ();
-   _type = AGGREGATE__OR;
-}
 
 /****
 *****
 ****/
-
 
 void
 RulesInfo :: set_type_mark_read_b (int lb, int hb)

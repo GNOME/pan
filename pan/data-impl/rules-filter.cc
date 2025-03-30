@@ -75,25 +75,6 @@ bool RulesFilter ::test_article(Data &data,
       }
       break;
 
-    case RulesInfo::AGGREGATE__OR:
-      if (rules._aggregates.empty())
-      {
-        pass = true;
-      }
-      else
-      {
-        pass = false;
-        foreach (RulesInfo::aggregatesp_t, rules._aggregates, it)
-        {
-          if (test_article(data, **it, group, article))
-          {
-            pass = true;
-            break;
-          }
-        }
-      }
-      break;
-
     case RulesInfo::MARK_READ:
 
       if (pass)

@@ -40,6 +40,9 @@ namespace pan
   /**
    * Interface class describing a filter that can be applied to a set of articles.
    * @ingroup usenet_utils
+   * RulesInfo is used with a top level RuleInfo with aggregate_and type.
+   * It contains a set of rules of type MARK_READ, AUTOCACHE, AUTODOWNLOAD DELETE_ARTICLE
+   * This construct is not used in a recursive way
    */
   class RulesInfo
   {
@@ -48,8 +51,7 @@ namespace pan
       /** The different type of filters we support. */
       enum RulesType {
         TYPE__ERR,
-        AGGREGATE__AND,
-        AGGREGATE__OR,
+        AGGREGATE__AND, // AND means all rules are applied to each article
         MARK_READ,
         AUTOCACHE,
         AUTODOWNLOAD,
@@ -90,7 +92,6 @@ namespace pan
 
       void clear ();
       void set_type_aggregate_and ();
-      void set_type_aggregate_or ();
       void set_type_mark_read_b (int lb, int hb);
       void set_type_autocache_b (int lb, int hb);
       void set_type_dl_b (int lb, int hb);
