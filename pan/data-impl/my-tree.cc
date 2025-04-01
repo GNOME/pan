@@ -215,12 +215,6 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
   cache_articles(_data._article_rules._cached);
   download_articles(_data._article_rules._downloaded);
   _data._article_rules.finalize(_data);
-
-  // remove shown articles from my_tree which does not make sense.
-  quarks_t mids;
-  foreach_const (const_nodes_v, shown_articles, it)
-    mids.insert (mids.end(), (*it)->_mid);
-  remove_articles (mids);
 }
 
 void
