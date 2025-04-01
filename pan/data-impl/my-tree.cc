@@ -199,16 +199,12 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
 //  std::cerr<<"apply rules mytree\n";
 
   NodeMidCompare compare;
-  const_nodes_v shown_articles;
-  shown_articles.reserve (candidates.size());
 
-  // apply the rules to the whole tree. All articles not impacted by rules are
-  // slated to be shown
+  // apply the rules to the whole tree.
   foreach (const_nodes_v, candidates, it) {
     if (!(*it)->_article)
       continue;
-    if (!_data._article_rules.apply_rules (_data, _rules, _group, *(*it)->_article))
-      shown_articles.push_back (*it);
+    _data._article_rules.apply_rules (_data, _rules, _group, *(*it)->_article);
   }
 
   // now act on result of applied rules
