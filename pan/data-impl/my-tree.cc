@@ -211,42 +211,6 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
       shown_articles.push_back (*it);
   }
 
-  //  maybe also show threads or subthreads...
-  if (_show_type == Data::SHOW_THREADS)
-  {
-    const_nodes_v shown_articles_copy=shown_articles;
-    foreach (const_nodes_v, shown_articles_copy, it) {
-      const ArticleNode *n (*it);
-      while ((n = n->_parent))
-        shown_articles.push_back(n);
-    }
-    // removed duplicated article in shown list
-    std::sort (shown_articles.begin(), shown_articles.end(), compare);
-    shown_articles.erase (std::unique (shown_articles.begin(), shown_articles.end()), shown_articles.end());
-    //std::cerr << LINE_ID << " reduces to " << shown_articles.size() << " threads\n";
-  }
-
-  if (_show_type == Data::SHOW_THREADS || _show_type == Data::SHOW_SUBTHREADS)
-  {
-    unique_nodes_t d;
-    foreach (const_nodes_v, shown_articles, it)
-    {
-      // this function does not allow duplicated articles
-      accumulate_descendants(d, *it);
-    }
-    //std::cerr << LINE_ID << " expands into " << d.size() << " articles\n";
-
-    // now unique_nodes contains all articles to be shown and their descendants
-    const_nodes_v fail2;
-    shown_articles.clear ();
-    // re-apply rules on all these articles (why ??)
-    foreach (unique_nodes_t, d, it) {
-      Article * a ((*it)->_article);
-      if (!_data._article_rules.apply_rules (_data, _rules, _group, *a))
-        shown_articles.push_back (*it);
-    }
-  }
-
   // now act on result of applied rules
   cache_articles(_data._article_rules._cached);
   download_articles(_data._article_rules._downloaded);
