@@ -59,6 +59,7 @@ log4cxx::LoggerPtr getLogger(std::string const &name)
           outfile << "log4j.logger.header=WARN, A1" << std::endl;
           outfile << "log4j.logger.header-filter=WARN, A1" << std::endl;
           outfile << "log4j.logger.header-pane=WARN, A1" << std::endl;
+          outfile << "log4j.logger.header-rules=WARN, A1" << std::endl;
           outfile << "log4j.logger.header-tree=WARN, A1" << std::endl;
           outfile << "log4j.logger.nzb=WARN, A1" << std::endl;
           outfile << "log4j.logger.profiles=WARN, A1" << std::endl;
