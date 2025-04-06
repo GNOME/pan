@@ -558,8 +558,7 @@ namespace pan
           virtual void set_filter (const ShowType     show_type = SHOW_ARTICLES,
                                    const FilterInfo * filter_or_null_to_reset = nullptr) = 0;
 
-          virtual void set_rules (const ShowType     show_type = SHOW_ARTICLES,
-                                   const RulesInfo * filter_or_null_to_reset = nullptr) = 0;
+          virtual void set_rules (const RulesInfo * filter_or_null_to_reset = nullptr) = 0;
       };
 
        /**
