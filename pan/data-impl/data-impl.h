@@ -570,8 +570,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
         size_t size() const override;
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
-        void set_rules(const ShowType show_type = SHOW_ARTICLES,
-                       RulesInfo const *rules = nullptr) final override;
+        void set_rules(RulesInfo const *rules = nullptr) final override;
 
       public:
         void articles_changed(quarks_t const &mids, bool do_refilter);

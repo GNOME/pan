@@ -85,8 +85,7 @@ DataImpl :: MyTree :: size () const
 }
 
 void
-DataImpl :: MyTree :: set_rules (const Data::ShowType    show_type,
-                                 const RulesInfo * rules )
+DataImpl :: MyTree :: set_rules (const RulesInfo * rules )
 {
 
   if (rules) {
@@ -98,8 +97,6 @@ DataImpl :: MyTree :: set_rules (const Data::ShowType    show_type,
 //    std::cerr<<"rules clear my_tree\n";
     _rules.clear ();
   }
-
-  _show_type = show_type;
 
   const GroupHeaders * h (_data.get_group_headers (_group));
   g_assert (h != nullptr);
@@ -158,7 +155,7 @@ DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
   _data._trees.insert (this);
 
   set_filter (show_type, filter);
-  set_rules (show_type, rules);
+  set_rules (rules);
 
 }
 

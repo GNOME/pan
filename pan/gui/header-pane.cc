@@ -1542,7 +1542,7 @@ HeaderPane :: rules(bool enable)
     if (_rules._aggregates.empty())
       _atree->set_rules();
     else
-      _atree->set_rules(_show_type, &_rules);
+      _atree->set_rules(&_rules);
 
     _wait.watch_cursor_off ();
   }
