@@ -1536,7 +1536,7 @@ std::pair<int, int> HeaderPane ::get_int_from_rules_str(std::string val)
   if (val == "watched")
   {
     res.first = 9999;
-    res.second = 99999;
+    res.second = 999999;
   }
   if (val == "high")
   {
@@ -1555,8 +1555,8 @@ std::pair<int, int> HeaderPane ::get_int_from_rules_str(std::string val)
   }
   if (val == "ignored")
   {
-    res.first = -9999;
-    res.second = -99999;
+    res.first = -999999;
+    res.second = -9999;
   }
   return res;
 }
