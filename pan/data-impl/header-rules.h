@@ -19,7 +19,9 @@ class HeaderRules
   public:
     HeaderRules(){};
 
-    int apply_rules(Data const &data);
+    int apply_read_rule(Data const &data, RulesInfo &rule, Quark const &group);
+
+    int apply_rules(Data const &data, RulesInfo &rules, Quark const &group);
 
 }; // namespace pan
 

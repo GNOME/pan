@@ -3,6 +3,7 @@
 #include "pan/data/article-cache.h"
 #include "pan/data/data.h"
 #include "pan/general/string-view.h"
+#include "pan/usenet-utils/rules-info.h"
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
 #include <config.h>
@@ -124,7 +125,7 @@ class DataImplTest : public CppUnit::TestFixture
 
     void assert_apply_result(std::string label, std::string group, int expect)
     {
-      int nb = hr.apply_rules(*data);
+      int nb = hr.apply_rules(*data, rules, group);
 
       auto str = "article " + label;
       CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " count", expect, nb);
@@ -140,18 +141,30 @@ class DataImplTest : public CppUnit::TestFixture
 
     void test_mark_read()
     {
-      pan_db.exec(R"SQL(
-        insert into article (message_id,author_id, time_posted, is_read)
-           values ("<m1>", (select id from author where author like "Me%"), 1234, 1);
-        insert into article (message_id,author_id, time_posted, is_read)
-           values ("<m2>", (select id from author where author like "Me%"), 1234, 0);
-      )SQL");
+      add_article("g1", "m1", 150);
+      add_article("g1", "m2");
 
-      assert_apply_result("empty", "g1", 0);
+      // set new rules with:
+      RulesInfo *tmp = new RulesInfo;
+      tmp->set_type_mark_read_b(100, 200);
+      rules._aggregates.push_back(tmp);
+
+      assert_apply_result("marked read article", "g1", 1);
+
+      SQLite::Statement q(pan_db, R"SQL(
+        select message_id from article where is_read == True;
+      )SQL");
+      while (q.executeStep())
+      {
+        std::string msg_id = q.getColumn(0);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(
+          "article marked as read", std::string("m1"), msg_id);
+      }
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_empty_criteria);
+    CPPUNIT_TEST(test_mark_read);
     CPPUNIT_TEST_SUITE_END();
 };
 
