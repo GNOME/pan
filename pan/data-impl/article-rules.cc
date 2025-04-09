@@ -102,10 +102,6 @@ bool ArticleRules ::apply_rules(Data &data,
       if (apply)
       {
         _delete.insert(&article);
-        if (_auto_delete_mark_read)
-        {
-          _mark_read.insert(&article);
-        }
       }
       break;
 

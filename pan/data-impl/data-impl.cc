@@ -84,8 +84,7 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _descriptions_loaded(false),
   _cached_xover_entry(nullptr),
   _article_rules(prefs.get_flag("rules-autocache-mark-read", false),
-                prefs.get_flag("rules-auto-dl-mark-read", false),
-                prefs.get_flag("rules-autocache-mark-read", false)),
+                prefs.get_flag("rules-auto-dl-mark-read", false)),
   newsrc_autosave_id(0),
   newsrc_autosave_timeout(0)
 {
