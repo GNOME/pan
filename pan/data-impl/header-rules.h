@@ -17,11 +17,32 @@ namespace pan {
 class HeaderRules
 {
   public:
-    HeaderRules(){};
+    HeaderRules() :
+      _auto_cache_mark_read(false) {};
+
+    HeaderRules(bool cache) :
+      _auto_cache_mark_read(cache) {};
 
     int apply_read_rule(Data const &data, RulesInfo &rule, Quark const &group);
 
     int apply_rules(Data const &data, RulesInfo &rules, Quark const &group);
+
+    std::vector<Article> _cached;
+
+    // used by tests
+    void reset()
+    {
+      _auto_cache_mark_read = false;
+      _auto_dl_mark_read = false;
+    }
+
+  private:
+    bool _auto_cache_mark_read, _auto_dl_mark_read;
+    int apply_some_rule(Data const &data,
+                        RulesInfo &rule,
+                        Quark const &group,
+                        std::vector<Article> &setme
+                        );
 
 }; // namespace pan
 
