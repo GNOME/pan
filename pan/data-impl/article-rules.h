@@ -36,10 +36,9 @@ class ArticleRules
 {
 
   public:
-    ArticleRules(bool cache, bool dl, bool del) :
+    ArticleRules(bool cache, bool dl) :
       _auto_cache_mark_read(cache),
-      _auto_dl_mark_read(dl),
-      _auto_delete_mark_read(del)
+      _auto_dl_mark_read(dl)
     {
     }
 
@@ -51,7 +50,7 @@ class ArticleRules
   private:
     std::set<Article const *> _mark_read;
     std::set<Article const *> _delete;
-    bool _auto_cache_mark_read, _auto_dl_mark_read, _auto_delete_mark_read;
+    bool _auto_cache_mark_read, _auto_dl_mark_read;
 
   public:
     std::set<Article const *> _cached;
