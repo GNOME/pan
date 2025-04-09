@@ -38,6 +38,35 @@ int HeaderRules::apply_read_rule(Data const &data,
   return q.exec();
 }
 
+int HeaderRules::apply_some_rule(Data const &data,
+                                 RulesInfo &rule,
+                                 Quark const &group,
+                                 std::vector<Article> &setme)
+{
+  std::string sql(R"SQL(
+    select message_id from article
+    join `group` as g on g.id == ag.group_id
+    join  article_group as ag on ag.article_id == article.id
+    where g.name = $group
+      and ag.score between $lb and  $hb
+      and article.is_read == False
+  )SQL");
+
+  SQLite::Statement q(pan_db, sql);
+  q.bind(1, group);
+  q.bind(2, rule._lb);
+  q.bind(3, rule._hb);
+
+  int count(0);
+  while (q.executeStep())
+  {
+    Article article(group, q.getColumn(0).getText());
+    setme.push_back(article);
+    count++;
+  }
+  return count;
+}
+
 int HeaderRules::apply_rules(Data const &data,
                              RulesInfo &rules,
                              Quark const &group)
@@ -57,6 +86,10 @@ int HeaderRules::apply_rules(Data const &data,
       return apply_read_rule(data, rules, group);
       break;
 
+    case RulesInfo::AUTOCACHE:
+      return apply_some_rule(data, rules, group, _cached);
+      break;
+      break;
   }
   return count;
 }
