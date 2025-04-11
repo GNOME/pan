@@ -9,6 +9,7 @@
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/scorefile.h>
+#include <vector>
 
 namespace pan {
 
@@ -27,9 +28,17 @@ class HeaderRules
 
     int apply_read_rule(Data const &data, RulesInfo &rule, Quark const &group);
 
+    int apply_delete_rule(Data const &data,
+                          RulesInfo &rule,
+                          Quark const &group);
+
     int apply_rules(Data const &data, RulesInfo &rules, Quark const &group);
 
     std::vector<Article> _cached, _downloaded;
+
+    // This is used to cleanup my-tree. This will eventually be
+    // removed when my-tree is removed.
+    std::vector<Article> _deleted;
 
     // used by tests
     void reset()
@@ -43,8 +52,8 @@ class HeaderRules
     int apply_some_rule(Data const &data,
                         RulesInfo &rule,
                         Quark const &group,
-                        std::vector<Article> &setme
-                        );
+                        std::vector<Article> &setme,
+                        bool skip_read);
 
   public:
     void finalize(Data &data);
