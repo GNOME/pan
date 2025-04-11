@@ -18,16 +18,18 @@ class HeaderRules
 {
   public:
     HeaderRules() :
-      _auto_cache_mark_read(false) {};
+      _auto_cache_mark_read(false),
+      _auto_dl_mark_read(false) {};
 
-    HeaderRules(bool cache) :
-      _auto_cache_mark_read(cache) {};
+    HeaderRules(bool cache, bool dl) :
+      _auto_cache_mark_read(cache),
+      _auto_dl_mark_read(dl) {};
 
     int apply_read_rule(Data const &data, RulesInfo &rule, Quark const &group);
 
     int apply_rules(Data const &data, RulesInfo &rules, Quark const &group);
 
-    std::vector<Article> _cached;
+    std::vector<Article> _cached, _downloaded;
 
     // used by tests
     void reset()
@@ -44,6 +46,8 @@ class HeaderRules
                         std::vector<Article> &setme
                         );
 
+  public:
+    void finalize(Data &data);
 }; // namespace pan
 
 }

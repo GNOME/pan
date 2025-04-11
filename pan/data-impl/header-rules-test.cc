@@ -174,7 +174,7 @@ class DataImplTest : public CppUnit::TestFixture
 
     void test_autocache()
     {
-      hr = HeaderRules(true);
+      hr = HeaderRules(true, false);
       add_article("g1", "m1", 150);
       add_article("g1", "m2");
       add_article("g1", "m3", 150, true);
@@ -192,10 +192,31 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE("cached article id", std::string("m1"), mid);
     }
 
+    void test_autodl()
+    {
+      hr = HeaderRules(false, true);
+      add_article("g1", "m1", 150);
+      add_article("g1", "m2");
+      add_article("g1", "m3", 150, true);
+
+      // set new rules with:
+      RulesInfo *tmp = new RulesInfo;
+      tmp->set_type_dl_b(100, 200);
+      rules._aggregates.push_back(tmp);
+
+      assert_apply_result("autodl article", "g1", 1);
+
+      int size(hr._downloaded.size());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("downloaded article count", 1, size);
+      std::string mid(hr._downloaded[0].message_id.to_string());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("downloaded article id", std::string("m1"), mid);
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_empty_criteria);
     CPPUNIT_TEST(test_mark_read);
     CPPUNIT_TEST(test_autocache);
+    CPPUNIT_TEST(test_autodl);
     CPPUNIT_TEST_SUITE_END();
 };
 

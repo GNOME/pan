@@ -89,6 +89,9 @@ int HeaderRules::apply_rules(Data const &data,
     case RulesInfo::AUTOCACHE:
       return apply_some_rule(data, rules, group, _cached);
       break;
+
+    case RulesInfo::AUTODOWNLOAD:
+      return apply_some_rule(data, rules, group, _downloaded);
       break;
   }
   return count;
