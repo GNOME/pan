@@ -38,10 +38,31 @@ int HeaderRules::apply_read_rule(Data const &data,
   return q.exec();
 }
 
+int HeaderRules::apply_delete_rule(Data const &data,
+                                 RulesInfo &rule,
+                                 Quark const &group)
+{
+  std::string sql(R"SQL(
+    delete from article
+    where id in (
+      select article_id from article_group as ag
+      join `group` as g on g.id == ag.group_id
+      where g.name = $group
+        and ag.score between $lb and  $hb
+    )
+  )SQL");
+  SQLite::Statement q(pan_db, sql);
+  q.bind(1, group);
+  q.bind(2, rule._lb);
+  q.bind(3, rule._hb);
+  return q.exec();
+}
+
 int HeaderRules::apply_some_rule(Data const &data,
                                  RulesInfo &rule,
                                  Quark const &group,
-                                 std::vector<Article> &setme)
+                                 std::vector<Article> &setme,
+                                 bool skip_read)
 {
   std::string sql(R"SQL(
     select message_id from article
@@ -49,8 +70,12 @@ int HeaderRules::apply_some_rule(Data const &data,
     join  article_group as ag on ag.article_id == article.id
     where g.name = $group
       and ag.score between $lb and  $hb
-      and article.is_read == False
   )SQL");
+
+  if (skip_read)
+  {
+    sql += "and article.is_read == False";
+  }
 
   SQLite::Statement q(pan_db, sql);
   q.bind(1, group);
@@ -87,12 +112,23 @@ int HeaderRules::apply_rules(Data const &data,
       break;
 
     case RulesInfo::AUTOCACHE:
-      return apply_some_rule(data, rules, group, _cached);
+      return apply_some_rule(data, rules, group, _cached, true);
       break;
 
     case RulesInfo::AUTODOWNLOAD:
-      return apply_some_rule(data, rules, group, _downloaded);
+      return apply_some_rule(data, rules, group, _downloaded, true);
       break;
+
+    case RulesInfo::DELETE_ARTICLE:
+      // fill list of deleted article, used to cleanup my-tree. This
+      // will eventually be removed when my-tree is removed.
+      apply_some_rule(data, rules, group, _deleted, false);
+      // remove article from DB
+      return apply_delete_rule(data, rules, group);
+      break;
+
+    case pan::RulesInfo::TYPE__ERR:
+      return 0;
   }
   return count;
 }

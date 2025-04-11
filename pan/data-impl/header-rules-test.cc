@@ -212,11 +212,52 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE("downloaded article id", std::string("m1"), mid);
     }
 
+    void test_auto_delete()
+    {
+      hr = HeaderRules(false, true);
+      add_article("g1", "m1", 150);
+      add_article("g1", "m2");
+      add_article("g1", "m3", 160, true);
+      add_article("g2", "m4", 160);
+
+      // set new rules with:
+      RulesInfo *tmp = new RulesInfo;
+      tmp->set_type_delete_b(100, 200);
+      rules._aggregates.push_back(tmp);
+
+      assert_apply_result("auto delete article", "g1", 2);
+
+      int size(hr._deleted.size());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted article count", 2, size);
+      std::string mid(hr._deleted[0].message_id.to_string());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted article id", std::string("m1"), mid);
+      mid = hr._deleted[1].message_id.to_string();
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted article id", std::string("m3"), mid);
+
+      SQLite::Statement q(pan_db, R"SQL(
+        select count() from article where message_id == ?;
+      )SQL");
+
+      for (Article a : hr._deleted)
+      {
+        q.reset();
+        q.bind(1, a.message_id);
+        while (q.executeStep())
+        {
+          CPPUNIT_ASSERT_EQUAL_MESSAGE(
+            "deleted article " + a.message_id.to_string() + " is gone",
+            0,
+            q.getColumn(0).getInt());
+        }
+      }
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_empty_criteria);
     CPPUNIT_TEST(test_mark_read);
     CPPUNIT_TEST(test_autocache);
     CPPUNIT_TEST(test_autodl);
+    CPPUNIT_TEST(test_auto_delete);
     CPPUNIT_TEST_SUITE_END();
 };
 
