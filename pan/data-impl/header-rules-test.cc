@@ -145,6 +145,18 @@ class DataImplTest : public CppUnit::TestFixture
       assert_apply_result("empty", "g1", 0);
     }
 
+    void assert_read_articles(std::string mid)
+    {
+      SQLite::Statement q(pan_db, R"SQL(
+        select message_id from article where is_read == True;
+      )SQL");
+      while (q.executeStep())
+      {
+        std::string msg_id = q.getColumn(0);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("article marked as read", mid, msg_id);
+      }
+    }
+
     void test_mark_read()
     {
       add_article("g1", "m1", 150);
@@ -157,15 +169,7 @@ class DataImplTest : public CppUnit::TestFixture
 
       assert_apply_result("marked read article", "g1", 1);
 
-      SQLite::Statement q(pan_db, R"SQL(
-        select message_id from article where is_read == True;
-      )SQL");
-      while (q.executeStep())
-      {
-        std::string msg_id = q.getColumn(0);
-        CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          "article marked as read", std::string("m1"), msg_id);
-      }
+      assert_read_articles("m1");
     }
 
     void test_autocache()
