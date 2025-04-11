@@ -111,22 +111,22 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       return _certstore;
     }
 
-    virtual Prefs &get_prefs()
+    Prefs &get_prefs() override
     {
       return _prefs;
     }
 
-    virtual Prefs const &get_prefs() const
+    Prefs const &get_prefs() const override
     {
       return _prefs;
     }
 
-    virtual Queue *get_queue()
+    Queue *get_queue() override
     {
       return _queue;
     }
 
-    virtual Queue const *get_queue() const
+    Queue *get_queue() const override
     {
       return _queue;
     }

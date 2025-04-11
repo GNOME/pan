@@ -213,6 +213,10 @@ namespace pan
     public:
 
       virtual void save_state () = 0;
+      virtual Queue *get_queue () = 0;
+      virtual Queue *get_queue () const = 0;
+      virtual Prefs const &get_prefs() = 0 ;
+      virtual Prefs const &get_prefs() const = 0 ;
 
     public:
 
