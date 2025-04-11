@@ -284,7 +284,7 @@ class Data :
 
   public:
 #ifdef HAVE_GKR
-    virtual gboolean password_encrypt(const PasswordData &) = 0;
+    virtual gboolean password_encrypt(PasswordData const &) = 0;
     virtual gchar *password_decrypt(PasswordData &) const = 0;
 #endif
     /** Gets a quark to the provided hostname */
