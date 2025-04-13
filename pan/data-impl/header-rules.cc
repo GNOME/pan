@@ -2,6 +2,7 @@
 #include "pan/data/data.h"
 #include "pan/data-impl/header-rules.h"
 #include "pan/general/log4cxx.h"
+#include "pan/general/time-elapsed.h"
 #include "pan/usenet-utils/rules-info.h"
 #include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Database.h>
@@ -92,19 +93,23 @@ int HeaderRules::apply_some_rule(Data const &data,
   return count;
 }
 
-int HeaderRules::apply_rules(Data const &data,
+int HeaderRules::apply_rules(Data &data,
                              RulesInfo &rules,
                              Quark const &group,
+                             Quark const &save_path,
                              bool dry_run)
 {
+  TimeElapsed timer;
+
   int count(0);
   switch (rules._type)
   {
     case RulesInfo::AGGREGATE_RULES:
+      LOG4CXX_DEBUG(logger, "aggregate apply_rules called");
       for (int i = 0; i < rules._aggregates.size(); i++)
       {
         RulesInfo *tmp = rules._aggregates[i];
-        count += apply_rules(data, *tmp, group, dry_run);
+        count += apply_rules(data, *tmp, group, save_path, dry_run);
       }
       break;
 
@@ -131,5 +136,7 @@ int HeaderRules::apply_rules(Data const &data,
     case pan::RulesInfo::TYPE__ERR:
       return 0;
   }
+  LOG4CXX_INFO(logger, "aggregate apply_rules done in " << timer.get_seconds_elapsed() << "s.");
+
   return count;
 }
