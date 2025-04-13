@@ -75,15 +75,11 @@ namespace pan
           the aggregated rules are applied one by one. */
       aggregatesp_t _aggregates;
 
-      /** When this is true, the results of the test should be negated. */
-      bool _negate;
-
     private:
       void set_type_is (RulesType type);
       void set_type_le (RulesType type, unsigned long le);
       void set_type_ge (RulesType type, unsigned long ge);
       void set_type_bounds (RulesType type, int low, int high);
-
 
     public:
 

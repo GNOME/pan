@@ -40,7 +40,6 @@ using namespace pan;
 
 RulesInfo :: RulesInfo (const RulesInfo &that)
   : _type(that._type)
-  , _negate(that._negate)
   , _ge(that._ge)
   , _lb(that._lb)
   , _hb(that._hb)
@@ -57,7 +56,6 @@ swap (RulesInfo &first, RulesInfo &second)
 
   swap (first._type,       second._type);
   swap (first._aggregates, second._aggregates);
-  swap (first._negate,     second._negate);
   swap (first._ge,         second._ge);
   swap (first._lb,         second._lb);
   swap (first._hb,         second._hb);
@@ -87,7 +85,6 @@ RulesInfo :: clear ()
   _aggregates.clear ();
   _lb = _hb = 0;
   _ge = 0;
-  _negate = false;
 }
 
 void
@@ -107,7 +104,6 @@ void
 RulesInfo :: set_type_le (RulesType type, unsigned long le) {
   clear ();
   _type = type;
-  _negate = true;
   _ge = le+1;  // le N == !ge N+1
 }
 
