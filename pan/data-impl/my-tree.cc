@@ -218,10 +218,7 @@ struct DataImpl ::MyTree ::NodeMidCompare
 
 void DataImpl ::MyTree ::apply_rules(const_nodes_v &candidates)
 {
-
   //  std::cerr<<"apply rules mytree\n";
-
-  NodeMidCompare compare;
 
   // apply the rules to the whole tree.
   foreach (const_nodes_v, candidates, it)
