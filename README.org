@@ -111,10 +111,25 @@ other than testing. Use at your own risk:
 
 - [[https://webkitgtk.org/][WebKitGTK]] 1.8.1 or higher for embedded HTML
 
+*** Debian, Ubuntu, Mint
+
 On Debian and derivatives, required dependencies can added with:
+
 #+BEGIN_SRC shell :results verbatim
   sudo apt-get build-dep pan
 #+END_SRC
+
+*** Fedora
+
+On Fedora, dependencies can be installed with:
+
+#+BEGIN_SRC shell :results verbatim
+  sudo dnf install cmake gtk3-devel glib-devel gmime30-devel gspell-devel gnutls-devel
+#+END_SRC
+
+Note that I work on Debian and I did not test this instructions on
+Fedora. Please get back to me if something is missing, or preferably,
+create a pull request.
 
 * Installation
 
