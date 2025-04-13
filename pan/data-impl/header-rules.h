@@ -35,9 +35,10 @@ class HeaderRules
     // apply rules and trigger actions. If dry_run is set, actions are
     // performed only in DB and actual download or caching is
     // disabled.
-    int apply_rules(Data const &data,
+    int apply_rules(Data &data,
                     RulesInfo &rules,
                     Quark const &group,
+                    Quark const &save_path,
                     bool dry_run = false);
 
     std::vector<Article> _cached, _downloaded;
