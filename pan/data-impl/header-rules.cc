@@ -94,7 +94,8 @@ int HeaderRules::apply_some_rule(Data const &data,
 
 int HeaderRules::apply_rules(Data const &data,
                              RulesInfo &rules,
-                             Quark const &group)
+                             Quark const &group,
+                             bool dry_run)
 {
   int count(0);
   switch (rules._type)
@@ -103,7 +104,7 @@ int HeaderRules::apply_rules(Data const &data,
       for (int i = 0; i < rules._aggregates.size(); i++)
       {
         RulesInfo *tmp = rules._aggregates[i];
-        count += apply_rules(data, *tmp, group);
+        count += apply_rules(data, *tmp, group, dry_run);
       }
       break;
 

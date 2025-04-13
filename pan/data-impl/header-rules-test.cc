@@ -131,7 +131,7 @@ class DataImplTest : public CppUnit::TestFixture
 
     void assert_apply_result(std::string label, std::string group, int expect)
     {
-      int nb = hr.apply_rules(*data, rules, group);
+      int nb = hr.apply_rules(*data, rules, group, true);
 
       auto str = "article " + label;
       CPPUNIT_ASSERT_EQUAL_MESSAGE(str + " count", expect, nb);
