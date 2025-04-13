@@ -75,10 +75,10 @@ add_executable(pan pan/gui/pan.cc pan/gui/gui.cc)
 set_target_properties(pan PROPERTIES RUNTIME_OUTPUT_DIRECTORY "pan/gui")
 target_compile_options(pan PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
 
-
-# Don't embed GIT_REV for a reproducible build. This is mostly done in
-# Linux distribution build where git rev is not the same as upstream
-if (NOT DEFINED ENV{SOURCE_DATE_EPOCH})
+# Don't embed GIT_REV for a reproducible build or when building from a
+# tarball. The former is mostly done in Linux distribution build where
+# git rev is not the same as upstream.
+if (EXISTS ".git" AND NOT DEFINED ENV{SOURCE_DATE_EPOCH})
   # Get the latest abbreviated commit hash of the working branch
   # see https://jonathanhamberg.com/post/cmake-embedding-git-hash/
   # drawback: commited changed are not taken into account until "cmake ." is run
