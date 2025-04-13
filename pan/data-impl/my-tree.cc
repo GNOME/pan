@@ -21,6 +21,7 @@
 #include "data-impl.h"
 #include "memchunk.h"
 #include "pan/data-impl/header-filter.h"
+#include "pan/data-impl/header-rules.h"
 #include "pan/data/data.h"
 #include "pan/data/pan-db.h"
 #include "pan/general/time-elapsed.h"
@@ -162,7 +163,6 @@ size_t DataImpl ::MyTree ::size() const
 
 void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
 {
-  TimeElapsed timer;
   LOG4CXX_DEBUG(logger, "set_rules called");
   if (rules)
   {
@@ -175,22 +175,7 @@ void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
     _rules.clear();
   }
 
-  GroupHeaders const *h(_data.get_group_headers(_group));
-  g_assert(h != nullptr);
-  const_nodes_v candidates;
-  candidates.reserve(h->_nodes.size());
-  foreach_const (nodes_t, h->_nodes, it)
-  {
-    ArticleNode const *node(it->second);
-    if (node->_article)
-    {
-      candidates.push_back((ArticleNode *)node);
-    }
-  }
-
-  apply_rules(candidates);
-  LOG4CXX_INFO(logger, "set_rules done in " << timer.get_seconds_elapsed() << "s.");
-
+  _header_rules.apply_rules(_data, _rules, _group, _save_path);
 }
 
 void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
@@ -211,23 +196,9 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
   }
   _show_type = show_type;
 
-  // refilter all the articles in the group...
-  GroupHeaders const *h(_data.get_group_headers(_group));
-  g_assert(h != nullptr);
-  const_nodes_v candidates;
-  candidates.reserve(h->_nodes.size());
-  foreach_const (nodes_t, h->_nodes, it)
-  {
-    ArticleNode const *node(it->second);
-    if (node->_article)
-    {
-      candidates.push_back(node);
-    }
-  }
-
-  LOG4CXX_TRACE(logger, "set_filter calls apply_filter in " << timer.get_seconds_elapsed() << "s.");
-  apply_filter(candidates);
-  LOG4CXX_DEBUG(logger, "set_filter done in " << timer.get_seconds_elapsed() << "s.");
+  LOG4CXX_TRACE(logger, "apply_sql_filter calls apply_filter in " << timer.get_seconds_elapsed() << "s.");
+  apply_sql_filter();
+  LOG4CXX_DEBUG(logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
@@ -371,6 +342,36 @@ void DataImpl ::MyTree ::download_articles(std::set<Article const *> s)
   {
     queue->add_tasks(tasks, Queue::BOTTOM);
   }
+}
+
+void DataImpl ::MyTree ::apply_sql_filter()
+{
+  auto q = _header_filter.get_sql_filter(_data, _show_type, _filter);
+  q.bind(q.getBindParameterCount(), _group);
+
+  std::set<Quark> pass, fail;
+  while (q.executeStep())
+  {
+    std::string msg_id = q.getColumn(0);
+    bool in = q.getColumn(1).getInt();
+
+    if (in)
+    {
+      pass.insert(msg_id);
+    }
+    else
+    {
+      fail.insert(msg_id);
+    }
+  }
+
+  // passing articles not in the tree should be added...
+  const_nodes_v nodes;
+  _data.find_nodes(pass, _data.get_group_headers(_group)->_nodes, nodes);
+  add_articles(nodes);
+
+  // failing articles in the tree should be removed...
+  remove_articles(fail);
 }
 
 // candidates holds GroupHeader's ArticleNodes pointers
@@ -596,9 +597,10 @@ void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
 {
   //  std::cerr<<"articles changed\n";
 
+  _header_rules.apply_rules(_data, _rules, _group, _save_path);
+
   const_nodes_v nodes;
   _data.find_nodes(mids, _data.get_group_headers(_group)->_nodes, nodes);
-  apply_rules(nodes);
 
   if (do_refilter)
   {
@@ -624,9 +626,10 @@ void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
 {
   //  std::cerr<<"add articles\n";
 
+  _header_rules.apply_rules(_data, _rules, _group, _save_path);
+
   const_nodes_v nodes;
   _data.find_nodes(mids, _data.get_group_headers(_group)->_nodes, nodes);
-  apply_rules(nodes);
   apply_filter(nodes);
 }
 

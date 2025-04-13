@@ -3,6 +3,7 @@
 #include "pan/data-impl/header-rules.h"
 #include "pan/general/log4cxx.h"
 #include "pan/general/time-elapsed.h"
+#include "pan/tasks/queue.h"
 #include "pan/usenet-utils/rules-info.h"
 #include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Database.h>
@@ -136,7 +137,85 @@ int HeaderRules::apply_rules(Data &data,
     case pan::RulesInfo::TYPE__ERR:
       return 0;
   }
+
+  if (! dry_run)
+  {
+    // act on apply_rules results
+    cache_articles(data);
+    download_articles(data, save_path);
+    delete_articles(data);
+  }
+
   LOG4CXX_INFO(logger, "aggregate apply_rules done in " << timer.get_seconds_elapsed() << "s.");
 
   return count;
+}
+
+void HeaderRules ::cache_articles(Data &data)
+{
+  Queue *queue(data.get_queue());
+  Prefs prefs(data.get_prefs());
+  bool const action(prefs.get_flag("rules-autocache-mark-read", false));
+
+  Queue::tasks_t tasks;
+  ArticleCache &cache(data.get_cache());
+  for (Article a : _cached)
+  {
+    auto t_action(action ? TaskArticle::ACTION_TRUE :
+                           TaskArticle::ACTION_FALSE);
+    tasks.push_back(new TaskArticle(data, data, a, cache, data, t_action));
+  }
+
+  if (! tasks.empty())
+  {
+    queue->add_tasks(tasks, Queue::BOTTOM);
+  }
+  _cached.clear();
+}
+
+void HeaderRules::download_articles(Data &data, Quark const &save_path)
+{
+  Queue *queue(data.get_queue());
+
+  Queue::tasks_t tasks;
+  ArticleCache &cache(data.get_cache());
+  Prefs prefs(data.get_prefs());
+  bool const action(prefs.get_flag("rules-auto-dl-mark-read", false));
+  bool const always(prefs.get_flag("mark-downloaded-articles-read", false));
+
+  for (Article a : _downloaded)
+  {
+    auto t_action(always ? TaskArticle::ALWAYS_MARK :
+                  action ? TaskArticle::ACTION_TRUE :
+                           TaskArticle::ACTION_FALSE);
+    tasks.push_back(new TaskArticle(data,
+                                    data,
+                                    a,
+                                    cache,
+                                    data,
+                                    t_action,
+                                    nullptr,
+                                    TaskArticle::DECODE,
+                                    save_path));
+  }
+  if (! tasks.empty())
+  {
+    queue->add_tasks(tasks, Queue::BOTTOM);
+  }
+  _downloaded.clear();
+}
+
+void HeaderRules::delete_articles(Data &data)
+{
+  std::set<Article const *> const tmp;
+  std::set<Article const *> articleSet;
+  for (auto const &article : _deleted)
+  {
+    articleSet.insert(&article);
+  }
+  if (! tmp.empty())
+  {
+    data.delete_articles(tmp);
+  }
+  _deleted.clear();
 }

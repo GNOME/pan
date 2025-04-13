@@ -63,7 +63,10 @@ class HeaderRules
                         bool skip_read);
 
   public:
-    void finalize(Data &data);
+    void cache_articles(Data &data);
+    void download_articles(Data &data, Quark const &save_path);
+    void delete_articles(Data  &data);
+
 }; // namespace pan
 
 }
