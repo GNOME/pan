@@ -32,6 +32,7 @@
 #include <SQLiteCpp/VariadicBind.h>
 
 #include "pan/data-impl/header-filter.h"
+#include "pan/data-impl/header-rules.h"
 #include "pan/general/log4cxx.h"
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/data-io.h>
@@ -518,6 +519,7 @@ public:
         struct NodeMidCompare;
         struct TwoNodes;
         HeaderFilter _header_filter;
+        HeaderRules _header_rules;
 
       private:
         typedef std::set<ArticleNode const *, NodeMidCompare> unique_nodes_t;
@@ -696,7 +698,6 @@ public:
     const ArticleFilter _article_filter;
     const HeaderFilter _header_filter;
     ArticleRules _article_rules;
-
 };
 } // namespace pan
 
