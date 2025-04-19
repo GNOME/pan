@@ -839,6 +839,8 @@ main (int argc, char *argv[])
   setlocale(LC_ALL,"C");
 #endif
 
+  g_set_prgname("org.gnome.pan");
+
   if (verbosed && !gui)
     _verbose_flag = true;
 
