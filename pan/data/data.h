@@ -619,6 +619,12 @@ class Data :
         **/
 
       public:
+        struct ArticleChild
+        {
+          Article a;
+          bool has_child;
+        };
+
         typedef std::vector<Article const *> articles_t;
 
         /**
@@ -629,7 +635,7 @@ class Data :
                                   articles_t &setme) const = 0;
         virtual void get_children_sql(Quark const &mid,
                                       Quark const &group,
-                                      std::vector<Article> &setme) const = 0;
+                                      std::vector<ArticleChild> &setme) const = 0;
 
         virtual size_t size() const = 0;
 
