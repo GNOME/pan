@@ -6,6 +6,7 @@ create table if not exists article_view
     article_id integer unique references article (id) on delete cascade,
     parent_id integer references article (id) on delete set null,
     init boolean default False,
+    has_child boolean,
     show integer default True
   );
 
