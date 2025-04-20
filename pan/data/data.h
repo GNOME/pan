@@ -630,9 +630,6 @@ class Data :
         /**
          * if message_id is empty, the root nodes are returned.
          */
-        virtual void get_children(Quark const &mid,
-                                  Quark const &group,
-                                  articles_t &setme) const = 0;
         virtual void get_children_sql(Quark const &mid,
                                       Quark const &group,
                                       std::vector<ArticleChild> &setme) const = 0;
