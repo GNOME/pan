@@ -19,7 +19,6 @@
 
 #include "pan/gui/load-icon.h"
 #include <config.h>
-#include <map>
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -40,7 +39,6 @@ extern "C" {
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
-#include <pan/data-impl/article-rules.h>
 #include "actions.h"
 #include "body-pane.h"
 #include "dl-headers-ui.h"

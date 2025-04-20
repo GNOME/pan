@@ -265,25 +265,6 @@ struct DataImpl ::MyTree ::NodeMidCompare
     }
 };
 
-void DataImpl ::MyTree ::apply_rules(const_nodes_v &candidates)
-{
-  //  std::cerr<<"apply rules mytree\n";
-
-  // apply the rules to the whole tree.
-  foreach (const_nodes_v, candidates, it)
-  {
-    if ((*it)->_article)
-    {
-      _data._article_rules.apply_rules(_data, _rules, _group, *(*it)->_article);
-    }
-  }
-
-  // now act on result of applied rules
-  cache_articles(_data._article_rules._cached);
-  download_articles(_data._article_rules._downloaded);
-  _data._article_rules.finalize(_data);
-}
-
 void DataImpl ::MyTree ::cache_articles(std::set<Article const *> s)
 {
   Queue *queue(_data.get_queue());
