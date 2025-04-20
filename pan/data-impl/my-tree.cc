@@ -52,7 +52,7 @@ void DataImpl ::MyTree ::reset_article_view() const
 
 void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
                                           Quark const &group,
-                                          std::vector<Article> &setme) const
+                                          std::vector<ArticleChild> &setme) const
 {
   FilterInfo criteria;
 
@@ -65,8 +65,10 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
     // need to fill temp tables
     auto c = [](std::string join, std::string where) -> std::string
     {
-      return "insert into article_view (article_id, parent_id, shown)\n"
-             "select article.id, article.parent_id, True from article\n"
+      return "insert into article_view (article_id, parent_id, shown, has_child)\n"
+             "select article.id, article.parent_id, True,"
+             "       (select count()>0 from article as a_in where a_in.parent_id = article.id)"
+             "   from article\n"
              "join article_group as ag on ag.article_id = article.id\n"
              "join `group` as g on ag.group_id = g.id\n"
              + join + " where g.name == ? and " + where
@@ -81,7 +83,7 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
                     << count << " articles");
   }
 
-  std::string str("select message_id from article "
+  std::string str("select message_id, av.has_child from article "
                   " join article_view as av on av.article_id == article.id"
                   " where av.parent_id ");
   str += mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
@@ -98,7 +100,8 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
   {
     std::string msg_id = q.getColumn(0);
     Article a(group, msg_id);
-    setme.push_back(a);
+    bool has_child = q.getColumn(1).getInt();
+    setme.push_back({a, has_child});
     count++;
   }
   LOG4CXX_TRACE(

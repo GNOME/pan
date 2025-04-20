@@ -36,6 +36,12 @@ private:
     Data::ArticleTree *tree;
     PrefsFile *prefs;
 
+    struct ExpArticle
+    {
+        std::string msg_id;
+        bool has_child;
+    };
+
 public:
     void setUp()
     {
@@ -131,9 +137,9 @@ public:
       q_article_xref.exec();
     }
 
-    void assert_result(Quark const &mid, Quark const &group, std::vector<std::string> expect)
+    void assert_result(Quark const &mid, Quark const &group, std::vector<ExpArticle> expect)
     {
-      std::vector<Article> setme;
+      std::vector<pan::Data::ArticleTree::ArticleChild> setme;
       if (mid.empty())
       {
         tree = data->group_get_articles(group, "/tmp", Data::SHOW_ARTICLES);
@@ -149,15 +155,17 @@ public:
       for (int i(0); i < expect.max_size() && i < setme.size(); i++)
       {
         CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          label + " child msg_id ", expect[i], setme[i].message_id.to_string());
+          label + " child msg_id ", expect[i].msg_id, setme[i].a.message_id.to_string());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(
+          label + " has child ", expect[i].has_child, setme[i].has_child);
       }
     }
 
     void test_get_children()
     {
-      assert_result(Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
-      assert_result("g1m1a", "g1", {"g1m1b"});
-      assert_result("g1m1b", "g1", {"g1m1c1", "g1m1c2"});
+        assert_result(Quark(), "g1", {{"g1m1a", true}, {"g1m2a", true}, {"g1m2", false}});
+        assert_result("g1m1a", "g1", {{"g1m1b", true}});
+        assert_result("g1m1b", "g1", {{"g1m1c1", false}, {"g1m1c2", false}});
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
