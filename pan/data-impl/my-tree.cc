@@ -186,7 +186,7 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
   _data(data_impl),
   _save_path(save_path)
 {
-
+  LOG4CXX_DEBUG(logger, "creating new MyTree for group " << group);
   _data.ref_group(_group);
   _data._trees.insert(this);
 
@@ -196,6 +196,7 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 
 DataImpl ::MyTree ::~MyTree()
 {
+  LOG4CXX_DEBUG(logger, "Destroying MyTree of group " << _group);
   _nodes.clear();
   _data._trees.erase(this);
   _data.unref_group(_group);
@@ -547,7 +548,7 @@ void DataImpl ::MyTree ::accumulate_descendants(unique_nodes_t &descendants,
 void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
                                           bool do_refilter)
 {
-  //  std::cerr<<"articles changed\n";
+  LOG4CXX_DEBUG(logger, "group " << _group << ": " << mids.size() << " articles changed");
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
@@ -576,7 +577,7 @@ void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
 
 void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
 {
-  //  std::cerr<<"add articles\n";
+  LOG4CXX_DEBUG(logger, "group " << _group << ": " << mids.size() << " articles added");
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
