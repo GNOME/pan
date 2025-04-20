@@ -500,8 +500,9 @@ int HeaderPane ::add_children_to_model(PanTreeStore *store,
 {
   // see if this parent has any children...
   int count(0);
-  article_v children;
-  atree->get_children(parent_mid, group, children);
+  std::vector<Article> children;
+
+  atree->get_children_sql(parent_mid, group, children);
   if (children.empty())
   {
     return count;
@@ -511,16 +512,17 @@ int HeaderPane ::add_children_to_model(PanTreeStore *store,
   PanTreeStore::rows_t rows;
   rows.reserve(children.size());
   count += children.size();
-  foreach_const (article_v, children, it)
+  for (Article it : children)
   {
-    rows.push_back(create_row(**it));
+    rows.push_back(create_row(it));
   }
   store->append(do_thread ? parent_row : nullptr, rows);
 
   // recurse
   for (size_t i = 0, n = children.size(); i < n; ++i)
   {
-    count += add_children_to_model(store, group, rows[i], children[i]->message_id, atree, do_thread);
+    count += add_children_to_model(
+      store, group, rows[i], children[i].message_id, atree, do_thread);
   }
   return count;
 }
