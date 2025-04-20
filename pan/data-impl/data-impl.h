@@ -38,7 +38,6 @@
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/memchunk.h>
 #include <pan/data-impl/profiles.h>
-#include <pan/data-impl/article-rules.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
@@ -528,7 +527,6 @@ public:
         void add_articles(const_nodes_v const &);
         void apply_filter(const_nodes_v const &);
         void apply_sql_filter();
-        void apply_rules(const_nodes_v &candidates);
 
       private:
         void cache_articles(std::set<Article const *> s);
@@ -697,7 +695,6 @@ public:
   public:
     const ArticleFilter _article_filter;
     const HeaderFilter _header_filter;
-    ArticleRules _article_rules;
 };
 } // namespace pan
 
