@@ -10,6 +10,7 @@ create table article_view
     id integer primary key asc autoincrement,
     article_id integer references article (id) on delete cascade,
     parent_id integer references article (id) on delete set null,
+    has_child boolean,
     shown integer default True
   );
 
