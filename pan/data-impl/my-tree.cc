@@ -103,35 +103,6 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
     logger, "query on article_view table done with " << count << " articles");
 }
 
-void DataImpl ::MyTree ::get_children(Quark const &mid,
-                                      Quark const &group,
-                                      articles_t &setme) const
-{
-  if (mid.empty()) // get the roots
-  {
-    foreach_const (nodes_t, _nodes, it)
-    {
-      if (it->second->_article && ! it->second->_parent)
-      {
-        setme.push_back(it->second->_article);
-      }
-    }
-  }
-  else // get children of a particular article
-  {
-    nodes_t::const_iterator parent_it(_nodes.find(mid));
-    if (parent_it != _nodes.end())
-    {
-      ArticleNode::children_t &kids(parent_it->second->_children);
-      setme.reserve(kids.size());
-      foreach_const (ArticleNode::children_t, kids, it)
-      {
-        setme.push_back((*it)->_article);
-      }
-    }
-  }
-}
-
 Article const *DataImpl ::MyTree ::get_parent(Quark const &mid) const
 {
   Article const *parent(nullptr);
