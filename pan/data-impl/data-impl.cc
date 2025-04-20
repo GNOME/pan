@@ -157,9 +157,7 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _unit_test(unit_test),
   _data_io(io),
   _prefs(prefs),
-  _cached_xover_entry(nullptr),
-  _article_rules(prefs.get_flag("rules-autocache-mark-read", false),
-                 prefs.get_flag("rules-auto-dl-mark-read", false))
+  _cached_xover_entry(nullptr)
 {
   load_db_schema(pan_db);
 
