@@ -66,7 +66,7 @@ class HeaderFilter
                                      FilterInfo const &criteria) const;
 
     void score_article(Data const &data,
-                       std::vector<Scorefile::Section const *> const &sections,
+                       std::vector<Scorefile::Section> const &sections,
                        Article const &article) const;
 };
 

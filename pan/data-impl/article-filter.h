@@ -71,7 +71,7 @@ class ArticleFilter
                       FilterInfo const &criteria,
                       Article const &article) const;
 
-    typedef std::vector<Scorefile::Section const *> sections_t;
+    typedef std::vector<Scorefile::Section> sections_t;
 
     void get_article_scores(Data const &data,
                             sections_t const &score,

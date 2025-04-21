@@ -16,12 +16,12 @@ log4cxx::LoggerPtr logger(getLogger("header-filter"));
 
 void HeaderFilter::score_article(
   Data const &data,
-  std::vector<Scorefile::Section const *> const &sections,
+  std::vector<Scorefile::Section> const &sections,
   Article const &article) const
 {
   int score(0);
-  for(Scorefile::Section const *sit : sections) {
-    foreach_const (Scorefile::items_t, sit->items, it)
+  for(Scorefile::Section const sit : sections) {
+    foreach_const (Scorefile::items_t, sit.items, it)
     {
       if (it->expired)
       {

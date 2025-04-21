@@ -32,6 +32,7 @@
 #include "pan/general/log4cxx.h"
 #include "pan/general/string-view.h"
 #include "pan/usenet-utils/filter-info.h"
+#include "pan/usenet-utils/scorefile.h"
 
 namespace {
 log4cxx::LoggerPtr logger = pan::getLogger("article-filter");
@@ -259,10 +260,9 @@ void ArticleFilter ::get_article_scores(Data const &data,
                                         Article const &article,
                                         Scorefile::items_t &setme) const
 {
-  foreach_const (sections_t, sections, sit)
+  for (Scorefile::Section section : sections)
   {
-    Scorefile::Section const *section(*sit);
-    foreach_const (Scorefile::items_t, section->items, it)
+    foreach_const (Scorefile::items_t, section.items, it)
     {
       if (it->expired)
       {
