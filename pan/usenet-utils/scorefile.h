@@ -161,7 +161,7 @@ struct Scorefile
     }
 
     void get_matching_sections(StringView const &groupname,
-                               std::vector<Section const *> &setme) const;
+                               std::vector<Section> &setme) const;
 
   protected:
     sections_t _sections;
