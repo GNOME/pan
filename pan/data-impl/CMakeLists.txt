@@ -33,7 +33,7 @@ if(WANT_GKR)
 endif()
 
 set(data-impl-test-programs header-filter-test header-rules-test
-  ghost-article-test my-tree-test)
+  header-score-test ghost-article-test my-tree-test)
 
 foreach(test ${data-impl-test-programs})
   add_executable(${test} ${test}.cc)

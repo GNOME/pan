@@ -16,6 +16,19 @@ log4cxx::LoggerPtr logger(getLogger("header-filter"));
 
 void HeaderFilter::score_article(
   Data const &data,
+  std::deque<Scorefile::Section> const &sections,
+  Article const &article) const
+{
+  std::vector<Scorefile::Section> v_sections;
+  for (Scorefile::Section s : sections)
+  {
+    v_sections.push_back(s);
+  }
+  score_article(data, v_sections, article);
+}
+
+void HeaderFilter::score_article(
+  Data const &data,
   std::vector<Scorefile::Section> const &sections,
   Article const &article) const
 {
