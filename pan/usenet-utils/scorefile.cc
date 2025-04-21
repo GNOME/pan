@@ -595,7 +595,7 @@ bool Scorefile::parse_file(StringView const &filename)
 }
 
 void Scorefile::get_matching_sections(StringView const &groupname,
-                                      std::vector<Section const *> &setme) const
+                                      std::vector<Section> &setme) const
 {
   for (auto const &section : _sections)
   {
@@ -608,7 +608,7 @@ void Scorefile::get_matching_sections(StringView const &groupname,
       }
       if (match)
       {
-        setme.push_back(&section);
+        setme.push_back(section);
         break;
       }
     }
