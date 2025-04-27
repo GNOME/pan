@@ -1724,6 +1724,7 @@ void DataImpl ::on_articles_removed(quarks_t const &mids) const
   }
 }
 
+// called when articles are read, rescored or added
 void DataImpl ::on_articles_changed(Quark const &group,
                                     quarks_t const &mids,
                                     bool do_refilter)
