@@ -65,10 +65,10 @@ class HeaderFilter
                                      Data::ShowType show_type,
                                      FilterInfo const &criteria) const;
 
-    void score_article(Data const &data,
+    bool score_article(Data const &data,
                        std::deque<Scorefile::Section> const &sections,
                        Article const &article) const;
-    void score_article(Data const &data,
+    bool score_article(Data const &data,
                        std::vector<Scorefile::Section> const &sections,
                        Article const &article) const;
 };
