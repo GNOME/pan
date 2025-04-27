@@ -912,9 +912,10 @@ void HeaderPane ::select_message_id(Quark const &mid, bool do_scroll)
 
 void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
 {
-  pan_debug(diffs.added.size()
-            << " article added; " << diffs.reparented.size() << " reparented; "
-            << diffs.removed.size() << " removed");
+  LOG4CXX_DEBUG(logger,
+                diffs.added.size()
+                  << " article added; " << diffs.reparented.size()
+                  << " reparented; " << diffs.removed.size() << " removed");
 
   // we might need to change the selection after the update.
   const article_v old_selection(get_full_selection_v());
