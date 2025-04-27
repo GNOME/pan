@@ -14,7 +14,7 @@ namespace  {
 log4cxx::LoggerPtr logger(getLogger("header-filter"));
 }
 
-void HeaderFilter::score_article(
+bool HeaderFilter::score_article(
   Data const &data,
   std::deque<Scorefile::Section> const &sections,
   Article const &article) const
@@ -24,10 +24,10 @@ void HeaderFilter::score_article(
   {
     v_sections.push_back(s);
   }
-  score_article(data, v_sections, article);
+  return score_article(data, v_sections, article);
 }
 
-void HeaderFilter::score_article(
+bool HeaderFilter::score_article(
   Data const &data,
   std::vector<Scorefile::Section> const &sections,
   Article const &article) const
@@ -61,8 +61,22 @@ void HeaderFilter::score_article(
   }
 
 endloop:
-  LOG4CXX_TRACE(logger, "Article " << article.message_id << " scored to " << score);
-  article.set_score(score);
+
+  SQLite::Statement q(pan_db, R"SQL(
+    update article_group set score = $score
+    where group_id = (select id from `group` where name = $name)
+      and article_id = (select id from article where message_id = $msg_id)
+      and score != $score
+  )SQL");
+  q.bind(1, score);
+  q.bind(2, article.group);
+  q.bind(3, article.message_id);
+  int n(q.exec());
+  LOG4CXX_TRACE(logger,
+                "Article " << article.message_id << " scored to " << score
+                           << (n == 1 ? " (changed)" : " (unchanged)"));
+
+  return (n == 1);
 }
 
 // returns a SQL statement like

@@ -163,9 +163,13 @@ public:
       scorefile.parse_file(filename);
       std::deque<Scorefile::Section> const &sections(scorefile.get_sections());
 
-      hf.score_article(*data, sections, Article(Quark("g1"), Quark("g1m1")));
-      hf.score_article(*data, sections, Article(Quark("g1"), Quark("g1m2")));
-      hf.score_article(*data, sections, Article(Quark("g1"), Quark("g1m3")));
+      std::map<std::string, int> suite{{"g1m1", 1}, {"g1m2", 1}, {"g1m3",0}};
+      for (auto const &[mid, exp] : suite)
+      {
+        int res =
+          hf.score_article(*data, sections, Article(Quark("g1"), Quark(mid)));
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("g1m1 change score", exp, res);
+      }
 
       SQLite::Statement q_score(
         pan_db,
