@@ -28,6 +28,7 @@
 #include <SQLiteCpp/Statement.h>
 #include <cassert>
 #include <config.h>
+#include <log4cxx/logger.h>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -108,6 +109,7 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
 
 Article const *DataImpl ::MyTree ::get_parent(Quark const &mid) const
 {
+  LOG4CXX_WARN(logger, "deprecated function called");
   Article const *parent(nullptr);
   ArticleNode const *parent_node(nullptr);
 
@@ -126,6 +128,7 @@ Article const *DataImpl ::MyTree ::get_parent(Quark const &mid) const
 
 Article const *DataImpl ::MyTree ::get_article(Quark const &mid) const
 {
+  LOG4CXX_WARN(logger, "deprecated function called");
   nodes_t::const_iterator it(_nodes.find(mid));
   return it == _nodes.end() ? nullptr : it->second->_article;
 }
@@ -334,6 +337,7 @@ void DataImpl ::MyTree ::apply_sql_filter()
 // candidates are sorted by Mid (see NodeMidCompare)
 void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
 {
+  LOG4CXX_WARN(logger, "deprecated function called");
   NodeMidCompare compare;
 
   const_nodes_v pass;
@@ -457,6 +461,7 @@ void DataImpl ::MyTree ::remove_articles(quarks_t const &mids)
   ArticleTree::Diffs diffs;
   std::set<ArticleNode *> parents;
 
+  LOG4CXX_WARN(logger, "deprecated function called");
   // zero out any corresponding nodes in the tree...
   nodes_v nodes;
   _data.find_nodes(mids, _nodes, nodes);
@@ -538,6 +543,7 @@ void DataImpl ::MyTree ::remove_articles(quarks_t const &mids)
 void DataImpl ::MyTree ::accumulate_descendants(unique_nodes_t &descendants,
                                                 ArticleNode const *node) const
 {
+  LOG4CXX_WARN(logger, "deprecated function called");
 
   if (node->_article && descendants.insert(node).second || ! node->_article)
   {
@@ -603,6 +609,7 @@ struct DataImpl ::MyTree ::TwoNodes
 
 void DataImpl ::MyTree ::add_articles(const_nodes_v const &nodes_in)
 {
+  LOG4CXX_WARN(logger, "deprecated add_articles called");
   //  std::cerr<<"add articles nodes\n";
 
   NodeMidCompare compare;
