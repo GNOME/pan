@@ -245,6 +245,9 @@ SQLite::Statement HeaderFilter::get_sql_query(
 
 // returns a SQL statement like
 // select <select_str> from article where <pre_cond> <criteria is matched>
+// criteria parameters are already bound to returned query, so additional
+// parameters must be bound with q.bind(q.getBindParameterCount(), thing)) AND
+// additional parameters must be placed *after* "where" string in compose function
 SQLite::Statement HeaderFilter::get_sql_query(
   Data const &data,
   std::function<std::string(std::string join, std::string where)> compose,
