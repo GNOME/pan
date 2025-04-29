@@ -1583,7 +1583,7 @@ void HeaderPane ::rebuild_rules(bool enable)
 
 void HeaderPane ::rebuild_filter(std::string const &text, int mode)
 {
-
+  LOG4CXX_TRACE(logger, "build filter with text " <<  text);
   TextMatch::Description d;
   d.negate = false;
   d.case_sensitive = false;
