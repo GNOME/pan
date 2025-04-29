@@ -290,14 +290,20 @@ namespace pan
   {
     const bool active (gtk_toggle_action_get_active(a));
     toggle_action_set_active("match-only-unread-articles", active);
-    if (active) toggle_action_set_active("match-only-read-articles", false);
+    if (active) {
+      toggle_action_set_active("match-only-read-articles", false);
+      prefs->set_flag("match-only-read-articles", false);
+    }
     pan_ui->do_match_only_unread_articles(true);
   }
   void do_match_only_read_articles (GtkToggleAction * a)
   {
     const bool active (gtk_toggle_action_get_active(a));
     toggle_action_set_active("match-only-read-articles", active);
-    if (active) toggle_action_set_active("match-only-unread-articles", false);
+    if (active) {
+      toggle_action_set_active("match-only-unread-articles", false);
+      prefs->set_flag("match-only-unread-articles", false);
+    }
     pan_ui->do_match_only_read_articles(true);
   }
 
