@@ -51,6 +51,12 @@ void DataImpl ::MyTree ::reset_article_view() const
   pan_db.exec("delete from article_view");
 }
 
+void DataImpl ::MyTree ::initialize_article_view() const
+{
+  reset_article_view();
+  update_article_view();
+}
+
 void DataImpl ::MyTree ::update_article_view() const
 {
    TimeElapsed timer;
@@ -88,11 +94,6 @@ void DataImpl ::MyTree ::update_article_view() const
 void DataImpl ::MyTree ::get_children_sql(
   Quark const &mid, Quark const &group, std::vector<ArticleChild> &setme) const
 {
-  if (mid.empty())
-  {
-    reset_article_view();
-    update_article_view();
-  }
   std::string str("select message_id, av.has_child from article "
                   " join article_view as av on av.article_id == article.id"
                   " where show == True and av.parent_id ");

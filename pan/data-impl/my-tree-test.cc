@@ -184,9 +184,12 @@ private:
 
     void test_get_children()
     {
-        assert_result(Quark(), "g1", {{"g1m1a", true}, {"g1m2a", true}, {"g1m2", false}});
-        assert_result("g1m1a", "g1", {{"g1m1b", true}});
-        assert_result("g1m1b", "g1", {{"g1m1c1", false}, {"g1m1c2", false}});
+      tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
+      tree->initialize_article_view();
+      assert_result(
+        Quark(), "g1", {{"g1m1a", true}, {"g1m2a", true}, {"g1m2", false}});
+      assert_result("g1m1a", "g1", {{"g1m1b", true}});
+      assert_result("g1m1b", "g1", {{"g1m1c1", false}, {"g1m1c2", false}});
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
