@@ -759,6 +759,8 @@ void HeaderPane ::rebuild()
 
 bool HeaderPane ::set_group(Quark const &new_group)
 {
+  LOG4CXX_TRACE(logger, "set_group called for group " << new_group <<
+                ", old group was " << (_group.empty() ? "null" : _group));
 
   set_cleared(new_group.empty());
 
@@ -808,6 +810,8 @@ bool HeaderPane ::set_group(Quark const &new_group)
       }
     }
   }
+
+  LOG4CXX_TRACE(logger, "set_group done for group " << _group);
 
   return change;
 }
@@ -1776,6 +1780,8 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
 
 void HeaderPane ::filter(std::string const &text, int mode)
 {
+  LOG4CXX_TRACE(logger, "filter called " << (_atree ? " with tree" :" without tree"));
+
   rebuild_filter(text, mode);
 
   if (_atree)
@@ -2238,6 +2244,7 @@ HeaderPane ::HeaderPane(ActionManager &action_manager,
   _gui(gui),
   _cleared(true)
 {
+  LOG4CXX_TRACE(logger, "Creating header pane object...");
   _fg = prefs.get_color_str("text-color-fg", colors.def_fg.c_str());
   _bg = prefs.get_color_str("text-color-bg", colors.def_bg.c_str());
 
@@ -2309,6 +2316,7 @@ HeaderPane ::HeaderPane(ActionManager &action_manager,
   _cache.add_listener(this);
 
   refresh_font();
+  LOG4CXX_TRACE(logger, "Done creating header pane object.");
 }
 
 void HeaderPane ::set_focus()

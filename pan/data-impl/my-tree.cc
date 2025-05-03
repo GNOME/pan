@@ -85,14 +85,16 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
   std::string str("select message_id from article "
                   "join article_view as av on av.article_id == article.id "
                   "where av.parent_id ");
-  str += mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
+  str +=
+    mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
 
-  LOG4CXX_TRACE(
-    logger, "query on article_view with «" << str << "»");
+  LOG4CXX_TRACE(logger, "query on article_view with «" << str << "»");
   SQLite::Statement q(pan_db, str);
 
   if (! mid.empty())
+  {
     q.bind(1, mid);
+  }
 
   int count(0);
   while (q.executeStep())
@@ -162,7 +164,9 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
   // set the filter...
   if (criteria)
   {
-    LOG4CXX_DEBUG(logger, "set_filter called with criteria «" << criteria->describe() << "»");
+    LOG4CXX_DEBUG(logger,
+                  "set_filter called on group " << _group << " with criteria «"
+                                                << criteria->describe() << "»");
     _filter = *criteria;
   }
   else
@@ -172,9 +176,12 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
   }
   _show_type = show_type;
 
-  LOG4CXX_TRACE(logger, "apply_sql_filter calls apply_filter in " << timer.get_seconds_elapsed() << "s.");
+  LOG4CXX_TRACE(logger,
+                "apply_sql_filter calls apply_filter in "
+                  << timer.get_seconds_elapsed() << "s.");
   apply_sql_filter();
-  LOG4CXX_DEBUG(logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
+  LOG4CXX_DEBUG(
+    logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
@@ -304,6 +311,7 @@ void DataImpl ::MyTree ::download_articles(std::set<Article const *> s)
 
 void DataImpl ::MyTree ::apply_sql_filter()
 {
+  LOG4CXX_TRACE(logger, "called (deprecated ?)");
   auto q = _header_filter.get_sql_filter(_data, _show_type, _filter);
   q.bind(q.getBindParameterCount(), _group);
 
@@ -556,7 +564,8 @@ void DataImpl ::MyTree ::accumulate_descendants(unique_nodes_t &descendants,
 void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
                                           bool do_refilter)
 {
-  LOG4CXX_DEBUG(logger, "group " << _group << ": " << mids.size() << " articles changed");
+  LOG4CXX_DEBUG(
+    logger, "group " << _group << ": " << mids.size() << " articles changed");
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
