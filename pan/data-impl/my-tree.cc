@@ -58,6 +58,7 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
   if (mid.empty())
   {
     LOG4CXX_TRACE(logger, "Initial load on article_view table");
+    SQLite::Transaction setup_article_view_transaction(pan_db);
     reset_article_view();
 
     // get the roots. called when switching groups
@@ -78,6 +79,7 @@ void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
     LOG4CXX_TRACE(logger,
                   "Initial load on article_view table done with "
                     << count << " articles");
+    setup_article_view_transaction.commit();
   }
 
   std::string str("select message_id from article "
