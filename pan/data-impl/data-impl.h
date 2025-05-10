@@ -488,6 +488,7 @@ public:
 
       public: // from ArticleTree
         void reset_article_view() const;
+        void reset_article_transition_tables() const;
         void initialize_article_view() const override;
         void update_article_view() const override;
         void get_children_sql(Quark const &mid,
@@ -499,6 +500,10 @@ public:
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
+
+      private:
+        void set_parent_in_article_view() const;
+        int fill_article_view_from_article() const;
 
       public:
         void articles_changed(quarks_t const &mids, bool do_refilter);
