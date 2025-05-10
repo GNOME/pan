@@ -71,7 +71,7 @@ private:
       // That's dumb but that how it's done in header-pane.cc.
       criteria.set_type_aggregate_and();
 
-      // g1m1a -> g1m1b => g1m1c1, g1m1c2
+      // g1m1a -> g1m1b => g1m1c1, g1m1c2 => g1m1d1, g1m1d2
       add_article("g1m1a", "g1");
       add_article("g1m1b", "g1");
       data->store_references("g1m1b", "g1m1a"); // add ancestor
@@ -79,6 +79,10 @@ private:
       data->store_references("g1m1c1", "g1m1a g1m1b"); // add ancestors
       add_article("g1m1c2", "g1");
       data->store_references("g1m1c2", "g1m1a g1m1b"); // add ancestors
+      add_article("g1m1d1", "g1");
+      data->store_references("g1m1d1", "g1m1a g1m1b g1m1c1"); // add ancestors
+      add_article("g1m1d2", "g1");
+      data->store_references("g1m1d2", "g1m1a g1m1b g1m1c2"); // add ancestors
 
       // g1m2a -> g1m2b -> g1m2c
       add_article("g1m2a", "g1");
@@ -143,10 +147,6 @@ private:
                        std::vector<ExpArticle> expect)
     {
       std::vector<pan::Data::ArticleTree::ArticleChild> setme;
-      if (mid.empty())
-      {
-        tree = data->group_get_articles(group, "/tmp", Data::SHOW_ARTICLES);
-      }
 
       // get root chidren
       tree->get_children_sql(mid, group, setme);
@@ -189,7 +189,9 @@ private:
       assert_result(
         Quark(), "g1", {{"g1m1a", true}, {"g1m2a", true}, {"g1m2", false}});
       assert_result("g1m1a", "g1", {{"g1m1b", true}});
-      assert_result("g1m1b", "g1", {{"g1m1c1", false}, {"g1m1c2", false}});
+      assert_result("g1m1b", "g1", {{"g1m1c1", true}, {"g1m1c2", true}});
+      assert_result("g1m1c1", "g1", {{"g1m1d1", false}});
+      assert_result("g1m1c2", "g1", {{"g1m1d2", false}});
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
