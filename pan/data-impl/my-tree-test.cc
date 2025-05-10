@@ -1,6 +1,7 @@
 #include "pan/data-impl/data-impl.h"
 #include "pan/data-impl/header-filter.h"
 #include "pan/data/data.h"
+#include "pan/general/quark.h"
 #include "pan/general/string-view.h"
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
@@ -23,7 +24,7 @@
 
 using namespace pan;
 
-char const *db_file("/tmp/data-impl-my-tree.db");
+char const *db_file("/tmp/my-tree-test.db");
 SQLiteDb pan_db(db_file, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 
 class DataImplTest : public CppUnit::TestFixture
@@ -34,6 +35,11 @@ class DataImplTest : public CppUnit::TestFixture
     FilterInfo criteria;
     Data::ArticleTree *tree;
     PrefsFile *prefs;
+
+    std::map<std::string, std::string> propMap = {{"hidden", "h"},
+                                                  {"exposed", "e"},
+                                                  {"reparented", "r"},
+                                                  {"unchanged", "u"}};
 
   public:
     void setUp()
@@ -65,7 +71,8 @@ class DataImplTest : public CppUnit::TestFixture
       // That's dumb but that how it's done in header-pane.cc.
       criteria.set_type_aggregate_and();
 
-      // g1m1a -> g1m1b => g1m1c1, g1m1c2 => g1m1d1, g1m1d2
+      // g1m1a -> g1m1b +--> g1m1c1 -> g1m1d1
+      //                 \-> g1m1c2 -> g1m1d2
       add_article("g1m1a", "g1");
       add_article("g1m1b", "g1");
       data->store_references("g1m1b", "g1m1a"); // add ancestor
@@ -137,13 +144,13 @@ class DataImplTest : public CppUnit::TestFixture
       q_article_xref.exec();
     }
 
-    void assert_result(Quark const &mid,
+    void assert_result(std::string label,
+                       Quark const &mid,
                        Quark const &group,
                        std::vector<std::string> expect)
     {
       std::vector<Article> setme;
 
-      // get root chidren
       tree->get_children_sql(mid, group, setme);
 
       std::sort(setme.begin(),
@@ -154,31 +161,258 @@ class DataImplTest : public CppUnit::TestFixture
                 });
       std::sort(expect.begin(), expect.end());
 
-      std::string label(mid.empty() ? "root" : mid.to_string());
+      std::string user_message(label + " "
+                               + (mid.empty() ? "root" : mid.to_string()));
 
       for (int i(0); i < expect.max_size() && i < setme.size(); i++)
       {
         CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          label + " child msg_id ", expect[i], setme[i].message_id.to_string());
+          user_message + " child msg_id ", expect[i], setme[i].message_id.to_string());
+      }
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(user_message + " children count",
+                                   int(expect.size()),
+                                   int(setme.size()));
+    }
+
+    void assert_hidden(std::string label, std::string msg_id)
+    {
+      assert_prop(label, "hidden", msg_id);
+    }
+
+    void assert_exposed(std::string label, std::string msg_id)
+    {
+      assert_prop(label, "exposed", msg_id);
+    }
+
+    void assert_unchanged(std::string label, std::string msg_id)
+    {
+      assert_prop(label, "unchanged", msg_id);
+    }
+
+    void assert_reparented(std::string label, std::string msg_id)
+    {
+      assert_prop(label, "reparented", msg_id);
+    }
+
+    void assert_prop(std::string label, std::string prop, std::string msg_id) {
+
+      SQLite::Statement q(pan_db, R"SQL(
+        select status from article_view as av
+        join article on article.id == av.article_id
+        where message_id = ?
+      )SQL");
+      q.bind(1, msg_id);
+
+      std::string status;
+      while (q.executeStep()) {
+        status = q.getColumn(0).getText();
+      }
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(label + " msg_id " + msg_id + " property",
+                                   propMap.at(prop), status);
+    };
+
+    void assert_not_in_view(std::string label,
+                     std::string msg_id)
+    {
+      SQLite::Statement q(pan_db, R"SQL(
+        select count() from article_view as av
+        join article on article.id == av.article_id
+        where message_id = ?
+      )SQL");
+      q.bind(1, msg_id);
+
+      int count(0);
+      while (q.executeStep())
+      {
+        count += q.getColumn(0).getInt();
       }
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE(
-        label + " children count", int(expect.size()), int(setme.size()));
+          label + " msg_id " + msg_id + " is not in view", true, count == 0);
+    };
+
+    void change_read_status(Quark const mid, bool status)
+    {
+      SQLite::Statement q(pan_db, R"SQL(
+        update article set is_read = ? where message_id = ?
+      )SQL");
+      q.bind(1, status);
+      q.bind(2, mid);
+      int count = q.exec();
+      CPPUNIT_ASSERT_MESSAGE("change read status msg_id " + mid.to_string(),
+                             count == 1);
     }
 
+    // inspect content of article_view and message_id with
+    // select message_id, article_id, is_read, av.parent_id, status
+    // from article join article_view as av on av.article_id = article.id
+
+    // emulates showing all articles, with no criteria
     void test_get_children()
     {
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
       tree->initialize_article_view();
-      assert_result(Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
-      assert_result("g1m1a", "g1", {"g1m1b"});
-      assert_result("g1m1b", "g1", {"g1m1c1", "g1m1c2"});
-      assert_result("g1m1c1", "g1", {"g1m1d1"});
-      assert_result("g1m1c2", "g1", {"g1m1d2"});
+      assert_result("", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
+      assert_result("", "g1m1a", "g1", {"g1m1b"});
+      assert_result("", "g1m1b", "g1", {"g1m1c1", "g1m1c2"});
+      assert_result("", "g1m1c1", "g1", {"g1m1d1"});
+      assert_result("", "g1m1c2", "g1", {"g1m1d2"});
+      assert_exposed("", "g1m1a");
+    }
+
+    // emulates showing all articles, with no criteria
+    void test_get_children_with_empty_criteria()
+    {
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+      assert_result("", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
+    }
+
+    // emulates showing unread articles with 2 read article in the beginning of
+    // a thread
+    void test_get_unread_children_beginning_thread()
+    {
+      // start test with 2 read articles
+      change_read_status("g1m1a", true);
+      change_read_status("g1m1b", true);
+
+      // init article view
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      std::vector<std::string> original_roots(
+        {"g1m1c1", "g1m1c2", "g1m2a", "g1m2"});
+
+      assert_result("step 1", Quark(), "g1", original_roots);
+
+      // the read articles (g1m1a and g1m1b) are not in tree
+      assert_not_in_view("step 2", "g1m1a");
+      assert_not_in_view("step 2", "g1m1b");
+      assert_result("step 1", "g1m1c1", "g1", {"g1m1d1"});
+      assert_result("step 1", "g1m1c2", "g1", {"g1m1d2"});
+
+      // now read another article
+      change_read_status("g1m1c2", true);
+      tree->update_article_view();
+      // new articles in root
+      assert_result(
+        "step 2", Quark(), "g1", {"g1m1c1", "g1m1d2", "g1m2a", "g1m2"});
+
+      // check that read article is going to be removed
+      assert_hidden("step 2", "g1m1c2");
+
+      // mark same article as unread
+      change_read_status("g1m1c2", false);
+      tree->update_article_view();
+      // check content of added article and reparented ?
+      assert_result("step 3", Quark(), "g1", original_roots);
+      assert_exposed("step 3", "g1m1c2");
+    }
+
+    // emulates showing unread articles with 2 read article in the middle of a
+    // thread
+    void test_get_unread_children_middle_thread()
+    {
+      // start test with 2 read articles in the middle of the thread
+      change_read_status("g1m1b", true);
+      change_read_status("g1m1c1", true);
+
+      // init article view
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+      assert_exposed("step 1", "g1m1d1");
+      assert_exposed("step 1", "g1m1c2");
+
+      std::vector<std::string> original_roots({"g1m1a", "g1m2a", "g1m2"});
+      assert_result("step 1", Quark(), "g1", original_roots);
+      // the read articles (g1m1b and g1m1c1) are not in tree
+      assert_result("step 1", "g1m1a", "g1", {"g1m1c2", "g1m1d1"});
+
+      // now read another article
+      change_read_status("g1m1c2", true);
+      tree->update_article_view();
+      // no change in root
+      assert_result("step 2", Quark(), "g1", original_roots);
+      // g1m1c2 is removed from tree, new child is g1m1d2
+      assert_result("step 2", "g1m1a", "g1", {"g1m1d1", "g1m1d2"});
+      assert_hidden("step 2", "g1m1c2");
+      assert_unchanged("step 2", "g1m1d1");
+      assert_reparented("step 2", "g1m1d2");
+
+      // mark an article as unread
+      change_read_status("g1m1c1", false);
+      tree->update_article_view();
+      // no change in root
+      assert_result("step 3", Quark(), "g1", original_roots);
+      // g1m1c1 is back in tree
+      assert_result("step 3", "g1m1a", "g1", {"g1m1c1", "g1m1d2"});
+      assert_exposed("step 3", "g1m1c1");
+      // hidden articles should not be flagged as reparented
+      assert_not_in_view("step 3", "g1m1c2");
+      assert_reparented("step 3", "g1m1d1");
+      assert_unchanged("step 3", "g1m1d2");
+    }
+
+    // emulates showing unread articles with 2 read article in the end of a
+    // thread
+    void test_get_unread_children_end_thread()
+    {
+      change_read_status("g1m1c1", true);
+      change_read_status("g1m1d1", true);
+      change_read_status("g1m1d2", true);
+
+      // init article view
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      std::vector<std::string> original_roots({"g1m1a", "g1m2a", "g1m2"});
+      assert_result("step 1", Quark(), "g1", original_roots);
+
+      // the read articles are no longer in tree
+      assert_result("step 1", "g1m1a", "g1", {"g1m1b"});
+      assert_result("step 1", "g1m1b", "g1", {"g1m1c2"});
+
+      // now read another article
+      change_read_status("g1m1c2", true);
+      tree->update_article_view();
+      // no change in root
+      assert_result("step 2", Quark(), "g1", original_roots);
+
+      // g1m1b has no child
+      assert_result("step 2", "g1m1a", "g1", {"g1m1b"});
+      assert_hidden("step 2", "g1m1c2");
+      assert_not_in_view("step 2", "g1m1d1");
+      assert_not_in_view("step 2", "g1m1d2");
+
+      // mark an article as unread
+      change_read_status("g1m1c1", false);
+      tree->update_article_view();
+      // no change in root
+      assert_result("step 3", Quark(), "g1", original_roots);
+      assert_result("step 3", "g1m1a", "g1", {"g1m1b"});
+      // g1m1c1 is back in tree
+      assert_result("step 3", "g1m1b", "g1", {"g1m1c1"});
+      assert_not_in_view("step 3", "g1m1c2");
+      assert_exposed("step 3", "g1m1c1");
+      assert_not_in_view("step 3", "g1m1d1");
+      assert_not_in_view("step 3", "g1m1d2");
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
+    CPPUNIT_TEST(test_get_children_with_empty_criteria);
+    CPPUNIT_TEST(test_get_unread_children_beginning_thread);
+    CPPUNIT_TEST(test_get_unread_children_middle_thread);
+    CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST_SUITE_END();
 };
 
