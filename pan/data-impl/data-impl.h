@@ -490,6 +490,8 @@ public:
         void reset_article_view() const;
         void initialize_article_view() const override;
         void update_article_view() const override;
+        void update_article_after_gui_update() const override;
+        void set_article_hidden_status(quarks_t &mids) const override;
         void get_children_sql(Quark const &mid,
                               Quark const &group,
                               std::vector<Article> &setme) const override;
@@ -499,6 +501,10 @@ public:
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
+
+      private:
+        void set_parent_in_article_view() const;
+        int fill_article_view_from_article() const;
 
       public:
         void articles_changed(quarks_t const &mids, bool do_refilter);

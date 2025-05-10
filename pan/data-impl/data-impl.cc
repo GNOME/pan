@@ -129,11 +129,9 @@ void load_db_schema(SQLiteDb &pan_db)
   // this may not be portable across distributions
   pan_db.loadExtension("/usr/lib/sqlite3/pcre.so", nullptr);
 
-  std::vector<std::string> sql_files{"01-server.sql",
-                                     "02-group.sql",
-                                     "03-article.sql",
-                                     "04-posting-profile.sql",
-                                     "05-article-view.sql"};
+  std::vector<std::string> sql_files{
+      "01-server.sql",          "02-group.sql",        "03-article.sql",
+      "04-posting-profile.sql", "05-article-view.sql", "99-cleanup.sql"};
 
   for (int i = 0; i < sql_files.size(); i++)
   {

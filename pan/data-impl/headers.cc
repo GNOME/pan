@@ -1679,24 +1679,23 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
     }
   }
 
-  // trigger action before actually deleting because existing and
-  // deleted articles can be compared for time (or other property)
-  // while re-arranging header pane
-  on_articles_removed(all_mids);
-
-  // remove articles from DB
-  SQLite::Statement delete_article_q(pan_db, R"SQL(
-    delete from article where message_id == ?
+  // mark articles as pending deletion
+  SQLite::Statement mark_to_delete_q(pan_db, R"SQL(
+    update article set to_delete = True where message_id == ?
   )SQL");
 
   for (Quark msg_id: all_mids) {
-    delete_article_q.reset();
+    mark_to_delete_q.reset();
 
-    delete_article_q.bindNoCopy(1, msg_id);
-    assert(delete_article_q.exec() == 1);
+    mark_to_delete_q.bindNoCopy(1, msg_id);
+    assert(mark_to_delete_q.exec() == 1);
 
-    LOG4CXX_TRACE(logger, "Deleted article " << msg_id);
+    LOG4CXX_TRACE(logger, "Marked article to delete " << msg_id);
   }
+
+  // trigger action: this updates header-pane, update article_view and
+  // actually delete articles from DB
+  on_articles_removed(all_mids);
 
   // delete orphan authors
   SQLite::Statement author_q(pan_db, R"SQL(

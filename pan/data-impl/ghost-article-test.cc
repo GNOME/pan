@@ -141,8 +141,10 @@ public:
       data->store_references(msg_id, references);
     }
 
-    void delete_article(std::string msg_id)
-    {
+    void delete_article(std::string msg_id) {
+      // this test does not use article_view table so there's to
+      // need to set to_delete attribute. Simply deleting the
+      // article is enough.
       SQLite::Statement setup(pan_db, R"SQL(
            delete from article where message_id = ?
         )SQL");

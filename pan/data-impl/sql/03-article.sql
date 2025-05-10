@@ -29,11 +29,16 @@ create table if not exists article (
   -- 1 for text article, potentially a lot for binaries
   expected_parts integer,
 
+  -- used to mark article pending deletion. Article is eventually
+  -- deleted after GUI update
+  to_delete boolean check(to_delete = False or to_delete = True) default False,
+
   cached boolean check(cached = False or cached = True) default False,
   is_read boolean check(is_read = False or is_read = True) default False
 );
 
 create unique index if not exists article_message_id on `article` (message_id);
+create index if not exists article_to_delete on `article` (to_delete);
 
 -- filled with message_id extracted from references header for missing
 -- articles this table is emptied when articles are found or when
@@ -145,16 +150,6 @@ create table if not exists article_xref (
 );
 
 create unique index if not exists article_xref_ids on article_xref (article_group_id, server_id);
-
--- check and remove orphaned article, i.e. articles that are no longer
--- attached any group and server, i.e. a group was removed or a server was removed
--- this should be taken care of at runtime, but let's cleanup on startup as well
-delete from `article` where id in (
-  select distinct a.id
-    from `article` as a
-         left outer join article_group as ag on ag.article_id == a.id
-   where ag.article_id is null
-);
 
 create table if not exists article_part (
   id integer primary key asc autoincrement,

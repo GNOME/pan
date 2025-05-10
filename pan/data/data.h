@@ -591,6 +591,8 @@ class Data :
 
       virtual void initialize_article_view() const = 0;
       virtual void update_article_view() const = 0;
+      virtual void update_article_after_gui_update() const = 0;
+      virtual void set_article_hidden_status(quarks_t &mids) const = 0;
 
       protected:
         /** the quirky way of incrementing 'it' is to prevent it from being

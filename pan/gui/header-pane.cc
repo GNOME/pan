@@ -1043,6 +1043,11 @@ void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
           || ! diffs.removed.empty());
     select_message_id(*new_selection.begin(), do_scroll);
   }
+
+  // keep article view in sync even though the GUI update is done
+  // above
+  _atree->update_article_view();
+  _atree->update_article_after_gui_update();
 }
 
 /****

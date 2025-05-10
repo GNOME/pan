@@ -1,0 +1,33 @@
+** article state machine
+
+This diagram show the state machine implemented with =status= attribute of the =article_view= table.
+
+#+begin_src plantuml :file article-fsm.png :exports results
+  @startuml
+
+  [*] -> e : 2.new_art
+  e: exposed
+  e: pending GUI addition
+
+  e -> s : update GUI
+  s: article is visible
+
+  s -> r : new parent
+  r: reparented
+  r: pending GUI update
+
+  r --> s : update GUI
+
+  s -> h : art hidden
+  h: hidden article
+  h: pending removal from GUI
+  h: and article view
+
+  h -> [*] : update GUI
+
+  @enduml
+
+#+end_src
+
+#+RESULTS:
+[[file:article-fsm.png]]
