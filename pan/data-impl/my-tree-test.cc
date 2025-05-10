@@ -42,14 +42,14 @@ private:
         bool has_child;
     };
 
-public:
+  public:
     void setUp()
     {
       StringView cache;
-      prefs = new PrefsFile ("/tmp/dummy.xml");
+      prefs = new PrefsFile("/tmp/dummy.xml");
       // cleanup whatever may be left from previous test runs
       load_db_schema(pan_db);
-      std::cout << "cleanup called\n" ;
+      std::cout << "cleanup called\n";
       pan_db.exec(R"SQL(
          delete from article_part;
          delete from article_xref;
@@ -100,7 +100,7 @@ public:
         insert into article (message_id,author_id, time_posted) values (?, 1, 1234);
       )SQL");
       q_article.bind(1, msg_id);
-      int res (q_article.exec());
+      int res(q_article.exec());
       CPPUNIT_ASSERT_EQUAL_MESSAGE("insert article " + msg_id, 1, res);
     }
 
@@ -120,7 +120,8 @@ public:
       q_article_group.bind(1, msg_id);
       q_article_group.bind(2, group);
       int res(q_article_group.exec());
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("link article " + msg_id + " in group" + group, 1, res);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "link article " + msg_id + " in group" + group, 1, res);
 
       SQLite::Statement q_article_xref(pan_db, R"SQL(
       insert into article_xref(article_group_id, server_id, number)
@@ -137,7 +138,9 @@ public:
       q_article_xref.exec();
     }
 
-    void assert_result(Quark const &mid, Quark const &group, std::vector<ExpArticle> expect)
+    void assert_result(Quark const &mid,
+                       Quark const &group,
+                       std::vector<ExpArticle> expect)
     {
       std::vector<pan::Data::ArticleTree::ArticleChild> setme;
       if (mid.empty())
