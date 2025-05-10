@@ -500,6 +500,10 @@ public:
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
 
+      private:
+        void set_parent_in_article_view() const;
+        int fill_article_view_from_article() const;
+
       public:
         void articles_changed(quarks_t const &mids, bool do_refilter);
         void add_articles(quarks_t const &mids);
