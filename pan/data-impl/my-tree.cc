@@ -48,13 +48,109 @@ log4cxx::LoggerPtr logger = pan::getLogger("article-tree");
 
 void DataImpl ::MyTree ::reset_article_view() const
 {
-  pan_db.exec("delete from article_view");
+  pan_db.exec("delete from article_view;");
+  reset_article_transition_tables();
+}
+
+void DataImpl ::MyTree ::reset_article_transition_tables() const
+{
+  pan_db.exec("delete from hidden_article;"
+              "delete from exposed_article;"
+              "delete from reparented_article;");
+}
+
+void DataImpl::MyTree::set_parent_in_article_view() const
+{
+  std::string set_parent_id = R"SQL(
+    with recursive whole(article_id, parent_id, show, show_parent) as (
+      select a.id,  a.parent_id, show,
+        (select show from article_view as a_in where a_in.article_id == a.parent_id)
+      from article_view as av
+      full outer join article as a on av.article_id = a.id
+    ),
+    v (article_id, show, new_parent_id, show_parent) as (
+      select article_id, show, parent_id, show_parent from whole
+      union all
+      select article_id, show,
+        (select w2.parent_id   from whole as w2 where w2.article_id == v.new_parent_id),
+        (select w2.show_parent from whole as w2 where w2.article_id == v.new_parent_id)
+      from v
+      where new_parent_id is not null and (show_parent == 0 or show_parent is null)
+      limit 20000000 -- TODO : remove ?
+    )
+    update article_view set parent_id =
+      (case v.show == 1 and v.show_parent == 1 when True then v.new_parent_id else null end)
+    from v
+    where v.article_id = article_view.article_id
+  )SQL";
+
+  auto set_parent_id_st = SQLite::Statement(pan_db, set_parent_id);
+  int count = set_parent_id_st.exec();
+  LOG4CXX_TRACE(logger,
+                "set parent_id in article_view table done with " << count
+                                                                 << " rows");
+}
+
+void DataImpl::MyTree::set_has_child_in_article_view() const
+{
+  std::string set_has_child = R"SQL(
+    update article_view
+      set has_child = f.has_child
+	  from (
+      select article_view.article_id, (
+        select count() > 0 from article_view as a_in
+        where a_in.parent_id = article_view.article_id
+      ) as has_child from article_view
+	  ) as f
+	  where f.article_id == article_view.article_id
+  )SQL";
+
+  auto set_has_child_st = SQLite::Statement(pan_db, set_has_child);
+  int count = set_has_child_st.exec();
+  LOG4CXX_TRACE(logger,
+                "set has_child in article_view table done with " << count
+                                                                 << " rows");
 }
 
 void DataImpl ::MyTree ::initialize_article_view() const
 {
+  TimeElapsed timer;
+  LOG4CXX_TRACE(logger, "Initial load on article_view table");
+  SQLite::Transaction setup_article_view_transaction(pan_db);
+
   reset_article_view();
-  update_article_view();
+
+  auto c = [](std::string join, std::string where) -> std::string
+  {
+    // as it is, parent_id is useless as it may point to a filtered out article.
+    // so we cannot copy it from article table.
+    return R"SQL(
+      insert into article_view (article_id, init)
+      select article.id, True from article
+      join article_group as ag on ag.article_id = article.id
+      join `group` as g on ag.group_id = g.id
+    )SQL" + join
+           + " where " + where + " and g.name == ? " + " order by article.id";
+  };
+
+  auto q = _header_filter.get_sql_query(_data, c, _filter);
+  q.bind(q.getBindParameterCount(), _group);
+  int count = q.exec();
+
+  // second pass to setup parent_id in article view (this needs whole
+  // article_view table to compute parent_id)
+  set_parent_in_article_view();
+
+  // third pass to setup has_child from complete article_view table,
+  // this requires new parent_id
+  set_has_child_in_article_view();
+
+  setup_article_view_transaction.commit();
+
+  LOG4CXX_TRACE(logger,
+                "Initial load on article_view table done with "
+                  << count << " articles"
+                  << " in " << timer.get_seconds_elapsed() << "s.");
 }
 
 void DataImpl ::MyTree ::update_article_view() const
