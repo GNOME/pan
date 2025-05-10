@@ -169,10 +169,13 @@ private:
 
       for (int i(0); i < expect.max_size() && i < setme.size(); i++)
       {
-        CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          label + " child msg_id ", expect[i].msg_id, setme[i].a.message_id.to_string());
-        CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          label + " has child ", expect[i].has_child, setme[i].has_child);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(label + " child msg_id ",
+                                     expect[i].msg_id,
+                                     setme[i].a.message_id.to_string());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(label + "/" + expect[i].msg_id
+                                       + " has child ",
+                                     expect[i].has_child,
+                                     setme[i].has_child);
       }
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE(
