@@ -1,6 +1,7 @@
 #include "pan/data-impl/data-impl.h"
 #include "pan/data-impl/header-filter.h"
 #include "pan/data/data.h"
+#include "pan/general/quark.h"
 #include "pan/general/string-view.h"
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
@@ -48,6 +49,9 @@ class DataImplTest : public CppUnit::TestFixture
          delete from article_part;
          delete from article_xref;
          delete from article_group;
+         delete from exposed_article;
+         delete from hidden_article;
+         delete from reparented_article;
          delete from article;
          delete from server_group;
          delete from `group`;
@@ -167,6 +171,21 @@ class DataImplTest : public CppUnit::TestFixture
         label + " children count", int(expect.size()), int(setme.size()));
     }
 
+    void change_read_status(Quark const mid, bool status)
+    {
+      SQLite::Statement q(pan_db, R"SQL(
+        update article set is_read = ? where message_id = ?
+      )SQL");
+      q.bind(1, status);
+      q.bind(2, mid);
+      q.exec();
+    }
+
+    // inspect content of article_view and message_id with
+    // select message_id, article_id, is_read, av.parent_id, show
+    // from article join article_view as av on av.article_id = article.id
+
+    // emulates showing all articles
     void test_get_children()
     {
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
@@ -178,8 +197,79 @@ class DataImplTest : public CppUnit::TestFixture
       assert_result("g1m1c2", "g1", {"g1m1d2"});
     }
 
+    // emulates showing unread articles with 2 read article in the beginning of
+    // a thread
+    void test_get_unread_children_beginning_thread()
+    {
+      // start test with 2 read articles
+      change_read_status("g1m1a", true);
+      change_read_status("g1m1b", true);
+
+      // init article view
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      std::vector<std::string> original_roots(
+        {"g1m1c1", "g1m1c2", "g1m2a", "g1m2"});
+
+      assert_result(Quark(), "g1", original_roots);
+
+      // the read articles (g1m1b and g1m1c1) are no longer in tree
+      assert_result("g1m1c1", "g1", {"g1m1d1"});
+      assert_result("g1m1c2", "g1", {"g1m1d2"});
+    }
+
+    // emulates showing unread articles with 2 read article in the middle of a
+    // thread
+    void test_get_unread_children_middle_thread()
+    {
+      // start test with 2 read articles
+      change_read_status("g1m1b", true);
+      change_read_status("g1m1c1", true);
+
+      // init article view
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      assert_result(Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
+      // the read articles (g1m1b and g1m1c1) are no longer in tree
+      assert_result("g1m1a", "g1", {"g1m1c2", "g1m1d1"});
+
+      // now read another article
+    }
+
+    // emulates showing unread articles with 2 read article in the end of a thread
+    void test_get_unread_children_end_thread ()
+    {
+      change_read_status("g1m1c1", true);
+      change_read_status("g1m1d1", true);
+      change_read_status("g1m1d2", true);
+
+      // init article view
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      assert_result(
+        Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
+      // the read articles (g1m1b and g1m1c1) are no longer in tree
+      assert_result("g1m1a", "g1", {"g1m1b"});
+      assert_result("g1m1b", "g1", {"g1m1c2"});
+      // change_read_status("g1m1c2", true);
+      // tree->update_article_view();
+      // assert_result("g1m1b after reading g1m1c2", "g1", {});
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
+    CPPUNIT_TEST(test_get_unread_children_beginning_thread);
+    CPPUNIT_TEST(test_get_unread_children_middle_thread);
+    CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST_SUITE_END();
 };
 
