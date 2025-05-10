@@ -5,14 +5,13 @@ create table if not exists article_view
     id integer primary key asc autoincrement,
     article_id integer unique references article (id) on delete cascade,
     parent_id integer references article (id) on delete set null,
-    init boolean default False,
     -- track status of article in article_view
-    -- value is (n)ew: article was inserted
+    -- value is (e)xposed: article was exposed, i.e added to article_view and header list
     -- (u)nchanged: article not changed
     -- (r)eparented: article reparented, i.e. its parent_id was changed
     --               following addition or deletion of its parent
-    -- (d)elete: article was filtered out and will be deleted
-    status text check (status in ('n','u','r','d')) not null
+    -- (h)idden: article was filtered out and will be removed from article_view and header list
+    status text check (status in ('r','u','h','e')) not null
   );
 
 -- Local Variables:

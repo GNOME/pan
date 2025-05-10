@@ -28,6 +28,7 @@
 #include <SQLiteCpp/Statement.h>
 #include <cassert>
 #include <config.h>
+#include <cstdio>
 #include <log4cxx/logger.h>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
@@ -48,41 +49,137 @@ log4cxx::LoggerPtr logger = pan::getLogger("article-tree");
 
 void DataImpl ::MyTree ::reset_article_view() const
 {
-  pan_db.exec("delete from article_view");
+  pan_db.exec("delete from article_view;");
+  LOG4CXX_TRACE(logger, "reset article view done ");
+}
+
+void DataImpl::MyTree::set_parent_in_article_view() const {
+  std::string set_parent_id = R"SQL(
+    -- like article_view with added show_parent column
+    with recursive whole(article_id, parent_id, status, parent_status) as (
+      select a.id,  a.parent_id,
+        (select status from article_view as a_in where a_in.article_id == a.id),
+		(select status from article_view as a_in where a_in.article_id == a.parent_id)
+      from article as a
+    ),
+    -- retrieve resursively parent_id until root or a parent with
+    -- show attribute is found
+    v (count, article_id, new_parent_id, status, parent_status) as (
+      select 0, article_id, parent_id, status, parent_status from whole
+      union all
+      select count + 1, v.article_id, w2.parent_id, v.status, w2.parent_status
+      from v
+      join whole as w2 on w2.article_id == v.new_parent_id and new_parent_id is not null
+      where  v.parent_status is null or v.parent_status is "h"
+      limit 20000000 -- TODO : remove ?
+    ),
+    -- in v, the same article id may be present several time. Only the last is valid.
+    -- v2 filters the result, keeping only the highest count, i.e. the latest found.
+    -- See https://sqlite.org/lang_select.html#bare_columns_in_an_aggregate_query for max() usage
+  	v2 (count, article_id, new_parent_id, status, parent_status) as (
+      select max(count),article_id, new_parent_id, status, parent_status from v
+	  where status is not null and status is not "h"
+	  group by article_id
+    )
+   update article_view set parent_id = v2.new_parent_id,
+     -- do not set reparented for on new articles
+     status = (case article_view.status when "u" then "r" else article_view.status end)
+   from v2
+   where v2.article_id = article_view.article_id and parent_id is not v2.new_parent_id
+  )SQL";
+
+  auto set_parent_id_st = SQLite::Statement(pan_db, set_parent_id);
+  int count = set_parent_id_st.exec();
+  LOG4CXX_TRACE(logger,
+                "set parent_id in article_view table done with " << count
+                                                                 << " rows");
 }
 
 void DataImpl ::MyTree ::initialize_article_view() const
 {
+  TimeElapsed timer;
+  LOG4CXX_TRACE(logger, "Initial load on article_view table");
+  SQLite::Transaction setup_article_view_transaction(pan_db);
+
   reset_article_view();
-  update_article_view();
+
+  int count = fill_article_view_from_article();
+  LOG4CXX_TRACE(
+    logger, "init: fill article_view done (" << timer.get_seconds_elapsed() << "s)");
+
+  // second pass to setup parent_id in article view (this needs whole
+  // article_view table to compute parent_id)
+  set_parent_in_article_view();
+  LOG4CXX_TRACE(
+    logger, "init: set parent in article_view done (" << timer.get_seconds_elapsed() << "s)");
+
+  setup_article_view_transaction.commit();
+
+  LOG4CXX_TRACE(logger,
+                "Initial load on article_view table done with "
+                  << count << " articles ("
+                  << timer.get_seconds_elapsed() << "s)");
 }
 
-void DataImpl ::MyTree ::update_article_view() const
+// also apply filters to build article_view
+int DataImpl ::MyTree ::fill_article_view_from_article() const
 {
-   TimeElapsed timer;
-   LOG4CXX_TRACE(logger, "Initial load on article_view table");
-   SQLite::Transaction setup_article_view_transaction(pan_db);
-   reset_article_view();
-
-  // get the roots. called when switching groups
-  // need to fill temp tables
-  auto c = [](std::string join, std::string where) -> std::string {
-    return "insert into article_view (article_id, parent_id, init, status)\n"
-           "select article.id, article.parent_id, True, \"n\" from article\n"
-           "join article_group as ag on ag.article_id = article.id\n"
-           "join `group` as g on ag.group_id = g.id\n" +
-           join + " where " + where + " and g.name == ? " +
-           " order by article.id";
+  auto c = [](std::string join, std::string where) -> std::string
+  {
+    // CTE: compute show status of all articles of a group
+    // then update article view with show status, create new entry if needed
+    // set again parent_id so  set_parent_in_article_view() works as expected
+    return R"SQL(
+       with f (article_id, parent_id) as (
+         select article.id, article.parent_id
+         from article
+         join article_group as ag on ag.article_id = article.id
+         join `group` as g on ag.group_id = g.id
+    )SQL" + join + "where " + (where.empty() ? "true" : where) + R"SQL(
+         and g.name == ?
+       )
+       insert into article_view (article_id, parent_id, status)
+       select distinct article_id, parent_id, "e" from f where true
+       on conflict
+       do update set status = "u"
+    )SQL";
   };
 
   auto q = _header_filter.get_sql_query(_data, c, _filter);
-  q.bind(q.getBindParameterCount(), _group);
-  int count = q.exec();
+
+  // nb of parameters in the statement, not the nb of already bound parameters
+  int param_count = q.getBindParameterCount();
+  q.bind(param_count, _group);
+
+  return q.exec();
+}
+
+void DataImpl ::MyTree ::update_article_view() const {
+  TimeElapsed timer;
+  LOG4CXX_TRACE(logger, "Update article_view");
+  SQLite::Transaction setup_article_view_transaction(pan_db);
+
+  // remove deletable articles
+  pan_db.exec("delete from article_view where status == \"h\"");
+
+  // mark all remaining articles are deletable
+  pan_db.exec("update article_view set status = \"h\"");
+
+  int count = fill_article_view_from_article();
+  LOG4CXX_TRACE(logger, "fill article_view done ("
+                            << timer.get_seconds_elapsed() << "s)");
+
+  // second pass to setup parent_id in article view (this needs whole
+  // article_view table to compute parent_id)
+  set_parent_in_article_view();
+  LOG4CXX_TRACE(logger, "set_parent in article_view done ("
+                            << timer.get_seconds_elapsed() << "s)");
+
   setup_article_view_transaction.commit();
 
-  LOG4CXX_TRACE(logger, "Initial load on article_view table done with "
-                            << count << " articles"
-                            << " in " << timer.get_seconds_elapsed() << "s.");
+  LOG4CXX_TRACE(logger, "Update article_view done with "
+                            << count << " articles ("
+                            << timer.get_seconds_elapsed() << "s).");
 }
 
 void DataImpl ::MyTree ::get_children_sql(
@@ -90,7 +187,7 @@ void DataImpl ::MyTree ::get_children_sql(
 {
   std::string str("select message_id from article "
                   "join article_view as av on av.article_id == article.id "
-                  "where av.parent_id ");
+                  "where av.status is not \"h\" and av.parent_id ");
   str +=
     mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
 
