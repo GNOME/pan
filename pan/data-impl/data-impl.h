@@ -504,7 +504,7 @@ public:
       private:
         void set_parent_in_article_view() const;
         void set_has_child_in_article_view() const;
-        int fill_article_view_from_article() const;
+        int fill_article_view_from_article(bool init) const;
 
       public:
         void articles_changed(quarks_t const &mids, bool do_refilter);
