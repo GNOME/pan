@@ -120,22 +120,7 @@ void DataImpl ::MyTree ::initialize_article_view() const
 
   reset_article_view();
 
-  auto c = [](std::string join, std::string where) -> std::string
-  {
-    // as it is, parent_id is useless as it may point to a filtered out article.
-    // so we cannot copy it from article table.
-    return R"SQL(
-      insert into article_view (article_id, init)
-      select article.id, True from article
-      join article_group as ag on ag.article_id = article.id
-      join `group` as g on ag.group_id = g.id
-    )SQL" + join
-           + " where " + where + " and g.name == ? " + " order by article.id";
-  };
-
-  auto q = _header_filter.get_sql_query(_data, c, _filter);
-  q.bind(q.getBindParameterCount(), _group);
-  int count = q.exec();
+  int count = fill_article_view_from_article();
 
   // second pass to setup parent_id in article view (this needs whole
   // article_view table to compute parent_id)
@@ -153,38 +138,66 @@ void DataImpl ::MyTree ::initialize_article_view() const
                   << " in " << timer.get_seconds_elapsed() << "s.");
 }
 
+int DataImpl ::MyTree ::fill_article_view_from_article() const
+{
+  auto c = [](std::string join, std::string where) -> std::string
+  {
+    // CTE: compute show status of all articles of a group
+    // then update article view with show status, create new entry if needed
+    // set again parent_id so  set_parent_in_article_view() works as expected
+    return R"SQL(
+       with f (article_id, parent_id, show) as (
+         select article.id, article.parent_id,
+    )SQL" + where
+           + R"SQL(
+         from article
+         join article_group as ag on ag.article_id = article.id
+         join `group` as g on ag.group_id = g.id
+    )SQL" + join
+           + R"SQL(
+         where g.name == ?
+       )
+       insert into article_view (article_id, parent_id, show)
+       select article_id, parent_id, show from f where true
+       on conflict
+       do update set (show, parent_id)
+          = (select f.show, f.parent_id from f where f.article_id == article_view.article_id)
+    )SQL";
+  };
+
+  auto q = _header_filter.get_sql_query(_data, c, _filter);
+  q.bind(q.getBindParameterCount(), _group);
+
+  return q.exec();
+}
+
 void DataImpl ::MyTree ::update_article_view() const
 {
-   TimeElapsed timer;
-   LOG4CXX_TRACE(logger, "Initial load on article_view table");
-   SQLite::Transaction setup_article_view_transaction(pan_db);
-   reset_article_view();
+  TimeElapsed timer;
+  LOG4CXX_TRACE(logger, "Update article_view");
+  SQLite::Transaction setup_article_view_transaction(pan_db);
+  // similar to update_article_view, but init is True here
+  reset_article_transition_tables();
 
-   // get the roots. called when switching groups
-   // need to fill temp tables
-   auto c = [](std::string join, std::string where) -> std::string
-   {
-     return "insert into article_view (article_id, parent_id, init, "
-            "has_child)\n"
-            "select article.id, article.parent_id, True,"
-            "       (select count()>0 from article as a_in where "
-            "        a_in.parent_id = article.id)"
-            "   from article\n"
-            "join article_group as ag on ag.article_id = article.id\n"
-            "join `group` as g on ag.group_id = g.id\n"
-            + join + " where " + where + " and g.name == ? "
-            + " order by article.id";
-   };
+  int count = fill_article_view_from_article();
 
-   auto q = _header_filter.get_sql_query(_data, c, _filter);
-   q.bind(q.getBindParameterCount(), _group);
-   int count = q.exec();
-   setup_article_view_transaction.commit();
+  // second pass to setup parent_id in article view (this needs whole
+  // article_view table to compute parent_id)
+  set_parent_in_article_view();
 
-   LOG4CXX_TRACE(logger,
-                 "Initial load on article_view table done with "
-                   << count << " articles"
-                   << " in " << timer.get_seconds_elapsed() << "s.");
+  // third pass to setup has_child from complete article_view table,
+  // this requires new parent_id
+  set_has_child_in_article_view();
+
+  // transitions tables (like hidden_articles, exposed_articles... )
+  // are filled by triggers
+
+  setup_article_view_transaction.commit();
+
+  LOG4CXX_TRACE(logger,
+                "Update article_view done with "
+                  << count << " articles"
+                  << " in " << timer.get_seconds_elapsed() << "s.");
 }
 
 void DataImpl ::MyTree ::get_children_sql(

@@ -186,6 +186,30 @@ private:
         label + " children count", int(expect.size()), int(setme.size()));
     }
 
+    void assert_hidden(std::string msg_id, bool expect) {
+        assert_prop("hidden", msg_id, expect);
+    }
+
+    void assert_exposed(std::string msg_id, bool expect) {
+        assert_prop("exposed", msg_id, expect);
+    }
+
+    void assert_prop(std::string prop, std::string msg_id, bool expect) {
+      SQLite::Statement q(pan_db,
+                          "select count() from " + prop + "_article"
+                            + " join article on article.id == "
+                              "hidden_article.article_id where message_id = ?");
+      q.bind(1, msg_id);
+
+      int count(0);
+      while(q.executeStep()) {
+          count += q.getColumn(0).getInt();
+      }
+
+      CPPUNIT_ASSERT_MESSAGE("msg_id " + msg_id + " " + prop + " consistency", count <= 1);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("msg_id " + msg_id + " is " + prop, expect, count == 1);
+    };
+
     void change_read_status(Quark const mid, bool status)
     {
       SQLite::Statement q(pan_db, R"SQL(
@@ -235,6 +259,30 @@ private:
       // the read articles (g1m1b and g1m1c1) are no longer in tree
       assert_result("g1m1c1", "g1", {{"g1m1d1", false}});
       assert_result("g1m1c2", "g1", {{"g1m1d2", false}});
+
+      // now read another article
+      change_read_status("g1m1c2", true);
+      tree->update_article_view();
+      // new articles in root
+      assert_result(Quark(),
+                    "g1",
+                    {{"g1m1c1", true},
+                     {"g1m1d2", false},
+                     {"g1m2a", true},
+                     {"g1m2", false}});
+
+      // check content of hidden article
+      assert_hidden("g1m1c1", false);
+      assert_hidden("g1m1c2", true);
+
+      // TODO: what should reparented value be ?
+
+      // mark article  as unread
+      change_read_status("g1m1c2", false);
+      tree->update_article_view();
+      // check content of added article and reparented ?
+      assert_result(Quark(), "g1", original_roots);
+      assert_hidden("g1m1c2", false);
     }
 
     // emulates showing unread articles with 2 read article in the middle of a thread
