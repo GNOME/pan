@@ -599,6 +599,8 @@ class Data :
 
       virtual void initialize_article_view() const = 0;
       virtual void update_article_view() const = 0;
+      virtual int call_on_exposed_articles(
+          std::function<void(Quark msg_id, Quark parent_id)> cb) const = 0;
 
       protected:
         /** the quirky way of incrementing 'it' is to prevent it from being
