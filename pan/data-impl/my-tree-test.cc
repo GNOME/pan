@@ -475,6 +475,39 @@ class DataImplTest : public CppUnit::TestFixture
         "check new g1m1d2 parent", std::string("g1m1b"), prt);
     }
 
+    // check hidden status of articles
+    void test_function_on_hidden_articles()
+    {
+      // init article view, some articles are shown
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      // change status and re-apply filter, some articles are hidden
+      change_read_status("g1m1c1", true);
+      change_read_status("g1m1c2", true);
+      tree->update_article_view();
+      assert_hidden("step 2", "g1m1c1", true);
+      assert_hidden("step 2", "g1m1c2", true);
+      assert_hidden("step 2", "g1m1d1", false);
+      assert_hidden("step 2", "g1m1b", false);
+
+      // msg_id -> new_parent_id
+      std::set<std::string> hidden;
+      auto insert_in_stack = [&hidden](Quark msg_id)
+      {
+        hidden.insert(msg_id.to_string());
+      };
+      int count = tree->call_on_hidden_articles(insert_in_stack);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 2 , count);
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c1",
+                             hidden.find("g1m1c1") != hidden.end());
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c2",
+                             hidden.find("g1m1c2") != hidden.end());
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
     CPPUNIT_TEST(test_get_children_with_empty_criteria);
@@ -483,6 +516,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_function_on_exposed_articles);
     CPPUNIT_TEST(test_function_on_reparented_articles);
+    CPPUNIT_TEST(test_function_on_hidden_articles);
     CPPUNIT_TEST_SUITE_END();
 };
 
