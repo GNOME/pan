@@ -1527,6 +1527,8 @@ void GUI :: do_delete_article ()
   {
     const std::set<const Article*> articles (_header_pane->get_nested_selection(false));
     _data.delete_articles (articles);
+    _header_pane->update_article_view();
+    _header_pane->update_tree();
 
     const Quark mid (_body_pane->get_message_id());
     foreach_const (std::set<const Article*>, articles, it)

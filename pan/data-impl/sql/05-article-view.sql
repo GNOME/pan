@@ -32,6 +32,12 @@ create table if not exists hidden_article
     article_id integer unique references article (id) on delete cascade
   );
 
+-- no foreign keys as the articles were removed from article table
+create table if not exists removed_article
+  (
+    message_id text unique
+  );
+
 -- to update header-pane, we must give the list of article where the
 -- parent_id was modified (because a parent article was filtered in or
 -- out)
@@ -54,6 +60,13 @@ create trigger if not exists hidden_article
   when old.show == True and new.show == False
   begin
     insert into hidden_article values (new.article_id);
+  end;
+
+create trigger if not exists removed_article
+  before delete on article
+  when (select show from article_view where article_id == old.id) == True
+  begin
+    insert into removed_article values (old.message_id);
   end;
 
 -- article_view.parent_id is not set when inserting new record, but it
