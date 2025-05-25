@@ -1603,6 +1603,8 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
 {
   quarks_t all_mids;
 
+  LOG4CXX_DEBUG(logger,  "Deleting " << articles.size() << " articles from DB.");
+
   // remove article from DB
   foreach_const (unique_articles_t, articles, it)
   {
