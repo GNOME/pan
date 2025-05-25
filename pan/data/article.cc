@@ -417,6 +417,8 @@ bool Article::is_in_db_article_table() const {
 
 bool Article::is_read() const
 {
+  LOG4CXX_TRACE(logger, "called on articles " << message_id );
+
   SQLite::Statement is_read_q(pan_db, R"SQL(
     select is_read from article where message_id = ?
   )SQL");

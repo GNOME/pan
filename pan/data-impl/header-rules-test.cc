@@ -52,6 +52,7 @@ class DataImplTest : public CppUnit::TestFixture
          delete from article_part;
          delete from article_xref;
          delete from article_group;
+         delete from removed_article;
          delete from article;
          delete from server_group;
          delete from `group`;

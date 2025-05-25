@@ -26,7 +26,7 @@
 
 using namespace pan;
 
-char const *db_file("/tmp/data-score-header.db");
+char const *db_file("/tmp/header-score-test.db");
 SQLiteDb pan_db(db_file, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 
 // copied from scorefile-test.cc
@@ -69,6 +69,7 @@ public:
          delete from article_part;
          delete from article_xref;
          delete from article_group;
+         delete from removed_article;
          delete from article;
          delete from server_group;
          delete from `group`;
