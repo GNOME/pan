@@ -486,6 +486,10 @@ HeaderPane::Row *HeaderPane ::create_row(Article a)
   Row *row = new Row(*this, a);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
+  if (!result.second)
+    {
+      LOG4CXX_ERROR(logger, "Attempted to create a duplicate row for article " << a.message_id);
+    }
   g_assert(result.second);
 
   return row;
