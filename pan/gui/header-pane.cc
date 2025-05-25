@@ -1051,6 +1051,160 @@ void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
   }
 }
 
+void HeaderPane ::update_tree()
+{
+  // we might need to change the selection after the update.
+  const article_v old_selection(get_full_selection_v());
+
+  SQLite::Statement is_old_selection_shown(pan_db, R"SQL(
+    select show from article_view
+    join article on article_view.article_id == article.id
+    where message_id == ? and show == True
+  )SQL");
+
+  quarks_t new_selection;
+  foreach_const (article_v, old_selection, it)
+  {
+    is_old_selection_shown.reset();
+    is_old_selection_shown.bind(1, (*it)->message_id);
+    while (is_old_selection_shown.executeStep())
+    {
+      new_selection.insert((*it)->message_id);
+    }
+  }
+
+  // if the old selection survived,
+  // is it visible on the screen?
+  bool selection_was_visible(true);
+  if (! new_selection.empty())
+  {
+    GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
+    Row *row(get_row(*new_selection.begin()));
+    GtkTreePath *a(nullptr), *b(nullptr), *p(_tree_store->get_path(row));
+    gtk_tree_view_get_visible_range(view, &a, &b);
+    selection_was_visible =
+      (gtk_tree_path_compare(a, p) <= 0 && gtk_tree_path_compare(p, b) <= 0);
+    gtk_tree_path_free(a);
+    gtk_tree_path_free(b);
+    gtk_tree_path_free(p);
+  }
+
+  LOG4CXX_TRACE(logger,
+                "new selection size: " << new_selection.size()
+                                       << " was visible "
+                                       << selection_was_visible);
+
+  quarks_t hidden;
+  auto insert_hidden_row = [&hidden](Quark msg_id)
+  {
+      hidden.insert(msg_id);
+  };
+  _atree->call_on_hidden_articles(insert_hidden_row);
+
+  LOG4CXX_TRACE(logger, "nb of hidden articles: " << hidden.size());
+
+  // if none of the current selection survived,
+  // we need to select something to replace the
+  // current selection.
+  if (! old_selection.empty() && new_selection.empty())
+  {
+    ArticleIsNotInSet tester(hidden);
+    RememberMessageId actor(new_selection);
+    action_next_if(tester, actor);
+  }
+
+  // exposed articles...
+  bool const do_thread(_prefs.get_flag("thread-headers", true));
+  PanTreeStore::parent_to_children_t exposed;
+  auto insert_exposed_row = [this, do_thread, &exposed](Quark msg_id, Quark prt_id)
+  {
+    Article exposed_article (_group, msg_id);
+    Row *child(create_row(exposed_article));
+    Row *parent(do_thread && ! prt_id.empty() ? get_row(prt_id) : nullptr);
+    exposed[parent].push_back(child);
+  };
+
+  int count = _atree->call_on_exposed_articles(insert_exposed_row);
+  LOG4CXX_TRACE(logger, "nb of exposed articles: " << count);
+
+  if (! exposed.empty())
+  {
+    g_object_ref(G_OBJECT(_tree_store));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
+    _tree_store->insert_sorted(exposed);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
+                            GTK_TREE_MODEL(_tree_store));
+    g_object_unref(G_OBJECT(_tree_store));
+  }
+
+  // reparent...
+  PanTreeStore::parent_to_children_t reparented;
+  if (do_thread)
+  {
+    auto insert_reparented_row =
+      [this, do_thread, &reparented](Quark msg_id, Quark prt_id)
+    {
+      Row *child(get_row(msg_id));
+      Row *parent(do_thread && ! prt_id.empty() ? get_row(prt_id) : nullptr);
+      reparented[parent].push_back(child);
+    };
+    count = _atree->call_on_reparented_articles(insert_reparented_row);
+    if (count > 0)
+    {
+      _tree_store->reparent(reparented);
+    }
+    LOG4CXX_TRACE(logger, "nb of reparented articles: " << count);
+  }
+
+  // hidden...
+  if (! hidden.empty())
+  {
+    RowLessThan o;
+    std::vector<Row *> keep;
+    PanTreeStore::rows_t kill;
+    std::set_difference(_mid_to_row.begin(),
+                        _mid_to_row.end(),
+                        hidden.begin(),
+                        hidden.end(),
+                        inserter(keep, keep.begin()),
+                        o);
+    std::set_difference(_mid_to_row.begin(),
+                        _mid_to_row.end(),
+                        keep.begin(),
+                        keep.end(),
+                        inserter(kill, kill.begin()),
+                        o);
+    g_assert(keep.size() + kill.size() == _mid_to_row.size());
+
+    g_object_ref(G_OBJECT(_tree_store));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
+    _tree_store->remove(kill);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
+                            GTK_TREE_MODEL(_tree_store));
+    g_object_unref(G_OBJECT(_tree_store));
+    _mid_to_row.get_container().swap(keep);
+  }
+
+  if (! exposed.empty()
+      && _prefs.get_flag("expand-threads-when-entering-group", false))
+  {
+    gtk_tree_view_expand_all(GTK_TREE_VIEW(_tree_view));
+  }
+
+  // update our selection if necessary.
+  // if the new selection has just been added or reparented,
+  // and it was visible on the screen before,
+  // then scroll to ensure it's still visible.
+  if (! new_selection.empty())
+  {
+    bool const do_scroll =
+      selection_was_visible
+      && (! exposed.empty() || ! reparented.empty() || ! hidden.empty());
+    select_message_id(*new_selection.begin(), do_scroll);
+  }
+}
+
+
 /****
 *****  SELECTION
 ****/
@@ -1804,6 +1958,8 @@ void HeaderPane ::filter(std::string const &text, int mode)
       _atree->set_filter(_show_type, &_filter);
     }
 
+    _atree->update_article_view();
+    update_tree();
     _wait.watch_cursor_off();
   }
 }

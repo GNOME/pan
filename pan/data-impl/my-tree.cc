@@ -396,13 +396,6 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
     _filter.clear();
   }
   _show_type = show_type;
-
-  LOG4CXX_TRACE(logger,
-                "apply_sql_filter calls apply_filter in "
-                  << timer.get_seconds_elapsed() << "s.");
-  apply_sql_filter();
-  LOG4CXX_DEBUG(
-    logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
@@ -423,8 +416,9 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
   _data.ref_group(_group);
   _data._trees.insert(this);
 
-  set_filter(show_type, filter);
   set_rules(rules);
+  set_filter(show_type, filter);
+  initialize_article_view();
 }
 
 DataImpl ::MyTree ::~MyTree()

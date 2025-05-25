@@ -177,6 +177,7 @@ class HeaderPane :
 
   private:
     virtual void on_tree_change(Data::ArticleTree::Diffs const &) override;
+    virtual void update_tree() override;
 
   private:
     void on_prefs_flag_changed(StringView const &, bool) override;
