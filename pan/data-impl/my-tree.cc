@@ -51,7 +51,8 @@ log4cxx::LoggerPtr logger = pan::getLogger("article-tree");
 void DataImpl ::MyTree ::reset_article_view() const
 {
   reset_article_transition_tables();
-  pan_db.exec("delete from article_view;");
+  pan_db.exec("delete from article_view;"
+              "delete from removed_article;");
   LOG4CXX_TRACE(logger, "reset article view done ");
 }
 
@@ -237,8 +238,10 @@ int DataImpl ::MyTree ::call_on_hidden_articles(
 {
   std::string q = R"SQL(
     select message_id
-	  from hidden_article as h
-	  join article on h.article_id == article.id
+	    from hidden_article as h
+	    join article on h.article_id == article.id
+    union
+    select message_id from removed_article
   )SQL";
 
   SQLite::Statement st(pan_db, q);
@@ -378,13 +381,6 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
     _filter.clear();
   }
   _show_type = show_type;
-
-  LOG4CXX_TRACE(logger,
-                "apply_sql_filter calls apply_filter in "
-                  << timer.get_seconds_elapsed() << "s.");
-  apply_sql_filter();
-  LOG4CXX_DEBUG(
-    logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
@@ -405,8 +401,9 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
   _data.ref_group(_group);
   _data._trees.insert(this);
 
-  set_filter(show_type, filter);
   set_rules(rules);
+  set_filter(show_type, filter);
+  initialize_article_view();
 }
 
 DataImpl ::MyTree ::~MyTree()

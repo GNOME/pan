@@ -191,6 +191,7 @@ class HeaderPane :
 
   public:
     void on_article_flag_changed(articles_t &a, Quark const &group) override;
+    virtual void update_tree() override;
 
   private:
     void on_queue_task_active_changed(Queue &,
