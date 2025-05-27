@@ -14,6 +14,8 @@ create table if not exists article_view
     status text check (status in ('r','u','h','e')) not null
   );
 
+create index if not exists article_view_parent_id on `article_view` (parent_id);
+
 -- no foreign keys as the articles were removed from article table
 create table if not exists removed_article
   (
