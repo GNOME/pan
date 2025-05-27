@@ -683,9 +683,17 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
   }
   if (! group.empty())
   {
-    int count(0);
     bool const do_thread(_prefs.get_flag("thread-headers", true));
-    count = add_children_to_model(store, group, nullptr, Quark(), atree, do_thread);
+
+    auto insert_shown_row = [this, do_thread, store](Quark msg_id, Quark prt_id)
+    {
+      Article shown_article(_group, msg_id);
+      Row *child(create_row(shown_article));
+      Row *parent(do_thread ? get_row(prt_id) : nullptr);
+      store->append(parent, child);
+    };
+
+    int count = _atree->call_on_shown_articles(insert_shown_row);
 
     LOG4CXX_INFO(logger, "Build model: added " << count << " articles of group " << group.c_str()
                  << " in " << timer.get_seconds_elapsed() << "s.");
