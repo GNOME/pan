@@ -589,6 +589,8 @@ class Data :
           _listeners.erase(l);
         }
 
+      virtual void update_article_view() const = 0;
+
       protected:
         /** the quirky way of incrementing 'it' is to prevent it from being
             invalidated if on_tree_change() calls remove_listener() */
