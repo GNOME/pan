@@ -138,6 +138,9 @@ void DataImpl ::load_db_schema(char const *file) {
 void
 DataImpl :: rebuild_backend ()
 {
+  // this may not be portable across distributions
+  pan_db.loadExtension("/usr/lib/sqlite3/pcre.so", nullptr);
+
   std::vector<std::string> sql_files { "01-server.sql", "02-group.sql", "03-article.sql" };
   for (int i = 0; i < sql_files.size(); i++) {
     load_db_schema(sql_files[i].c_str());
