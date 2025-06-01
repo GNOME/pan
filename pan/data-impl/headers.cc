@@ -1496,11 +1496,17 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
 
   // delete orphan authors
   SQLite::Statement author_q(pan_db, R"SQL(
-    delete from author where id in (
-      select distinct author.id from author
-      left outer join article on author.id == article.author_id
-      where article.author_id is null
-    )
+    delete from author
+    where id in
+      (
+        select distinct author.id from author
+        left outer join article on author.id == article.author_id
+        where article.author_id is null
+      )
+      and id not in
+      (
+        select author_id from profile
+      )
   )SQL");
   author_q.exec();
 
