@@ -17,8 +17,8 @@
 
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestResult.h>
-#include <cppunit/ui/text/TestRunner.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/ui/text/TestRunner.h>
 #include <vector>
 
 using namespace pan;
@@ -28,18 +28,18 @@ SQLiteDb pan_db(db_file, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 
 class DataImplTest : public CppUnit::TestFixture
 {
-private:
+  private:
     DataImpl *data;
     HeaderFilter hf;
     FilterInfo criteria;
     Data::ArticleTree *tree;
     PrefsFile *prefs;
 
-public:
+  public:
     void setUp()
     {
       StringView cache;
-      prefs = new PrefsFile ("/tmp/dummy.xml");
+      prefs = new PrefsFile("/tmp/dummy.xml");
       // cleanup whatever may be left from previous test runs
       load_db_schema(pan_db);
 
@@ -99,7 +99,7 @@ public:
                      (select id from subject where subject = "blah"), 1234);
       )SQL");
       q_article.bind(1, msg_id);
-      int res (q_article.exec());
+      int res(q_article.exec());
       CPPUNIT_ASSERT_EQUAL_MESSAGE("insert article " + msg_id, 1, res);
     }
 
@@ -119,7 +119,8 @@ public:
       q_article_group.bind(1, msg_id);
       q_article_group.bind(2, group);
       int res(q_article_group.exec());
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("link article " + msg_id + " in group" + group, 1, res);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "link article " + msg_id + " in group" + group, 1, res);
 
       SQLite::Statement q_article_xref(pan_db, R"SQL(
       insert into article_xref(article_group_id, server_id, number)
@@ -136,7 +137,9 @@ public:
       q_article_xref.exec();
     }
 
-    void assert_result(Quark const &mid, Quark const &group, std::vector<std::string> expect)
+    void assert_result(Quark const &mid,
+                       Quark const &group,
+                       std::vector<std::string> expect)
     {
       std::vector<Article> setme;
       if (mid.empty())
@@ -182,7 +185,7 @@ public:
 int main()
 {
   CppUnit::TextUi::TestRunner runner;
-  runner.addTest( DataImplTest::suite() );
+  runner.addTest(DataImplTest::suite());
   bool wasSuccessful = runner.run("", false);
   return wasSuccessful ? 0 : 1 ; // compute exit return value
 }
