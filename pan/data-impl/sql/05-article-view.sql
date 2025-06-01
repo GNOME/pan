@@ -8,8 +8,11 @@ create table if not exists article_view
     show integer default True
   );
 
+create index if not exists article_view_parent_id on `article_view` (parent_id);
+
 -- used to decide when to trigger update of the exposed_article,
 -- hidden_article and reparented_article tables
+-- There should be only one row in this table.
 create table if not exists article_view_status
   (
     id integer primary key asc autoincrement,

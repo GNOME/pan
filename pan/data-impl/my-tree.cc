@@ -67,26 +67,34 @@ void DataImpl ::MyTree ::reset_article_transition_tables() const
 void DataImpl::MyTree::set_parent_in_article_view() const
 {
   std::string set_parent_id = R"SQL(
+    -- like article_view with added show_parent column
     with recursive whole(article_id, parent_id, show, show_parent) as (
       select a.id,  a.parent_id, show,
         (select show from article_view as a_in where a_in.article_id == a.parent_id)
       from article_view as av
       full outer join article as a on av.article_id = a.id
     ),
-    v (article_id, show, new_parent_id, show_parent) as (
-      select article_id, show, parent_id, show_parent from whole
+    -- retrieve resursively parent_id until root or a parent with
+    -- show attribute is found
+    v (count, article_id, show, new_parent_id, show_parent) as (
+      select 0, article_id, show, parent_id, show_parent from whole
       union all
-      select article_id, show,
-        (select w2.parent_id   from whole as w2 where w2.article_id == v.new_parent_id),
-        (select w2.show_parent from whole as w2 where w2.article_id == v.new_parent_id)
+      select count + 1, v.article_id, v.show, w2.parent_id, w2.show_parent
       from v
-      where new_parent_id is not null and (show_parent == 0 or show_parent is null)
+      join whole as w2 on w2.article_id == v.new_parent_id and new_parent_id is not null
+      where  v.show_parent == 0 or v.show_parent is null
       limit 20000000 -- TODO : remove ?
+    ),
+    -- in v, the same article id may be present several time. Only the last is valid.
+    -- v2 filters the result, keeping only the highest count, i.e. the latest found.
+    -- See https://sqlite.org/lang_select.html#bare_columns_in_an_aggregate_query for max() usage
+  	v2 (count, article_id, show, new_parent_id, show_parent) as (
+      select max(count),article_id, show, new_parent_id, show_parent from v group by article_id
     )
     update article_view set parent_id =
-      (case v.show == 1 and v.show_parent == 1 when True then v.new_parent_id else null end)
-    from v
-    where v.article_id = article_view.article_id
+      (case v2.show == 1 and v2.show_parent == 1 when True then v2.new_parent_id else null end)
+    from v2
+    where v2.article_id = article_view.article_id
   )SQL";
 
   auto set_parent_id_st = SQLite::Statement(pan_db, set_parent_id);
