@@ -68,7 +68,7 @@ class DataImplTest : public CppUnit::TestFixture
       // That's dumb but that how it's done in header-pane.cc.
       criteria.set_type_aggregate_and();
 
-      // g1m1a -> g1m1b => g1m1c1, g1m1c2
+      // g1m1a -> g1m1b => g1m1c1, g1m1c2 => g1m1d1, g1m1d2
       add_article("g1m1a", "g1");
       add_article("g1m1b", "g1");
       data->store_references("g1m1b", "g1m1a"); // add ancestor
@@ -76,6 +76,10 @@ class DataImplTest : public CppUnit::TestFixture
       data->store_references("g1m1c1", "g1m1a g1m1b"); // add ancestors
       add_article("g1m1c2", "g1");
       data->store_references("g1m1c2", "g1m1a g1m1b"); // add ancestors
+      add_article("g1m1d1", "g1");
+      data->store_references("g1m1d1", "g1m1a g1m1b g1m1c1"); // add ancestors
+      add_article("g1m1d2", "g1");
+      data->store_references("g1m1d2", "g1m1a g1m1b g1m1c2"); // add ancestors
 
       // g1m2a -> g1m2b -> g1m2c
       add_article("g1m2a", "g1");
@@ -142,10 +146,6 @@ class DataImplTest : public CppUnit::TestFixture
                        std::vector<std::string> expect)
     {
       std::vector<Article> setme;
-      if (mid.empty())
-      {
-        tree = data->group_get_articles(group, "/tmp", Data::SHOW_ARTICLES);
-      }
 
       // get root chidren
       tree->get_children_sql(mid, group, setme);
@@ -177,6 +177,8 @@ class DataImplTest : public CppUnit::TestFixture
       assert_result(Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
       assert_result("g1m1a", "g1", {"g1m1b"});
       assert_result("g1m1b", "g1", {"g1m1c1", "g1m1c2"});
+      assert_result("g1m1c1", "g1", {"g1m1d1"});
+      assert_result("g1m1c2", "g1", {"g1m1d2"});
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
