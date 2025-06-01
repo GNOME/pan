@@ -3,6 +3,7 @@
   - [[#the-sales-pitch][The sales pitch]]
   - [[#using-pan][Using Pan]]
   - [[#release-notes][Release Notes]]
+  - [[#sqlite-migration][SQLite migration]]
   - [[#requirements][Requirements]]
 - [[#installation][Installation]]
   - [[#cleanup-autotools-remnants][Cleanup autotools remnants]]
@@ -110,6 +111,7 @@ Pan requires these libraries:
 - [[http://spruce.sourceforge.net/gmime/][GMime]] 3.0.0 or higher (optionally with PGP cryptography support)
 - [[https://logging.apache.org/log4cxx/index.html][Apache Log4cxx]] (tested with 1.4.0, previous versions may work)
 - [[https://github.com/SRombauts/SQLiteCpp/tree/master][SQLiteCpp]] 3.3.1 or higher
+- [[https://git.altlinux.org/people/at/packages/?p=sqlite3-pcre.git][sqlite3-pcre]]
 - [[https://www.freedesktop.org/wiki/Software/cppunit/][cppunit]] to execute new unit tests
 
 The following libraries add extra features but are optional:
@@ -132,6 +134,13 @@ On Debian and derivatives, required dependencies can added with:
 
 #+BEGIN_SRC shell :results verbatim
   sudo apt-get build-dep pan
+#+END_SRC
+
+Until pan with sqlite is packaged by Debian, you will have to install
+manually the following packages:
+
+#+BEGIN_SRC shell :results verbatim
+sudo apt install libsqlitecpp-dev sqlite3-pcre libcppunit-dev liblog4cxx-dev
 #+END_SRC
 
 *** Fedora
