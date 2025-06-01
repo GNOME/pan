@@ -51,37 +51,41 @@ void DataImpl ::MyTree ::reset_article_view() const
   pan_db.exec("delete from article_view");
 }
 
-void DataImpl ::MyTree ::get_children_sql(Quark const &mid,
-                                          Quark const &group,
-                                          std::vector<Article> &setme) const
+void DataImpl ::MyTree ::update_article_view() const {
+  TimeElapsed timer;
+  LOG4CXX_TRACE(logger, "Initial load on article_view table");
+  SQLite::Transaction setup_article_view_transaction(pan_db);
+  reset_article_view();
+
+  // get the roots. called when switching groups
+  // need to fill temp tables
+  auto c = [](std::string join, std::string where) -> std::string {
+    return "insert into article_view (article_id, parent_id, init, status)\n"
+           "select article.id, article.parent_id, True, \"n\" from article\n"
+           "join article_group as ag on ag.article_id = article.id\n"
+           "join `group` as g on ag.group_id = g.id\n" +
+           join + " where " + where + " and g.name == ? " +
+           " order by article.id";
+  };
+
+  auto q = _header_filter.get_sql_query(_data, c, _filter);
+  q.bind(q.getBindParameterCount(), _group);
+  int count = q.exec();
+  setup_article_view_transaction.commit();
+
+  LOG4CXX_TRACE(logger, "Initial load on article_view table done with "
+                            << count << " articles"
+                            << " in " << timer.get_seconds_elapsed() << "s.");
+}
+
+void DataImpl ::MyTree ::get_children_sql(
+  Quark const &mid, Quark const &group, std::vector<Article> &setme) const
 {
   if (mid.empty())
   {
-    LOG4CXX_TRACE(logger, "Initial load on article_view table");
-    SQLite::Transaction setup_article_view_transaction(pan_db);
     reset_article_view();
-
-    // get the roots. called when switching groups
-    // need to fill temp tables
-    auto c = [](std::string join, std::string where) -> std::string
-    {
-      return "insert into article_view (article_id, parent_id, init, status)\n"
-             "select article.id, article.parent_id, True, \"n\" from article\n"
-             "join article_group as ag on ag.article_id = article.id\n"
-             "join `group` as g on ag.group_id = g.id\n"
-             + join + " where " + where + " and g.name == ? "
-             + " order by article.id";
-    };
-
-    auto q = _header_filter.get_sql_query(_data, c, _filter);
-    q.bind(q.getBindParameterCount(), group);
-    int count = q.exec();
-    LOG4CXX_TRACE(logger,
-                  "Initial load on article_view table done with "
-                    << count << " articles");
-    setup_article_view_transaction.commit();
+    update_article_view();
   }
-
   std::string str("select message_id from article "
                   "join article_view as av on av.article_id == article.id "
                   "where av.parent_id ");

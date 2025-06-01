@@ -488,6 +488,7 @@ public:
 
       public: // from ArticleTree
         void reset_article_view() const;
+        void update_article_view() const override;
         void get_children_sql(Quark const &mid,
                               Quark const &group,
                               std::vector<Article> &setme) const override;
