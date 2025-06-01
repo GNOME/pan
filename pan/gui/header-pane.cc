@@ -719,6 +719,7 @@ void HeaderPane ::rebuild()
   }
 
   _mid_to_row.clear();
+  _atree->initialize_article_view();
   _tree_store = build_model(_group, _atree, nullptr);
 
   bool const sort_ascending =
