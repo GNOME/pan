@@ -51,11 +51,18 @@ void DataImpl ::MyTree ::reset_article_view() const
   pan_db.exec("delete from article_view");
 }
 
-void DataImpl ::MyTree ::update_article_view() const {
-  TimeElapsed timer;
-  LOG4CXX_TRACE(logger, "Initial load on article_view table");
-  SQLite::Transaction setup_article_view_transaction(pan_db);
+void DataImpl ::MyTree ::initialize_article_view() const
+{
   reset_article_view();
+  update_article_view();
+}
+
+void DataImpl ::MyTree ::update_article_view() const
+{
+   TimeElapsed timer;
+   LOG4CXX_TRACE(logger, "Initial load on article_view table");
+   SQLite::Transaction setup_article_view_transaction(pan_db);
+   reset_article_view();
 
   // get the roots. called when switching groups
   // need to fill temp tables
@@ -81,11 +88,6 @@ void DataImpl ::MyTree ::update_article_view() const {
 void DataImpl ::MyTree ::get_children_sql(
   Quark const &mid, Quark const &group, std::vector<Article> &setme) const
 {
-  if (mid.empty())
-  {
-    reset_article_view();
-    update_article_view();
-  }
   std::string str("select message_id from article "
                   "join article_view as av on av.article_id == article.id "
                   "where av.parent_id ");

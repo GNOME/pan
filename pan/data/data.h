@@ -589,6 +589,7 @@ class Data :
           _listeners.erase(l);
         }
 
+      virtual void initialize_article_view() const = 0;
       virtual void update_article_view() const = 0;
 
       protected:
