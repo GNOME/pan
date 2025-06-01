@@ -172,6 +172,8 @@ class DataImplTest : public CppUnit::TestFixture
 
     void test_get_children()
     {
+      tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
+      tree->initialize_article_view();
       assert_result(Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
       assert_result("g1m1a", "g1", {"g1m1b"});
       assert_result("g1m1b", "g1", {"g1m1c1", "g1m1c2"});
