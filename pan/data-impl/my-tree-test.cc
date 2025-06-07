@@ -69,7 +69,10 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.clear();
       // That's dumb but that how it's done in header-pane.cc.
       criteria.set_type_aggregate_and();
+    }
 
+    void add_test_articles()
+    {
       // g1m1a -> g1m1b => g1m1c1, g1m1c2 => g1m1d1, g1m1d2
       add_article("g1m1a", "g1");
       add_article("g1m1b", "g1");
@@ -232,6 +235,7 @@ class DataImplTest : public CppUnit::TestFixture
     // emulates showing all articles, with no criteria
     void test_get_children()
     {
+      add_test_articles();
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
       tree->initialize_article_view();
       assert_result("", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
@@ -244,6 +248,7 @@ class DataImplTest : public CppUnit::TestFixture
     // emulates showing all articles, with no criteria
     void test_get_children_with_empty_criteria()
     {
+      add_test_articles();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
       tree->initialize_article_view();
@@ -254,6 +259,7 @@ class DataImplTest : public CppUnit::TestFixture
     // a thread
     void test_get_unread_children_beginning_thread()
     {
+      add_test_articles();
       // start test with 2 read articles
       change_read_status("g1m1a", true);
       change_read_status("g1m1b", true);
@@ -296,6 +302,7 @@ class DataImplTest : public CppUnit::TestFixture
     // thread
     void test_get_unread_children_middle_thread()
     {
+      add_test_articles();
       // start test with 2 read articles
       change_read_status("g1m1b", true);
       change_read_status("g1m1c1", true);
@@ -345,6 +352,7 @@ class DataImplTest : public CppUnit::TestFixture
     // thread
     void test_get_unread_children_end_thread()
     {
+      add_test_articles();
       change_read_status("g1m1c1", true);
       change_read_status("g1m1d1", true);
       change_read_status("g1m1d2", true);
@@ -397,6 +405,7 @@ class DataImplTest : public CppUnit::TestFixture
     // sorted in hierarchy
     void test_function_on_shown_articles()
     {
+      add_test_articles();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
       tree->initialize_article_view();
@@ -427,6 +436,7 @@ class DataImplTest : public CppUnit::TestFixture
     // sorted in hierarchy
     void test_function_on_exposed_articles()
     {
+      add_test_articles();
       change_read_status("g1m2", true);
       change_read_status("g1m2a", true);
       change_read_status("g1m1c1", true);
@@ -472,6 +482,7 @@ class DataImplTest : public CppUnit::TestFixture
     // check reparented status of article.
     void test_function_on_reparented_articles()
     {
+      add_test_articles();
       // init article view, some articles are shown
       criteria.set_type_is_unread();
       tree =
@@ -510,6 +521,7 @@ class DataImplTest : public CppUnit::TestFixture
     // check hidden status of articles
     void test_function_on_hidden_articles()
     {
+      add_test_articles();
       // init article view, some articles are shown
       criteria.set_type_is_unread();
       tree =
