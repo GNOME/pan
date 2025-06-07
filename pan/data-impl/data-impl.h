@@ -486,6 +486,9 @@ public:
                RulesInfo const *rules = nullptr);
         virtual ~MyTree();
 
+      protected:
+        void fire_updates() const ;
+
       public: // from ArticleTree
         void reset_article_view() const;
         void reset_article_transition_tables() const;
