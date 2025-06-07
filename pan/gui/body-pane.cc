@@ -810,7 +810,12 @@ void replace_emoticon_text_with_pixbuf(GtkTextBuffer *buffer,
                                        GdkPixbuf *pixbuf)
 {
   g_assert(! text.empty());
-  g_assert(pixbuf != nullptr);
+  if (pixbuf == nullptr)
+    {
+      // emoticon icon was not found. No need to crash pan
+      std::cout << "No icon loaded for emoticon " << text << std::endl;
+      return;
+    }
 
   GtkTextTagTable *tags(gtk_text_buffer_get_tag_table(buffer));
   GtkTextTag *url_tag(gtk_text_tag_table_lookup(tags, "url"));
