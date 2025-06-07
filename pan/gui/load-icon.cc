@@ -24,15 +24,17 @@ GdkPixbuf *load_icon(gchar const *file_name)
 
   // try system icon
   pixbuf = load_icon_from_path(file_name, PAN_SYSTEM_ICON_PATH);
-  if (pixbuf != nullptr) {
+  if (pixbuf != nullptr)
+  {
     return pixbuf;
   }
 
-  std::cerr << "Unable to load " << file_name << " icon. Use --debug flag for more details";
+  std::cerr << "Unable to load " << file_name
+            << " icon. Use --debug flag for more details";
   return nullptr;
 }
 
-GdkPixbuf *load_icon_from_path(const gchar *file_name, const gchar *icon_dir)
+GdkPixbuf *load_icon_from_path(gchar const *file_name, gchar const *icon_dir)
 {
   GError *error = NULL;
   gchar *icon_path = g_build_filename(icon_dir, file_name, NULL);
