@@ -859,11 +859,9 @@ void DataImpl ::MyTree ::accumulate_descendants(unique_nodes_t &descendants,
   }
 }
 
-void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
-                                          bool do_refilter)
+void DataImpl ::MyTree ::articles_changed(bool do_refilter)
 {
-  LOG4CXX_DEBUG(
-    logger, "group " << _group << ": " << mids.size() << " articles changed");
+  LOG4CXX_DEBUG(logger, "group " << _group << ": articles were changed");
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 

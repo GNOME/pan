@@ -519,7 +519,7 @@ public:
         int fill_article_view_from_article() const;
 
       public:
-        void articles_changed(quarks_t const &mids, bool do_refilter);
+        void articles_changed(bool do_refilter);
         void add_articles(quarks_t const &mids);
         void remove_articles(quarks_t const &mids);
 

@@ -1742,7 +1742,7 @@ void DataImpl ::on_articles_changed(Quark const &group,
   // notify the trees that the articles have changed...
   foreach (std::set<MyTree *>, _trees, it)
   {
-    (*it)->articles_changed(mids, do_refilter);
+    (*it)->articles_changed(do_refilter);
   }
 }
 
