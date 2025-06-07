@@ -867,27 +867,12 @@ void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
-  const_nodes_v nodes;
-  _data.find_nodes(mids, _data.get_group_headers(_group)->_nodes, nodes);
-
   if (do_refilter)
   {
-    apply_filter(nodes);
+    update_article_view();
   }
 
-  // fire an update event for any of those mids in our tree...
-  nodes_v my_nodes;
-  _data.find_nodes(mids, _nodes, my_nodes);
-
-  if (! my_nodes.empty())
-  {
-    ArticleTree::Diffs diffs;
-    foreach_const (nodes_v, my_nodes, it)
-    {
-      diffs.changed.insert(diffs.changed.end(), (*it)->_mid);
-    }
-    fire_diffs(diffs);
-  }
+  fire_updates();
 
   update_article_after_gui_update();
   LOG4CXX_DEBUG(logger, "articles_changed done");
