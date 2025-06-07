@@ -432,6 +432,23 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 exposed count ", 10, count);
     }
 
+    void test_exposed_articles_from_scratch()
+    {
+      // init article view on empty group
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      // emulate get new headers
+      add_test_articles();
+      tree->update_article_view();
+
+      // we can view the 3 read articles. They are in separate threads
+      // so they have no children
+      assert_result("step 1", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
+      assert_exposed("step 1", "g1m1a", true);
+    }
+
     // emulates showing article using a callback, and with articles
     // sorted in hierarchy
     void test_function_on_exposed_articles()
@@ -580,6 +597,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_function_on_shown_articles);
     CPPUNIT_TEST(test_function_on_exposed_articles);
+    CPPUNIT_TEST(test_exposed_articles_from_scratch);
     CPPUNIT_TEST(test_function_on_reparented_articles);
     CPPUNIT_TEST(test_function_on_hidden_articles);
     CPPUNIT_TEST_SUITE_END();
