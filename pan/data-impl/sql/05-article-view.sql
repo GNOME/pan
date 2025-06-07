@@ -51,7 +51,14 @@ create table if not exists reparented_article
 
 -- do not create upsert as entries should be cleaned up when
 -- updating header list
-create trigger if not exists exposed_article
+create trigger if not exists exposed_article_after_insert
+  after insert on article_view
+  when (select value from article_view_status where key = "init") == False
+  begin
+    insert into exposed_article values (new.article_id);
+  end;
+
+create temp trigger if not exists exposed_article_after_update
   after update of show on article_view
   when old.show == False and new.show == True
   begin
