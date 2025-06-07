@@ -583,7 +583,7 @@ class Data :
             virtual void update_tree() = 0;
         };
 
-      private:
+      protected:
         typedef std::set<Listener *> listeners_t;
         listeners_t _listeners;
 
@@ -624,6 +624,8 @@ class Data :
             }
           }
         }
+
+        void fire_updates() const;
 
         /*************************************************************
         ***
