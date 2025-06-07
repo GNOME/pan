@@ -30,7 +30,7 @@ GdkPixbuf *load_icon(gchar const *file_name)
   }
 
   std::cerr << "Unable to load " << file_name
-            << " icon. Use --debug flag for more details";
+            << " icon. Use --debug flag for more details" << std::endl;
   return nullptr;
 }
 
@@ -42,7 +42,8 @@ GdkPixbuf *load_icon_from_path(gchar const *file_name, gchar const *icon_dir)
 
   if (error != NULL)
   {
-    pan_debug("Unable to load icon " << file_name << " from " << icon_dir << ": " << error->message);
+    pan_debug("Unable to load icon " << file_name << " from " << icon_dir
+                                     << ": " << error->message);
     g_error_free(error);
   }
 
