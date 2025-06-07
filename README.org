@@ -10,6 +10,7 @@
   - [[#installation-1][Installation]]
   - [[#build-options][Build options]]
   - [[#debug-build][Debug build]]
+  - [[#running-pan][Running pan]]
   - [[#cc-language-server-support][CC++ language server support]]
 - [[#tls-support][TLS support]]
 - [[#upgrading][Upgrading]]
@@ -221,6 +222,25 @@ You can also create a debug build:
   cmake --build debug-build -j 8
 #+END_SRC
 
+** Running pan
+
+After compilation, you **must** run pan from the repository root:
+
+#+BEGIN_SRC shell :results verbatim
+./debug-build/pan/gui/pan
+#+END_SRC
+
+If pan was installed with a package, you can run pan from anywhere.
+
+Why ? Pan searches for icon in 2 locations:
+- =./pan/icons= which is useful when hacking pan
+- =$PAN_SYSTEM_ICON_PATH= (which is =/usr/share/pan/icons= on
+  Linux). This directory should be provided by pan package.
+
+When icons are not found, pan shows this kind of messages:
+#+begin_example
+Unable to load icon_article_read.png icon. Use --debug flag for more details
+#+end_example
 
 ** CC++ language server support
 
