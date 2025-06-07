@@ -534,6 +534,17 @@ struct DataImpl ::MyTree ::NodeMidCompare
     }
 };
 
+// the quirky way of incrementing 'it' is to prevent it from being
+// invalidated if update_tree() calls remove_listener()
+void DataImpl ::MyTree ::fire_updates() const
+{
+  listeners_t::iterator it, e;
+  for (it = _listeners.begin(), e = _listeners.end(); it != e;)
+  {
+    (*it++)->update_tree();
+  }
+}
+
 void DataImpl ::MyTree ::cache_articles(std::set<Article const *> s)
 {
   Queue *queue(_data.get_queue());
