@@ -319,22 +319,19 @@ void DataImpl ::MyTree ::update_article_view() const {
                             << timer.get_seconds_elapsed() << "s).");
 }
 
-Article const *DataImpl ::MyTree ::get_parent(Quark const &mid) const
+Article DataImpl ::MyTree ::get_parent(Quark const &mid) const
 {
-  LOG4CXX_WARN(logger, "deprecated function called");
-  Article const *parent(nullptr);
-  ArticleNode const *parent_node(nullptr);
+  SQLite::Statement q(pan_db,
+                      "select message_id from article where id == (select "
+                      "parent_id from article where message_id = ?) ");
+  q.bind(1, mid);
 
-  nodes_t::const_iterator child_it(_nodes.find(mid));
-  if (child_it != _nodes.end())
-  {
-    parent_node = child_it->second->_parent;
-  }
-  if (parent_node)
-  {
-    parent = parent_node->_article;
-  }
-
+  Article parent;
+  while (q.executeStep())
+    {
+      parent.message_id = q.getColumn(0).getText();
+    }
+  LOG4CXX_TRACE(logger, "get_parent: " << parent.message_id << " is parent of " << mid);
   return parent;
 }
 
