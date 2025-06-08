@@ -494,9 +494,6 @@ public:
         void reset_article_transition_tables() const;
         void initialize_article_view() const override;
         void update_article_view() const override;
-        void get_children_sql(Quark const &mid,
-                              Quark const &group,
-                              std::vector<Article> &setme) const override;
         Article const *get_parent(Quark const &mid) const override;
         Article const *get_article(Quark const &mid) const override;
         size_t size() const override;
