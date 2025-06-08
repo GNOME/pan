@@ -150,31 +150,35 @@ class DataImplTest : public CppUnit::TestFixture
                        Quark const &group,
                        std::vector<std::string> expect)
     {
-      std::vector<Article> setme;
+      std::string str("select message_id from article "
+                      " join article_view as av on av.article_id == article.id"
+                      " where show == True and av.parent_id ");
+      str += mid.empty() ? "isnull" :
+                           "= (select id from article where message_id == ?)";
+      str += " order by message_id asc";
 
-      // get root chidren
-      tree->get_children_sql(mid, group, setme);
+      SQLite::Statement q(pan_db, str);
 
-      std::sort(setme.begin(),
-                setme.end(),
-                [](Article a, Article b)
-                {
-                  return a.message_id.to_string() < b.message_id.to_string();
-                });
+      if (! mid.empty())
+      {
+        q.bind(1, mid);
+      }
+
       std::sort(expect.begin(), expect.end());
 
       std::string user_message(label + " "
                                + (mid.empty() ? "root" : mid.to_string()));
-
-      for (int i(0); i < expect.max_size() && i < setme.size(); i++)
+      int count(0);
+      while (q.executeStep())
       {
+        std::string msg_id = q.getColumn(0);
         CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          user_message + " child msg_id ", expect[i], setme[i].message_id.to_string());
+          user_message + " child msg_id ", expect[count], msg_id);
+        count++;
       }
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE(user_message + " children count",
-                                   int(expect.size()),
-                                   int(setme.size()));
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        user_message + " children count", int(expect.size()), count);
     }
 
     void assert_hidden(std::string label, std::string msg_id, bool expect)
