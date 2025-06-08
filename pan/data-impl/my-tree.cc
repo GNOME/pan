@@ -842,9 +842,8 @@ void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
-  const_nodes_v nodes;
-  _data.find_nodes(mids, _data.get_group_headers(_group)->_nodes, nodes);
-  apply_filter(nodes);
+  update_article_view();
+  fire_updates();
 }
 
 struct DataImpl ::MyTree ::TwoNodes
