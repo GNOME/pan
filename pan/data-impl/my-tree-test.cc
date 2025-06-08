@@ -245,6 +245,10 @@ class DataImplTest : public CppUnit::TestFixture
       assert_result("", "g1m1b", "g1", {"g1m1c1", "g1m1c2"});
       assert_result("", "g1m1c1", "g1", {"g1m1d1"});
       assert_result("", "g1m1c2", "g1", {"g1m1d2"});
+
+      std::string p_msg_id(tree->get_parent(Quark("g1m1c1")).message_id);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "check parent", std::string("g1m1b"), p_msg_id);
     }
 
     // emulates showing all articles, with no criteria
