@@ -2677,8 +2677,8 @@ struct ArticleIsParentOf : public ArticleTester
 
     ArticleIsParentOf(Data::ArticleTree const &tree, Article const *a)
     {
-      Article const *parent = a ? tree.get_parent(a->message_id) : nullptr;
-      _mid = parent ? parent->message_id : "";
+      Article parent = a ? tree.get_parent(a->message_id) : Article();
+      _mid = parent.message_id ;
     }
 
     Quark _mid;
@@ -2728,12 +2728,12 @@ struct ArticleIsNotInThread : public ArticleTester
       for (;;)
       {
         const Quark mid(a->message_id);
-        Article const *parent = _tree.get_parent(mid);
-        if (! parent)
+        Article parent = _tree.get_parent(mid);
+        if (parent.message_id.empty())
         {
           return mid;
         }
-        a = parent;
+        a = &parent;
       }
     }
 

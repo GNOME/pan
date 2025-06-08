@@ -632,7 +632,7 @@ class Data :
 
         virtual size_t size() const = 0;
 
-        virtual Article const *get_parent(Quark const &mid) const = 0;
+        virtual Article get_parent(Quark const &mid) const = 0;
 
         virtual Article const *get_article(Quark const &mid) const = 0;
 
