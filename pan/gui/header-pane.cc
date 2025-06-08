@@ -695,6 +695,8 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     int count = _atree->call_on_shown_articles(insert_shown_row);
 
+    atree->update_article_after_gui_update();
+
     LOG4CXX_INFO(logger,
                  "Build model: added " << count << " articles of group "
                                        << group.c_str() << " in "
