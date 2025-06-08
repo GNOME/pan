@@ -168,30 +168,35 @@ class DataImplTest : public CppUnit::TestFixture
                        Quark const &group,
                        std::vector<std::string> expected_children_mid)
     {
-      std::vector<Article> setme;
+      std::string str("select message_id from article "
+                      " join article_view as av on av.article_id == article.id"
+                      " where av.status is not \"h\" and av.parent_id ");
+      str += parent_mid.empty() ? "isnull" :
+                           "= (select id from article where message_id == ?)";
+      str += " order by message_id asc";
 
-      tree->get_children_sql(parent_mid, group, setme);
+      SQLite::Statement q(pan_db, str);
 
-      std::sort(setme.begin(),
-                setme.end(),
-                [](Article a, Article b)
-                {
-                  return a.message_id.to_string() < b.message_id.to_string();
-                });
+      if (! parent_mid.empty())
+      {
+        q.bind(1, parent_mid);
+      }
+
       std::sort(expected_children_mid.begin(), expected_children_mid.end());
 
       std::string user_message(label + " "
                                + (parent_mid.empty() ? "root" : parent_mid.to_string()));
-
-      for (int i(0); i < expected_children_mid.max_size() && i < setme.size(); i++)
+      int count(0);
+      while (q.executeStep())
       {
+        std::string msg_id = q.getColumn(0);
         CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          user_message + " child msg_id ", expected_children_mid[i], setme[i].message_id.to_string());
+          user_message + " child msg_id ", expected_children_mid[count], msg_id);
+        count++;
       }
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE(user_message + " children count",
-                                   int(expected_children_mid.size()),
-                                   int(setme.size()));
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        user_message + " children count", int(expected_children_mid.size()), count);
     }
 
     void assert_hidden(std::string label, std::string msg_id)
