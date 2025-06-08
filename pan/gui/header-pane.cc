@@ -495,42 +495,6 @@ HeaderPane::Row *HeaderPane ::create_row(Article a)
   return row;
 }
 
-int HeaderPane ::add_children_to_model(PanTreeStore *store,
-                                        Quark const &group,
-                                        PanTreeStore::Row *parent_row,
-                                        Quark const &parent_mid,
-                                        Data::ArticleTree const *atree,
-                                        bool const do_thread)
-{
-  // see if this parent has any children...
-  int count(0);
-  std::vector<Article> children;
-
-  atree->get_children_sql(parent_mid, group, children);
-  if (children.empty())
-  {
-    return count;
-  }
-
-  // add all these children...
-  PanTreeStore::rows_t rows;
-  rows.reserve(children.size());
-  count += children.size();
-  for (Article it : children)
-  {
-    rows.push_back(create_row(it));
-  }
-  store->append(do_thread ? parent_row : nullptr, rows);
-
-  // recurse
-  for (size_t i = 0, n = children.size(); i < n; ++i)
-  {
-    count += add_children_to_model(
-      store, group, rows[i], children[i].message_id, atree, do_thread);
-  }
-  return count;
-}
-
 int HeaderPane ::column_compare_func(GtkTreeModel *model,
                                      GtkTreeIter *iter_a,
                                      GtkTreeIter *iter_b,
