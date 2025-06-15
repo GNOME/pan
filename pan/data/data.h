@@ -605,21 +605,6 @@ class Data :
           std::function<void(Quark msg_id)> cb) const = 0;
 
       protected:
-        /** the quirky way of incrementing 'it' is to prevent it from being
-            invalidated if on_tree_change() calls remove_listener() */
-        void fire_diffs(Diffs const &d) const
-        {
-          if (! d.added.empty() || ! d.removed.empty() || ! d.reparented.empty()
-              || ! d.changed.empty())
-          {
-            listeners_t::iterator it, e;
-            for (it = _listeners.begin(), e = _listeners.end(); it != e;)
-            {
-              (*it++)->on_tree_change(d);
-            }
-          }
-        }
-
         void fire_updates() const;
 
         /*************************************************************
