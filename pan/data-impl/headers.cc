@@ -1670,11 +1670,6 @@ void DataImpl ::delete_articles(std::vector<Article> const &articles)
     }
   }
 
-  // trigger action before actually deleting because existing and
-  // deleted articles can be compared for time (or other property)
-  // while re-arranging header pane
-  on_articles_removed(all_mids);
-
   // remove articles from DB
   SQLite::Statement delete_article_q(pan_db, R"SQL(
     delete from article where message_id == ?
@@ -1704,15 +1699,6 @@ void DataImpl ::delete_articles(std::vector<Article> const &articles)
       )
   )SQL");
   author_q.exec();
-
-}
-
-void DataImpl ::on_articles_removed(quarks_t const &mids) const
-{
-  foreach (std::set<MyTree *>, _trees, it)
-  {
-    //(*it)->remove_articles(mids);
-  }
 }
 
 // called when articles are read, rescored or added
