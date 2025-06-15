@@ -575,22 +575,6 @@ void DataImpl ::MyTree ::download_articles(std::set<Article const *> s)
   }
 }
 
-// if this node has an article and wasn't already in `descendants',
-// then add it and its children.
-void DataImpl ::MyTree ::accumulate_descendants(unique_nodes_t &descendants,
-                                                ArticleNode const *node) const
-{
-  LOG4CXX_WARN(logger, "deprecated function called");
-
-  if (node->_article && descendants.insert(node).second || ! node->_article)
-  {
-    foreach_const (ArticleNode::children_t, node->_children, it)
-    {
-      accumulate_descendants(descendants, *it);
-    }
-  }
-}
-
 void DataImpl ::MyTree ::articles_changed(bool do_refilter)
 {
   LOG4CXX_DEBUG(logger, "group " << _group << ": articles were changed");
