@@ -518,7 +518,6 @@ public:
       public:
         void articles_changed(bool do_refilter);
         void add_articles(quarks_t const &mids);
-        void remove_articles(quarks_t const &mids);
 
       private: // implementation fields
         const Quark _group;
