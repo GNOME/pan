@@ -575,37 +575,6 @@ void DataImpl ::MyTree ::download_articles(std::set<Article const *> s)
   }
 }
 
-void DataImpl ::MyTree ::apply_sql_filter()
-{
-  LOG4CXX_TRACE(logger, "called (deprecated ?)");
-  auto q = _header_filter.get_sql_filter(_data, _show_type, _filter);
-  q.bind(q.getBindParameterCount(), _group);
-
-  std::set<Quark> pass, fail;
-  while (q.executeStep())
-  {
-    std::string msg_id = q.getColumn(0);
-    bool in = q.getColumn(1).getInt();
-
-    if (in)
-    {
-      pass.insert(msg_id);
-    }
-    else
-    {
-      fail.insert(msg_id);
-    }
-  }
-
-  // passing articles not in the tree should be added...
-  const_nodes_v nodes;
-  _data.find_nodes(pass, _data.get_group_headers(_group)->_nodes, nodes);
-  add_articles(nodes);
-
-  // failing articles in the tree should be removed...
-  remove_articles(fail);
-}
-
 // candidates holds GroupHeader's ArticleNodes pointers
 // candidates are sorted by Mid (see NodeMidCompare)
 void DataImpl ::MyTree ::apply_filter(const_nodes_v const &candidates)
