@@ -1633,7 +1633,7 @@ void DataImpl ::on_articles_removed(quarks_t const &mids) const
 {
   foreach (std::set<MyTree *>, _trees, it)
   {
-    (*it)->remove_articles(mids);
+    //(*it)->remove_articles(mids);
   }
 }
 
