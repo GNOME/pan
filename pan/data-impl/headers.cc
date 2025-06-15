@@ -1702,10 +1702,6 @@ void DataImpl ::delete_articles(std::vector<Article> const &articles)
     LOG4CXX_TRACE(logger, "Marked article to delete " << msg_id);
   }
 
-  // trigger action: this updates header-pane, update article_view and
-  // actually delete articles from DB
-  on_articles_removed(all_mids);
-
   // delete orphan authors
   SQLite::Statement author_q(pan_db, R"SQL(
     delete from author
@@ -1721,15 +1717,6 @@ void DataImpl ::delete_articles(std::vector<Article> const &articles)
       )
   )SQL");
   author_q.exec();
-
-}
-
-void DataImpl ::on_articles_removed(quarks_t const &mids) const
-{
-  foreach (std::set<MyTree *>, _trees, it)
-  {
-    //(*it)->remove_articles(mids);
-  }
 }
 
 // called when articles are read, rescored or added

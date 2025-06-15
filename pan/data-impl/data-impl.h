@@ -545,7 +545,6 @@ public:
     };
 
     std::set<MyTree *> _trees;
-    void on_articles_removed(quarks_t const &mids) const;
     void on_articles_added(Quark const &group, quarks_t const &mids);
     void on_articles_changed(Quark const &group,
                              quarks_t const &mids,
