@@ -618,14 +618,3 @@ void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
   fire_updates();
 }
 
-struct DataImpl ::MyTree ::TwoNodes
-{
-    ArticleNode const *node;
-    ArticleNode *tree_node;
-
-    TwoNodes(ArticleNode const *n, ArticleNode *t) :
-      node(n),
-      tree_node(t)
-    {
-    }
-};

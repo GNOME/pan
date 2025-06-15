@@ -529,7 +529,6 @@ public:
         RulesInfo _rules;
         Data::ShowType _show_type;
         struct NodeMidCompare;
-        struct TwoNodes;
         HeaderFilter _header_filter;
         HeaderRules _header_rules;
 
