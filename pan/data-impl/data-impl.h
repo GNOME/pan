@@ -538,7 +538,6 @@ public:
                                     ArticleNode const *) const;
         void add_articles(const_nodes_v const &);
         void apply_filter(const_nodes_v const &);
-        void apply_sql_filter();
 
       private:
         void cache_articles(std::set<Article const *> s);
