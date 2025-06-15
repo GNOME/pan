@@ -327,11 +327,6 @@ Article DataImpl ::MyTree ::get_parent(Quark const &mid) const
   return parent;
 }
 
-size_t DataImpl ::MyTree ::size() const
-{
-  return _nodes.size();
-}
-
 void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
 {
   LOG4CXX_DEBUG(logger, "set_rules called");
@@ -396,7 +391,6 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 DataImpl ::MyTree ::~MyTree()
 {
   LOG4CXX_DEBUG(logger, "Destroying MyTree of group " << _group);
-  _nodes.clear();
   _data._trees.erase(this);
   _data.unref_group(_group);
 }
