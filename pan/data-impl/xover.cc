@@ -310,13 +310,9 @@ Article const *DataImpl ::xover_add(Quark const &server,
     // if we don't already have this article in memory...
     if (!h->find_article (art_mid))
     {
-      //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
-      // load article data in memory. Will be removed
       Article& a (h->alloc_new_article());
       a.group = group;
       a.message_id = art_mid;
-      // build article tree in memory. Will be removed
-      load_article (group, &a, references);
       new_article = &a;
 
       workarea._added_batch.insert (art_mid);

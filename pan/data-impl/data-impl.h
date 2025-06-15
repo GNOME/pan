@@ -348,12 +348,6 @@ public:
   private: // implementation
     void store_parent_articles(Quark &message_id, std::string &references);
 
-    /** 'article' MUST have been allocated by
-     * GroupHeaders::alloc_new_article()!! */
-    void load_article(Quark const &g,
-                      Article *article,
-                      StringView const &references);
-
     void insert_part_in_db(Quark const &g,
                            Quark const &mid,
                            int number,
