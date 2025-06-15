@@ -1625,16 +1625,6 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
       )
   )SQL");
   author_q.exec();
-
-  on_articles_removed(all_mids);
-}
-
-void DataImpl ::on_articles_removed(quarks_t const &mids) const
-{
-  foreach (std::set<MyTree *>, _trees, it)
-  {
-    //(*it)->remove_articles(mids);
-  }
 }
 
 // called when articles are read, rescored or added
