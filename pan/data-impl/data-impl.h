@@ -494,7 +494,6 @@ public:
         void initialize_article_view() const override;
         void update_article_view() const override;
         Article get_parent(Quark const &mid) const override;
-        size_t size() const override;
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
@@ -519,7 +518,6 @@ public:
         const Quark _group;
         DataImpl &_data;
         const Quark _save_path; // for auto-download
-        nodes_t _nodes;
         MemChunk<ArticleNode> _node_chunk;
         FilterInfo _filter;
         RulesInfo _rules;
