@@ -33,6 +33,7 @@
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
 #include "data-impl.h"
+#include "pan/general/time-elapsed.h"
 
 using namespace pan;
 
@@ -223,6 +224,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
                                     StringView const &xref,
                                     bool const is_virtual)
 {
+  TimeElapsed timer;
+
   if (is_virtual)
     ref_group(group);
 
@@ -386,6 +389,10 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
   if (!workarea._added_batch.count(art_mid))
     workarea._changed_batch.insert(art_mid);
+
+  double const duration = timer.get_seconds_elapsed();
+  LOG4CXX_TRACE(logger, "Saved part "
+               << message_id << " of article " << art_mid << "in " << duration << "s.");
 
   // maybe flush the batched changes
   // TODO: check if the change applied during flush won't clobber what was setup
