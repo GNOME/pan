@@ -618,8 +618,6 @@ class Data :
 
         virtual Article get_parent(Quark const &mid) const = 0;
 
-        virtual Article const *get_article(Quark const &mid) const = 0;
-
         virtual void set_filter(
           ShowType const show_type = SHOW_ARTICLES,
           FilterInfo const *filter_or_null_to_reset = nullptr) = 0;

@@ -497,7 +497,6 @@ public:
         Article get_parent(Quark const &mid) const override;
         void update_article_after_gui_update() const override;
         void set_article_hidden_status(quarks_t &mids) const override;
-        Article const *get_article(Quark const &mid) const override;
         size_t size() const override;
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;

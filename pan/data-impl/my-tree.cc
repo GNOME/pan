@@ -387,13 +387,6 @@ Article DataImpl ::MyTree ::get_parent(Quark const &mid) const
   return parent;
 }
 
-Article const *DataImpl ::MyTree ::get_article(Quark const &mid) const
-{
-  LOG4CXX_WARN(logger, "deprecated function called");
-  nodes_t::const_iterator it(_nodes.find(mid));
-  return it == _nodes.end() ? nullptr : it->second->_article;
-}
-
 size_t DataImpl ::MyTree ::size() const
 {
   return _nodes.size();
