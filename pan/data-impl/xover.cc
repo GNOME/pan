@@ -33,6 +33,7 @@
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
 #include "data-impl.h"
+#include "pan/general/time-elapsed.h"
 
 using namespace pan;
 
@@ -223,6 +224,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
                                     StringView const &xref,
                                     bool const is_virtual)
 {
+  TimeElapsed timer;
+
   if (is_virtual)
     ref_group(group);
 
@@ -394,7 +397,9 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
   if (is_virtual)
       unref_group(group);
-
+  double const duration = timer.get_seconds_elapsed();
+  LOG4CXX_INFO(logger, "Saved part "
+               << message_id << " of article " << art_mid << "in " << duration << "s.");
   return new_article;
 }
 
