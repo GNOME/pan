@@ -176,9 +176,6 @@ class HeaderPane :
     void on_group_read(Quark const &group) override;
 
   private:
-    virtual void on_tree_change(Data::ArticleTree::Diffs const &) override;
-
-  private:
     void on_prefs_flag_changed(StringView const &, bool) override;
 
     void on_prefs_int_changed(StringView const &, int) override
