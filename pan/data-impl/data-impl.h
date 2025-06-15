@@ -539,7 +539,6 @@ public:
         void accumulate_descendants(unique_nodes_t &,
                                     ArticleNode const *) const;
         void add_articles(const_nodes_v const &);
-        void apply_filter(const_nodes_v const &);
 
       private:
         void cache_articles(std::set<Article const *> s);
