@@ -1609,18 +1609,6 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
   }
 }
 
-// TODO: remove, used only in load_article
-DataImpl::ArticleNode *DataImpl ::find_ancestor(ArticleNode *node,
-                                                Quark const &ancestor_mid)
-{
-  ArticleNode *parent_node(node->_parent);
-  while (parent_node && (parent_node->_mid != ancestor_mid))
-  {
-    parent_node = parent_node->_parent;
-  }
-  return parent_node;
-}
-
 Data::ArticleTree *DataImpl ::group_get_articles(Quark const &group,
                                                  Quark const &save_path,
                                                  const ShowType show_type,
