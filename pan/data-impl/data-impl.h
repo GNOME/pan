@@ -452,9 +452,6 @@ public:
     void get_article_references(Article const *,
                                 std::string &setme) const override;
 
-    static ArticleNode *find_ancestor(ArticleNode *node,
-                                      Quark const &ancestor_mid);
-
     typedef Loki::AssocVector<Quark, GroupHeaders *> group_to_headers_t;
     group_to_headers_t _group_to_headers;
 
