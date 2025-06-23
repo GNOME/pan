@@ -105,7 +105,6 @@ class Article
     Quark message_id;
     Quark author;
     Quark subject;
-    time_t time_posted;
     unsigned int lines;
     int score;
     bool is_binary;
@@ -120,12 +119,13 @@ class Article
     bool is_line_count_ge(size_t test) const;
     unsigned long get_byte_count() const;
     bool is_byte_count_ge(unsigned long test) const;
+    time_t get_time_posted() const;
+    void set_time_posted(time_t) const;
 
     Xref xref;
 
   public:
     Article() :
-      time_posted(0),
       lines(0),
       score(0),
       is_binary(false),

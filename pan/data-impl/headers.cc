@@ -989,8 +989,8 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     a.author = Quark(read_article_q.getColumn(3).getText());
 
     // date-posted line
-    a.time_posted = read_article_q.getColumn(4).getInt64();
-    int const days_old((now - a.time_posted) / (24 * 60 * 60));
+    int time_posted = read_article_q.getColumn(4).getInt64();
+    int const days_old((now - time_posted) / (24 * 60 * 60));
 
     // xref
     read_xref_q.reset();
@@ -1173,8 +1173,8 @@ bool DataImpl ::save_headers(DataIO &data_io,
 )SQL");
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id,subject,author_id, `references`, time_posted, binary, expected_parts,line_count)
-    values (?,?,?, (select id from author where author = ?),?,?,?,?,?) on conflict do nothing;
+    insert into `article` (flag, message_id,subject,author_id, `references`, binary, expected_parts,line_count)
+    values (?,?,?, (select id from author where author = ?),?,?,?,?) on conflict do nothing;
   )SQL");
 
   SQLite::Statement set_author_q(pan_db,R"SQL(
@@ -1252,11 +1252,10 @@ bool DataImpl ::save_headers(DataIO &data_io,
       set_article_q.bind(3, a->subject);
       set_article_q.bind(4, author);
       set_article_q.bind(5, references); // don't care if references is empty
-      set_article_q.bind(6, a->time_posted);
-      set_article_q.bind(7, a->is_binary);
+      set_article_q.bind(6, a->is_binary);
       // text article always have 1 part
-      set_article_q.bind(8, a->is_binary ? a->get_total_part_count() : 1);
-      set_article_q.bind(9, a->lines);
+      set_article_q.bind(7, a->is_binary ? a->get_total_part_count() : 1);
+      set_article_q.bind(8, a->lines);
       set_article_q.exec();
 
       // xref

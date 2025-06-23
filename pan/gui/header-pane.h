@@ -378,7 +378,7 @@ class HeaderPane :
               set_value_ulong(setme, article->get_byte_count());
               break;
             case COL_DATE:
-              set_value_ulong(setme, (unsigned long)article->time_posted);
+              set_value_ulong(setme, (unsigned long)article->get_time_posted());
               break;
             case COL_ARTICLE_POINTER:
               set_value_pointer(setme, (void *)article);
