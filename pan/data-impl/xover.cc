@@ -271,28 +271,24 @@ Article const *DataImpl ::xover_add(Quark const &server,
     )SQL");
 
     typedef XOverEntry::subject_to_mid_t::const_iterator cit;
+    // find all articles with same subject that may be the right article for this part
+    // (note that part identifier like [3/50] are stripped before being stored)
     const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject_quark));
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
-        Quark const &candidate_mid(it->second);
-        Article const *candidate(h->find_article(candidate_mid));
-        // TODO: replace with a search in DB
-        if (candidate && (candidate->get_author() == author)
-            && ((int)candidate->get_total_part_count() == part_count))
-          art_mid = candidate_mid;
-
-        // check operation using DB
-        search_article_q.reset();
-        search_article_q.bind(1, it->second); // aka candidate_mid
-        search_article_q.bind(2, author);
-        search_article_q.bind(3, part_count);
-        while (search_article_q.executeStep()) {
-          if (search_article_q.getColumn(0).getInt() == 1) {
-            // article for this part was found in DB
-            // check that result is consistent with above (temporary)
-            assert(art_mid == candidate_mid );
-            // later:  art_mid = candidate_mid;
-          }
+      // check author and part count to make sure that found article if a good
+      // match for this part
+      search_article_q.reset();
+      search_article_q.bind(1, it->second);
+      search_article_q.bind(2, author);
+      search_article_q.bind(3, part_count);
+      while (search_article_q.executeStep())
+      {
+        if (search_article_q.getColumn(0).getInt() == 1)
+        {
+          // ok, we'll use this article as the article for this part
+          art_mid = it->second;
         }
+      }
     }
   }
 
