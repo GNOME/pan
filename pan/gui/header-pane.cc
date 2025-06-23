@@ -479,7 +479,7 @@ HeaderPane::Row *HeaderPane ::create_row(EvolutionDateMaker const &e,
 {
   int const action(get_article_action(a, _cache, _queue, a->message_id));
   int const state(get_article_state(_data, a));
-  char *date_str(e.get_date_string(a->time_posted));
+  char *date_str(e.get_date_string(a->get_time_posted()));
   Row *row = new Row(_data, a, date_str, action, state);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
@@ -604,8 +604,8 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
 
     default:
     { // COL_DATE
-      const time_t a_time(row_a.article->time_posted);
-      const time_t b_time(row_b.article->time_posted);
+      const time_t a_time(row_a.article->get_time_posted());
+      const time_t b_time(row_b.article->get_time_posted());
       if (a_time < b_time)
       {
         ret = -1;
@@ -3009,7 +3009,7 @@ struct HeaderPane::SimilarWalk : public PanTreeStore::WalkFunctor
       // similar subject
       static const size_t SECONDS_IN_DAY(60 * 60 * 24);
       return (a.author == source.author)
-             && (fabs(difftime(a.time_posted, source.time_posted))
+             && (fabs(difftime(a.get_time_posted(), source.get_time_posted()))
                  < (SECONDS_IN_DAY * 1.5))
              && (subjects_are_similar(a, source));
     }

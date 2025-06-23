@@ -308,13 +308,13 @@ Article const *DataImpl ::xover_add(Quark const &server,
     if (!h->find_article (art_mid))
     {
       //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
+      // load article data in memory. Will be removed
       Article& a (h->alloc_new_article());
       a.author = author;
       a.subject = multipart_subject_quark;
       a.message_id = art_mid;
       a.is_binary = part_count >= 1;
       a.set_part_count (a.is_binary ? part_count : 1);
-      a.time_posted = time_posted;
       a.xref.insert (server, xref);
       load_article (group, &a, references);
       new_article = &a;
