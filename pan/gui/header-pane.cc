@@ -21,6 +21,7 @@
 #include "pan/gui/load-icon.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
+#include <SQLiteCpp/Statement.h>
 #include <algorithm>
 #include <cctype>
 #include <cmath>
@@ -307,7 +308,7 @@ void HeaderPane ::render_author(GtkTreeViewColumn *,
 
   g_object_set(renderer,
                "text",
-               a->author.c_str(),
+               a->get_author().c_str(),
                "background",
                self->_bg.c_str(),
                "foreground",
@@ -3005,13 +3006,29 @@ struct HeaderPane::SimilarWalk : public PanTreeStore::WalkFunctor
   private:
     bool similar(Article const &a) const
     {
-      // same author, posted within a day and a half of the source, with a
-      // similar subject
-      static const size_t SECONDS_IN_DAY(60 * 60 * 24);
-      return (a.author == source.author)
-             && (fabs(difftime(a.get_time_posted(), source.get_time_posted()))
-                 < (SECONDS_IN_DAY * 1.5))
-             && (subjects_are_similar(a, source));
+      // same author, posted within a day and a half (e.g. 129600 seconds) of
+      // the source, with a similar subject
+      SQLite::Statement q(pan_db, R"Q(
+        with data(a1, a2, t1, t2) as (
+          select
+            (select author_id   from article where id = $m1),
+            (select author_id   from article where id = $m2),
+            (select time_posted from article where id = $m1),
+            (select time_posted from article where id = $m2)
+        )
+        select count() from data
+        where a1 == a2
+          and abs(t1 - t2) < 86400 -- 1.5 days
+      )Q");
+      q.bind(1, a.message_id);
+      q.bind(2, source.message_id);
+      bool res(false);
+      while (q.executeStep())
+      {
+        res = q.getColumn(0).getInt() == 1;
+      }
+
+      return res && (subjects_are_similar(a, source));
     }
 
     static bool subjects_are_similar(Article const &a, Article const &b)
