@@ -275,7 +275,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
         Quark const &candidate_mid(it->second);
         Article const *candidate(h->find_article(candidate_mid));
-        if (candidate && (candidate->author == author)
+        // TODO: replace with a search in DB
+        if (candidate && (candidate->get_author() == author)
             && ((int)candidate->get_total_part_count() == part_count))
           art_mid = candidate_mid;
 
@@ -310,7 +311,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
       //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
       // load article data in memory. Will be removed
       Article& a (h->alloc_new_article());
-      a.author = author;
       a.subject = multipart_subject_quark;
       a.message_id = art_mid;
       a.is_binary = part_count >= 1;
