@@ -339,11 +339,11 @@ Article const *DataImpl ::xover_add(Quark const &server,
       set_author_q.bind(1, author);
       set_author_q.exec();
 
-      // Create the article in DB
+      // Create the article in DB, line_count is updated in insert_part_in_db()
       SQLite::Statement create_article_q(pan_db, R"SQL(
         insert into `article` (author_id,subject,message_id, binary, expected_parts,
-                               time_posted, `references`, line_count)
-        values ((select id from author where author = ?),?,?,?,?,?,?,?)
+                               time_posted, `references`)
+        values ((select id from author where author = ?),?,?,?,?,?,?)
       )SQL");
       create_article_q.bind(1, author);
       create_article_q.bind(2, multipart_subject_quark);
@@ -353,7 +353,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
       create_article_q.bind(6, time_posted);
       if (!references.empty())
         create_article_q.bind(7, references);
-      create_article_q.bind(8, static_cast<int64_t>(line_count));
       create_article_q.exec();
 
       insert_xref_in_db(server, art_mid, xref);
