@@ -264,7 +264,7 @@ class HeaderPane :
       private:
         static Quark build_short_author(Article const *article)
         {
-          return Quark(GNKSA ::get_short_author_name(article->author.c_str()));
+          return Quark(GNKSA ::get_short_author_name(article->get_author().c_str()));
         }
 
       private:
@@ -384,7 +384,7 @@ class HeaderPane :
               set_value_pointer(setme, (void *)article);
               break;
             case COL_SUBJECT:
-              set_value_static_string(setme, article->author.c_str());
+              set_value_static_string(setme, article->get_author().c_str());
               break;
             case COL_SHORT_AUTHOR:
               set_value_static_string(setme, short_author.c_str());

@@ -943,10 +943,9 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(group_id != 0);
 
   SQLite::Statement read_article_q(pan_db,R"SQL(
-    select flag,message_id, subject, author.author,
+    select flag,message_id, subject,
            time_posted, binary, expected_parts, line_count, `references`
       from article
-      join author on author_id = author.id
       join article_group as ag on ag.article_id = article.id
       where ag.group_id = ?;
   )SQL");
@@ -982,14 +981,14 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   while (read_article_q.executeStep()) {
     Article &a(h->alloc_new_article());
 
-    a.flag = read_article_q.getColumn(0).getInt() == 1 ? true : false;
-    char const *message_id = read_article_q.getColumn(1);
+    int i(0);
+    a.flag = read_article_q.getColumn(i++).getInt() == 1 ? true : false;
+    char const *message_id = read_article_q.getColumn(i++);
     a.message_id = Quark(message_id);
-    a.subject = Quark(read_article_q.getColumn(2).getText());
-    a.author = Quark(read_article_q.getColumn(3).getText());
+    a.subject = Quark(read_article_q.getColumn(i++).getText());
 
     // date-posted line
-    int time_posted = read_article_q.getColumn(4).getInt64();
+    int time_posted = read_article_q.getColumn(i++).getInt64();
     int const days_old((now - time_posted) / (24 * 60 * 60));
 
     // xref
@@ -1012,9 +1011,9 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     a.xref.swap(targets);
 
     // is_binary [total_part_count found_part_count]
-    a.is_binary = read_article_q.getColumn(5).getInt() == 1 ;
-    int total_part_count(read_article_q.getColumn(6).getInt());
-    a.lines = read_article_q.getColumn(7).getInt();
+    a.is_binary = read_article_q.getColumn(i++).getInt() == 1 ;
+    int total_part_count(read_article_q.getColumn(i++).getInt());
+    a.lines = read_article_q.getColumn(i++).getInt();
 
     // found parts...
     part_batch.init(a.message_id, total_part_count);
@@ -1046,7 +1045,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
     }
 
     // optional references line
-    std::string references(read_article_q.getColumn(8).getText());
+    std::string references(read_article_q.getColumn(i++).getText());
 
     // add the article to the group if it hasn't all expired
     if (expired) {
@@ -1173,12 +1172,8 @@ bool DataImpl ::save_headers(DataIO &data_io,
 )SQL");
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id,subject,author_id, `references`, binary, expected_parts,line_count)
-    values (?,?,?, (select id from author where author = ?),?,?,?,?) on conflict do nothing;
-  )SQL");
-
-  SQLite::Statement set_author_q(pan_db,R"SQL(
-    insert into `author` (author) values (?) on conflict do nothing;
+    insert into `article` (flag, message_id,subject, `references`, binary, expected_parts,line_count)
+    values (?,?,?,?,?,?,?) on conflict do nothing;
   )SQL");
 
   SQLite::Statement set_article_group_q(pan_db,R"SQL(
@@ -1235,27 +1230,21 @@ bool DataImpl ::save_headers(DataIO &data_io,
 
       ++article_count;
 
-      // add author if needed
-      set_author_q.reset();
-      StringView author(a->author.to_view());
-      set_author_q.bind(1,author);
-      set_author_q.exec();
-
       set_article_q.reset();
 
       Quark const &message_id(a->message_id);
       h->build_references_header(a, references);
 
       // save article data in DB
-      set_article_q.bind(1, a->flag);
-      set_article_q.bind(2, message_id);
-      set_article_q.bind(3, a->subject);
-      set_article_q.bind(4, author);
-      set_article_q.bind(5, references); // don't care if references is empty
-      set_article_q.bind(6, a->is_binary);
+      int i(1);
+      set_article_q.bind(i++, a->flag);
+      set_article_q.bind(i++, message_id);
+      set_article_q.bind(i++, a->subject);
+      set_article_q.bind(i++, references); // don't care if references is empty
+      set_article_q.bind(i++, a->is_binary);
       // text article always have 1 part
-      set_article_q.bind(7, a->is_binary ? a->get_total_part_count() : 1);
-      set_article_q.bind(8, a->lines);
+      set_article_q.bind(i++, a->is_binary ? a->get_total_part_count() : 1);
+      set_article_q.bind(i++, a->lines);
       set_article_q.exec();
 
       // xref

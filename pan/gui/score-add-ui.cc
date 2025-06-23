@@ -261,7 +261,7 @@ namespace
     // update the text entry field...
     std::string text;
     if (value == REFERENCES) text = a->message_id.to_string();
-    else if (value == AUTHOR) text = a->author.to_string();
+    else if (value == AUTHOR) text = a->get_author().to_string();
     else text = a->subject.to_string();
     gtk_entry_set_text (GTK_ENTRY(entry), text.c_str());
 
@@ -526,7 +526,7 @@ ScoreAddDialog :: populate (const Quark& group, const Article& a, Mode mode)
                      false);
   std::string text;
   if (field == REFERENCES) text = a.message_id.to_string();
-  else if (field == AUTHOR) text = a.author.to_string();
+  else if (field == AUTHOR) text = a.get_author().to_string();
   else text = a.subject.to_string();
   gtk_entry_set_text (GTK_ENTRY(_text_criteria_entry), text.c_str());
 

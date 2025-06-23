@@ -77,6 +77,7 @@ namespace
     std::string text;
     std::string path;
     std::string paused;
+    std::string author;
     PartBatch parts;
     int64_t time_posted;
     tasks_t tasks;
@@ -108,6 +109,7 @@ namespace
       text.clear ();
       path.clear ();
       paused.clear ();
+      author.clear();
       a.clear ();
       bytes = 0;
       number = 0;
@@ -130,7 +132,7 @@ namespace
     if (!strcmp (element_name, "file")) {
       mc.file_clear ();
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-        if (!strcmp (*k,"poster"))  mc.a.author = *v;
+        if (!strcmp (*k,"poster"))       mc.author = *v;
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
         else if (!strcmp (*k,"date"))    mc.time_posted = strtoul(*v,nullptr,10);
       }
@@ -293,7 +295,7 @@ std::ostream &print_article(
 {
   int depth = 1;
   out << indent(depth++) << "<file" << " poster=\"";
-  escaped (out, a.author.to_view());
+  escaped (out, a.get_author().to_view());
   out  << "\" date=\"" << a.get_time_posted() << "\" subject=\"";
   //This is nasty. pan munges the article title of a multipart article to
   //xxxxxxxxx (/<parts>), but nzb wants (1/<parts>)
