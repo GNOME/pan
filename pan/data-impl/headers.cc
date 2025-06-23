@@ -486,9 +486,9 @@ void DataImpl ::update_part_states(Quark const &group)
        from article as a
        join article_group as ag on ag.article_id == a.id
        join `group`       as g  on ag.group_id == g.id
+       join `subject`     as sb on sb.id == a.subject_id
        where g.name == ?
          and (part_state is null or part_state is "I")
-         and subject is not null
     ) as upd
     where article.id == upd.id
   )SQL");
@@ -517,9 +517,16 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
   _scorefile.get_matching_sections(StringView(group), score_sections);
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id,subject,author_id, `references`,
+    insert into `article` (flag, message_id,subject_id, author_id, `references`,
                            time_posted, binary, expected_parts,line_count)
-    values (?,?,?, (select id from author where author = ?),?,?,?,?,?) on conflict do nothing;
+    values (?,?,(select id from subject where subject = ?),
+            (select id from author where author = ?),?,?,?,?,?) on conflict do nothing;
+  )SQL");
+
+  SQLite::Statement set_subject_q(pan_db, R"SQL(
+    insert into `subject` (subject)
+    values ($subject)
+    on conflict (subject) do nothing
   )SQL");
 
   SQLite::Statement set_author_q(pan_db,R"SQL(
@@ -631,6 +638,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         }
 
         set_article_q.reset();
+        set_subject_q.reset();
         set_author_q.reset();
 
         int bind_idx = 1;
@@ -652,12 +660,13 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         // message id
         s.ltrim();
         std::string message_id(s);
-        set_article_q.bind(bind_idx++,message_id.c_str());
+        set_article_q.bind(bind_idx++, message_id.c_str());
 
         // subject line
         in->getline(s);
         s.ltrim();
-        set_article_q.bind(bind_idx++,std::string{s}.c_str());
+        set_article_q.bind(bind_idx++, std::string{s}.c_str());
+        set_subject_q.bind(1, std::string{s}.c_str());
 
         // author line
         in->getline(s);
@@ -750,6 +759,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 
         // at this point we have all required information to create article in
         // DB
+        set_subject_q.exec();
         set_article_q.exec();
         item_count++;
         article_count++;
