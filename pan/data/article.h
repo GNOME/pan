@@ -103,7 +103,6 @@ class Article
 
   public:
     Quark message_id;
-    unsigned int lines;
     int score;
     bool is_binary;
     bool flag;
@@ -127,7 +126,6 @@ class Article
 
   public:
     Article() :
-      lines(0),
       score(0),
       is_binary(false),
       flag(false)

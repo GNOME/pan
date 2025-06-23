@@ -19,17 +19,24 @@
 
 #include "article.h"
 #include "pan/data/pan-db.h"
+#include "pan/general/log4cxx.h"
 #include <SQLiteCpp/Statement.h>
 #include <algorithm>
 #include <bits/types/time_t.h>
 #include <cassert>
 #include <config.h>
+#include <cstdint>
 #include <glib.h>
+#include <log4cxx/logger.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>
 
 using namespace pan;
+
+namespace  {
+log4cxx::LoggerPtr logger(getLogger("article"));
+}
 
 Article ::PartState Article ::get_part_state() const
 {
@@ -83,12 +90,21 @@ bool Article::get_part_info(Parts::number_t num,
 
 unsigned long Article::get_line_count() const
 {
-  return lines;
+  SQLite::Statement q(pan_db, "select line_count from article where message_id = ?");
+  q.bind(1,message_id);
+  int64_t result(0);
+  int count(0);
+  while (q.executeStep()) {
+    result = q.getColumn(0).getInt();
+    count++;
+  }
+  assert(count > 0);
+  return result;
 }
 
 bool Article::is_line_count_ge(size_t test) const
 {
-  return lines >= test;
+  return get_line_count() >= test;
 }
 
 unsigned int Article ::get_crosspost_count() const
@@ -175,7 +191,9 @@ Quark Article::get_author() const {
     result = Quark(q.getColumn(0).getText());
     count ++;
   }
-  assert(count > 0);
+  if (count == 0) {
+    LOG4CXX_DEBUG(logger, "Could not find author of article " << message_id.c_str());
+  }
   return result;
 }
 
