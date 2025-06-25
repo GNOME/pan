@@ -122,6 +122,7 @@ create table if not exists subject (
   article_id integer not null unique references article (id) on delete cascade,
   subject text not null
 );
+create index if not exists subject_idx on subject (subject);
 
 create table if not exists article_group (
   id integer primary key asc autoincrement,
