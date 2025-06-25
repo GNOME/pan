@@ -126,6 +126,7 @@ create table if not exists subject (
   id integer primary key asc autoincrement,
   subject text not null unique
 );
+create index if not exists subject_idx on subject (subject);
 
 create table if not exists article_group (
   id integer primary key asc autoincrement,

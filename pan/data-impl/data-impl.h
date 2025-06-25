@@ -379,13 +379,10 @@ public:
         Quark _mid;
         Article *_article;
 
-        ArticleNode *_parent;
         typedef std::list<ArticleNode *> children_t;
-        children_t _children;
 
         ArticleNode() :
-          _article(nullptr),
-          _parent(nullptr)
+          _article(nullptr)
         {
         }
     };
@@ -603,16 +600,6 @@ public:
 
         /** Same as _added_batch, but for changed articles. */
         quarks_t _changed_batch;
-
-        typedef std::multimap<Quark, Quark> subject_to_mid_t;
-
-        /** This is for multipart detection.  Pan folds multipart posts into
-            a single Article holding all the parts.  This lookup helps decide,
-            when we get a new multipart post, which Article to fold
-            it into.  We strip out the unique part info from the Subject header
-            (such as the "15" in [15/42]) and use it as a key in this lookup
-            table that gives the Message-ID of the Article owning this post. */
-        subject_to_mid_t _subject_lookup;
 
         /** We must refcount because multiple server connections can
             be assigned to the same XOVER task. */

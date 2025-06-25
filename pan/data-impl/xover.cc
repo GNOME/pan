@@ -20,7 +20,6 @@
 #include <SQLiteCpp/Transaction.h>
 #include <config.h>
 #include <cmath>
-#include <cstdint>
 #include <glib/gi18n.h>
 #include <gmime/gmime.h>
 #include <log4cxx/logger.h>
@@ -177,16 +176,6 @@ void DataImpl ::xover_ref(Quark const &group)
   // ref the xover
   XOverEntry& workarea (xover_get_workarea (group));
   ++workarea.refcount;
-
-  // populate the normalized lookup for multipart detection...
-  GroupHeaders * h (get_group_headers (group));
-  foreach_const (nodes_t, h->_nodes, it) {
-      Quark const &mid(it->first);
-      Article const *a(it->second->_article);
-      if (a != nullptr)
-        workarea._subject_lookup.insert(
-          std::pair<Quark, Quark>(a->get_subject(), mid));
-  }
 }
 
 void DataImpl ::xover_flush(Quark const &group)
@@ -249,6 +238,12 @@ Article const *DataImpl ::xover_add(Quark const &server,
   /***
   **** Multipart Handling
   ***/
+  /** multipart detection.  Pan folds multipart posts into
+      a single Article holding all the parts.  This code decides,
+      when we get a new multipart post, which Article to fold
+      it into.  We strip out the unique part info from the Subject header
+      (such as the "15" in [15/42]) and use it as a key in subject
+      table that gives the Message-ID of the Article owning this post. */
 
   h->_dirty = true;
 
@@ -266,33 +261,32 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
     // search the article in DB
     SQLite::Statement search_article_q(pan_db, R"SQL(
-      select count()
+      select message_id
       from article as art
+      join article_group as ag on ag.article_id == art.id
+      join `group` as g on ag.group_id == g.id
       join author as auth on art.author_id == auth.id
-      where art.message_id == ?
+      join subject on subject.id == art.subject_id
+      where g.name == ?
+        and subject.subject == ?
         and auth.author == ?
         and art.expected_parts == ?
+      limit 1
     )SQL");
 
-    typedef XOverEntry::subject_to_mid_t::const_iterator cit;
-    // find all articles with same subject that may be the right article for this part
-    // (note that part identifier like [3/50] are stripped before being stored)
-    const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject_quark));
-    for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
-      // check author and part count to make sure that found article if a good
-      // match for this part
-      search_article_q.reset();
-      search_article_q.bind(1, it->second);
-      search_article_q.bind(2, author);
-      search_article_q.bind(3, part_count);
-      while (search_article_q.executeStep())
-      {
-        if (search_article_q.getColumn(0).getInt() == 1)
-        {
-          // ok, we'll use this article as the article for this part
-          art_mid = it->second;
-        }
-      }
+    // find all articles with same subject, author and part count to
+    // make sure that found article if a good match for this
+    // part. Note that part identifier like [3/50] are stripped before
+    // being stored.
+    search_article_q.reset();
+    search_article_q.bind(1, group);
+    search_article_q.bind(2, multipart_subject_quark);
+    search_article_q.bind(3, author);
+    search_article_q.bind(4, part_count);
+    while (search_article_q.executeStep())
+    {
+        // ok, we'll use this article as the article for this part
+      art_mid = Quark(search_article_q.getColumn(0).getText());
     }
   }
 
@@ -302,10 +296,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
     SQLite::Transaction add_article(pan_db);
 
     art_mid = message_id;
-
-    // TODO: find a similar fuzzy search using DB
-    if (part_count > 1)
-      workarea._subject_lookup.insert(std::pair<Quark,Quark>(multipart_subject_quark, art_mid));
 
     // if we don't already have this article in memory...
     if (!h->find_article (art_mid))
