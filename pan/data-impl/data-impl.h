@@ -428,8 +428,6 @@ public:
           return _art_chunk.back();
         }
 
-        void remove_articles(quarks_t const &mids);
-
         void reserve(Article_Count);
     };
 
