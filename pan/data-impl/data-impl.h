@@ -429,9 +429,6 @@ public:
           return _art_chunk.back();
         }
 
-        ArticleNode *find_node(Quark const &mid);
-        ArticleNode const *find_node(Quark const &mid) const;
-
         void remove_articles(quarks_t const &mids);
 
         void reserve(Article_Count);
