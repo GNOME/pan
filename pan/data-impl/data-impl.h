@@ -431,14 +431,6 @@ public:
         void reserve(Article_Count);
     };
 
-    static void find_nodes(quarks_t const &mids,
-                           nodes_t &nodes,
-                           nodes_v &setme);
-
-    static void find_nodes(quarks_t const &mids,
-                           nodes_t const &nodes,
-                           const_nodes_v &setme);
-
     void get_article_references(Article const *,
                                 std::string &setme) const override;
 
