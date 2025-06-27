@@ -70,17 +70,6 @@ DataImpl ::GroupHeaders ::~GroupHeaders()
 {
 }
 
-void DataImpl ::GroupHeaders ::remove_articles(quarks_t const &mids)
-{
-  nodes_v nodes;
-  find_nodes(mids, _nodes, nodes);
-  foreach (nodes_v, nodes, it)
-  {
-    (*it)->_article = nullptr;
-  }
-  _dirty = true;
-}
-
 DataImpl ::GroupHeaders const *DataImpl ::get_group_headers(
   Quark const &group) const
 {
@@ -1487,13 +1476,6 @@ void DataImpl ::delete_articles(std::vector<Article> const &articles)
     // update the group's read/unread count...
     Quark const &group(it->first);
     fire_group_counts(group);
-
-    // remove the articles from our lookup table...
-    GroupHeaders *h(get_group_headers(group));
-    if (h)
-    {
-      h->remove_articles(it->second.mids);
-    }
   }
 
   // mark articles as pending deletion
