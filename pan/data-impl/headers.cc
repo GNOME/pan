@@ -70,29 +70,6 @@ DataImpl ::GroupHeaders ::~GroupHeaders()
 {
 }
 
-DataImpl ::ArticleNode *DataImpl ::GroupHeaders ::find_node(Quark const &mid)
-{
-  ArticleNode *node(nullptr);
-  nodes_t::iterator it(_nodes.find(mid));
-  if (it != _nodes.end())
-  {
-    node = it->second;
-  }
-  return node;
-}
-
-DataImpl ::ArticleNode const *DataImpl ::GroupHeaders ::find_node(
-  Quark const &mid) const
-{
-  ArticleNode const *node(nullptr);
-  nodes_t::const_iterator it(_nodes.find(mid));
-  if (it != _nodes.end())
-  {
-    node = it->second;
-  }
-  return node;
-}
-
 void DataImpl ::GroupHeaders ::remove_articles(quarks_t const &mids)
 {
   nodes_v nodes;
