@@ -297,17 +297,6 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
     art_mid = message_id;
 
-    // if we don't already have this article in memory...
-    if (!h->find_article (art_mid))
-    {
-      Article& a (h->alloc_new_article());
-      a.group = group;
-      a.message_id = art_mid;
-      new_article = &a;
-
-      workarea._added_batch.insert (art_mid);
-    }
-
     SQLite::Statement search_article_q(pan_db, R"SQL(
         select count() from `article` where message_id = ?
     )SQL");
@@ -319,6 +308,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
     }
     // if we don't have this article in DB
     if (count == 0) {
+      workarea._added_batch.insert (art_mid);
+
       // Create author
       SQLite::Statement set_author_q(pan_db, R"SQL(
         insert into `author` (author) values (?) on conflict do nothing
