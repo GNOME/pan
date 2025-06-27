@@ -70,17 +70,6 @@ DataImpl ::GroupHeaders ::~GroupHeaders()
 {
 }
 
-void DataImpl ::GroupHeaders ::remove_articles(quarks_t const &mids)
-{
-  nodes_v nodes;
-  find_nodes(mids, _nodes, nodes);
-  foreach (nodes_v, nodes, it)
-  {
-    (*it)->_article = nullptr;
-  }
-  _dirty = true;
-}
-
 DataImpl ::GroupHeaders const *DataImpl ::get_group_headers(
   Quark const &group) const
 {
