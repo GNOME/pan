@@ -172,44 +172,6 @@ void DataImpl ::fire_article_flag_changed(articles_t &a, Quark const &group)
   Data::fire_article_flag_changed(a, group);
 }
 
-void DataImpl ::find_nodes(quarks_t const &mids, nodes_t &nodes, nodes_v &setme)
-{
-  NodeWeakOrdering o;
-  nodes_t tmp;
-  std::set_intersection(nodes.begin(),
-                        nodes.end(),
-                        mids.begin(),
-                        mids.end(),
-                        std::inserter(tmp, tmp.begin()),
-                        o);
-
-  setme.reserve(tmp.size());
-  foreach_const (nodes_t, tmp, it)
-  {
-    setme.push_back(it->second);
-  }
-}
-
-void DataImpl ::find_nodes(quarks_t const &mids,
-                           nodes_t const &nodes,
-                           const_nodes_v &setme)
-{
-  NodeWeakOrdering o;
-  nodes_t tmp;
-  std::set_intersection(nodes.begin(),
-                        nodes.end(),
-                        mids.begin(),
-                        mids.end(),
-                        std::inserter(tmp, tmp.begin()),
-                        o);
-
-  setme.reserve(tmp.size());
-  foreach_const (nodes_t, tmp, it)
-  {
-    setme.push_back(it->second);
-  }
-}
-
 void DataImpl ::insert_part_in_db(Quark const &group,
                           Quark const &article_mid,
                           int number,
