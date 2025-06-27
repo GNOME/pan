@@ -97,10 +97,6 @@ DataImpl ::GroupHeaders *DataImpl ::get_group_headers(Quark const &group)
 void DataImpl::GroupHeaders::reserve(Article_Count articles)
 {
   _art_chunk.reserve(static_cast<Article_Count::type>(articles));
-  // A note - the number of nodes is very rarely the same as the number of
-  // articles, but it is generally not far out, so at worse you'll end up with
-  // two allocations
-  _node_chunk.reserve(static_cast<Article_Count::type>(articles));
 }
 
 void DataImpl ::get_article_references(Article const *article,
@@ -1404,11 +1400,6 @@ void DataImpl ::group_clear_articles(Quark const &group)
     }
     delete_articles(all);
   }
-
-  // reset GroupHeaders' memory...
-  //  headers->_nodes.clear ();
-  //  headers->_node_chunk.clear ();
-  //  headers->_art_chunk.clear ();
 
   // remove 'em from DB too. delete the article_group entry.
   SQLite::Statement delete_group_q(pan_db, R"SQL(

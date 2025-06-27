@@ -417,7 +417,6 @@ public:
         bool _dirty;
         nodes_t _nodes;
         MemChunk<Article> _art_chunk;
-        MemChunk<ArticleNode> _node_chunk;
 
         GroupHeaders();
         ~GroupHeaders();
@@ -506,7 +505,6 @@ public:
         const Quark _group;
         DataImpl &_data;
         const Quark _save_path; // for auto-download
-        MemChunk<ArticleNode> _node_chunk;
         FilterInfo _filter;
         RulesInfo _rules;
         Data::ShowType _show_type;
