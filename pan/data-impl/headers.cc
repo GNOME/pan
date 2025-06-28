@@ -1439,8 +1439,11 @@ void DataImpl ::delete_articles(std::vector<Article> const &articles)
 
     LOG4CXX_TRACE(logger, "Marked article to delete " << msg_id);
   }
+  delete_orphan_author();
+}
 
-  // delete orphan authors
+void DataImpl ::delete_orphan_author()
+{
   SQLite::Statement author_q(pan_db, R"SQL(
     delete from author
     where id in

@@ -518,6 +518,7 @@ public:
   public: // Data interface
     void delete_articles(unique_articles_t const &) override;
     void delete_articles(std::vector<Article> const &) override;
+    void delete_orphan_author() override;
 
     ArticleTree *group_get_articles(
       Quark const &group,
