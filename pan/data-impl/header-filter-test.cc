@@ -56,6 +56,8 @@ public:
         insert into server (host, port, pan_id, newsrc_filename)
                     values ("dummy", 2, 1, "/dev/null");
         insert into `group` (name) values ("g1"),("g2");
+        insert into current_group ( group_id )
+          select id from `group` as g where g.name = "g1";
       )SQL");
       criteria.clear();
     }
@@ -307,11 +309,14 @@ public:
     {
       add_article("g1m1", "g1");
       add_article("g1m2", "g1");
+      add_article("g2m1", "g2");
       pan_db.exec(R"SQL(
         update article_group set score = 2
            where article_id = (select id from article where message_id == "g1m1");
         update article_group set score = 10
            where article_id = (select id from article where message_id == "g1m2");
+        update article_group set score = 10
+           where article_id = (select id from article where message_id == "g2m1");
       )SQL");
 
       criteria.set_type_score_ge(5);

@@ -343,8 +343,13 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       break;
 
     case FilterInfo::SCORE_GE:
-      res.push_back(SqlCond(
-        "(select score from article_group where article_id = article.id) >= ?",
+      res.push_back(SqlCond(R"SQL(
+          (
+            select score from article_group as ag
+            where ag.group_id == (select group_id from current_group limit 1)
+            and article_id = article.id
+          ) >= ?
+        )SQL",
         criteria._ge));
       break;
 
