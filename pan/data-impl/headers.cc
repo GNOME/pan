@@ -1191,6 +1191,8 @@ void DataImpl ::rescore_articles(Quark const &group, const quarks_t mids)
 // compute the score of all articles of a group
 void DataImpl ::rescore_group_articles(Quark const &group)
 {
+  LOG4CXX_DEBUG(logger, "rescoring group " << group);
+
   ArticleFilter::sections_t sections;
   _scorefile.get_matching_sections(group.to_view(), sections);
 
@@ -1217,31 +1219,15 @@ void DataImpl ::rescore()
   _scorefile.clear();
   _scorefile.parse_file(filename);
 
-  // enumerate the groups that need rescoring...
-  quarks_t groups;
-  foreach (std::set<MyTree *>, _trees, it)
+  for (MyTree *it: _trees)
   {
-    groups.insert((*it)->_group);
+    rescore_group_articles(it->_group);
   }
 
-  // "on_articles_changed" rescores the articles...
-  foreach_const (quarks_t, groups, git)
+  // notify the trees that the articles have changed...
+  foreach (std::set<MyTree *>, _trees, it)
   {
-    quarks_t mids;
-    Quark const &group(*git);
-    GroupHeaders const *h(get_group_headers(group));
-    foreach_const (nodes_t, h->_nodes, nit)
-    {
-      // only insert mids for nodes with articles
-      if (nit->second->_article)
-      {
-        mids.insert(mids.end(), nit->first);
-      }
-    }
-    if (! mids.empty())
-    {
-      on_articles_changed(group, mids, true);
-    }
+    (*it)->articles_changed(true);
   }
 }
 
