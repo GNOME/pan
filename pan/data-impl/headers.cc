@@ -1323,20 +1323,7 @@ struct PerGroup
 
 void DataImpl ::group_clear_articles(Quark const &group)
 {
-  // if they're in memory, remove them from there too...
-  GroupHeaders *headers(get_group_headers(group));
-  if (headers)
-  {
-    unique_articles_t all;
-    foreach (nodes_t, headers->_nodes, it)
-    {
-      if (it->second->_article)
-      {
-        all.insert(it->second->_article);
-      }
-    }
-    delete_articles(all);
-  }
+  LOG4CXX_DEBUG(logger,"Clearing all articles of group " << group);
 
   // remove 'em from DB too. delete the article_group entry.
   SQLite::Statement delete_group_q(pan_db, R"SQL(
@@ -1357,6 +1344,8 @@ void DataImpl ::group_clear_articles(Quark const &group)
     )
   )SQL");
   count = delete_article_q.exec();
+
+  delete_orphan_author();
 
   // count may be different because of cross-posting or previously orphaned articles
   LOG4CXX_TRACE(logger,  "Deleted all " << count << " articles of group "
