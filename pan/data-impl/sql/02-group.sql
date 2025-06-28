@@ -35,6 +35,13 @@ create table if not exists `group` (
 
 create unique index if not exists group_name on `group` (name);
 
+-- store which group is shown in header-pane. There should be only one
+-- row in there.
+create table if not exists current_group (
+  id integer primary key asc autoincrement,
+  group_id integer not null references `group` (id) on delete cascade
+);
+
 create table if not exists server_group (
   id integer primary key asc autoincrement,
   server_id integer not null references server (id) on delete cascade,

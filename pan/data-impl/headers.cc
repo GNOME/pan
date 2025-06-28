@@ -948,6 +948,16 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
 
   LOG4CXX_INFO(logger, "Loading headers for group " << group.c_str());
 
+  SQLite::Statement set_current_group(pan_db, R"SQL(
+     insert into current_group ( id, group_id )
+          select 1, id from `group` as g where g.name = $grp
+     on conflict (id) do
+       update set group_id =
+         (select id from `group` as g where g.name = $grp)
+  )SQL");
+  set_current_group.bind(1,group);
+  set_current_group.exec();
+
   int group_id(0), total_article_count(0);
 
   SQLite::Statement group_info_q(pan_db, "select id, total_article_count from `group` where name = ?");
