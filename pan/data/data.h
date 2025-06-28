@@ -637,6 +637,7 @@ class Data :
     typedef std::set<Article const *> unique_articles_t;
 
     virtual void delete_articles(unique_articles_t const &) = 0;
+    virtual void delete_orphan_author() = 0;
 
     virtual void get_article_scores(Quark const &group,
                                     Article const &,
