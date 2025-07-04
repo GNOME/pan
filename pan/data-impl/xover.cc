@@ -32,6 +32,7 @@
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
 #include "data-impl.h"
+#include "pan/general/log4cxx.h"
 #include "pan/general/time-elapsed.h"
 
 using namespace pan;
