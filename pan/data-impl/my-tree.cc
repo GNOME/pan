@@ -475,41 +475,6 @@ DataImpl ::MyTree ::~MyTree()
   _data.unref_group(_group);
 }
 
-/****
-*****
-****/
-
-struct DataImpl ::MyTree ::NodeMidCompare
-{
-    typedef std::pair<pan::Quark const, pan::DataImpl::ArticleNode *>
-      nodes_v_pair;
-
-    bool operator()(ArticleNode const *a, nodes_v_pair const &b) const
-    {
-      return a->_mid < b.first;
-    }
-
-    bool operator()(nodes_v_pair const &a, ArticleNode const *b) const
-    {
-      return a.first < b->_mid;
-    }
-
-    bool operator()(ArticleNode const *a, ArticleNode const *b) const
-    {
-      return a->_mid < b->_mid;
-    }
-
-    bool operator()(Quark const &a, ArticleNode const *b) const
-    {
-      return a < b->_mid;
-    }
-
-    bool operator()(ArticleNode const *a, Quark const &b) const
-    {
-      return a->_mid < b;
-    }
-};
-
 // the quirky way of incrementing 'it' is to prevent it from being
 // invalidated if update_tree() calls remove_listener()
 void DataImpl ::MyTree ::fire_updates() const

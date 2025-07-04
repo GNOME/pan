@@ -498,7 +498,6 @@ public:
         FilterInfo _filter;
         RulesInfo _rules;
         Data::ShowType _show_type;
-        struct NodeMidCompare;
         HeaderFilter _header_filter;
         HeaderRules _header_rules;
 
