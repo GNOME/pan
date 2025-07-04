@@ -360,62 +360,12 @@ public:
     void migrate_read_ranges(Quark const &group);
     void load_headers_from_db(Quark const &group);
 
-    /**
-     * ArticleNode is a Tree node used for threading Article objects.
-     *
-     * GroupHeaders owns these, and also contains a lookup table from
-     * Message-ID to ArticleNode for finding a starting point in the tree.
-     *
-     * Note that _article can be NULL here; we instantiate nodes from
-     * Articles' References: header so that we can get the threading model
-     * right even during an xover where we get children in before the
-     * parent.  This way we never need to rethread; new articles just
-     * fill in the missing pieces as they come in.
-     *
-     * @see GroupHeaders
-     */
-    struct ArticleNode
-    {
-        Quark _mid;
-        Article *_article;
-
-        typedef std::list<ArticleNode *> children_t;
-
-        ArticleNode() :
-          _article(nullptr)
-        {
-        }
-    };
-
-    typedef std::map<Quark, ArticleNode *> nodes_t;
-    typedef std::vector<ArticleNode *> nodes_v;
-    typedef std::vector<ArticleNode const *> const_nodes_v;
-
-    struct NodeWeakOrdering
-    {
-        typedef std::pair<Quark, ArticleNode *> nodes_t_element;
-
-        bool operator()(nodes_t_element const &a, Quark const &b) const
-        {
-          return a.first < b;
-        }
-
-        bool operator()(Quark const &a, nodes_t_element const &b) const
-        {
-          return a < b.first;
-        }
-    };
-
-    /***
-     **
-     ***/
     void fire_article_flag_changed(articles_t &a, Quark const &group) override;
 
     struct GroupHeaders
     {
         int _ref;
         bool _dirty;
-        nodes_t _nodes;
         MemChunk<Article> _art_chunk;
 
         GroupHeaders();
