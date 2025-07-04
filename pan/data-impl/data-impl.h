@@ -21,10 +21,6 @@
 #define __DataImpl_h__
 
 #include <SQLiteCpp/Database.h>
-#include <deque>
-#include <iosfwd>
-#include <list>
-#include <map>
 #include <string>
 #include <vector>
 
@@ -33,7 +29,6 @@
 
 #include "pan/data-impl/header-filter.h"
 #include "pan/data-impl/header-rules.h"
-#include "pan/general/log4cxx.h"
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/memchunk.h>
