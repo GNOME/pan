@@ -17,13 +17,12 @@
  *
  */
 
-#include "article-filter.h"
 #include "data-impl.h"
-#include "memchunk.h"
 #include "pan/data-impl/header-filter.h"
 #include "pan/data-impl/header-rules.h"
 #include "pan/data/data.h"
 #include "pan/data/pan-db.h"
+#include "pan/general/log4cxx.h"
 #include "pan/general/time-elapsed.h"
 #include <SQLiteCpp/Statement.h>
 #include <cassert>
