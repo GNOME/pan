@@ -274,11 +274,10 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 {
   TimeElapsed timer;
 
+  int64_t article_count(0), xref_count(0), part_count(0), old_item_count(0);
   StringView line;
   bool success(false);
   quarks_t servers;
-  int item_count(0);
-  int article_count(0);
 
   ArticleFilter::sections_t score_sections;
   _scorefile.get_matching_sections(StringView(group), score_sections);
@@ -380,14 +379,21 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
       in->getline(line);
 
       const time_t now(time(nullptr));
+      time_t before(now);
       PartBatch part_batch;
 
       for (;;)
       {
-        if ((item_count & 0x3FFF) == 0) {
-          if (item_count != 0) {
-            LOG4CXX_INFO(logger, "Migrated " << item_count <<
-                         " items of group " << group.c_str());
+        if ((article_count & 0xFFF) == 0) {
+          if (article_count != 0) {
+            time_t delta(time(nullptr) - before);
+            int new_count = article_count + part_count + xref_count;
+            int rate = (new_count - old_item_count) / delta;
+            LOG4CXX_INFO(logger, "Migrated " << article_count <<
+                         " articles of group " << group.c_str() <<
+                         " (" << rate << " items/s)");
+            time(&before);
+            old_item_count = new_count;
           }
           if (in_transaction)
             pan_db.exec("end transaction");
@@ -528,7 +534,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         // DB
         set_subject_q.exec();
         set_article_q.exec();
-        item_count++;
         article_count++;
         LOG4CXX_TRACE(logger, "Stored article " << message_id);
 
@@ -557,7 +562,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
           set_xref_q.bind(3, it->server.c_str());
           set_xref_q.bind(4, static_cast<int64_t>(it->number));
           set_xref_q.exec();
-          item_count++;
+          xref_count++;
           LOG4CXX_TRACE(logger, "article " << message_id << " stored xref in group "
                         << it->group.c_str());
         }
@@ -599,6 +604,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
             set_part_q.bind(4, static_cast<int64_t>(part_bytes));
 
             set_part_q.exec();
+            part_count++;
           }
         }
 
@@ -640,7 +646,6 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
     pan_db.exec("end transaction");
   }
 
-  int part_count = item_count - article_count;
   LOG4CXX_INFO(logger, "Migrated " << article_count << " articles and "
                                    << part_count << " parts of groups "
                                    << group.c_str() << " in DB in "
