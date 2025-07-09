@@ -1972,168 +1972,115 @@ void ellipsize_if_supported(GObject *o)
 }
 } // namespace
 
-void HeaderPane ::build_tree_columns()
-{
+void HeaderPane::build_tree_columns() {
   GtkTreeView *tree_view(GTK_TREE_VIEW(_tree_view));
   int const xpad(_prefs.get_int("tree-view-row-margins", 1));
 
   // out with the old columns, if any
   GList *old_columns = gtk_tree_view_get_columns(tree_view);
-  for (GList *l = old_columns; l != nullptr; l = l->next)
-  {
+  for (GList *l = old_columns; l != nullptr; l = l->next) {
     gtk_tree_view_remove_column(tree_view, GTK_TREE_VIEW_COLUMN(l->data));
   }
   g_list_free(old_columns);
 
+  // Column configuration structure
+  struct ColumnConfig {
+    char const *name;
+    char const *title;
+    GType renderer_type;
+    bool resizable;
+    int default_width;
+    int sort_column_id;
+    GtkTreeCellDataFunc data_func;
+    bool right_align;
+    bool is_expander;
+  };
+
+  // Define all column configurations
+  ColumnConfig configs[] = {
+      {"state", nullptr, GTK_TYPE_CELL_RENDERER_PIXBUF, false, 24, COL_STATE,
+       render_state, false, false},
+      {"action", nullptr, GTK_TYPE_CELL_RENDERER_PIXBUF, false, 24, -1,
+       render_action, false, false},
+      {"subject", _("Subject"), GTK_TYPE_CELL_RENDERER_TEXT, true, 400,
+       COL_SUBJECT, render_subject, false, true},
+      {"score", _("Score"), GTK_TYPE_CELL_RENDERER_TEXT, true, 50, COL_SCORE,
+       render_score, true, false},
+      {"author", _("Author"), GTK_TYPE_CELL_RENDERER_TEXT, true, 133,
+       COL_SHORT_AUTHOR, render_author, false, false},
+      {"lines", _("Lines"), GTK_TYPE_CELL_RENDERER_TEXT, true, 60, COL_LINES,
+       render_lines, true, false},
+      {"bytes", _("Bytes"), GTK_TYPE_CELL_RENDERER_TEXT, true, 80, COL_BYTES,
+       render_bytes, true, false},
+      {"date", _("Date"), GTK_TYPE_CELL_RENDERER_TEXT, true, 120, COL_DATE,
+       render_date, false, false}};
+
+  // Helper function to create a column
+  auto create_column = [&](ColumnConfig const &config) -> GtkTreeViewColumn * {
+    std::string const width_key =
+        std::string("header-pane-") + config.name + "-column-width";
+
+    GtkCellRenderer *r;
+    if (config.renderer_type == GTK_TYPE_CELL_RENDERER_PIXBUF) {
+      r = GTK_CELL_RENDERER(
+          g_object_new(config.renderer_type, "xpad", xpad, "ypad", 0, nullptr));
+    } else {
+      if (config.right_align) {
+        r = GTK_CELL_RENDERER(g_object_new(config.renderer_type, "xpad", xpad,
+                                           "ypad", 0, "xalign", 1.0, nullptr));
+      } else {
+        r = GTK_CELL_RENDERER(g_object_new(config.renderer_type, "xpad", xpad,
+                                           "ypad", 0, nullptr));
+      }
+      ellipsize_if_supported(G_OBJECT(r));
+    }
+
+    GtkTreeViewColumn *col;
+    if (config.title) {
+      col = gtk_tree_view_column_new_with_attributes(config.title, r, nullptr);
+    } else {
+      col = gtk_tree_view_column_new();
+      gtk_tree_view_column_pack_start(col, r, false);
+    }
+
+    gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(
+        col, _prefs.get_int(width_key, config.default_width));
+    gtk_tree_view_column_set_resizable(col, config.resizable);
+
+    if (config.sort_column_id != -1) {
+      gtk_tree_view_column_set_sort_column_id(col, config.sort_column_id);
+    }
+
+    gtk_tree_view_column_set_cell_data_func(col, r, config.data_func, this,
+                                            nullptr);
+
+    g_object_set_data_full(G_OBJECT(col), "column-width-key",
+                           g_strdup(width_key.c_str()), g_free);
+
+    return col;
+  };
+
   // get the user-configurable column list
   const std::string columns(_prefs.get_string(
-    "header-pane-columns", "state,action,subject,score,author,lines,date"));
+      "header-pane-columns", "state,action,subject,score,author,lines,date"));
   StringView v(columns), tok;
-  while (v.pop_token(tok, ','))
-  {
+
+  while (v.pop_token(tok, ',')) {
     std::string const &name(tok.to_string());
-    const std::string width_key =
-      std::string("header-pane-") + name + "-column-width";
-    GtkTreeViewColumn *col(nullptr);
 
-    if (name == "state")
-    {
-      GtkCellRenderer *r = GTK_CELL_RENDERER(g_object_new(
-        GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", xpad, "ypad", 0, nullptr));
-      col = gtk_tree_view_column_new();
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      // used a fixed width since the column is not resizable
-      gtk_tree_view_column_set_fixed_width (col, 24);
-      gtk_tree_view_column_set_resizable(col, false);
-      gtk_tree_view_column_pack_start(col, r, false);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_state, nullptr, nullptr);
-      gtk_tree_view_column_set_sort_column_id(col, COL_STATE);
-      gtk_tree_view_append_column(tree_view, col);
-    }
-    else if (name == "action")
-    {
-      GtkCellRenderer *r = GTK_CELL_RENDERER(g_object_new(
-        GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", xpad, "ypad", 0, nullptr));
-      col = gtk_tree_view_column_new();
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      // used a fixed width since the column is not resizable
-      gtk_tree_view_column_set_fixed_width (col, 24);
-      gtk_tree_view_column_set_resizable(col, false);
-      gtk_tree_view_column_pack_start(col, r, false);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_action, nullptr, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-    }
-    else if (name == "subject")
-    {
-      GtkCellRenderer *r = GTK_CELL_RENDERER(g_object_new(
-        GTK_TYPE_CELL_RENDERER_TEXT, "xpad", xpad, "ypad", 0, nullptr));
-      ellipsize_if_supported(G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes(_("Subject"), r, nullptr);
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(col, _prefs.get_int(width_key, 400));
-      gtk_tree_view_column_set_resizable(col, true);
-      gtk_tree_view_column_set_sort_column_id(col, COL_SUBJECT);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_subject, this, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-      gtk_tree_view_set_expander_column(tree_view, col);
-    }
-    else if (name == "score")
-    {
-      GtkCellRenderer *r =
-        GTK_CELL_RENDERER(g_object_new(GTK_TYPE_CELL_RENDERER_TEXT,
-                                       "xpad",
-                                       xpad,
-                                       "ypad",
-                                       0,
-                                       "xalign",
-                                       1.0,
-                                       nullptr));
-      ellipsize_if_supported(G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes(_("Score"), r, nullptr);
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(col, _prefs.get_int(width_key, 50));
-      gtk_tree_view_column_set_resizable(col, true);
-      gtk_tree_view_column_set_sort_column_id(col, COL_SCORE);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_score, this, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-    }
-    else if (name == "author")
-    {
-      GtkCellRenderer *r = GTK_CELL_RENDERER(g_object_new(
-        GTK_TYPE_CELL_RENDERER_TEXT, "xpad", xpad, "ypad", 0, nullptr));
-      ellipsize_if_supported(G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes(_("Author"), r, nullptr);
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(col, _prefs.get_int(width_key, 133));
-      gtk_tree_view_column_set_resizable(col, true);
-      gtk_tree_view_column_set_sort_column_id(col, COL_SHORT_AUTHOR);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_author, this, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-    }
-    else if (name == "lines")
-    {
-      GtkCellRenderer *r =
-        GTK_CELL_RENDERER(g_object_new(GTK_TYPE_CELL_RENDERER_TEXT,
-                                       "xpad",
-                                       xpad,
-                                       "ypad",
-                                       0,
-                                       "xalign",
-                                       1.0,
-                                       nullptr));
-      ellipsize_if_supported(G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes(_("Lines"), r, nullptr);
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(col, _prefs.get_int(width_key, 60));
-      gtk_tree_view_column_set_resizable(col, true);
-      gtk_tree_view_column_set_sort_column_id(col, COL_LINES);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_lines, this, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-    }
-    else if (name == "bytes")
-    {
-      GtkCellRenderer *r =
-        GTK_CELL_RENDERER(g_object_new(GTK_TYPE_CELL_RENDERER_TEXT,
-                                       "xpad",
-                                       xpad,
-                                       "ypad",
-                                       0,
-                                       "xalign",
-                                       1.0,
-                                       nullptr));
-      ellipsize_if_supported(G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes(_("Bytes"), r, nullptr);
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(col, _prefs.get_int(width_key, 80));
-      gtk_tree_view_column_set_resizable(col, true);
-      gtk_tree_view_column_set_sort_column_id(col, COL_BYTES);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_bytes, this, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-    }
-    else if (name == "date")
-    {
-      GtkCellRenderer *r = GTK_CELL_RENDERER(g_object_new(
-        GTK_TYPE_CELL_RENDERER_TEXT, "xpad", xpad, "ypad", 0, nullptr));
-      ellipsize_if_supported(G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes(_("Date"), r, nullptr);
-      gtk_tree_view_column_set_sizing(col, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(col, _prefs.get_int(width_key, 120));
-      gtk_tree_view_column_set_resizable(col, true);
-      gtk_tree_view_column_set_sort_column_id(col, COL_DATE);
-      gtk_tree_view_column_set_cell_data_func(
-        col, r, render_date, this, nullptr);
-      gtk_tree_view_append_column(tree_view, col);
-    }
+    // Find the configuration for this column
+    for (const auto& config : configs) {
+      if (name == config.name) {
+        GtkTreeViewColumn *col = create_column(config);
+        gtk_tree_view_append_column(tree_view, col);
 
-    g_object_set_data_full(
-      G_OBJECT(col), "column-width-key", g_strdup(width_key.c_str()), g_free);
+        if (config.is_expander) {
+          gtk_tree_view_set_expander_column(tree_view, col);
+        }
+        break;
+      }
+    }
   }
 }
 
