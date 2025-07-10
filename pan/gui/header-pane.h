@@ -236,20 +236,6 @@ class HeaderPane :
     ActionManager &_action_manager;
 
   private:
-    enum
-    {
-      COL_DATE_STR,
-      COL_STATE,
-      COL_ACTION,
-      COL_SCORE,
-      COL_LINES,
-      COL_BYTES,
-      COL_DATE,
-      COL_ARTICLE_POINTER,
-      COL_SUBJECT,
-      COL_SHORT_AUTHOR,
-      N_COLUMNS
-    };
 
     class Row : public PanTreeStore::Row
     {
