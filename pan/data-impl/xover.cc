@@ -123,10 +123,11 @@ namespace
         part = parts = 1;
     }
 
-    /* but if it's starting the subject with "Re:" and doesn't
-       have many lines, it's probably a followup to a part, rather
-       than an actual part. */
-    if (Article::has_reply_leader(subj) && line_count<100)
+    /* but if it's starting the subject with "Re:" and doesn't have
+       many lines, it's probably a followup to a part, rather than an
+       actual part. Note that server may provide a bogus zero line
+       count in which case the last test is misleading. */
+    if (Article::has_reply_leader(subj) && line_count != 0 && line_count < 100)
       part = parts = 0;
 
     /* Subjects containing (0/N) aren't part of an N-part binary;
