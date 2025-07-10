@@ -58,23 +58,6 @@ log4cxx::LoggerPtr logger(getLogger("header-pane"));
 EvolutionDateMaker const date_maker;
 
 namespace {
-enum
-{
-  COL_DATE_STR,
-  COL_STATE,
-  COL_ACTION,
-  COL_SCORE,
-  COL_LINES,
-  COL_BYTES,
-  COL_DATE,
-  COL_ARTICLE_POINTER,
-  COL_SUBJECT,
-  COL_SHORT_AUTHOR,
-  N_COLUMNS
-};
-}
-
-namespace {
 // default color theme's Colors
 PanColors const &colors(PanColors::get());
 } // namespace
@@ -199,7 +182,7 @@ void HeaderPane ::render_action(GtkTreeViewColumn *,
                                 gpointer)
 {
   int index(0);
-  gtk_tree_model_get(model, iter, COL_ACTION, &index, -1);
+  gtk_tree_model_get(model, iter, Data::COL_ACTION, &index, -1);
   g_object_set(renderer, "pixbuf", _icons[index].pixbuf, nullptr);
 }
 
@@ -210,7 +193,7 @@ void HeaderPane ::render_state(GtkTreeViewColumn *,
                                gpointer)
 {
   int index(0);
-  gtk_tree_model_get(model, iter, COL_STATE, &index, -1);
+  gtk_tree_model_get(model, iter, Data::COL_STATE, &index, -1);
   g_object_set(renderer, "pixbuf", _icons[index].pixbuf, nullptr);
 }
 
@@ -238,7 +221,7 @@ void HeaderPane ::render_score(GtkTreeViewColumn *,
                                gpointer user_data)
 {
   int score(0);
-  gtk_tree_model_get(model, iter, COL_SCORE, &score, -1);
+  gtk_tree_model_get(model, iter, Data::COL_SCORE, &score, -1);
 
   char buf[16];
   if (score)
@@ -334,7 +317,7 @@ void HeaderPane ::render_lines(GtkTreeViewColumn *,
   unsigned long lines(0ul);
   std::stringstream str;
 
-  gtk_tree_model_get(model, iter, COL_LINES, &lines, -1);
+  gtk_tree_model_get(model, iter, Data::COL_LINES, &lines, -1);
   str << lines;
 
   g_object_set(renderer,
@@ -356,7 +339,7 @@ void HeaderPane ::render_bytes(GtkTreeViewColumn *,
   HeaderPane const *self(static_cast<HeaderPane *>(userdata));
 
   unsigned long bytes(0);
-  gtk_tree_model_get(model, iter, COL_BYTES, &bytes, -1);
+  gtk_tree_model_get(model, iter, Data::COL_BYTES, &bytes, -1);
   g_object_set(renderer,
                "text",
                pan::render_bytes(bytes),
@@ -376,7 +359,7 @@ void HeaderPane ::render_date(GtkTreeViewColumn *,
   HeaderPane const *self(static_cast<HeaderPane *>(userdata));
 
   gchar *date(nullptr);
-  gtk_tree_model_get(model, iter, COL_DATE_STR, &date, -1);
+  gtk_tree_model_get(model, iter, Data::COL_DATE_STR, &date, -1);
   g_object_set(renderer,
                "text",
                date,
@@ -512,30 +495,30 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
   bool const is_root(store->is_root(iter_a));
   if (! is_root)
   {
-    sortcol = COL_DATE;
+    sortcol = Data::COL_DATE;
   }
 
   switch (sortcol)
   {
-    case COL_STATE:
+    case Data::COL_STATE:
       ret = row_a.get_state() - row_b.get_state();
       break;
 
-    case COL_ACTION:
-      // const int a_action (store->get_cell_int (iter_a, COL_ACTION));
-      // const int b_action (store->get_cell_int (iter_b, COL_ACTION));
+    case Data::COL_ACTION:
+      // const int a_action (store->get_cell_int (iter_a, Data::COL_ACTION));
+      // const int b_action (store->get_cell_int (iter_b, Data::COL_ACTION));
       // ret = a_action - b_action;
       break;
 
-    case COL_SUBJECT:
+    case Data::COL_SUBJECT:
       ret = strcmp(row_a.get_collated_subject(), row_b.get_collated_subject());
       break;
 
-    case COL_SCORE:
+    case Data::COL_SCORE:
       ret = row_a.article.get_score() - row_b.article.get_score();
       break;
 
-    case COL_BYTES:
+    case Data::COL_BYTES:
     {
       unsigned long const a_bytes(row_a.article.get_byte_count());
       unsigned long const b_bytes(row_b.article.get_byte_count());
@@ -554,7 +537,7 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
       break;
     }
 
-    case COL_LINES:
+    case Data::COL_LINES:
     {
       unsigned long const a_lines(row_a.article.get_line_count());
       unsigned long const b_lines(row_b.article.get_line_count());
@@ -573,12 +556,12 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
       break;
     }
 
-    case COL_SHORT_AUTHOR:
+    case Data::COL_SHORT_AUTHOR:
       ret = strcmp(row_a.get_collated_author(), row_b.get_collated_author());
       break;
 
     default:
-    { // COL_DATE
+    { // Data::COL_DATE
       time_t const a_time(row_a.article.get_time_posted());
       time_t const b_time(row_b.article.get_time_posted());
       if (a_time < b_time)
@@ -627,7 +610,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
   LOG4CXX_DEBUG(logger, "Build model: called on group " << group.c_str());
   TimeElapsed timer;
   PanTreeStore *store =
-    PanTreeStore ::new_tree(N_COLUMNS,
+    PanTreeStore ::new_tree(Data::N_COLUMNS,
                             G_TYPE_STRING,  // date string
                             G_TYPE_INT,     // state
                             G_TYPE_INT,     // action
@@ -640,7 +623,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                             G_TYPE_STRING); // short author
 
   GtkTreeSortable *sort = GTK_TREE_SORTABLE(store);
-  for (int i = 0; i < N_COLUMNS; ++i)
+  for (int i = 0; i < Data::N_COLUMNS; ++i)
   {
     gtk_tree_sortable_set_sort_func(
       sort, i, column_compare_func, GINT_TO_POINTER(i), nullptr);
@@ -705,11 +688,11 @@ void HeaderPane ::rebuild()
   bool const sort_ascending =
     _group_prefs.get_flag(_group, "header-pane-sort-ascending", false);
   int sort_column =
-    _group_prefs.get_int(_group, "header-pane-sort-column", COL_DATE);
+    _group_prefs.get_int(_group, "header-pane-sort-column", Data::COL_DATE);
   if (sort_column < 0
-      || sort_column >= N_COLUMNS) // safeguard against odd settings
+      || sort_column >= Data::N_COLUMNS) // safeguard against odd settings
   {
-    sort_column = COL_DATE;
+    sort_column = Data::COL_DATE;
   }
   gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_tree_store),
                                        sort_column,
@@ -2024,21 +2007,21 @@ void HeaderPane::build_tree_columns() {
 
   // Define all column configurations
   ColumnConfig configs[] = {
-      {"state", nullptr, GTK_TYPE_CELL_RENDERER_PIXBUF, false, 24, COL_STATE,
+      {"state", nullptr, GTK_TYPE_CELL_RENDERER_PIXBUF, false, 24, Data::COL_STATE,
        render_state, false, false},
       {"action", nullptr, GTK_TYPE_CELL_RENDERER_PIXBUF, false, 24, -1,
        render_action, false, false},
       {"subject", _("Subject"), GTK_TYPE_CELL_RENDERER_TEXT, true, 400,
-       COL_SUBJECT, render_subject, false, true},
-      {"score", _("Score"), GTK_TYPE_CELL_RENDERER_TEXT, true, 50, COL_SCORE,
+       Data::COL_SUBJECT, render_subject, false, true},
+      {"score", _("Score"), GTK_TYPE_CELL_RENDERER_TEXT, true, 50, Data::COL_SCORE,
        render_score, true, false},
       {"author", _("Author"), GTK_TYPE_CELL_RENDERER_TEXT, true, 133,
-       COL_SHORT_AUTHOR, render_author, false, false},
-      {"lines", _("Lines"), GTK_TYPE_CELL_RENDERER_TEXT, true, 60, COL_LINES,
+       Data::COL_SHORT_AUTHOR, render_author, false, false},
+      {"lines", _("Lines"), GTK_TYPE_CELL_RENDERER_TEXT, true, 60, Data::COL_LINES,
        render_lines, true, false},
-      {"bytes", _("Bytes"), GTK_TYPE_CELL_RENDERER_TEXT, true, 80, COL_BYTES,
+      {"bytes", _("Bytes"), GTK_TYPE_CELL_RENDERER_TEXT, true, 80, Data::COL_BYTES,
        render_bytes, true, false},
-      {"date", _("Date"), GTK_TYPE_CELL_RENDERER_TEXT, true, 120, COL_DATE,
+      {"date", _("Date"), GTK_TYPE_CELL_RENDERER_TEXT, true, 120, Data::COL_DATE,
        render_date, false, false}};
 
   // Helper function to create a column
@@ -3182,34 +3165,34 @@ void HeaderPane::Row::get_value(int column, GValue *setme)
 {
   switch (column)
   {
-    case COL_DATE_STR:
+    case Data::COL_DATE_STR:
       set_value_string(setme, date_maker.get_date_string(article.get_time_posted()));
       break;
-    case COL_STATE:
+    case Data::COL_STATE:
       set_value_int(setme, get_state());
       break;
-    case COL_ACTION:
+    case Data::COL_ACTION:
       set_value_int(setme, _header_pane.get_article_action(article.get_flag(), article.message_id));
       break;
-    case COL_SCORE:
+    case Data::COL_SCORE:
       set_value_int(setme, article.get_score());
       break;
-    case COL_LINES:
+    case Data::COL_LINES:
       set_value_ulong(setme, article.get_line_count());
       break;
-    case COL_BYTES:
+    case Data::COL_BYTES:
       set_value_ulong(setme, article.get_byte_count());
       break;
-    case COL_DATE:
+    case Data::COL_DATE:
       set_value_ulong(setme, (unsigned long)article.get_time_posted());
       break;
-    case COL_ARTICLE_POINTER:
+    case Data::COL_ARTICLE_POINTER:
       set_value_pointer(setme, (void *)&article);
       break;
-    case COL_SUBJECT:
+    case Data::COL_SUBJECT:
       set_value_static_string(setme, article.get_author().c_str());
       break;
-    case COL_SHORT_AUTHOR:
+    case Data::COL_SHORT_AUTHOR:
       set_value_static_string(setme, get_short_author().c_str());
       break;
   }
