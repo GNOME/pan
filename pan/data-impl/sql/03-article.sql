@@ -20,6 +20,12 @@ create table if not exists article (
   -- in SQL null + 3 => null
   line_count integer default 0,
 
+  -- bytes is made of the sum of the article parts. I need to
+  -- denormalize this as sorting column can be done on
+  -- bytes. Computing bytes from article_part while sorting would be
+  -- very long. Anyway article_part is never updated, so no worry.
+  bytes integer default 0,
+
   --  marked boolean check(marked = False or marked = True),
   binary boolean check(binary = False or binary = True),
 
@@ -167,6 +173,12 @@ create unique index if not exists article_part_msg_id
   on `article_part` (part_message_id);
 create unique index if not exists article_part_art_id_pt_nb
   on `article_part` (article_id, part_number);
+
+create trigger if not exists update_article_bytes after insert on article_part
+  begin
+    update article set bytes = bytes + new.size where id = new.article_id;
+  end;
+
 
 -- Local Variables:
 -- mode: sql
