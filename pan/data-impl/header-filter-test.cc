@@ -83,7 +83,7 @@ public:
     {
     }
 
-    void add_article(std::string msg_id)
+    void add_article_db(std::string msg_id)
     {
       SQLite::Statement q_article(pan_db, R"SQL(
         insert into article (message_id,subject_id, author_id, time_posted)
@@ -95,13 +95,13 @@ public:
       CPPUNIT_ASSERT_EQUAL_MESSAGE("insert article " + msg_id, 1, res);
     }
 
-    void add_article(std::string msg_id, std::string group)
+    void add_article_in_group(std::string msg_id, std::string group)
     {
-      add_article(msg_id);
-      add_article_in_group(msg_id, group);
+      add_article_db(msg_id);
+      link_article_in_group_db(msg_id, group);
     }
 
-    void add_article_in_group(std::string msg_id, std::string group)
+    void link_article_in_group_db(std::string msg_id, std::string group)
     {
       SQLite::Statement q_article_group(pan_db, R"SQL(
       insert into article_group(article_id, group_id)
@@ -253,9 +253,9 @@ public:
 
     void test_by_group_name()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
-      add_article("g2m3", "g2");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
+      add_article_in_group("g2m3", "g2");
 
       TextMatch::Description d;
       d.type = TextMatch::CONTAINS;
@@ -267,9 +267,9 @@ public:
 
     void test_by_nb_of_crosspost()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
-      add_article_in_group("g1m1", "g2");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
+      link_article_in_group_db("g1m1", "g2");
 
       TextMatch::Description d;
       d.text = "(.*:){2}";
@@ -286,9 +286,9 @@ public:
 
     void test_by_xref_test()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
-      add_article_in_group("g1m1", "g2");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
+      link_article_in_group_db("g1m1", "g2");
 
       // test that g2 is not part of xref
       TextMatch::Description d;
@@ -302,10 +302,10 @@ public:
 
     void test_by_newsgroup()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
-      add_article("g2m3", "g2");
-      add_article_in_group("g1m1", "g2");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
+      add_article_in_group("g2m3", "g2");
+      link_article_in_group_db("g1m1", "g2");
 
       // test that g2 is not part of xref
       TextMatch::Description d;
@@ -325,8 +325,8 @@ public:
 
     void test_by_references()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         update article set `references` = "g1m1" where message_id = "g1m2"
       )SQL");
@@ -340,8 +340,8 @@ public:
 
     void test_by_header()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         insert into subject (subject) values ("m1 subject"), ("m2 subject");
         update article set author_id = (select id from author where author like "Me%"),
@@ -377,9 +377,9 @@ public:
 
     void test_by_score_ge()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
-      add_article("g2m1", "g2");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
+      add_article_in_group("g2m1", "g2");
       pan_db.exec(R"SQL(
         update article_group set score = 2
            where article_id = (select id from article where message_id == "g1m1");
@@ -395,8 +395,8 @@ public:
 
     void test_by_cache_status()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         update article set cached = True where message_id == "g1m1";
       )SQL");
@@ -407,8 +407,8 @@ public:
 
     void test_by_line_count()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         update article set line_count = 10 where message_id == "g1m1";
         update article set line_count = 20 where message_id == "g1m2";
@@ -420,8 +420,8 @@ public:
 
     void test_by_days_old()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         update article set time_posted = unixepoch('now', '-10 days')
                where message_id == "g1m1";
@@ -441,8 +441,8 @@ public:
 
     void test_by_is_binary()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         update article set part_state = 'C' where message_id == "g1m1";
       )SQL");
@@ -482,8 +482,8 @@ public:
 
     void test_single_article()
     {
-      add_article("g1m1", "g1");
-      add_article("g1m2", "g1");
+      add_article_in_group("g1m1", "g1");
+      add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
         update article set part_state = 'C' where message_id == "g1m1";
       )SQL");
@@ -509,13 +509,13 @@ public:
 
     void test_article_filter()
     {
-      add_article("g1m1", "g1");
+      add_article_in_group("g1m1", "g1");
       pan_db.exec(R"SQL(
         update article set part_state = 'C' where message_id == "g1m1";
       )SQL");
 
-      add_article("g1m2", "g1");
-      add_article("g2m1", "g2");
+      add_article_in_group("g1m2", "g1");
+      add_article_in_group("g2m1", "g2");
 
       criteria.set_type_binary();
 
@@ -528,25 +528,25 @@ public:
     void add_article_tree()
     {
       // g1m1a -> g1m1b, g1m1b2 => g1m1c1, g1m1c2
-      add_article("g1m1a", "g1");
-      add_article("g1m1b", "g1");
+      add_article_in_group("g1m1a", "g1");
+      add_article_in_group("g1m1b", "g1");
       data->store_references("g1m1b", "g1m1a"); // add ancestor
-      add_article("g1m1b2", "g1");
+      add_article_in_group("g1m1b2", "g1");
       data->store_references("g1m1b2", "g1m1a"); // add ancestor
-      add_article("g1m1c1", "g1");
+      add_article_in_group("g1m1c1", "g1");
       data->store_references("g1m1c1", "g1m1a g1m1b"); // add ancestors
-      add_article("g1m1c2", "g1");
+      add_article_in_group("g1m1c2", "g1");
       data->store_references("g1m1c2", "g1m1a g1m1b"); // add ancestors
 
       // g1m2a -> g1m2b -> g1m2c
-      add_article("g1m2a", "g1");
-      add_article("g1m2b", "g1");
+      add_article_in_group("g1m2a", "g1");
+      add_article_in_group("g1m2b", "g1");
       data->store_references("g1m2b", "g1m2a"); // add ancestor
-      add_article("g1m2c", "g1");
+      add_article_in_group("g1m2c", "g1");
       data->store_references("g1m2c", "g1m2a g1m2b"); // add ancestors
 
-      add_article("g1m2", "g1"); // no ancestors
-      add_article("g2m1", "g2");
+      add_article_in_group("g1m2", "g1"); // no ancestors
+      add_article_in_group("g2m1", "g2");
     }
 
     void test_article_filter_with_thread()
