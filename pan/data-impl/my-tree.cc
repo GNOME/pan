@@ -172,28 +172,73 @@ int DataImpl ::MyTree ::fill_article_view_from_article(bool init) const
 }
 
 // apply function on shown articles in breadth first order
-int DataImpl ::MyTree ::call_on_shown_articles (
-  std::function<void(Quark msg_id, Quark parent_id)> cb) const
-{
-  // see https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
+int DataImpl ::MyTree ::call_on_shown_articles(
+    std::function<void(Quark msg_id, Quark parent_id)> cb,
+    header_column_enum header_column_id, bool ascending) const {
+
+  // Map column IDs to database column names
+  std::string db_column, db_join;
+
+  switch (header_column_id) {
+  case COL_STATE:
+    db_column = "a.part_state";
+    break;
+  case COL_SUBJECT:
+    db_column = "subject.subject";
+    db_join = "join subject on subject.article_id == a.id";
+    break;
+  case COL_SCORE:
+    db_column = "ag.score";
+    db_join = "join article_group as ag on ag.article_id == a.id";
+    break;
+  case COL_SHORT_AUTHOR:
+    db_column = "author.author";
+    db_join = "join author on a.author_id == author.id";
+    break;
+  case COL_LINES:
+    db_column = "a.line_count";
+    break;
+  case COL_BYTES:
+    db_column = "a.bytes";
+    break;
+  case COL_DATE:
+    db_column = "time_posted";
+    break;
+  default:
+    assert(0); // Unknown column
+  }
+
+  // see
+  // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   std::string q = R"SQL(
-    with recursive hierarchy as (
-      select a.id article_id, message_id, av.parent_id
+    with recursive hierarchy (a_id, m_id, p_id, order_item) as (
+      select a.id, message_id, av.parent_id, )SQL" +
+                  db_column +
+                  R"SQL(
       from article_view as av
 	    join article as a on a.id == av.article_id
+      )SQL" + db_join + R"SQL(
       where av.parent_id is null and show == 1
       union all
-      select a.id, a.message_id, av.parent_id
+      select a.id, a.message_id, av.parent_id, )SQL" +
+                  db_column +
+                  R"SQL(
       from article_view as av
 	    join article as a on a.id == av.article_id
       join hierarchy as h
-	    where show == 1 and av.parent_id is not null and av.parent_id = h.article_id
+      )SQL" + db_join + R"SQL(
+	    where show == 1 and av.parent_id is not null and av.parent_id = h.a_id
+      order by )SQL" +
+                  db_column + " " + (ascending ? "asc" : "desc") +
+                  R"SQL(
 	    limit 10000000 -- todo remove ?
     )
-    select hierarchy.message_id, parent.message_id
+    select hierarchy.m_id, parent.message_id
 	  from hierarchy
-	  left outer join article as parent on hierarchy.parent_id == parent.id
+	  left outer join article as parent on hierarchy.p_id == parent.id
   )SQL";
+
+  LOG4CXX_TRACE(logger, "sql request is " << q);
 
   SQLite::Statement st(pan_db, q);
   int count(0);
