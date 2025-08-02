@@ -644,39 +644,35 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     atree->update_article_after_gui_update();
 
-    LOG4CXX_INFO(logger,
-                 "Build model: added " << count << " articles of group "
-                                       << group.c_str() << " in "
-                                       << timer.get_seconds_elapsed() << "s.");
+    LOG4CXX_INFO(logger, "Build model: added "
+                             << count << " articles of group " << group.c_str()
+                             << " in " << timer.get_seconds_elapsed() << "s.");
   }
   return store;
 }
 
 namespace {
-void save_sort_order(Quark const &group, GroupPrefs &prefs, PanTreeStore *store)
-{
+void save_sort_order(Quark const &group, GroupPrefs &prefs,
+                     PanTreeStore *store) {
   g_assert(store);
   g_assert(GTK_IS_TREE_SORTABLE(store));
 
   gint sort_column(0);
   GtkSortType sort_type;
-  gtk_tree_sortable_get_sort_column_id(
-    GTK_TREE_SORTABLE(store), &sort_column, &sort_type);
+  gtk_tree_sortable_get_sort_column_id(GTK_TREE_SORTABLE(store), &sort_column,
+                                       &sort_type);
   prefs.set_int(group, "header-pane-sort-column", sort_column);
-  prefs.set_flag(
-    group, "header-pane-sort-ascending", sort_type == GTK_SORT_ASCENDING);
+  prefs.set_flag(group, "header-pane-sort-ascending",
+                 sort_type == GTK_SORT_ASCENDING);
 }
 } // namespace
 
-void HeaderPane ::rebuild()
-{
+void HeaderPane ::rebuild() {
   LOG4CXX_DEBUG(logger, "rebuild started");
   quarks_t selectme;
-  if (1)
-  {
+  if (1) {
     articles_set const old_selection(get_full_selection());
-    foreach_const (articles_set, old_selection, it)
-    {
+    foreach_const(articles_set, old_selection, it) {
       selectme.insert((*it)->message_id);
     }
   }
@@ -686,11 +682,11 @@ void HeaderPane ::rebuild()
   _tree_store = build_model(_group, _atree, nullptr);
 
   bool const sort_ascending =
-    _group_prefs.get_flag(_group, "header-pane-sort-ascending", false);
+      _group_prefs.get_flag(_group, "header-pane-sort-ascending", false);
   int sort_column =
-    _group_prefs.get_int(_group, "header-pane-sort-column", Data::COL_DATE);
-  if (sort_column < 0
-      || sort_column >= Data::N_COLUMNS) // safeguard against odd settings
+      _group_prefs.get_int(_group, "header-pane-sort-column", Data::COL_DATE);
+  if (sort_column < 0 ||
+      sort_column >= Data::N_COLUMNS) // safeguard against odd settings
   {
     sort_column = Data::COL_DATE;
   }
@@ -705,50 +701,40 @@ void HeaderPane ::rebuild()
   g_object_unref(G_OBJECT(_tree_store)); // store is deleted w/view
 
   // add signal here to avoid loop
-  g_signal_connect(GTK_TREE_SORTABLE(_tree_store),
-                   "sort-column-changed",
-                   G_CALLBACK(sort_column_changed_cb),
-                   this);
+  g_signal_connect(GTK_TREE_SORTABLE(_tree_store), "sort-column-changed",
+                   G_CALLBACK(sort_column_changed_cb), this);
 
-  if (_prefs.get_flag("expand-threads-when-entering-group", false))
-  {
+  if (_prefs.get_flag("expand-threads-when-entering-group", false)) {
     gtk_tree_view_expand_all(view);
   }
 
-  if (! selectme.empty())
-  {
+  if (!selectme.empty()) {
     select_message_id(*selectme.begin());
   }
   LOG4CXX_DEBUG(logger, "rebuild done");
 }
 
-bool HeaderPane ::set_group(Quark const &new_group)
-{
-  LOG4CXX_TRACE(logger,
-                "set_group called for group "
-                  << new_group << ", old group was "
-                  << (_group.empty() ? "null" : _group));
+bool HeaderPane ::set_group(Quark const &new_group) {
+  LOG4CXX_TRACE(logger, "set_group called for group "
+                            << new_group << ", old group was "
+                            << (_group.empty() ? "null" : _group));
 
   set_cleared(new_group.empty());
 
   Quark const old_group(_group);
   bool change(old_group != new_group);
 
-  if (change)
-  {
-    if (! _group.empty()
-        && _prefs.get_flag("mark-group-read-when-leaving-group", false))
-    {
+  if (change) {
+    if (!_group.empty() &&
+        _prefs.get_flag("mark-group-read-when-leaving-group", false)) {
       _data.mark_group_read(_group);
     }
 
-    if (_atree)
-    {
+    if (_atree) {
       _atree->remove_listener(this);
     }
 
-    if (_tree_store)
-    {
+    if (_tree_store) {
       save_sort_order(get_group(), _group_prefs, _tree_store);
       _mid_to_row.clear();
       _tree_store = nullptr;
@@ -764,15 +750,13 @@ bool HeaderPane ::set_group(Quark const &new_group)
     Quark path(_group_prefs.get_string(_group, "default-group-save-path", pch));
     g_free(pch);
 
-    if (! _group.empty())
-    {
-      _atree = _data.group_get_articles(
-        new_group, path, _show_type, &_filter, &_rules);
+    if (!_group.empty()) {
+      _atree = _data.group_get_articles(new_group, path, _show_type, &_filter,
+                                        &_rules);
       _atree->add_listener(this);
 
       rebuild();
-      if (gtk_widget_get_realized(_tree_view))
-      {
+      if (gtk_widget_get_realized(_tree_view)) {
         gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(_tree_view), 0, 0);
       }
     }
@@ -787,10 +771,8 @@ bool HeaderPane ::set_group(Quark const &new_group)
 *****
 ****/
 
-void HeaderPane ::on_group_read(Quark const &group)
-{
-  if (group == _group)
-  {
+void HeaderPane ::on_group_read(Quark const &group) {
+  if (group == _group) {
     gtk_widget_queue_draw(_tree_view);
   }
 }
@@ -800,57 +782,40 @@ void HeaderPane ::on_group_read(Quark const &group)
 ****/
 
 namespace {
-struct ArticleIsNotInSet : public ArticleTester
-{
-    quarks_t const &mids;
+struct ArticleIsNotInSet : public ArticleTester {
+  quarks_t const &mids;
 
-    ArticleIsNotInSet(quarks_t const &m) :
-      mids(m)
-    {
-    }
+  ArticleIsNotInSet(quarks_t const &m) : mids(m) {}
 
-    virtual ~ArticleIsNotInSet()
-    {
-    }
+  virtual ~ArticleIsNotInSet() {}
 
-    virtual bool operator()(Article const &a) const override
-    {
-      return ! mids.count(a.message_id);
-    }
+  virtual bool operator()(Article const &a) const override {
+    return !mids.count(a.message_id);
+  }
 };
 
-struct RememberMessageId : public RowActionFunctor
-{
-    quarks_t &mids;
+struct RememberMessageId : public RowActionFunctor {
+  quarks_t &mids;
 
-    RememberMessageId(quarks_t &m) :
-      mids(m)
-    {
-    }
+  RememberMessageId(quarks_t &m) : mids(m) {}
 
-    virtual ~RememberMessageId()
-    {
-    }
+  virtual ~RememberMessageId() {}
 
-    void operator()(GtkTreeModel *,
-                    GtkTreeIter *,
-                    Article const &article) override
-    {
-      mids.insert(article.message_id);
-    }
+  void operator()(GtkTreeModel *, GtkTreeIter *,
+                  Article const &article) override {
+    mids.insert(article.message_id);
+  }
 };
 } // namespace
 
-void HeaderPane ::collapse_selected()
-{
+void HeaderPane ::collapse_selected() {
   {
     // get a list of paths
     GtkTreeModel *model(nullptr);
     GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
     GtkTreeSelection *selection(gtk_tree_view_get_selection(view));
     GList *list(gtk_tree_selection_get_selected_rows(selection, &model));
-    if (list)
-    {
+    if (list) {
       GtkTreePath *path(static_cast<GtkTreePath *>(list->data));
       gtk_tree_view_collapse_row(view, path);
       //    gtk_tree_view_expand_to_path (view, path);
@@ -860,38 +825,31 @@ void HeaderPane ::collapse_selected()
   }
 }
 
-void HeaderPane ::select_message_id(Quark const &mid, bool do_scroll)
-{
+void HeaderPane ::select_message_id(Quark const &mid, bool do_scroll) {
 
   HeaderPane::Row *row = get_row(mid);
   GtkTreePath *path(_tree_store->get_path(row));
   GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
   bool const expand(_prefs.get_flag("expand-selected-articles", false));
-  if (expand)
-  {
+  if (expand) {
     gtk_tree_view_expand_to_path(view, path);
   }
   GtkTreeSelection *sel(gtk_tree_view_get_selection(view));
   gtk_tree_selection_select_path(sel, path);
-  if (do_scroll)
-  {
+  if (do_scroll) {
     gtk_tree_view_set_cursor(view, path, nullptr, false);
     gtk_tree_view_scroll_to_cell(view, path, nullptr, true, 0.5f, 0.0f);
   }
   gtk_tree_path_free(path);
 }
 
-void HeaderPane ::update_article_view()
-{
-  _atree->update_article_view();
-}
+void HeaderPane ::update_article_view() { _atree->update_article_view(); }
 
 void HeaderPane ::mark_as_pending_deletion(const std::set<const Article *> goners) {
   _atree->mark_as_pending_deletion(goners);
 }
 
-void HeaderPane ::update_tree()
-{
+void HeaderPane ::update_tree() {
   LOG4CXX_TRACE(logger, "update_tree called...");
   TimeElapsed timer;
 
@@ -905,58 +863,48 @@ void HeaderPane ::update_tree()
   )SQL");
 
   quarks_t new_selection;
-  foreach_const (article_v, old_selection, it)
-  {
+  foreach_const(article_v, old_selection, it) {
     is_old_selection_shown.reset();
     is_old_selection_shown.bind(1, (*it)->message_id);
-    while (is_old_selection_shown.executeStep())
-    {
+    while (is_old_selection_shown.executeStep()) {
       new_selection.insert((*it)->message_id);
     }
   }
-  LOG4CXX_TRACE(logger,
-                "update_tree: got old selection ("
-                  << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "update_tree: got old selection ("
+                            << timer.get_seconds_elapsed() << "s)");
 
   // if the old selection survived,
   // is it visible on the screen?
   bool selection_was_visible(true);
-  if (! new_selection.empty())
-  {
+  if (!new_selection.empty()) {
     GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
     Row *row(get_row(*new_selection.begin()));
     GtkTreePath *a(nullptr), *b(nullptr), *p(_tree_store->get_path(row));
     gtk_tree_view_get_visible_range(view, &a, &b);
     selection_was_visible =
-      (gtk_tree_path_compare(a, p) <= 0 && gtk_tree_path_compare(p, b) <= 0);
+        (gtk_tree_path_compare(a, p) <= 0 && gtk_tree_path_compare(p, b) <= 0);
     gtk_tree_path_free(a);
     gtk_tree_path_free(b);
     gtk_tree_path_free(p);
   }
 
-  LOG4CXX_TRACE(logger,
-                "new selection size: " << new_selection.size()
-                                       << " was visible "
-                                       << selection_was_visible << " ("
-                                       << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "new selection size: "
+                            << new_selection.size() << " was visible "
+                            << selection_was_visible << " ("
+                            << timer.get_seconds_elapsed() << "s)");
 
   quarks_t hidden;
-  auto insert_hidden_row = [&hidden](Quark msg_id)
-  {
-    hidden.insert(msg_id);
-  };
+  auto insert_hidden_row = [&hidden](Quark msg_id) { hidden.insert(msg_id); };
   _atree->call_on_hidden_articles(insert_hidden_row);
 
-  LOG4CXX_TRACE(logger,
-                "nb of hidden or removed articles: " << hidden.size() << " ("
-                                          << timer.get_seconds_elapsed()
-                                          << "s)");
+  LOG4CXX_TRACE(logger, "nb of hidden or removed articles: "
+                            << hidden.size() << " ("
+                            << timer.get_seconds_elapsed() << "s)");
 
   // if none of the current selection survived,
   // we need to select something to replace the
   // current selection.
-  if (! old_selection.empty() && new_selection.empty())
-  {
+  if (!old_selection.empty() && new_selection.empty()) {
     ArticleIsNotInSet tester(hidden);
     RememberMessageId actor(new_selection);
     action_next_if(tester, actor);
@@ -965,22 +913,20 @@ void HeaderPane ::update_tree()
   // exposed articles...
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore::parent_to_children_t exposed;
-  auto insert_exposed_row =
-    [this, do_thread, &exposed](Quark msg_id, Quark prt_id)
-  {
+  auto insert_exposed_row = [this, do_thread, &exposed](Quark msg_id,
+                                                        Quark prt_id) {
     Article exposed_article(_group, msg_id);
     Row *child(create_row(exposed_article));
-    Row *parent(do_thread && ! prt_id.empty() ? get_row(prt_id) : nullptr);
+    Row *parent(do_thread && !prt_id.empty() ? get_row(prt_id) : nullptr);
     exposed[parent].push_back(child);
   };
 
   int count = _atree->call_on_exposed_articles(insert_exposed_row);
-  LOG4CXX_TRACE(logger,
-                "nb of exposed articles: "
-                  << count << " (" << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "nb of exposed articles: "
+                            << count << " (" << timer.get_seconds_elapsed()
+                            << "s)");
 
-  if (! exposed.empty())
-  {
+  if (!exposed.empty()) {
     g_object_ref(G_OBJECT(_tree_store));
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
     _tree_store->insert_sorted(exposed);
@@ -991,43 +937,32 @@ void HeaderPane ::update_tree()
 
   // reparent...
   PanTreeStore::parent_to_children_t reparented;
-  if (do_thread)
-  {
+  if (do_thread) {
     auto insert_reparented_row = [this, do_thread, &reparented](Quark msg_id,
                                                                 Quark prt_id) {
       Row *child(get_row(msg_id));
       g_assert(child);
-      Row *parent(do_thread && ! prt_id.empty() ? get_row(prt_id) : nullptr);
+      Row *parent(do_thread && !prt_id.empty() ? get_row(prt_id) : nullptr);
       reparented[parent].push_back(child);
     };
     count = _atree->call_on_reparented_articles(insert_reparented_row);
-    if (count > 0)
-    {
+    if (count > 0) {
       _tree_store->reparent(reparented);
     }
-    LOG4CXX_TRACE(logger,
-                  "nb of reparented articles: "
-                    << count << " (" << timer.get_seconds_elapsed() << "s)");
+    LOG4CXX_TRACE(logger, "nb of reparented articles: "
+                              << count << " (" << timer.get_seconds_elapsed()
+                              << "s)");
   }
 
   // hidden or removed articles...
-  if (! hidden.empty())
-  {
+  if (!hidden.empty()) {
     RowLessThan o;
     std::vector<Row *> keep;
     PanTreeStore::rows_t kill;
-    std::set_difference(_mid_to_row.begin(),
-                        _mid_to_row.end(),
-                        hidden.begin(),
-                        hidden.end(),
-                        inserter(keep, keep.begin()),
-                        o);
-    std::set_difference(_mid_to_row.begin(),
-                        _mid_to_row.end(),
-                        keep.begin(),
-                        keep.end(),
-                        inserter(kill, kill.begin()),
-                        o);
+    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), hidden.begin(),
+                        hidden.end(), inserter(keep, keep.begin()), o);
+    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), keep.begin(),
+                        keep.end(), inserter(kill, kill.begin()), o);
     g_assert(keep.size() + kill.size() == _mid_to_row.size());
 
     g_object_ref(G_OBJECT(_tree_store));
@@ -1037,97 +972,84 @@ void HeaderPane ::update_tree()
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
     _mid_to_row.get_container().swap(keep);
-    LOG4CXX_TRACE(
-      logger, "hide articles done (" << timer.get_seconds_elapsed() << "s)");
+    LOG4CXX_TRACE(logger, "hide articles done (" << timer.get_seconds_elapsed()
+                                                 << "s)");
   }
 
-  if (! exposed.empty()
-      && _prefs.get_flag("expand-threads-when-entering-group", false))
-  {
+  if (!exposed.empty() &&
+      _prefs.get_flag("expand-threads-when-entering-group", false)) {
     gtk_tree_view_expand_all(GTK_TREE_VIEW(_tree_view));
-    LOG4CXX_TRACE(
-      logger, "thread expansion done (" << timer.get_seconds_elapsed() << "s)");
+    LOG4CXX_TRACE(logger, "thread expansion done ("
+                              << timer.get_seconds_elapsed() << "s)");
   }
 
   // update our selection if necessary.
   // if the new selection has just been added or reparented,
   // and it was visible on the screen before,
   // then scroll to ensure it's still visible.
-  if (! new_selection.empty())
-  {
+  if (!new_selection.empty()) {
     bool const do_scroll =
-      selection_was_visible
-      && (! exposed.empty() || ! reparented.empty() || ! hidden.empty());
+        selection_was_visible &&
+        (!exposed.empty() || !reparented.empty() || !hidden.empty());
     select_message_id(*new_selection.begin(), do_scroll);
   }
-    LOG4CXX_TRACE(
-      logger, "update tree done (" << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger,
+                "update tree done (" << timer.get_seconds_elapsed() << "s)");
 }
 
 /****
 *****  SELECTION
 ****/
 
-Article const *HeaderPane ::get_first_selected_article() const
-{
+Article const *HeaderPane ::get_first_selected_article() const {
   Article const *a(nullptr);
   const std::set<Article const *> articles(get_full_selection());
-  if (! articles.empty())
-  {
+  if (!articles.empty()) {
     a = *articles.begin();
   }
   return a;
 }
 
-Article *HeaderPane ::get_first_selected_article()
-{
+Article *HeaderPane ::get_first_selected_article() {
   Article *a(nullptr);
   std::set<Article const *> articles(get_full_selection());
-  if (! articles.empty())
-  {
+  if (!articles.empty()) {
     a = (Article *)*articles.begin();
   }
   return a;
 }
 
-const guint HeaderPane ::get_full_selection_rows_num() const
-{
+const guint HeaderPane ::get_full_selection_rows_num() const {
   return (gtk_tree_selection_count_selected_rows(
-    gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view))));
+      gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view))));
 }
 
 void HeaderPane ::get_full_selection_v_foreach(GtkTreeModel *model,
-                                               GtkTreePath *,
-                                               GtkTreeIter *iter,
-                                               gpointer data)
-{
+                                               GtkTreePath *, GtkTreeIter *iter,
+                                               gpointer data) {
   static_cast<article_v *>(data)->push_back(get_article_ptr(model, iter));
 }
 
-std::vector<Article const *> HeaderPane ::get_full_selection_v() const
-{
+std::vector<Article const *> HeaderPane ::get_full_selection_v() const {
   std::vector<Article const *> articles;
   GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
-  gtk_tree_selection_selected_foreach(
-    gtk_tree_view_get_selection(view), get_full_selection_v_foreach, &articles);
+  gtk_tree_selection_selected_foreach(gtk_tree_view_get_selection(view),
+                                      get_full_selection_v_foreach, &articles);
   return articles;
 }
 
-std::set<Article const *> HeaderPane ::get_full_selection() const
-{
+std::set<Article const *> HeaderPane ::get_full_selection() const {
   std::set<Article const *> articles;
 
   const std::vector<Article const *> articles_v(get_full_selection_v());
-  foreach_const (std::vector<Article const *>, articles_v, it)
-  {
+  foreach_const(std::vector<Article const *>, articles_v, it) {
     articles.insert(*it);
   }
 
   return articles;
 }
 
-void HeaderPane ::mark_all_flagged()
-{
+void HeaderPane ::mark_all_flagged() {
 
   GtkTreeIter iter;
   GtkTreeModel *model(gtk_tree_view_get_model(GTK_TREE_VIEW(_tree_view)));
@@ -1137,8 +1059,7 @@ void HeaderPane ::mark_all_flagged()
   walk_and_collect_flagged(model, &iter, sel);
 }
 
-void HeaderPane ::invert_selection()
-{
+void HeaderPane ::invert_selection() {
 
   GtkTreeIter iter;
   GtkTreeModel *model(gtk_tree_view_get_model(GTK_TREE_VIEW(_tree_view)));
@@ -1149,26 +1070,19 @@ void HeaderPane ::invert_selection()
 
 void HeaderPane ::walk_and_invert_selection(GtkTreeModel *model,
                                             GtkTreeIter *cur,
-                                            GtkTreeSelection *ref) const
-{
-  for (;;)
-  {
+                                            GtkTreeSelection *ref) const {
+  for (;;) {
     bool const selected(gtk_tree_selection_iter_is_selected(ref, cur));
-    if (selected)
-    {
+    if (selected) {
       gtk_tree_selection_unselect_iter(ref, cur);
-    }
-    else
-    {
+    } else {
       gtk_tree_selection_select_iter(ref, cur);
     }
     GtkTreeIter child;
-    if (gtk_tree_model_iter_children(model, &child, cur))
-    {
+    if (gtk_tree_model_iter_children(model, &child, cur)) {
       walk_and_invert_selection(model, &child, ref);
     }
-    if (! gtk_tree_model_iter_next(model, cur))
-    {
+    if (!gtk_tree_model_iter_next(model, cur)) {
       break;
     }
   }
@@ -1176,91 +1090,73 @@ void HeaderPane ::walk_and_invert_selection(GtkTreeModel *model,
 
 void HeaderPane ::walk_and_collect_flagged(GtkTreeModel *model,
                                            GtkTreeIter *cur,
-                                           GtkTreeSelection *setme) const
-{
-  for (;;)
-  {
+                                           GtkTreeSelection *setme) const {
+  for (;;) {
     Article const *a(get_article_ptr(model, cur));
-    if (a->get_flag())
-    {
+    if (a->get_flag()) {
       gtk_tree_selection_select_iter(setme, cur);
     }
     GtkTreeIter child;
-    if (gtk_tree_model_iter_children(model, &child, cur))
-    {
+    if (gtk_tree_model_iter_children(model, &child, cur)) {
       walk_and_collect_flagged(model, &child, setme);
     }
-    if (! gtk_tree_model_iter_next(model, cur))
-    {
+    if (!gtk_tree_model_iter_next(model, cur)) {
       break;
     }
   }
 }
 
-void HeaderPane ::walk_and_collect(GtkTreeModel *model,
-                                   GtkTreeIter *cur,
-                                   articles_set &setme) const
-{
-  for (;;)
-  {
+void HeaderPane ::walk_and_collect(GtkTreeModel *model, GtkTreeIter *cur,
+                                   articles_set &setme) const {
+  for (;;) {
     setme.insert(get_article_ptr(model, cur));
     GtkTreeIter child;
-    if (gtk_tree_model_iter_children(model, &child, cur))
-    {
+    if (gtk_tree_model_iter_children(model, &child, cur)) {
       walk_and_collect(model, &child, setme);
     }
-    if (! gtk_tree_model_iter_next(model, cur))
-    {
+    if (!gtk_tree_model_iter_next(model, cur)) {
       break;
     }
   }
 }
 
 namespace {
-struct NestedData
-{
-    HeaderPane const *pane;
-    articles_t articles;
-    bool mark_all; /* for mark_article_(un)read and mark_thread_(un)read */
+struct NestedData {
+  HeaderPane const *pane;
+  articles_t articles;
+  bool mark_all; /* for mark_article_(un)read and mark_thread_(un)read */
 };
 } // namespace
 
-void HeaderPane ::get_nested_foreach(GtkTreeModel *model,
-                                     GtkTreePath *path,
-                                     GtkTreeIter *iter,
-                                     gpointer data) const
-{
+void HeaderPane ::get_nested_foreach(GtkTreeModel *model, GtkTreePath *path,
+                                     GtkTreeIter *iter, gpointer data) const {
   NestedData &ndata(*static_cast<NestedData *>(data));
   articles_set &articles(ndata.articles);
   articles.insert(get_article_ptr(model, iter));
   bool const expanded(
-    gtk_tree_view_row_expanded(GTK_TREE_VIEW(_tree_view), path));
+      gtk_tree_view_row_expanded(GTK_TREE_VIEW(_tree_view), path));
   GtkTreeIter child;
-  if ((! expanded || ndata.mark_all)
-      && gtk_tree_model_iter_children(model, &child, iter))
-  {
+  if ((!expanded || ndata.mark_all) &&
+      gtk_tree_model_iter_children(model, &child, iter)) {
     walk_and_collect(model, &child, articles);
   }
 }
 
 void HeaderPane ::get_nested_foreach_static(GtkTreeModel *model,
                                             GtkTreePath *path,
-                                            GtkTreeIter *iter,
-                                            gpointer data)
-{
+                                            GtkTreeIter *iter, gpointer data) {
   NestedData &ndata(*static_cast<NestedData *>(data));
   ndata.pane->get_nested_foreach(model, path, iter, &ndata);
 }
 
-articles_set HeaderPane ::get_nested_selection(bool do_mark_all) const
-{
+articles_set HeaderPane ::get_nested_selection(bool do_mark_all) const {
   NestedData data;
   data.pane = this;
   data.mark_all = do_mark_all;
   GtkTreeSelection *selection(
-    gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view)));
-  gtk_tree_selection_selected_foreach(
-    selection, get_nested_foreach_static, &data);
+      gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view)));
+  gtk_tree_selection_selected_foreach(selection, get_nested_foreach_static,
+                                      &data);
   return data.articles;
 }
 
@@ -1268,25 +1164,17 @@ articles_set HeaderPane ::get_nested_selection(bool do_mark_all) const
 *****  POPUP MENU
 ****/
 
-void HeaderPane ::do_popup_menu(GtkWidget *,
-                                GdkEventButton *event,
-                                gpointer pane_g)
-{
+void HeaderPane ::do_popup_menu(GtkWidget *, GdkEventButton *event,
+                                gpointer pane_g) {
   HeaderPane *self(static_cast<HeaderPane *>(pane_g));
   GtkWidget *menu(
-    self->_action_manager.get_action_widget("/header-pane-popup"));
-  gtk_menu_popup(GTK_MENU(menu),
-                 nullptr,
-                 nullptr,
-                 nullptr,
-                 nullptr,
-                 (event ? event->button : 0),
-                 (event ? event->time : 0));
+      self->_action_manager.get_action_widget("/header-pane-popup"));
+  gtk_menu_popup(GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr,
+                 (event ? event->button : 0), (event ? event->time : 0));
 }
 
 namespace {
-gboolean on_popup_menu(GtkWidget *treeview, gpointer userdata)
-{
+gboolean on_popup_menu(GtkWidget *treeview, gpointer userdata) {
   HeaderPane::do_popup_menu(treeview, nullptr, userdata);
   return true;
 }
@@ -1295,32 +1183,25 @@ gboolean on_popup_menu(GtkWidget *treeview, gpointer userdata)
 namespace {
 bool row_collapsed_or_expanded(false);
 
-void row_collapsed_cb(GtkTreeView *, GtkTreeIter *, GtkTreePath *, gpointer)
-{
+void row_collapsed_cb(GtkTreeView *, GtkTreeIter *, GtkTreePath *, gpointer) {
   row_collapsed_or_expanded = true;
 }
 
-void row_expanded_cb(GtkTreeView *view,
-                     GtkTreeIter *,
-                     GtkTreePath *path,
-                     gpointer)
-{
+void row_expanded_cb(GtkTreeView *view, GtkTreeIter *, GtkTreePath *path,
+                     gpointer) {
   row_collapsed_or_expanded = true;
   gtk_tree_view_expand_row(view, path, true);
 }
 
-struct Blah
-{
-    GtkTreeView *view;
-    GtkTreePath *path;
-    GtkTreeViewColumn *col;
+struct Blah {
+  GtkTreeView *view;
+  GtkTreePath *path;
+  GtkTreeViewColumn *col;
 };
 
-gboolean maybe_activate_on_idle_idle(gpointer blah_gpointer)
-{
+gboolean maybe_activate_on_idle_idle(gpointer blah_gpointer) {
   Blah *blah = (Blah *)blah_gpointer;
-  if (! row_collapsed_or_expanded)
-  {
+  if (!row_collapsed_or_expanded) {
     gtk_tree_view_row_activated(blah->view, blah->path, blah->col);
   }
   gtk_tree_path_free(blah->path);
@@ -1334,10 +1215,8 @@ gboolean maybe_activate_on_idle_idle(gpointer blah_gpointer)
  * not to activate a row on single click, let's wait and see if a row expands or
  * collapses.
  */
-void maybe_activate_on_idle(GtkTreeView *view,
-                            GtkTreePath *path,
-                            GtkTreeViewColumn *col)
-{
+void maybe_activate_on_idle(GtkTreeView *view, GtkTreePath *path,
+                            GtkTreeViewColumn *col) {
   row_collapsed_or_expanded = false;
   Blah *blah = (Blah *)g_new(Blah, 1);
   blah->view = view;
@@ -1348,24 +1227,21 @@ void maybe_activate_on_idle(GtkTreeView *view,
 } // namespace
 
 namespace {
-static gboolean return_pressed_download_all(gpointer data)
-{
+static gboolean return_pressed_download_all(gpointer data) {
   HeaderPane *self(static_cast<HeaderPane *>(data));
   // TODO move this into headerpane
   self->_gui.do_read_or_save_articles();
   return false;
 }
 
-static gboolean left_pressed(gpointer data)
-{
+static gboolean left_pressed(gpointer data) {
   HeaderPane *self(static_cast<HeaderPane *>(data));
   // TODO move this into headerpane
   self->_gui.do_collapse_thread();
   return false;
 }
 
-static gboolean right_pressed(gpointer data)
-{
+static gboolean right_pressed(gpointer data) {
   HeaderPane *self(static_cast<HeaderPane *>(data));
   // TODO move this into headerpane
   self->_gui.do_expand_thread();
@@ -1376,22 +1252,17 @@ static gboolean right_pressed(gpointer data)
 // TODO just pass TRUE and let actions.cc handle that!
 gboolean HeaderPane ::on_keyboard_button_pressed(GtkWidget *widget,
                                                  GdkEventKey *event,
-                                                 gpointer data)
-{
-  if (event->type == GDK_KEY_PRESS)
-  {
-    if (event->keyval == GDK_KEY_Return)
-    {
+                                                 gpointer data) {
+  if (event->type == GDK_KEY_PRESS) {
+    if (event->keyval == GDK_KEY_Return) {
       g_idle_add(return_pressed_download_all, data);
       return TRUE;
     }
-    if (event->keyval == GDK_KEY_Left)
-    {
+    if (event->keyval == GDK_KEY_Left) {
       g_idle_add(left_pressed, data);
       return TRUE;
     }
-    if (event->keyval == GDK_KEY_Right)
-    {
+    if (event->keyval == GDK_KEY_Right) {
       g_idle_add(right_pressed, data);
       return TRUE;
     }
@@ -1402,21 +1273,17 @@ gboolean HeaderPane ::on_keyboard_button_pressed(GtkWidget *widget,
 
 gboolean HeaderPane ::on_button_pressed(GtkWidget *treeview,
                                         GdkEventButton *event,
-                                        gpointer userdata)
-{
+                                        gpointer userdata) {
   HeaderPane *self(static_cast<HeaderPane *>(userdata));
   GtkTreeView *tv(GTK_TREE_VIEW(treeview));
 
   // single click with the right mouse button?
-  if (event->type == GDK_BUTTON_PRESS && event->button == 3)
-  {
+  if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
     GtkTreeSelection *selection = gtk_tree_view_get_selection(tv);
     GtkTreePath *path;
-    if (gtk_tree_view_get_path_at_pos(
-          tv, (gint)event->x, (gint)event->y, &path, nullptr, nullptr, nullptr))
-    {
-      if (! gtk_tree_selection_path_is_selected(selection, path))
-      {
+    if (gtk_tree_view_get_path_at_pos(tv, (gint)event->x, (gint)event->y, &path,
+                                      nullptr, nullptr, nullptr)) {
+      if (!gtk_tree_selection_path_is_selected(selection, path)) {
         gtk_tree_selection_unselect_all(selection);
         gtk_tree_selection_select_path(selection, path);
       }
@@ -1424,28 +1291,23 @@ gboolean HeaderPane ::on_button_pressed(GtkWidget *treeview,
     }
     HeaderPane::do_popup_menu(treeview, event, userdata);
     return true;
-  }
-  else if (self->_prefs.get_flag("single-click-activates-article", true)
-           && (event->type == GDK_BUTTON_RELEASE) && (event->button == 1)
-           && (event->send_event == false)
-           && (event->window == gtk_tree_view_get_bin_window(tv))
-           && ! (event->state
-                 & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
-           && (self->get_full_selection_rows_num() == 1u))
-  {
+  } else if (self->_prefs.get_flag("single-click-activates-article", true) &&
+             (event->type == GDK_BUTTON_RELEASE) && (event->button == 1) &&
+             (event->send_event == false) &&
+             (event->window == gtk_tree_view_get_bin_window(tv)) &&
+             !(event->state &
+               (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) &&
+             (self->get_full_selection_rows_num() == 1u)) {
     GtkTreePath *path;
     GtkTreeViewColumn *col;
     gint cell_x(0), cell_y(0);
-    if (gtk_tree_view_get_path_at_pos(
-          tv, (gint)event->x, (gint)event->y, &path, &col, &cell_x, &cell_y))
-    {
+    if (gtk_tree_view_get_path_at_pos(tv, (gint)event->x, (gint)event->y, &path,
+                                      &col, &cell_x, &cell_y)) {
       maybe_activate_on_idle(tv, path, col);
     }
-  }
-  else if ((event->type == GDK_BUTTON_RELEASE) && (event->button == 2)
-           && (event->send_event == false)
-           && (event->window == gtk_tree_view_get_bin_window(tv)))
-  {
+  } else if ((event->type == GDK_BUTTON_RELEASE) && (event->button == 2) &&
+             (event->send_event == false) &&
+             (event->window == gtk_tree_view_get_bin_window(tv))) {
     self->_action_manager.activate_action("clear-body-pane");
   }
 
@@ -1453,46 +1315,39 @@ gboolean HeaderPane ::on_button_pressed(GtkWidget *treeview,
 }
 
 namespace {
-bool has_image_type_in_subject(Article const &a)
-{
+bool has_image_type_in_subject(Article const &a) {
   const StringView s(a.get_subject().to_view());
-  return s.strstr(".jpg") || s.strstr(".JPG") || s.strstr(".gif")
-         || s.strstr(".GIF") || s.strstr(".jpeg") || s.strstr(".JPEG")
-         || s.strstr(".png") || s.strstr(".PNG");
+  return s.strstr(".jpg") || s.strstr(".JPG") || s.strstr(".gif") ||
+         s.strstr(".GIF") || s.strstr(".jpeg") || s.strstr(".JPEG") ||
+         s.strstr(".png") || s.strstr(".PNG");
 }
 
-gboolean on_row_activated_idle(gpointer pane_g)
-{
+gboolean on_row_activated_idle(gpointer pane_g) {
   HeaderPane *pane(static_cast<HeaderPane *>(pane_g));
   Article const *a(pane->get_first_selected_article());
-  if (a)
-  {
+  if (a) {
     const size_t lines = a->get_line_count();
-      bool const is_bigish = lines >= 20000;
+    bool const is_bigish = lines >= 20000;
     bool const image_subject = has_image_type_in_subject(*a);
     bool const is_pictures_newsgroup =
-      pane->get_group().to_view().strstr("pictures") != nullptr;
+        pane->get_group().to_view().strstr("pictures") != nullptr;
     // This is not the number of MIME parts
     int const part_count = a->get_found_part_count();
 
-      // update body pane with article information
-      pane->_action_manager.activate_action ("read-selected-article");
+    // update body pane with article information
+    pane->_action_manager.activate_action("read-selected-article");
 
-      if (is_bigish && ! is_pictures_newsgroup && ! image_subject
-          && part_count > 1)
-      {
-        pane->_action_manager.activate_action("save-articles");
-      }
+    if (is_bigish && !is_pictures_newsgroup && !image_subject &&
+        part_count > 1) {
+      pane->_action_manager.activate_action("save-articles");
     }
+  }
   return false;
 }
 } // namespace
 
-void HeaderPane ::on_row_activated(GtkTreeView *,
-                                   GtkTreePath *,
-                                   GtkTreeViewColumn *,
-                                   gpointer pane_g)
-{
+void HeaderPane ::on_row_activated(GtkTreeView *, GtkTreePath *,
+                                   GtkTreeViewColumn *, gpointer pane_g) {
   g_idle_add(on_row_activated_idle, pane_g);
 }
 
@@ -1504,15 +1359,12 @@ void HeaderPane ::on_row_activated(GtkTreeView *,
 
 namespace {
 char const *mode_strings[] = {
-  N_("Subject or Author"),
-  N_("Sub or Auth (regex)"),
-  N_("Subject"),
-  N_("Author"),
-  N_("Message-ID"),
+    N_("Subject or Author"), N_("Sub or Auth (regex)"),
+    N_("Subject"),           N_("Author"),
+    N_("Message-ID"),
 };
 
-enum
-{
+enum {
   SUBJECT_OR_AUTHOR,
   SUBJECT_OR_AUTHOR_REGEX,
   SUBJECT,
@@ -1524,52 +1376,42 @@ enum
 
 #define RANGE 4998
 
-std::pair<int, int> HeaderPane ::get_int_from_rules_str(std::string val)
-{
+std::pair<int, int> HeaderPane ::get_int_from_rules_str(std::string val) {
   std::pair<int, int> res;
-  if (val == "new")
-  {
+  if (val == "new") {
     res.first = 0;
     res.second = 0;
   }
-  if (val == "never")
-  {
+  if (val == "never") {
     res.first = 10;
     res.second = 5;
   } // inversed, so never true
-  if (val == "watched")
-  {
+  if (val == "watched") {
     res.first = 9999;
     res.second = 999999;
   }
-  if (val == "high")
-  {
+  if (val == "high") {
     res.first = 5000;
     res.second = 5000 + RANGE;
   }
-  if (val == "medium")
-  {
+  if (val == "medium") {
     res.first = 1;
     res.second = 1 + RANGE;
   }
-  if (val == "low")
-  {
+  if (val == "low") {
     res.first = -9998;
     res.second = -1;
   }
-  if (val == "ignored")
-  {
+  if (val == "ignored") {
     res.first = -999999;
     res.second = -9999;
   }
   return res;
 }
 
-void HeaderPane ::rebuild_rules(bool enable)
-{
+void HeaderPane ::rebuild_rules(bool enable) {
 
-  if (! enable)
-  {
+  if (!enable) {
     _rules.clear();
     return;
   }
@@ -1581,33 +1423,32 @@ void HeaderPane ::rebuild_rules(bool enable)
   std::pair<int, int> res;
 
   res =
-    get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never"));
+      get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never"));
   tmp = new RulesInfo;
   tmp->set_type_delete_b(res.first, res.second);
   r._aggregates.push_back(tmp);
 
-  res =
-    get_int_from_rules_str(_prefs.get_string("rules-mark-read-value", "never"));
+  res = get_int_from_rules_str(
+      _prefs.get_string("rules-mark-read-value", "never"));
   tmp = new RulesInfo;
   tmp->set_type_mark_read_b(res.first, res.second);
   r._aggregates.push_back(tmp);
 
-  res =
-    get_int_from_rules_str(_prefs.get_string("rules-autocache-value", "never"));
+  res = get_int_from_rules_str(
+      _prefs.get_string("rules-autocache-value", "never"));
   tmp = new RulesInfo;
   tmp->set_type_autocache_b(res.first, res.second);
   r._aggregates.push_back(tmp);
 
   res =
-    get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never"));
+      get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never"));
   tmp = new RulesInfo;
   tmp->set_type_dl_b(res.first, res.second);
   r._aggregates.push_back(tmp);
 }
 
-void HeaderPane ::rebuild_filter(std::string const &text, int mode)
-{
-  LOG4CXX_TRACE(logger, "build filter with text " <<  text);
+void HeaderPane ::rebuild_filter(std::string const &text, int mode) {
+  LOG4CXX_TRACE(logger, "build filter with text " << text);
   TextMatch::Description d;
   d.negate = false;
   d.case_sensitive = false;
@@ -1619,32 +1460,22 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
   f.set_type_aggregate_and();
 
   // entry field filter...
-  if (! text.empty())
-  {
+  if (!text.empty()) {
     FilterInfo *entry_filter = new FilterInfo;
-    if (mode == SUBJECT)
-    {
+    if (mode == SUBJECT) {
       entry_filter->set_type_text("Subject", d);
-    }
-    else if (mode == AUTHOR)
-    {
+    } else if (mode == AUTHOR) {
       entry_filter->set_type_text("From", d);
-    }
-    else if (mode == MESSAGE_ID)
-    {
+    } else if (mode == MESSAGE_ID) {
       entry_filter->set_type_text("Message-ID", d);
-    }
-    else if (mode == SUBJECT_OR_AUTHOR)
-    {
+    } else if (mode == SUBJECT_OR_AUTHOR) {
       FilterInfo *f1 = new FilterInfo, *f2 = new FilterInfo;
       entry_filter->set_type_aggregate_or();
       f1->set_type_text("Subject", d);
       f2->set_type_text("From", d);
       entry_filter->_aggregates.push_back(f1);
       entry_filter->_aggregates.push_back(f2);
-    }
-    else if (mode == SUBJECT_OR_AUTHOR_REGEX)
-    {
+    } else if (mode == SUBJECT_OR_AUTHOR_REGEX) {
       FilterInfo *f1 = new FilterInfo, *f2 = new FilterInfo;
       entry_filter->set_type_aggregate_or();
       d.type = TextMatch::REGEX;
@@ -1656,36 +1487,31 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
     f._aggregates.push_back(entry_filter);
   }
 
-  if (_action_manager.is_action_active("match-only-read-articles"))
-  {
+  if (_action_manager.is_action_active("match-only-read-articles")) {
     // std::cerr << LINE_ID << " AND is read" << std::endl;
     FilterInfo *tmp = new FilterInfo;
     tmp->set_type_is_read();
     f._aggregates.push_back(tmp);
   }
-  if (_action_manager.is_action_active("match-only-unread-articles"))
-  {
+  if (_action_manager.is_action_active("match-only-unread-articles")) {
     // std::cerr << LINE_ID << " AND is unread" << std::endl;
     FilterInfo *tmp = new FilterInfo;
     tmp->set_type_is_unread();
     f._aggregates.push_back(tmp);
   }
-  if (_action_manager.is_action_active("match-only-cached-articles"))
-  {
+  if (_action_manager.is_action_active("match-only-cached-articles")) {
     // std::cerr << LINE_ID << " AND is cached" << std::endl;
     FilterInfo *tmp = new FilterInfo;
     tmp->set_type_cached();
     f._aggregates.push_back(tmp);
   }
-  if (_action_manager.is_action_active("match-only-binary-articles"))
-  {
+  if (_action_manager.is_action_active("match-only-binary-articles")) {
     // std::cerr << LINE_ID << " AND has an attachment" << std::endl;
     FilterInfo *tmp = new FilterInfo;
     tmp->set_type_binary();
     f._aggregates.push_back(tmp);
   }
-  if (_action_manager.is_action_active("match-only-my-articles"))
-  {
+  if (_action_manager.is_action_active("match-only-my-articles")) {
     // std::cerr << LINE_ID << " AND was posted by me" << std::endl;
     FilterInfo *tmp = new FilterInfo;
     tmp->set_type_posted_by_me();
@@ -1696,45 +1522,32 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
   typedef std::pair<int, int> range_t;
   std::vector<range_t> ranges;
   ranges.reserve(6);
-  if (_action_manager.is_action_active("match-only-watched-articles"))
-  {
+  if (_action_manager.is_action_active("match-only-watched-articles")) {
     ranges.push_back(range_t(9999, INT_MAX));
-  }
-  else
-  {
-    if (_action_manager.is_action_active("match-ignored-articles"))
-    {
+  } else {
+    if (_action_manager.is_action_active("match-ignored-articles")) {
       ranges.push_back(range_t(INT_MIN, -9999));
     }
-    if (_action_manager.is_action_active("match-low-scoring-articles"))
-    {
+    if (_action_manager.is_action_active("match-low-scoring-articles")) {
       ranges.push_back(range_t(-9998, -1));
     }
-    if (_action_manager.is_action_active("match-normal-scoring-articles"))
-    {
+    if (_action_manager.is_action_active("match-normal-scoring-articles")) {
       ranges.push_back(range_t(0, 0));
     }
-    if (_action_manager.is_action_active("match-medium-scoring-articles"))
-    {
+    if (_action_manager.is_action_active("match-medium-scoring-articles")) {
       ranges.push_back(range_t(1, 4999));
     }
-    if (_action_manager.is_action_active("match-high-scoring-articles"))
-    {
+    if (_action_manager.is_action_active("match-high-scoring-articles")) {
       ranges.push_back(range_t(5000, 9998));
     }
-    if (_action_manager.is_action_active("match-watched-articles"))
-    {
+    if (_action_manager.is_action_active("match-watched-articles")) {
       ranges.push_back(range_t(9999, INT_MAX));
     }
   }
-  for (size_t i = 0; ! ranges.empty() && i < ranges.size() - 1;)
-  {
-    if (ranges[i].second + 1 != ranges[i + 1].first)
-    {
+  for (size_t i = 0; !ranges.empty() && i < ranges.size() - 1;) {
+    if (ranges[i].second + 1 != ranges[i + 1].first) {
       ++i;
-    }
-    else
-    {
+    } else {
       ranges[i].second = ranges[i + 1].second;
       ranges.erase(ranges.begin() + i + 1);
     }
@@ -1744,33 +1557,25 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
   // << ranges[i].first << "..." << ranges[i].second << "]" << std::endl;
 
   std::deque<FilterInfo *> filters;
-  for (size_t i = 0; i < ranges.size(); ++i)
-  {
+  for (size_t i = 0; i < ranges.size(); ++i) {
     range_t const &range(ranges[i]);
     bool const low_bound(range.first == INT_MIN);
     bool const hi_bound(range.second == INT_MAX);
-    if (low_bound && hi_bound)
-    {
+    if (low_bound && hi_bound) {
       // everything matches -- do nothing
-    }
-    else if (hi_bound)
-    {
+    } else if (hi_bound) {
       FilterInfo *tmp = new FilterInfo;
       tmp->set_type_score_ge(range.first);
       // std::cerr << LINE_ID << " AND has a score >= " << range.first <<
       // std::endl;
       filters.push_back(tmp);
-    }
-    else if (low_bound)
-    {
+    } else if (low_bound) {
       FilterInfo *tmp = new FilterInfo;
       tmp->set_type_score_le(range.second);
       // std::cerr << LINE_ID << " AND has a score <= " << range.second <<
       // std::endl;
       filters.push_back(tmp);
-    }
-    else
-    { // not bound on either side; need an aggregate
+    } else { // not bound on either side; need an aggregate
       FilterInfo *tmp = new FilterInfo;
       FilterInfo *s = new FilterInfo;
       s->set_type_aggregate_and();
@@ -1786,9 +1591,7 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
   if (filters.size() == 1) // can fit in an `and' parent
   {
     f._aggregates.push_back(filters[0]);
-  }
-  else if (! filters.empty())
-  { // needs an `or' parent
+  } else if (!filters.empty()) { // needs an `or' parent
     FilterInfo *s = new FilterInfo;
     s->set_type_aggregate_or();
     s->_aggregates.swap(filters);
@@ -1798,22 +1601,18 @@ void HeaderPane ::rebuild_filter(std::string const &text, int mode)
   // std::endl;
 }
 
-void HeaderPane ::filter(std::string const &text, int mode)
-{
-  LOG4CXX_TRACE(logger, "filter called " << (_atree ? " with tree" :" without tree"));
+void HeaderPane ::filter(std::string const &text, int mode) {
+  LOG4CXX_TRACE(logger,
+                "filter called " << (_atree ? " with tree" : " without tree"));
 
   rebuild_filter(text, mode);
 
-  if (_atree)
-  {
+  if (_atree) {
     _wait.watch_cursor_on();
 
-    if (_filter._aggregates.empty())
-    {
+    if (_filter._aggregates.empty()) {
       _atree->set_filter();
-    }
-    else
-    {
+    } else {
       _atree->set_filter(_show_type, &_filter);
     }
 
@@ -1824,20 +1623,15 @@ void HeaderPane ::filter(std::string const &text, int mode)
   }
 }
 
-void HeaderPane ::rules(bool enable)
-{
+void HeaderPane ::rules(bool enable) {
   rebuild_rules(enable);
 
-  if (_atree)
-  {
+  if (_atree) {
     _wait.watch_cursor_on();
 
-    if (_rules._aggregates.empty())
-    {
+    if (_rules._aggregates.empty()) {
       _atree->set_rules();
-    }
-    else
-    {
+    } else {
       _atree->set_rules(&_rules);
     }
 
@@ -1855,24 +1649,20 @@ guint activate_soon_tag(0u);
 // AUTHOR, SUBJECT, SUBJECT_OR_AUTHOR, or MESSAGE_ID
 int mode;
 
-void set_search_entry(GtkWidget *entry, char const *s)
-{
+void set_search_entry(GtkWidget *entry, char const *s) {
   g_signal_handler_block(entry, entry_changed_tag);
   gtk_entry_set_text(GTK_ENTRY(entry), s);
   g_signal_handler_unblock(entry, entry_changed_tag);
 }
 
-gboolean search_entry_focus_in_cb(GtkWidget *w, GdkEventFocus *, gpointer)
-{
+gboolean search_entry_focus_in_cb(GtkWidget *w, GdkEventFocus *, gpointer) {
   gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, nullptr);
   set_search_entry(w, search_text.c_str());
   return false;
 }
 
-void refresh_search_entry(GtkWidget *w)
-{
-  if (search_text.empty() && ! gtk_widget_has_focus(w))
-  {
+void refresh_search_entry(GtkWidget *w) {
+  if (search_text.empty() && !gtk_widget_has_focus(w)) {
     GdkRGBA c;
     gdk_rgba_parse(&c, "0xAAA");
     gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, &c);
@@ -1880,34 +1670,26 @@ void refresh_search_entry(GtkWidget *w)
   }
 }
 
-gboolean search_entry_focus_out_cb(GtkWidget *w, GdkEventFocus *, gpointer)
-{
+gboolean search_entry_focus_out_cb(GtkWidget *w, GdkEventFocus *, gpointer) {
   refresh_search_entry(w);
   return false;
 }
 
-void search_activate(HeaderPane *h)
-{
-  h->filter(search_text, mode);
-}
+void search_activate(HeaderPane *h) { h->filter(search_text, mode); }
 
-void remove_activate_soon_tag()
-{
-  if (activate_soon_tag != 0)
-  {
+void remove_activate_soon_tag() {
+  if (activate_soon_tag != 0) {
     g_source_remove(activate_soon_tag);
     activate_soon_tag = 0;
   }
 }
 
-void search_entry_activated(GtkEntry *, gpointer h_gpointer)
-{
+void search_entry_activated(GtkEntry *, gpointer h_gpointer) {
   search_activate(static_cast<HeaderPane *>(h_gpointer));
   remove_activate_soon_tag();
 }
 
-gboolean activated_timeout_cb(gpointer h_gpointer)
-{
+gboolean activated_timeout_cb(gpointer h_gpointer) {
   search_activate(static_cast<HeaderPane *>(h_gpointer));
   remove_activate_soon_tag();
   return false; // remove the source
@@ -1915,16 +1697,14 @@ gboolean activated_timeout_cb(gpointer h_gpointer)
 
 // ensure there's exactly one activation timeout
 // and that it's set to go off in a half second from now.
-void bump_activate_soon_tag(HeaderPane *h)
-{
+void bump_activate_soon_tag(HeaderPane *h) {
   remove_activate_soon_tag();
   activate_soon_tag = g_timeout_add(500, activated_timeout_cb, h);
 }
 
 // when the user changes the filter text,
 // update our state variable and bump the activate timeout.
-void search_entry_changed(GtkEditable *e, gpointer h_gpointer)
-{
+void search_entry_changed(GtkEditable *e, gpointer h_gpointer) {
   search_text = gtk_entry_get_text(GTK_ENTRY(e));
   bump_activate_soon_tag(static_cast<HeaderPane *>(h_gpointer));
   refresh_search_entry(GTK_WIDGET(e));
@@ -1932,42 +1712,27 @@ void search_entry_changed(GtkEditable *e, gpointer h_gpointer)
 
 // when the search mode is changed via the menu,
 // update our state variable and bump the activate timeout.
-void search_menu_toggled_cb(GtkCheckMenuItem *menu_item, gpointer entry_g)
-{
-  if (gtk_check_menu_item_get_active(menu_item))
-  {
+void search_menu_toggled_cb(GtkCheckMenuItem *menu_item, gpointer entry_g) {
+  if (gtk_check_menu_item_get_active(menu_item)) {
     mode = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(menu_item), "MODE"));
     refresh_search_entry(GTK_WIDGET(entry_g));
     HeaderPane *h =
-      (HeaderPane *)g_object_get_data(G_OBJECT(entry_g), "header-pane");
+        (HeaderPane *)g_object_get_data(G_OBJECT(entry_g), "header-pane");
     bump_activate_soon_tag(h);
   }
 }
 
-void entry_icon_release(GtkEntry *,
-                        GtkEntryIconPosition icon_pos,
-                        GdkEventButton *,
-                        gpointer menu)
-{
-  if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
-  {
-    gtk_menu_popup(GTK_MENU(menu),
-                   nullptr,
-                   nullptr,
-                   nullptr,
-                   nullptr,
-                   0,
+void entry_icon_release(GtkEntry *, GtkEntryIconPosition icon_pos,
+                        GdkEventButton *, gpointer menu) {
+  if (icon_pos == GTK_ENTRY_ICON_PRIMARY) {
+    gtk_menu_popup(GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr, 0,
                    gtk_get_current_event_time());
   }
 }
 
-void entry_icon_release_2(GtkEntry *entry,
-                          GtkEntryIconPosition icon_pos,
-                          GdkEventButton *,
-                          gpointer pane_gpointer)
-{
-  if (icon_pos == GTK_ENTRY_ICON_SECONDARY)
-  {
+void entry_icon_release_2(GtkEntry *entry, GtkEntryIconPosition icon_pos,
+                          GdkEventButton *, gpointer pane_gpointer) {
+  if (icon_pos == GTK_ENTRY_ICON_SECONDARY) {
     set_search_entry(GTK_WIDGET(entry), "");
     refresh_search_entry(GTK_WIDGET(entry));
     search_text.clear();
@@ -1975,8 +1740,7 @@ void entry_icon_release_2(GtkEntry *entry,
   }
 }
 
-void ellipsize_if_supported(GObject *o)
-{
+void ellipsize_if_supported(GObject *o) {
   g_object_set(o, "ellipsize", PANGO_ELLIPSIZE_END, nullptr);
 }
 } // namespace
@@ -1987,15 +1751,16 @@ void HeaderPane::build_tree_columns() {
 
   // out with the old columns, if any
   GList *old_columns = gtk_tree_view_get_columns(tree_view);
-  for (GList *l = old_columns; l != nullptr; l = l->next) {
+  for (GList *l = old_columns; l != nullptr; l = l->next)
+  {
     gtk_tree_view_remove_column(tree_view, GTK_TREE_VIEW_COLUMN(l->data));
   }
   g_list_free(old_columns);
 
   // Column configuration structure
   struct ColumnConfig {
-    char const *name;
-    char const *title;
+    const char* name;
+    const char* title;
     GType renderer_type;
     bool resizable;
     int default_width;
@@ -2025,7 +1790,7 @@ void HeaderPane::build_tree_columns() {
        render_date, false, false}};
 
   // Helper function to create a column
-  auto create_column = [&](ColumnConfig const &config) -> GtkTreeViewColumn * {
+  auto create_column = [&](const ColumnConfig& config) -> GtkTreeViewColumn* {
     std::string const width_key =
         std::string("header-pane-") + config.name + "-column-width";
 
