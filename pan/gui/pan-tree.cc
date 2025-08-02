@@ -1150,7 +1150,8 @@ struct PanTreeStore::ClearWalker: public PanTreeStore::WalkFunctor
 
   void clear_children (PanTreeStore* store, Row * row)
   {
-    store->remove_siblings (row->children, true);
+    if (!row->children.empty())
+      store->remove_siblings (row->children, true);
   }
 
   virtual bool operator()(PanTreeStore* store,
