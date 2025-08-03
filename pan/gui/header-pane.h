@@ -416,6 +416,14 @@ class HeaderPane :
     ArticleCache &_cache;
     GUI &_gui;
 
+  // click on column to sort pane
+  public:
+    static void on_column_clicked(GtkTreeViewColumn *column, gpointer user_data);
+
+  private:
+    void clear_other_column_sort_indicators(GtkTreeViewColumn *clicked_column);
+    void rebuild_tree_with_sorted_data(gint sort_column_id, GtkSortType sort_order);
+
   private:
     void get_nested_foreach(GtkTreeModel *,
                             GtkTreePath *,

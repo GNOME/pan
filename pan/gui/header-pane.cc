@@ -22,6 +22,7 @@
 #include "pan/general/string-view.h"
 #include "pan/general/time-elapsed.h"
 #include "pan/gui/load-icon.h"
+#include "pan/gui/pan-tree.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
 #include <SQLiteCpp/Statement.h>
@@ -622,12 +623,8 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                             G_TYPE_STRING,  // subject
                             G_TYPE_STRING); // short author
 
-  GtkTreeSortable *sort = GTK_TREE_SORTABLE(store);
-  for (int i = 0; i < Data::N_COLUMNS; ++i)
-  {
-    gtk_tree_sortable_set_sort_func(
-      sort, i, column_compare_func, GINT_TO_POINTER(i), nullptr);
-  }
+  GtkTreeStore *sort = GTK_TREE_STORE(store);
+
   if (! group.empty())
   {
     bool const do_thread(_prefs.get_flag("thread-headers", true));
@@ -636,7 +633,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
     {
       Article shown_article(_group, msg_id);
       Row *child(create_row(shown_article));
-      Row *parent(do_thread ? get_row(prt_id) : nullptr);
+      Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
       store->append(parent, child);
     };
 
@@ -690,10 +687,6 @@ void HeaderPane ::rebuild() {
   {
     sort_column = Data::COL_DATE;
   }
-  gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_tree_store),
-                                       sort_column,
-                                       sort_ascending ? GTK_SORT_ASCENDING :
-                                                        GTK_SORT_DESCENDING);
 
   GtkTreeModel *model(GTK_TREE_MODEL(_tree_store));
   GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
@@ -1824,6 +1817,10 @@ void HeaderPane::build_tree_columns() {
 
     if (config.sort_column_id != -1) {
       gtk_tree_view_column_set_sort_column_id(col, config.sort_column_id);
+      gtk_tree_view_column_set_clickable(col, TRUE);
+
+      // Connect to clicked signal for sorting
+      g_signal_connect(col, "clicked", G_CALLBACK(on_column_clicked), this);
     }
 
     gtk_tree_view_column_set_cell_data_func(col, r, config.data_func, this,
@@ -1856,6 +1853,75 @@ void HeaderPane::build_tree_columns() {
       }
     }
   }
+}
+
+// Column clicked callback
+void HeaderPane::on_column_clicked(GtkTreeViewColumn *column,
+                                   gpointer user_data) {
+  HeaderPane *instance = static_cast<HeaderPane *>(user_data);
+
+  // Get the sort column ID to identify which column was clicked
+  gint sort_column_id = gtk_tree_view_column_get_sort_column_id(column);
+
+  // Get current sort order, or default to ascending if not set
+  GtkSortType current_order = gtk_tree_view_column_get_sort_order(column);
+
+  // Toggle sort order
+  GtkSortType new_order = (current_order == GTK_SORT_ASCENDING)
+                              ? GTK_SORT_DESCENDING
+                              : GTK_SORT_ASCENDING;
+
+  // Clear sort indicators on all other columns
+  instance->clear_other_column_sort_indicators(column);
+
+  // Update the clicked column's sort indicator
+  gtk_tree_view_column_set_sort_order(column, new_order);
+  gtk_tree_view_column_set_sort_indicator(column, TRUE);
+
+  // Call method to rebuild tree with sorted data
+  instance->rebuild_tree_with_sorted_data(sort_column_id, new_order);
+}
+
+// Clear sort indicators on other columns
+void HeaderPane::clear_other_column_sort_indicators(
+    GtkTreeViewColumn *clicked_column) {
+  GtkTreeView *tree_view = GTK_TREE_VIEW(_tree_view);
+  GList *columns = gtk_tree_view_get_columns(tree_view);
+
+  for (GList *l = columns; l != nullptr; l = l->next) {
+    GtkTreeViewColumn *col = GTK_TREE_VIEW_COLUMN(l->data);
+    if (col != clicked_column) {
+      gtk_tree_view_column_set_sort_indicator(col, FALSE);
+    }
+  }
+
+  g_list_free(columns);
+}
+
+// Rebuild tree with sorted data from database
+void HeaderPane::rebuild_tree_with_sorted_data(gint sort_column_id,
+                                               GtkSortType sort_order) {
+  Data::header_column_enum sort_column =
+      Data::header_column_enum(sort_column_id);
+
+  LOG4CXX_DEBUG(logger, "sorting columns with col id " << sort_column);
+
+  LOG4CXX_TRACE(logger, "clearing tree store");
+  bool const do_thread(_prefs.get_flag("thread-headers", true));
+  PanTreeStore *store(_tree_store);
+  store->clear();
+  _mid_to_row.clear();
+
+  LOG4CXX_TRACE(logger, "filling tree store");
+  auto insert_shown_row = [this, do_thread, store](Quark msg_id, Quark prt_id) {
+    Article shown_article(_group, msg_id);
+    Row *child(create_row(shown_article));
+    Row *parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
+    store->append(parent, child);
+  };
+  bool is_asc = sort_order == GTK_SORT_ASCENDING;
+  int count =
+      _atree->call_on_shown_articles(insert_shown_row, sort_column, is_asc);
 }
 
 void HeaderPane ::refilter()
