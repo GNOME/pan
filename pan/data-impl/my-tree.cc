@@ -29,6 +29,7 @@
 #include <config.h>
 #include <cstdio>
 #include <functional>
+#include <glib.h>
 #include <log4cxx/logger.h>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
@@ -160,6 +161,8 @@ int DataImpl ::MyTree ::call_on_shown_articles(
     std::function<void(Quark msg_id, Quark parent_id)> cb,
     header_column_enum header_column_id, bool ascending) const {
 
+  TimeElapsed timer;
+
   // Map column IDs to database column names
   std::string db_column, db_join;
 
@@ -237,6 +240,9 @@ int DataImpl ::MyTree ::call_on_shown_articles(
     cb(msg_id,prt_id);
     count++;
   }
+
+  LOG4CXX_DEBUG(logger, "sql request done for " << count << " articles in "
+                                                << timer.get_seconds_elapsed());
 
   return count;
 }
