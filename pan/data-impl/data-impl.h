@@ -433,6 +433,9 @@ public:
       private:
         void set_parent_in_article_view() const;
         int fill_article_view_from_article() const;
+        void set_join_and_column(header_column_enum &header_column_id,
+                                 std::string &db_column,
+                                 std::string &db_join) const;
 
       public:
         void articles_changed(bool do_refilter);

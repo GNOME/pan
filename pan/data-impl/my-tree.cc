@@ -165,16 +165,9 @@ int DataImpl ::MyTree ::fill_article_view_from_article() const
   return q.exec();
 }
 
-// apply function on shown articles in breadth first order
-int DataImpl ::MyTree ::call_on_shown_articles(
-    std::function<void(Quark msg_id, Quark parent_id)> cb,
-    header_column_enum header_column_id, bool ascending) const {
-
-  TimeElapsed timer;
-
-  // Map column IDs to database column names
-  std::string db_column, db_join;
-
+void DataImpl::MyTree::set_join_and_column(header_column_enum &header_column_id,
+                                 std::string &db_column,
+                                 std::string &db_join) const {
   switch (header_column_id) {
   case COL_STATE:
     db_column = "a.part_state";
@@ -205,6 +198,19 @@ int DataImpl ::MyTree ::call_on_shown_articles(
     LOG4CXX_FATAL(logger, "Internal error: unexpected column id: " << header_column_id);
     assert(0); // Unknown column
   }
+}
+
+// apply function on shown articles in breadth first order
+int DataImpl ::MyTree ::call_on_shown_articles(
+    std::function<void(Quark msg_id, Quark parent_id)> cb,
+    header_column_enum header_column_id, bool ascending) const {
+
+  TimeElapsed timer;
+
+  // Map column IDs to database column names
+  std::string db_column, db_join;
+
+  set_join_and_column(header_column_id, db_column, db_join);
 
   // see
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
