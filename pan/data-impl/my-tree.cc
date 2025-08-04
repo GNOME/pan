@@ -37,6 +37,7 @@
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <vector>
 
 using namespace pan;
 
@@ -266,6 +267,26 @@ int DataImpl ::MyTree ::call_on_shown_articles(
                                                 << timer.get_seconds_elapsed());
 
   return count;
+}
+
+void DataImpl ::MyTree ::get_shown_parent_ids(
+    std::vector<Quark> &shown_parents_ids
+  ) const {
+  TimeElapsed timer;
+  std::string q = R"SQL(
+    select distinct article.message_id as prt_msg_id from article_view
+    join article on article.id == article_view.parent_id
+    where show == 1
+  )SQL";
+  SQLite::Statement st(pan_db, q);
+
+  while (st.executeStep()) {
+    Quark prt_id = st.getColumn(0).getText();
+    shown_parents_ids.push_back(prt_id);
+  }
+
+  LOG4CXX_DEBUG(logger, "got " << shown_parents_ids.size() << " parents in "
+                                                << timer.get_seconds_elapsed());
 }
 
 // apply function on exposed article in breadth first order.
