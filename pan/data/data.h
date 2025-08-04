@@ -611,6 +611,8 @@ class Data :
           std::function<void(Quark msg_id, Quark parent_id)> cb,
           header_column_enum header_column_id = COL_DATE,
           bool ascending = false) const = 0;
+      virtual void
+      get_shown_parent_ids(std::vector<Quark> &shown_parents_ids) const = 0;
       virtual int call_on_exposed_articles(
           std::function<void(Quark msg_id, Quark parent_id)> cb) const = 0;
       virtual int call_on_reparented_articles(

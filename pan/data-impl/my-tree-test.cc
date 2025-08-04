@@ -773,6 +773,29 @@ class DataImplTest : public CppUnit::TestFixture
                              hidden.find("g1m1d2") != hidden.end());
     }
 
+    // check hidden status of articles
+    void test_get_shown_parent_ids()
+    {
+      add_test_articles();
+      // init article view, some articles are shown
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      // read 2 articles, which are removed from view, then their
+      // parents are childless and no longer counted as parents
+      change_read_status("g1m1d1", true);
+      change_read_status("g1m1d2", true);
+      tree->update_article_view();
+
+      std::vector<Quark> result;
+      tree->get_shown_parent_ids(result);
+
+      int res_size(result.size());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check nb of parents", 4, res_size);
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
     CPPUNIT_TEST(test_get_children_with_empty_criteria);
@@ -786,6 +809,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_exposed_articles_from_scratch);
     CPPUNIT_TEST(test_function_on_reparented_articles);
     CPPUNIT_TEST(test_function_on_hidden_articles);
+    CPPUNIT_TEST(test_get_shown_parent_ids);
     CPPUNIT_TEST_SUITE_END();
 };
 
