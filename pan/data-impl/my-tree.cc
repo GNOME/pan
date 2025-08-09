@@ -215,13 +215,13 @@ int DataImpl ::MyTree ::initial_call_on_shown_articles(
   // See
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   std::string q = R"SQL(
-    with recursive hierarchy (step, a_id, m_id, p_id) as (
-      select 1, a.id, message_id, av.parent_id
+    with recursive hierarchy (step, a_id, m_id, p_id, time_posted) as (
+      select 1, a.id, message_id, av.parent_id, time_posted
       from article_view as av
       join article as a on a.id == av.article_id
       where av.parent_id is null and status in ("e","r","s")
       union all
-      select step+1, a.id, a.message_id, av.parent_id
+      select step+1, a.id, a.message_id, av.parent_id, a.time_posted
       from article_view as av
       join article as a on a.id == av.article_id
       join hierarchy as h
@@ -231,7 +231,7 @@ int DataImpl ::MyTree ::initial_call_on_shown_articles(
     select hierarchy.m_id,
        (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
     from hierarchy
-    order by step
+    order by step, time_posted asc
     )SQL" ;
 
   LOG4CXX_TRACE(logger, "sql request is " << q);
