@@ -18,17 +18,26 @@
  */
 
 #include <config.h>
-#include <iostream>
 #include <algorithm>
 #include <cstdarg>
+#include <glib-object.h>
+#include <log4cxx/logger.h>
 #include <set>
 #include <gobject/gvaluecollector.h>
 #include <pan/general/debug.h>
+#include <pan/general/log4cxx.h>
 #include <pan/general/macros.h>
+#include <unordered_map>
+#include <vector>
 #include "pan-tree.h"
+#include "pan/data/data.h"
 
 #define IS_SORTED(tree) \
   (tree->sort_column_id != GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID)
+
+namespace  {
+  log4cxx::LoggerPtr logger(pan::getLogger("pan-tree"));
+}
 
 /***
 ****  Row Helper Functions
