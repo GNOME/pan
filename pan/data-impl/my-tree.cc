@@ -422,33 +422,37 @@ int DataImpl ::MyTree ::call_on_hidden_articles(
 void DataImpl ::MyTree ::update_article_view() const
 {
   TimeElapsed timer;
-  LOG4CXX_TRACE(logger, "Update article_view");
+  LOG4CXX_TRACE(logger, "start");
   SQLite::Transaction setup_article_view_transaction(pan_db);
 
   // similar to update_article_view, but init is True here
   reset_article_transition_tables();
-  LOG4CXX_TRACE(
-    logger, "reset article_view done (" << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "reset article transition tables done ("
+                            << timer.get_seconds_elapsed() << "s)");
+  auto tmp_time = timer.get_seconds_elapsed();
 
   int count = fill_article_view_from_article(false);
-  LOG4CXX_TRACE(
-    logger, "fill article_view done (" << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "fill article_view done ("
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   // second pass to setup parent_id in article view (this needs whole
   // article_view table to compute parent_id)
   set_parent_in_article_view();
-  LOG4CXX_TRACE(
-    logger, "set_parent in article_view done (" << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "set_parent in article_view done ("
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   // transitions tables (like hidden_articles, exposed_articles... )
   // are filled by triggers
 
   setup_article_view_transaction.commit();
 
-  LOG4CXX_TRACE(logger,
-                "Update article_view done with "
-                  << count << " articles ("
-                  << timer.get_seconds_elapsed() << "s).");
+  LOG4CXX_TRACE(logger, "commit done in "
+                            << timer.get_seconds_elapsed() - tmp_time << "s).");
+
+  LOG4CXX_TRACE(logger, "done with " << count << " articles (total time: "
+                                     << timer.get_seconds_elapsed() << "s).");
 }
 
 Article DataImpl ::MyTree ::get_parent(Quark const &mid) const
