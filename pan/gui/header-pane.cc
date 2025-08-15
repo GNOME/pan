@@ -854,6 +854,14 @@ void HeaderPane ::mark_as_pending_deletion(const std::set<const Article *> goner
 void HeaderPane ::update_tree() {
   LOG4CXX_TRACE(logger, "update_tree called...");
   TimeElapsed timer;
+  auto tmp_time = timer.get_seconds_elapsed();
+
+  auto get_elapsed_time = [&timer, &tmp_time]() -> std::string {
+    auto t = timer.get_seconds_elapsed();
+    auto ret = t - tmp_time;
+    tmp_time = t;
+    return std::string(" (" + std::to_string(ret) + "s)");
+  };
 
   // we might need to change the selection after the update.
   article_v const old_selection(get_full_selection_v());
@@ -872,8 +880,7 @@ void HeaderPane ::update_tree() {
       new_selection.insert((*it)->message_id);
     }
   }
-  LOG4CXX_TRACE(logger, "update_tree: got old selection ("
-                            << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "update_tree: got old selection" << get_elapsed_time());
 
   // if the old selection survived,
   // is it visible on the screen?
@@ -892,16 +899,14 @@ void HeaderPane ::update_tree() {
 
   LOG4CXX_TRACE(logger, "new selection size: "
                             << new_selection.size() << " was visible "
-                            << selection_was_visible << " ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << selection_was_visible << get_elapsed_time());
 
   quarks_t hidden;
   auto insert_hidden_row = [&hidden](Quark msg_id) { hidden.insert(msg_id); };
   _atree->call_on_hidden_articles(insert_hidden_row);
 
   LOG4CXX_TRACE(logger, "nb of hidden or removed articles: "
-                            << hidden.size() << " ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << hidden.size() << get_elapsed_time());
 
   // if none of the current selection survived,
   // we need to select something to replace the
@@ -924,9 +929,8 @@ void HeaderPane ::update_tree() {
   };
 
   int count = _atree->call_on_exposed_articles(insert_exposed_row);
-  LOG4CXX_TRACE(logger, "nb of exposed articles: "
-                            << count << " (" << timer.get_seconds_elapsed()
-                            << "s)");
+  LOG4CXX_TRACE(logger,
+                "nb of exposed articles: " << count << get_elapsed_time());
 
   if (!exposed.empty()) {
     g_object_ref(G_OBJECT(_tree_store));
@@ -935,6 +939,8 @@ void HeaderPane ::update_tree() {
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
+    LOG4CXX_TRACE(logger, "inserted " << count << " exposed articles  ("
+                                      << get_elapsed_time() << "s)");
   }
 
   // reparent...
@@ -951,9 +957,8 @@ void HeaderPane ::update_tree() {
     if (count > 0) {
       _tree_store->reparent(reparented);
     }
-    LOG4CXX_TRACE(logger, "nb of reparented articles: "
-                              << count << " (" << timer.get_seconds_elapsed()
-                              << "s)");
+    LOG4CXX_TRACE(logger,
+                  "nb of reparented articles: " << count << get_elapsed_time());
   }
 
   // hidden or removed articles...
@@ -974,15 +979,13 @@ void HeaderPane ::update_tree() {
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
     _mid_to_row.get_container().swap(keep);
-    LOG4CXX_TRACE(logger, "hide articles done (" << timer.get_seconds_elapsed()
-                                                 << "s)");
+    LOG4CXX_TRACE(logger, "hide articles done" << get_elapsed_time());
   }
 
   if (!exposed.empty() &&
       _prefs.get_flag("expand-threads-when-entering-group", false)) {
     gtk_tree_view_expand_all(GTK_TREE_VIEW(_tree_view));
-    LOG4CXX_TRACE(logger, "thread expansion done ("
-                              << timer.get_seconds_elapsed() << "s)");
+    LOG4CXX_TRACE(logger, "thread expansion done" << get_elapsed_time());
   }
 
   // update our selection if necessary.
@@ -995,8 +998,8 @@ void HeaderPane ::update_tree() {
         (!exposed.empty() || !reparented.empty() || !hidden.empty());
     select_message_id(*new_selection.begin(), do_scroll);
   }
-  LOG4CXX_TRACE(logger,
-                "update tree done (" << timer.get_seconds_elapsed() << "s)");
+  LOG4CXX_TRACE(logger, "update tree done (total time "
+                            << timer.get_seconds_elapsed() << "s)");
 }
 
 /****
