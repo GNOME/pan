@@ -67,6 +67,7 @@ void DataImpl ::MyTree ::reset_article_transition_tables() const
 
 void DataImpl::MyTree::set_parent_in_article_view() const
 {
+  TimeElapsed timer;
   std::string set_parent_id = R"SQL(
     -- like article_view with added show_parent column
     with recursive whole(article_id, parent_id, show, show_parent) as (
@@ -102,7 +103,7 @@ void DataImpl::MyTree::set_parent_in_article_view() const
   int count = set_parent_id_st.exec();
   LOG4CXX_TRACE(logger,
                 "set parent_id in article_view table done with " << count
-                                                                 << " rows");
+                << " rows" << " in " << timer.get_seconds_elapsed() << "s");
 }
 
 void DataImpl ::MyTree ::initialize_article_view() const
