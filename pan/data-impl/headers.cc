@@ -18,6 +18,7 @@
  */
 
 #include "pan/data/data.h"
+#include "pan/data/pan-db.h"
 #include "pan/general/string-view.h"
 #include "pan/general/article_number.h"
 #include "pan/usenet-utils/numbers.h"
@@ -951,8 +952,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   // I hate negative logic, but it's the only way to expire article
   // when it must be expired on all servers, i.e. do not expire an
   // article if it's not expired on any server.
-  SQLite::Statement delete_expired_articles_q(pan_db,R"SQL(
-    with goners ( article_id ) as (
+  SQLite::Statement get_expired_articles_q(pan_db,R"SQL(
       select a.id from article as a
       join article_group as ag on ag.article_id == a.id
       join `group` as g on ag.group_id == g.id
@@ -972,13 +972,30 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
               julianday() - julianday(a.time_posted, 'unixepoch') < i_s.expiry_days
             )
          ) == 0 -- no *NOT* expired parts found
-    )
-    delete from article as a
-      where a.id in (select article_id from goners)
   )SQL");
 
-  delete_expired_articles_q.bindNoCopy(1, group.c_str());
-  unsigned int expire_count(delete_expired_articles_q.exec());
+  get_expired_articles_q.bindNoCopy(1, group.c_str());
+
+  // I've tried to use a CTE and a subquery to avoid this loop. Both had a statement like
+  // delete from article where id in (CTE or subquery). Both statements did not finish.
+  // That may be a bug in sqlite or an unknown interaction between "delete from article"
+  // and all the complicated "select from articles" in the subquery.
+  std::vector<int64_t> goners;
+  while (get_expired_articles_q.executeStep()) {
+    goners.push_back(get_expired_articles_q.getColumn(0));
+  }
+
+  SQLite::Statement delete_article_q(pan_db, R"SQL(
+    delete from article where article.id == ?
+  )SQL");
+
+  for (int64_t db_id: goners) {
+    delete_article_q.reset();
+    delete_article_q.bind(1, db_id);
+    delete_article_q.exec();
+  }
+  
+  unsigned int expire_count(goners.size());
 
   if (expire_count) {
     LOG4CXX_INFO(logger, "Expired " << expire_count << " articles from group " << group.c_str()
