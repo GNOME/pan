@@ -940,28 +940,37 @@ void HeaderPane ::update_tree() {
 
   // exposed articles...
   bool const do_thread(_prefs.get_flag("thread-headers", true));
-  PanTreeStore::parent_to_children_t exposed;
-  auto insert_exposed_row = [this, do_thread, &exposed](Quark msg_id,
+  PanTreeStore::parent_to_children_t shown;
+  int exposed(0);
+  auto insert_shown_row = [this, do_thread, &shown, &exposed](Quark msg_id,
                                                         Quark prt_id) {
-    Article exposed_article(_group, msg_id);
-    Row *child(create_row(exposed_article));
+    Article shown_article(_group, msg_id);
+    Row *child(get_row(msg_id));
+    if (child == nullptr){
+      child = create_row(shown_article);
+      exposed++;
+    }
     Row *parent(do_thread && !prt_id.empty() ? get_row(prt_id) : nullptr);
-    exposed[parent].push_back(child);
+    shown[parent].push_back(child);
   };
 
-  int count = _atree->call_on_exposed_articles(insert_exposed_row);
-  LOG4CXX_TRACE(logger,
-                "nb of exposed articles: " << count << get_elapsed_time());
+  bool sort_ascending;
+  int sort_column;
+  get_sort_order(sort_column, sort_ascending);
+  int count = _atree->call_on_sorted_shown_articles(
+      insert_shown_row, Data::header_column_enum(sort_column),
+      sort_ascending);
+  LOG4CXX_TRACE(logger, "nb of exposed/shown articles: "
+                            << exposed << "/" << count << get_elapsed_time());
 
-  if (!exposed.empty()) {
+  if (exposed > 0) {
     g_object_ref(G_OBJECT(_tree_store));
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
-    _tree_store->insert_sorted(exposed);
+    _tree_store->insert_sorted(shown);
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
-    LOG4CXX_TRACE(logger, "inserted " << count << " exposed articles  ("
-                                      << get_elapsed_time() << "s)");
+    LOG4CXX_TRACE(logger, "inserted articles " << get_elapsed_time());
   }
 
   // reparent...
@@ -981,7 +990,7 @@ void HeaderPane ::update_tree() {
                   "nb of reparented articles: " << count << get_elapsed_time());
   }
 
-  if (!exposed.empty() &&
+  if (!shown.empty() &&
       _prefs.get_flag("expand-threads-when-entering-group", false)) {
     gtk_tree_view_expand_all(GTK_TREE_VIEW(_tree_view));
     LOG4CXX_TRACE(logger, "thread expansion done" << get_elapsed_time());
@@ -994,7 +1003,7 @@ void HeaderPane ::update_tree() {
   if (!new_selection.empty()) {
     bool const do_scroll =
         selection_was_visible &&
-        (!exposed.empty() || !reparented.empty() || !hidden.empty());
+        (!shown.empty() || !reparented.empty() || !hidden.empty());
     select_message_id(*new_selection.begin(), do_scroll);
   }
   LOG4CXX_TRACE(logger, "update tree done (total time "

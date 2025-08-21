@@ -20,6 +20,7 @@
 #include <config.h>
 #include <algorithm>
 #include <cstdarg>
+#include <cstddef>
 #include <glib-object.h>
 #include <log4cxx/logger.h>
 #include <set>
@@ -864,36 +865,14 @@ PanTreeStore :: insert_sorted (const parent_to_children_t& new_parents)
 {
   g_return_if_fail (!new_parents.empty());
 
-  RowCompareByDepth depth_compare (this);
-
-  // this is a pool of all the parents that need kids added...
-  std::set<Row*> pool;
-  foreach_const (parent_to_children_t, new_parents, it)
-    pool.insert (it->first ? it->first : root);
-
-  while (!pool.empty())
-  {
-    // get a subset of pool: parents that are are in the tree
-    rows_t keys;
-    foreach_const (std::set<Row*>, pool, it)
-      if (is_in_tree (*it))
-        keys.push_back (*it);
-    g_assert (!keys.empty());
-
-    // sort these from shallowest to deepest
-    std::sort (keys.begin(), keys.end(), depth_compare);
-
-    // process each of them
-    foreach_const (rows_t, keys, it)
-    {
-      // add the children to this parent...
-      // caller passes in NULL for the parent of top-level articles...
-      Row * parent (*it);
-      Row * key (parent==root ? nullptr : parent);
-      const rows_t& children (new_parents.find(key)->second);
-      insert_sorted (parent, children);
-      pool.erase (parent);
-    }
+  foreach_const (parent_to_children_t, new_parents, it) {
+    // add the children to this parent...
+    // caller passes in NULL for the parent of top-level articles...
+    Row * parent (it->first);
+    Row * key (parent==root ? nullptr : parent);
+    const rows_t& children (it->second);
+    // not a recursive call
+    insert_sorted (parent, children);
   }
 }
 
@@ -965,72 +944,65 @@ struct PanTreeStore::ReparentWalker: public PanTreeStore::WalkFunctor
 
 void
 PanTreeStore :: insert_sorted (Row           * parent,
-                               const rows_t  & children_in)
+                               const rows_t  & children)
 {
-  g_return_if_fail (!children_in.empty());
+  g_return_if_fail (!children.empty());
 
   if (!parent)
        parent = root;
 
-//std::cerr << LINE_ID << " adding " << children_in.size() << " sorted children to " << parent << " which currently has " << parent->children.size() << " children" << std::endl;
+  // input children: contains the sorted list of row* to display, new and *old* pointers
+  // parent->children: contains the sorted list of old row* to display
 
-  // sort new children...
-  rows_t children (children_in);
-  foreach (rows_t, children, it)
-    (*it)->parent = parent;
-  RowCompareByColumn compare_column (this);
-  std::sort (children.begin(), children.end(), compare_column);
-
-//for (int i=0, n=children.size()-1; i<n; ++i)
- // g_assert (!compare_column (children[i+1], children[i]));
-//for (int i=0, n=parent->children.size()-1; i<n; ++i)
- // g_assert (!compare_column (parent->children[i+1], parent->children[i]));
-
-
+  // TODO: Should we insert and delete old rows at the same time ? that's
+  // complicated, may be later.
 
   // merge the two sorted containers together...
   const size_t old_size (parent->children.size());
-  rows_t tmp;
-  tmp.reserve (old_size + children.size());
   const size_t n_new (children.size());
   std::vector<int> indices;
   indices.reserve (n_new);
+  size_t changed_idx(0);
   rows_t::const_iterator o_it  (parent->children.begin()),
                          o_end (parent->children.end()),
                          n_it  (children.begin()),
                          n_end (children.end());
-  for (size_t i=0; o_it!=o_end || n_it!=n_end; ++i) {
-    Row * addme (nullptr);
-    if ((n_it==n_end)) {
-      //std::cerr << LINE_ID << " n is empty ... adding another o at " << tmp.size() << std::endl;
-      addme = *o_it++;
+  // build list of indices of added rows
+  while ( n_it != n_end ) {
+    if (o_it==o_end) {
+      indices.push_back (changed_idx);
     }
-    else if (o_it==o_end) {
-      //std::cerr << LINE_ID << " o is empty .. adding NEW at " << tmp.size() << std::endl;
-      indices.push_back (i);
-      addme = *n_it++;
+    // the 2 *Row are different, insert the new one
+    else if ( *n_it != *o_it) {
+      indices.push_back (changed_idx);
     }
-    else if (compare_column (*n_it, *o_it)) {
-      //std::cerr << LINE_ID << " adding NEW at index " << tmp.size() << std::endl;
-      indices.push_back (i);
-      addme = *n_it++;
-    }
+    // else parent and child row are identical -> skip
     else {
-      //std::cerr << LINE_ID << " adding old at index " << tmp.size() << std::endl;
-      addme = *o_it++;
+      *o_it++;
     }
-  //  g_assert (tmp.empty() || !compare_column(addme,tmp.back()));
-    addme->child_index = i;
-   // g_assert (tmp.empty() || !compare_column(addme,tmp.back()));
-    tmp.push_back (addme);
+    *n_it++;
+    changed_idx++;
+  }
+
+  if ((n_it == n_end) && (o_it != o_end)) {
+    LOG4CXX_FATAL(logger,
+                  "reached end of reference list before end of old list");
+  }
+
+  rows_t tmp;
+  tmp.reserve (children.size());
+  // copy children so that swap can be used without modifying
+  // children.
+  for (size_t i(0); i < children.size() ; i++) {
+    tmp.push_back(children[i]);
+    tmp[i]->child_index = i;
+    tmp[i]->parent = parent;
   }
   parent->children.swap (tmp);
 
   // check our work...
-  //g_assert (parent->children.size() == old_size + children.size());
-  //g_assert (indices.size() == children.size());
-  //for (int i=0, n=parent->children.size(); i<n; ++i)
-   // g_assert (i==0 || !compare_column(parent->children[i], parent->children[i-1]));
+  g_assert (parent->children.size() == children.size());
+  g_assert (indices.size() == parent->children.size() - old_size);
 
   // emit the 'row inserted' signals
   GtkTreePath * path (get_path (parent));
@@ -1062,9 +1034,6 @@ PanTreeStore :: insert_sorted (Row           * parent,
 
   // cleanup
   gtk_tree_path_free (path);
-
-  //for (int i=0, n=parent->children.size(); i<n; ++i)
-   // g_assert (i==0 || !compare_column(parent->children[i], parent->children[i-1]));
 }
 
 void
