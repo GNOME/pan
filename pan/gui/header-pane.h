@@ -171,6 +171,7 @@ class HeaderPane :
   private:
     void rebuild();
     void rebuild_article_action(Quark const &message_id);
+    void get_sort_order(int &sort_column, bool &sort_ascending);
 
   private:
     void on_group_read(Quark const &group) override;
