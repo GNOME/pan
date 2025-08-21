@@ -917,6 +917,27 @@ void HeaderPane ::update_tree() {
     action_next_if(tester, actor);
   }
 
+  // hidden or removed articles...
+  if (!hidden.empty()) {
+    RowLessThan o;
+    std::vector<Row *> keep;
+    PanTreeStore::rows_t kill;
+    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), hidden.begin(),
+                        hidden.end(), inserter(keep, keep.begin()), o);
+    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), keep.begin(),
+                        keep.end(), inserter(kill, kill.begin()), o);
+    g_assert(keep.size() + kill.size() == _mid_to_row.size());
+
+    g_object_ref(G_OBJECT(_tree_store));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
+    _tree_store->remove(kill);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
+                            GTK_TREE_MODEL(_tree_store));
+    g_object_unref(G_OBJECT(_tree_store));
+    _mid_to_row.get_container().swap(keep);
+    LOG4CXX_TRACE(logger, "hide articles done" << get_elapsed_time());
+  }
+
   // exposed articles...
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore::parent_to_children_t exposed;
@@ -958,27 +979,6 @@ void HeaderPane ::update_tree() {
     }
     LOG4CXX_TRACE(logger,
                   "nb of reparented articles: " << count << get_elapsed_time());
-  }
-
-  // hidden or removed articles...
-  if (!hidden.empty()) {
-    RowLessThan o;
-    std::vector<Row *> keep;
-    PanTreeStore::rows_t kill;
-    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), hidden.begin(),
-                        hidden.end(), inserter(keep, keep.begin()), o);
-    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), keep.begin(),
-                        keep.end(), inserter(kill, kill.begin()), o);
-    g_assert(keep.size() + kill.size() == _mid_to_row.size());
-
-    g_object_ref(G_OBJECT(_tree_store));
-    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
-    _tree_store->remove(kill);
-    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
-                            GTK_TREE_MODEL(_tree_store));
-    g_object_unref(G_OBJECT(_tree_store));
-    _mid_to_row.get_container().swap(keep);
-    LOG4CXX_TRACE(logger, "hide articles done" << get_elapsed_time());
   }
 
   if (!exposed.empty() &&
