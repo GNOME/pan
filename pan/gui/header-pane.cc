@@ -674,6 +674,18 @@ void save_sort_order(Quark const &group, GroupPrefs &prefs,
 }
 } // namespace
 
+void HeaderPane ::get_sort_order(int &sort_column, bool &sort_ascending) {
+  sort_ascending =
+      _group_prefs.get_flag(_group, "header-pane-sort-ascending", false);
+  sort_column =
+      _group_prefs.get_int(_group, "header-pane-sort-column", Data::COL_DATE);
+  if (sort_column < 0 ||
+      sort_column >= Data::N_COLUMNS) // safeguard against odd settings
+  {
+    sort_column = Data::COL_DATE;
+  }
+}
+
 void HeaderPane ::rebuild() {
   LOG4CXX_DEBUG(logger, "rebuild started");
   quarks_t selectme;
@@ -684,15 +696,9 @@ void HeaderPane ::rebuild() {
     }
   }
 
-  bool const sort_ascending =
-      _group_prefs.get_flag(_group, "header-pane-sort-ascending", false);
-  int sort_column =
-      _group_prefs.get_int(_group, "header-pane-sort-column", Data::COL_DATE);
-  if (sort_column < 0 ||
-      sort_column >= Data::N_COLUMNS) // safeguard against odd settings
-  {
-    sort_column = Data::COL_DATE;
-  }
+  bool sort_ascending;
+  int sort_column;
+  get_sort_order(sort_column, sort_ascending);
 
   _mid_to_row.clear();
   _tree_store = build_model(_group, _atree, sort_column, sort_ascending);
