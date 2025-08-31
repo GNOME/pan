@@ -503,25 +503,29 @@ class DataImplTest : public CppUnit::TestFixture
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
       tree->initialize_article_view();
 
+      std::vector<Data::ArticleTree::ParentAndChildren> threads;
+
       // function that checks that parent_id is either null or already
       // provided.
       std::set<std::string> stack;
       int step(1);
-      auto check = [&](Quark msg_id, Quark prt_id) {
-        // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
-        if (! prt_id.empty())
-        {
+
+      int count = tree->get_shown_threads(threads, pan::Data::COL_DATE, true);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 shown count ", 10, count);
+      for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+        Quark prt_id(a_thread.parent_id);
+
+        if (!prt_id.empty()) {
           auto search = stack.find(prt_id.to_string());
-          CPPUNIT_ASSERT_MESSAGE("step " + std::to_string(step) + " msg_id " +
-                                     msg_id.to_string() + " parent_id " +
-                                     prt_id.to_string() + " consistency",
+          CPPUNIT_ASSERT_MESSAGE("step " + std::to_string(step++) +
+                                     " parent_id " + prt_id.to_string() +
+                                     " consistency",
                                  search != stack.end());
         }
-        stack.insert(msg_id.to_string());
-      };
-
-      int count = tree->initial_call_on_shown_articles(check, pan::Data::COL_DATE, true);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 exposed count ", 10, count);
+        for (Quark a_msg_id : a_thread.children_id) {
+          stack.insert(a_msg_id.to_string());
+        }
+      }
     }
 
     // emulates showing article using a callback, and with articles
@@ -585,13 +589,15 @@ class DataImplTest : public CppUnit::TestFixture
       };
 
       for (const auto a_test : all_tests) {
-          list.clear();
-          tree->initial_call_on_shown_articles(check, a_test.col, a_test.asc);
-          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 sort by " + a_test.label, a_test.expect, list.front());
+          std::vector<Data::ArticleTree::ParentAndChildren> threads;
+          tree->get_shown_threads(threads, a_test.col, a_test.asc);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3.1 sort by " + a_test.label, a_test.expect,
+                                       threads[0].children_id[0].to_string());
+          threads.clear();
 
           list.clear();
           tree->call_on_sorted_shown_articles(check, a_test.col, a_test.asc);
-          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 sort by " + a_test.label, a_test.expect, list.front());
+          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3.2 sort by " + a_test.label, a_test.expect, list.front());
       }
     }
 

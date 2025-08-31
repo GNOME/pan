@@ -208,11 +208,12 @@ void DataImpl::MyTree::set_join_and_column(header_column_enum &header_column_id,
 // is enough to get parents before children. In practice, this does
 // not work, so we must recursively scan the article to find the
 // parents first.
-int DataImpl ::MyTree ::initial_call_on_shown_articles(
-    std::function<void(Quark msg_id, Quark parent_id)> cb,
-    header_column_enum sort_column, bool sort_ascending) const {
+int DataImpl ::MyTree ::get_shown_threads(
+  std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+  header_column_enum sort_column, bool sort_ascending) const {
 
   TimeElapsed timer;
+  threads.clear(); // safety measure
 
   // Map column IDs to database column names
   std::string db_column, db_join;
@@ -246,13 +247,23 @@ int DataImpl ::MyTree ::initial_call_on_shown_articles(
 
   SQLite::Statement st(pan_db, q);
   int count(0);
+  Quark current_prt_id;
+  Data::ArticleTree::ParentAndChildren root;
+  threads.push_back(root);
+  root.parent_id = current_prt_id;
   while (st.executeStep()) {
     Quark msg_id = st.getColumn(0).getText();
     Quark prt_id;
     if (!st.getColumn(1).isNull()) {
       prt_id = st.getColumn(1).getText();
     }
-    cb(msg_id, prt_id);
+    if (prt_id != current_prt_id) {
+      Data::ArticleTree::ParentAndChildren pac;
+      pac.parent_id = prt_id;
+      current_prt_id = prt_id;
+      threads.push_back(pac);
+    }
+    threads.back().children_id.push_back(msg_id);
     count++;
   }
 

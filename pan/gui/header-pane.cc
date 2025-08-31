@@ -629,25 +629,33 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
   if (! group.empty())
   {
+    std::vector<Data::ArticleTree::ParentAndChildren> threads;
     bool const do_thread(_prefs.get_flag("thread-headers", true));
-
-    auto insert_shown_row = [this, do_thread, store](Quark msg_id, Quark prt_id)
-    {
-      Article shown_article(_group, msg_id);
-      Row *child(create_row(shown_article));
-      Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
-      // sanity check: a child must not be parentless in the tree widget
-      g_assert(!do_thread || prt_id.empty() || parent != nullptr);
-      store->append(parent, child);
-    };
 
     Data::header_column_enum sort_column =
         Data::header_column_enum(sort_column_id);
 
     LOG4CXX_DEBUG(logger, "sorting columns with col id " << sort_column);
 
-    int count = _atree->initial_call_on_shown_articles(
-        insert_shown_row, sort_column, sort_ascending);
+    _atree->get_shown_threads(threads, sort_column, sort_ascending);
+
+    int count(0);
+    for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+      Quark prt_id(a_thread.parent_id);
+      Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
+      // sanity check: a child must not be parentless in the tree widget
+      g_assert(!do_thread || prt_id.empty() || parent != nullptr);
+      PanTreeStore::rows_t children;
+
+      for (Quark a_msg_id: a_thread.children_id) {
+        Article shown_article(_group, a_msg_id);
+        children.push_back(create_row(shown_article));
+        count++;
+      }
+
+      if (!children.empty())
+        store->append(parent, children);
+    };
 
     atree->update_article_after_gui_update();
 
