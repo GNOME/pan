@@ -574,6 +574,11 @@ class Data :
             quarks_t changed;
         };
 
+        struct ParentAndChildren {
+          Quark parent_id;
+          std::vector<Quark> children_id;
+        };
+
         /**
          * Interface class for objects that listen to an ArticleTree's events.
          * @ingroup data
@@ -605,9 +610,9 @@ class Data :
 
       virtual void initialize_article_view() const = 0;
       virtual void update_article_view() const = 0;
-      virtual int initial_call_on_shown_articles(
-          std::function<void(Quark msg_id, Quark parent_id)> cb,
-          header_column_enum sort_column, bool sort_ascending) const = 0;
+      virtual int get_shown_threads(
+        std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+        header_column_enum sort_column, bool sort_ascending) const = 0;
       virtual int call_on_sorted_shown_articles(
           std::function<void(Quark msg_id, Quark parent_id)> cb,
           header_column_enum header_column_id = COL_DATE,
