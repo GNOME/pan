@@ -625,8 +625,6 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                             G_TYPE_STRING,  // subject
                             G_TYPE_STRING); // short author
 
-  GtkTreeStore *sort = GTK_TREE_STORE(store);
-
   if (! group.empty())
   {
     std::vector<Data::ArticleTree::ParentAndChildren> threads;
