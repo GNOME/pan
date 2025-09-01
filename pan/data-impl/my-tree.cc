@@ -566,7 +566,6 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 
   set_rules(rules);
   set_filter(show_type, filter);
-  initialize_article_view();
 }
 
 DataImpl ::MyTree ::~MyTree()
