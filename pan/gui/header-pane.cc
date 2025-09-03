@@ -637,6 +637,10 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     _atree->get_shown_threads(threads, sort_column, sort_ascending);
 
+    auto t = timer.get_seconds_elapsed();
+    LOG4CXX_TRACE(logger,
+                  "got " << threads.size() << " threads in " << t << "s.");
+
     int count(0);
     for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
       Quark prt_id(a_thread.parent_id);
@@ -654,9 +658,10 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
       store->append(parent, children);
     };
 
-    LOG4CXX_INFO(logger, "Build model: added "
-                             << count << " articles of group " << group.c_str()
-                             << " in " << timer.get_seconds_elapsed() << "s.");
+    auto new_t = timer.get_seconds_elapsed();
+    LOG4CXX_INFO(logger, "added " << count << " articles of group "
+                                  << group.c_str() << " in " << new_t - t
+                                  << "s, total " << new_t << "s.");
   }
   return store;
 }
