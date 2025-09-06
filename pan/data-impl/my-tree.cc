@@ -206,6 +206,40 @@ void DataImpl::MyTree::set_join_and_column(header_column_enum &header_column_id,
   }
 }
 
+int run_sql(std::string &q,
+            std::vector<Data::ArticleTree::ParentAndChildren> &threads) {
+  TimeElapsed timer;
+
+  LOG4CXX_TRACE(logger, "sql request is " << q);
+
+  SQLite::Statement st(pan_db, q);
+  int count(0);
+  Quark current_prt_id;
+  Data::ArticleTree::ParentAndChildren root;
+  threads.push_back(root);
+  root.parent_id = current_prt_id;
+  while (st.executeStep()) {
+    Quark msg_id = st.getColumn(0).getText();
+    Quark prt_id;
+    if (!st.getColumn(1).isNull()) {
+      prt_id = st.getColumn(1).getText();
+    }
+    if (prt_id != current_prt_id) {
+      Data::ArticleTree::ParentAndChildren pac;
+      pac.parent_id = prt_id;
+      current_prt_id = prt_id;
+      threads.push_back(pac);
+    }
+    threads.back().children_id.push_back(msg_id);
+    count++;
+  }
+
+  LOG4CXX_DEBUG(logger, "sql request done for " << count << " articles in "
+                                                << timer.get_seconds_elapsed());
+
+  return count;
+}
+
 // apply function on shown articles. In theory, article thread result
 // from exchange between servers, a parent article always have a time
 // stamp lower than its children, so ordering articles by time stamp
@@ -216,7 +250,6 @@ int DataImpl ::MyTree ::get_shown_threads(
   std::vector<Data::ArticleTree::ParentAndChildren> &threads,
   header_column_enum sort_column, bool sort_ascending) const {
 
-  TimeElapsed timer;
   threads.clear(); // safety measure
 
   // Map column IDs to database column names
@@ -247,34 +280,7 @@ int DataImpl ::MyTree ::get_shown_threads(
     from hierarchy
     order by step, sort_data )SQL" + (sort_ascending ? "asc" : "desc");
 
-  LOG4CXX_TRACE(logger, "sql request is " << q);
-
-  SQLite::Statement st(pan_db, q);
-  int count(0);
-  Quark current_prt_id;
-  Data::ArticleTree::ParentAndChildren root;
-  threads.push_back(root);
-  root.parent_id = current_prt_id;
-  while (st.executeStep()) {
-    Quark msg_id = st.getColumn(0).getText();
-    Quark prt_id;
-    if (!st.getColumn(1).isNull()) {
-      prt_id = st.getColumn(1).getText();
-    }
-    if (prt_id != current_prt_id) {
-      Data::ArticleTree::ParentAndChildren pac;
-      pac.parent_id = prt_id;
-      current_prt_id = prt_id;
-      threads.push_back(pac);
-    }
-    threads.back().children_id.push_back(msg_id);
-    count++;
-  }
-
-  LOG4CXX_DEBUG(logger, "sql request done for " << count << " articles in "
-                                                << timer.get_seconds_elapsed());
-
-  return count;
+  return run_sql(q, threads);
 }
 
 // apply function on shown articles in breadth first order
