@@ -393,6 +393,9 @@ class HeaderPane :
     Data::ShowType _show_type;
     guint _selection_changed_idle_tag;
 
+    // store threads currently shown in header pane
+    std::vector<Data::ArticleTree::ParentAndChildren> _threads;
+
     // default text colors, updated on prefs change
     std::string _fg;
     std::string _bg;
