@@ -627,7 +627,6 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
   if (! group.empty())
   {
-    std::vector<Data::ArticleTree::ParentAndChildren> threads;
     bool const do_thread(_prefs.get_flag("thread-headers", true));
 
     Data::header_column_enum sort_column =
@@ -635,14 +634,15 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     LOG4CXX_DEBUG(logger, "sorting columns with col id " << sort_column);
 
-    _atree->get_shown_threads(threads, sort_column, sort_ascending);
+    _threads.clear();
+    _atree->get_shown_threads(_threads, sort_column, sort_ascending);
 
     auto t = timer.get_seconds_elapsed();
     LOG4CXX_TRACE(logger,
-                  "got " << threads.size() << " threads in " << t << "s.");
+                  "got " << _threads.size() << " threads in " << t << "s.");
 
     int count(0);
-    for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+    for (Data::ArticleTree::ParentAndChildren a_thread : _threads) {
       Quark prt_id(a_thread.parent_id);
       Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
       // sanity check: a child must not be parentless in the tree widget
