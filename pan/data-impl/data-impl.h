@@ -437,12 +437,14 @@ public:
         int get_shown_threads(
           std::vector<Data::ArticleTree::ParentAndChildren> &threads,
           header_column_enum sort_column, bool sort_ascending) const override;
-        int call_on_sorted_shown_articles(
-            std::function<void(Quark msg_id, Quark parent_id)> cb,
+        int get_sorted_shown_threads(
+            std::vector<Data::ArticleTree::ParentAndChildren> &threads,
             header_column_enum header_column_id = COL_DATE,
             bool ascending = false) const override;
-        int call_on_exposed_articles(
-          std::function<void(Quark msg_id, Quark parent_id)> cb) const override;
+        int get_exposed_articles(
+          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          header_column_enum header_column_id = COL_DATE,
+          bool ascending = false) const override;
         int call_on_reparented_articles(
           std::function<void(Quark msg_id, Quark new_parent_id)> cb) const override;
         int call_on_hidden_articles(

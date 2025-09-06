@@ -935,29 +935,49 @@ void HeaderPane ::update_tree() {
   }
 
   // exposed articles...
+  std::vector<Data::ArticleTree::ParentAndChildren> threads;
+  bool sort_ascending;
+  int sort_column;
+  get_sort_order(sort_column, sort_ascending);
+  int count = _atree->get_exposed_articles(
+      threads, Data::header_column_enum(sort_column), sort_ascending);
+
+  LOG4CXX_TRACE(logger, "nb of exposed articles: " << count
+                                                         << get_elapsed_time());
+
   bool const do_thread(_prefs.get_flag("thread-headers", true));
-  PanTreeStore::parent_to_children_t exposed;
-  auto insert_exposed_row = [this, do_thread, &exposed](Quark msg_id,
-                                                        Quark prt_id) {
-    Article exposed_article(_group, msg_id);
-    Row *child(create_row(exposed_article));
-    Row *parent(do_thread && !prt_id.empty() ? get_row(prt_id) : nullptr);
-    exposed[parent].push_back(child);
-  };
+  PanTreeStore::parent_to_children_t shown;
+  int exposed(0);
+  for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+    Quark prt_id(a_thread.parent_id);
+    Row *parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
+    // sanity check: a child must not be parentless in the tree widget
+    g_assert(!do_thread || prt_id.empty() || parent != nullptr);
+    PanTreeStore::rows_t children;
 
-  int count = _atree->call_on_exposed_articles(insert_exposed_row);
-  LOG4CXX_TRACE(logger,
-                "nb of exposed articles: " << count << get_elapsed_time());
+    for (Quark a_msg_id: a_thread.children_id) {
+      Article shown_article(_group, a_msg_id);
+      Row *child(get_row(a_msg_id));
+      if (child == nullptr){
+        child = create_row(shown_article);
+        exposed++;
+      }
+      children.push_back(child);
+    }
+    // children is empty when no child is exposed
+    if (children.size() != 0) {
+      shown[parent] = children;
+    }
+  }
 
-  if (!exposed.empty()) {
+  if (exposed > 0) {
     g_object_ref(G_OBJECT(_tree_store));
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
-    _tree_store->insert_sorted(exposed);
+    _tree_store->insert_sorted(shown);
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
-    LOG4CXX_TRACE(logger, "inserted " << count << " exposed articles  ("
-                                      << get_elapsed_time() << "s)");
+    LOG4CXX_TRACE(logger, "inserted articles " << get_elapsed_time());
   }
 
   // reparent...
@@ -999,7 +1019,7 @@ void HeaderPane ::update_tree() {
     LOG4CXX_TRACE(logger, "hide articles done" << get_elapsed_time());
   }
 
-  if (!exposed.empty() &&
+  if (!shown.empty() &&
       _prefs.get_flag("expand-threads-when-entering-group", false)) {
     gtk_tree_view_expand_all(GTK_TREE_VIEW(_tree_view));
     LOG4CXX_TRACE(logger, "thread expansion done" << get_elapsed_time());
@@ -1012,7 +1032,7 @@ void HeaderPane ::update_tree() {
   if (!new_selection.empty()) {
     bool const do_scroll =
         selection_was_visible &&
-        (!exposed.empty() || !reparented.empty() || !hidden.empty());
+        (!shown.empty() || !reparented.empty() || !hidden.empty());
     select_message_id(*new_selection.begin(), do_scroll);
   }
   LOG4CXX_TRACE(logger, "update tree done (total time "
@@ -1933,29 +1953,39 @@ void HeaderPane::rebuild_tree_with_sorted_data(gint sort_column_id,
   Data::header_column_enum sort_column =
       Data::header_column_enum(sort_column_id);
 
-  LOG4CXX_DEBUG(logger, "sorting columns with col id " << sort_column);
+  TimeElapsed timer;
+  LOG4CXX_DEBUG(logger, "sorting tree store with col id " << sort_column);
 
   PanTreeStore *store(_tree_store);
   bool const do_thread(_prefs.get_flag("thread-headers", true));
 
+  std::vector<Data::ArticleTree::ParentAndChildren> threads;
+  bool is_asc = sort_order == GTK_SORT_ASCENDING;
+  _atree->get_sorted_shown_threads(threads, sort_column, is_asc);
+
+  auto t = timer.get_seconds_elapsed();
+  LOG4CXX_TRACE(logger,
+                "got " << threads.size() << " threads in " << t << "s.");
+
   std::vector<PanTreeStore::Row*> children;
   PanTreeStore::Row *parent(nullptr);
 
-  LOG4CXX_TRACE(logger, "Sorting tree store");
-  bool changed(false);
-  auto insert_shown_row = [this, do_thread, store, &children, &parent](Quark msg_id, Quark prt_id) {
-    Row *tmp_child(get_row(msg_id));
+  int count(0);
+  for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+    Quark prt_id(a_thread.parent_id);
     Row *tmp_parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
-    if (parent != tmp_parent) {
-      store->update_children(parent,children);
-      parent = tmp_parent;
-      children.clear();
+
+    for (Quark a_msg_id: a_thread.children_id) {
+      Row *tmp_child(get_row(a_msg_id));
+      if (parent != tmp_parent) {
+        store->update_children(parent,children);
+        parent = tmp_parent;
+        children.clear();
+        count++;
+      }
+      children.push_back(tmp_child);
     }
-    children.push_back(tmp_child);
-  };
-  bool is_asc = sort_order == GTK_SORT_ASCENDING;
-  int count =
-      _atree->call_on_sorted_shown_articles(insert_shown_row, sort_column, is_asc);
+  }
 }
 
 void HeaderPane ::refilter()

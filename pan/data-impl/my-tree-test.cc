@@ -561,12 +561,6 @@ class DataImplTest : public CppUnit::TestFixture
                                       &criteria);
       tree->initialize_article_view();
 
-      // store articles
-      std::vector<std::string> list;
-      auto check = [&](Quark msg_id, Quark prt_id) {
-        list.push_back(msg_id.to_string());
-      };
-
       // test results
       struct Exp {
         std::string label;
@@ -593,9 +587,9 @@ class DataImplTest : public CppUnit::TestFixture
                                        threads[0].children_id[0].to_string());
           threads.clear();
 
-          list.clear();
-          tree->call_on_sorted_shown_articles(check, a_test.col, a_test.asc);
-          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3.2 sort by " + a_test.label, a_test.expect, list.front());
+          tree->get_sorted_shown_threads(threads, a_test.col, a_test.asc);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3.2 sort by " + a_test.label, a_test.expect,
+                                       threads[0].children_id[0].to_string());
       }
     }
 
@@ -644,26 +638,24 @@ class DataImplTest : public CppUnit::TestFixture
 
       assert_children("step 2", Quark(), "g1", {"g1m1a", "g1m2b"});
 
-      // function that checks that parent_id is either null or already
-      // provided.
+      std::vector<Data::ArticleTree::ParentAndChildren> threads;
+
+      int count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 exposed count ", 7, count);
+
+      // check that parent_id is either null or already provided.
       std::set<std::string> stack;
-      auto check
-      = [&stack](Quark msg_id, Quark prt_id)
-      {
+      for (Data::ArticleTree::ParentAndChildren it : threads) {
         // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
-        if (! prt_id.empty())
-        {
-          auto search = stack.find(prt_id.to_string());
-          CPPUNIT_ASSERT_MESSAGE("step 3 msg_id " + msg_id.to_string()
-                                   + " parent_id " + prt_id.to_string()
-                                   + " consistency",
+        if (!it.parent_id.empty()) {
+          auto search = stack.find(it.parent_id.to_string());
+          CPPUNIT_ASSERT_MESSAGE("step 3 parent_id " +
+                                     it.parent_id.to_string() + " consistency",
                                  search != stack.end());
         }
-        stack.insert(msg_id.to_string());
+        for (Quark child : it.children_id)
+          stack.insert(child.to_string());
       };
-
-      int count = tree->call_on_exposed_articles(check);
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 exposed count ", 7, count);
     }
 
     // check reparented status of article.

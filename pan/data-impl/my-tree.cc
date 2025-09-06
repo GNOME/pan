@@ -216,8 +216,12 @@ int run_sql(std::string &q,
   int count(0);
   Quark current_prt_id;
   Data::ArticleTree::ParentAndChildren root;
+  std::map<Quark, bool> checkPrt;
+
   threads.push_back(root);
   root.parent_id = current_prt_id;
+  checkPrt[current_prt_id] = true;
+
   while (st.executeStep()) {
     Quark msg_id = st.getColumn(0).getText();
     Quark prt_id;
@@ -228,6 +232,7 @@ int run_sql(std::string &q,
       Data::ArticleTree::ParentAndChildren pac;
       pac.parent_id = prt_id;
       current_prt_id = prt_id;
+      assert(!checkPrt[current_prt_id]);
       threads.push_back(pac);
     }
     threads.back().children_id.push_back(msg_id);
@@ -296,12 +301,15 @@ int DataImpl ::MyTree ::get_threads(
   return run_sql(q, threads);
 }
 
-// apply function on shown articles in breadth first order
-int DataImpl ::MyTree ::call_on_sorted_shown_articles(
-    std::function<void(Quark msg_id, Quark parent_id)> cb,
+// apply function on shown articles in breadth first order This is
+// similar to get_shown_threads, except that this function is called
+// when getting articles in ordered threads is not necessary. Root and
+// parent threads are already created, just their order needs to
+// change. So there's no need to create a complex SQL query that
+// returns ordered threads.
+int DataImpl ::MyTree ::get_sorted_shown_threads(
+  std::vector<Data::ArticleTree::ParentAndChildren> &threads,
     header_column_enum header_column_id, bool ascending) const {
-
-  TimeElapsed timer;
 
   // Map column IDs to database column names
   std::string db_column, db_join;
@@ -318,25 +326,7 @@ int DataImpl ::MyTree ::call_on_sorted_shown_articles(
     order by prt_msg_id,
   )SQL" + db_column + " " + (ascending ? "asc" : "desc") ;
 
-  LOG4CXX_TRACE(logger, "sql request is " << q);
-
-  SQLite::Statement st(pan_db, q);
-  int count(0);
-  while (st.executeStep()) {
-    Quark msg_id = st.getColumn(0).getText();
-    Quark prt_id;
-    if (! st.getColumn(1).isNull())
-    {
-      prt_id = st.getColumn(1).getText();
-    }
-    cb(msg_id,prt_id);
-    count++;
-  }
-
-  LOG4CXX_DEBUG(logger, "sql request done for " << count << " articles in "
-                                                << timer.get_seconds_elapsed());
-
-  return count;
+  return run_sql(q, threads);
 }
 
 void DataImpl ::MyTree ::get_shown_parent_ids(
@@ -361,45 +351,11 @@ void DataImpl ::MyTree ::get_shown_parent_ids(
 
 // apply function on exposed article in breadth first order.
 // Returns the number of exposed articles
-int DataImpl ::MyTree ::call_on_exposed_articles (
-  std::function<void(Quark msg_id, Quark parent_id)> cb) const
-{
-  // see https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
-  std::string q = R"SQL(
-    with recursive hierarchy (step, article_id, message_id, parent_id, status) as (
-      select 0, a.id, message_id, av.parent_id, av.status
-      from article_view as av
-      join article as a on a.id == av.article_id
-      where av.parent_id is null
-
-      union all
-
-      select step+1, a.id, a.message_id, av.parent_id, av.status
-      from article_view as av
-      join article as a on a.id == av.article_id
-      join hierarchy as h on av.parent_id is h.article_id
-      limit 10000000 -- todo remove ?
-    )
-    select hierarchy.message_id, parent.message_id
-    from hierarchy
-    left outer join article as parent on hierarchy.parent_id == parent.id
-    where hierarchy.status is "e"
-    order by step
-  )SQL";
-
-  SQLite::Statement st(pan_db, q);
-  int count(0);
-  while (st.executeStep()) {
-    Quark msg_id = st.getColumn(0).getText();
-    Quark prt_id;
-    if (! st.getColumn(1).isNull())
-    {
-      prt_id = st.getColumn(1).getText();
-    }
-    count ++;
-    cb(msg_id,prt_id);
-  }
-  return count;
+int DataImpl ::MyTree ::get_exposed_articles (
+          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          header_column_enum header_column_id,
+          bool ascending) const {
+  return get_threads(threads, header_column_id, ascending, "is \"e\"");
 }
 
 // apply function on reparented articles
