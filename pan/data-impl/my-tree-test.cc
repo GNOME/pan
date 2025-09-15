@@ -471,6 +471,54 @@ class DataImplTest : public CppUnit::TestFixture
       assert_not_in_view("step 3", "g1m1d2");
     }
 
+    // emulates showing article using a callback, and with articles
+    // sorted in hierarchy
+    void test_function_on_exposed_articles()
+    {
+      change_read_status("g1m2", true);
+      change_read_status("g1m2a", true);
+      change_read_status("g1m1c1", true);
+
+      // init article view
+      criteria.set_type_is_read();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+      // we can view the 3 read articles. They are in separate threads
+      // so they have no children
+      assert_parents("step 1", Quark(), "g1", {"g1m1c1", "g1m2", "g1m2a"});
+
+      tree->update_article_after_gui_update();
+
+      // change filter
+      criteria.set_type_is_unread();
+      tree->set_filter(Data::SHOW_ARTICLES, &criteria);
+      tree->update_article_view();
+
+      assert_parents("step 2", Quark(), "g1", {"g1m1a", "g1m2b"});
+
+      // function that checks that parent_id is either null or already
+      // provided.
+      std::set<std::string> stack;
+      auto check
+      = [&stack](Quark msg_id, Quark prt_id)
+      {
+        // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
+        if (! prt_id.empty())
+        {
+          auto search = stack.find(prt_id.to_string());
+          CPPUNIT_ASSERT_MESSAGE("step 3 msg_id " + msg_id.to_string()
+                                   + " parent_id " + prt_id.to_string()
+                                   + " consistency",
+                                 search != stack.end());
+        }
+        stack.insert(msg_id.to_string());
+      };
+
+      int count = tree->call_on_exposed_articles(check);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 exposed count ", 7, count);
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
     CPPUNIT_TEST(test_get_children_with_empty_criteria);
@@ -478,6 +526,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_middle_thread);
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_article_deletion);
+    CPPUNIT_TEST(test_function_on_exposed_articles);
     CPPUNIT_TEST_SUITE_END();
 };
 

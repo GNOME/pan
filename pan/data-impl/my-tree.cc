@@ -30,6 +30,7 @@
 #include <config.h>
 #include <cstdint>
 #include <cstdio>
+#include <functional>
 #include <log4cxx/logger.h>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
@@ -162,6 +163,49 @@ int DataImpl ::MyTree ::fill_article_view_from_article() const
   q.bind(param_count, _group);
 
   return q.exec();
+}
+
+// apply function on exposed article in breadth first order.
+// Returns the number of exposed articles
+int DataImpl ::MyTree ::call_on_exposed_articles (
+  std::function<void(Quark msg_id, Quark parent_id)> cb) const
+{
+  // see https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
+  std::string q = R"SQL(
+    with recursive hierarchy (step, article_id, message_id, parent_id, status) as (
+      select 0, a.id, message_id, av.parent_id, av.status
+      from article_view as av
+      join article as a on a.id == av.article_id
+      where av.parent_id is null
+
+      union all
+
+      select step+1, a.id, a.message_id, av.parent_id, av.status
+      from article_view as av
+      join article as a on a.id == av.article_id
+      join hierarchy as h on av.parent_id is h.article_id
+      limit 10000000 -- todo remove ?
+    )
+    select hierarchy.message_id, parent.message_id
+    from hierarchy
+    left outer join article as parent on hierarchy.parent_id == parent.id
+    where hierarchy.status is "e"
+    order by step
+  )SQL";
+
+  SQLite::Statement st(pan_db, q);
+  int count(0);
+  while (st.executeStep()) {
+    Quark msg_id = st.getColumn(0).getText();
+    Quark prt_id;
+    if (! st.getColumn(1).isNull())
+    {
+      prt_id = st.getColumn(1).getText();
+    }
+    count ++;
+    cb(msg_id,prt_id);
+  }
+  return count;
 }
 
 void DataImpl ::MyTree ::update_article_view() const {
