@@ -232,6 +232,27 @@ int DataImpl ::MyTree ::call_on_reparented_articles(
   return count;
 }
 
+// apply function on hidden articles
+// Returns the number of hidden articles
+int DataImpl ::MyTree ::call_on_hidden_articles(
+    std::function<void(Quark msg_id)> cb) const {
+  std::string q = R"SQL(
+    select message_id
+    from article_view as av
+    join article on av.article_id == article.id
+    where av.status = "h"
+  )SQL";
+
+  SQLite::Statement st(pan_db, q);
+  int count(0);
+  while (st.executeStep()) {
+    std::string msg_id (st.getColumn(0).getText());
+    cb(msg_id);
+    count++;
+  }
+  return count;
+}
+
 void DataImpl ::MyTree ::update_article_view() const {
   TimeElapsed timer;
   LOG4CXX_TRACE(logger, "Update article_view");

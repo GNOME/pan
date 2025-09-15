@@ -597,6 +597,8 @@ class Data :
           std::function<void(Quark msg_id, Quark parent_id)> cb) const = 0;
       virtual int call_on_reparented_articles(
           std::function<void(Quark msg_id, Quark new_parent_id)> cb) const = 0;
+      virtual int call_on_hidden_articles(
+          std::function<void(Quark msg_id)> cb) const = 0;
 
       protected:
         /** the quirky way of incrementing 'it' is to prevent it from being

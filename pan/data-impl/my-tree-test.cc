@@ -587,6 +587,51 @@ class DataImplTest : public CppUnit::TestFixture
         "check new g1m1d2 parent", std::string(""), prt);
     }
 
+    // check hidden status of articles
+    void test_function_on_hidden_articles() {
+      // init article view, some articles are shown
+      criteria.set_type_is_unread();
+      tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
+                                      &criteria);
+      tree->initialize_article_view();
+
+      tree->update_article_after_gui_update();
+      // check idempotency
+      tree->update_article_after_gui_update();
+
+      // change status and re-apply filter, some articles are hidden
+      change_read_status("g1m1c1", true);
+      change_read_status("g1m1c2", true);
+
+      // emulate article removal
+      mark_to_delete_article("g1m1d2");
+
+      tree->update_article_view();
+      // check idempotency
+      tree->update_article_view();
+
+      assert_hidden("step 2", "g1m1c1");
+      assert_hidden("step 2", "g1m1c2");
+      assert_reparented("step 2", "g1m1d1");
+      assert_shown("step 2", "g1m1b");
+
+      // msg_id -> new_parent_id
+      std::set<std::string> hidden;
+      auto insert_in_stack = [&hidden](Quark msg_id) {
+        hidden.insert(msg_id.to_string());
+      };
+      int count = tree->call_on_hidden_articles(insert_in_stack);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 3, count);
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c1",
+                             hidden.find("g1m1c1") != hidden.end());
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c2",
+                             hidden.find("g1m1c2") != hidden.end());
+      // hidden via article with pending deletion
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1d2",
+                             hidden.find("g1m1d2") != hidden.end());
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
     CPPUNIT_TEST(test_get_children_with_empty_criteria);
@@ -596,6 +641,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_article_deletion);
     CPPUNIT_TEST(test_function_on_exposed_articles);
     CPPUNIT_TEST(test_function_on_reparented_articles);
+    CPPUNIT_TEST(test_function_on_hidden_articles);
     CPPUNIT_TEST_SUITE_END();
 };
 
