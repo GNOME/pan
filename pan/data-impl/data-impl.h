@@ -503,6 +503,8 @@ public:
         void set_rules(RulesInfo const *rules = nullptr) final override;
         int call_on_exposed_articles(
           std::function<void(Quark msg_id, Quark parent_id)> cb) const override;
+        int call_on_reparented_articles(
+          std::function<void(Quark msg_id, Quark new_parent_id)> cb) const override;
 
       private:
         void set_parent_in_article_view() const;

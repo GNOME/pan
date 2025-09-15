@@ -208,6 +208,30 @@ int DataImpl ::MyTree ::call_on_exposed_articles (
   return count;
 }
 
+// apply function on reparented articles
+// Returns the number of reparented articles
+int DataImpl ::MyTree ::call_on_reparented_articles(
+    std::function<void(Quark msg_id, Quark new_parent_id)> cb) const {
+  std::string q = R"SQL(
+    select child.message_id, parent.message_id
+    from article_view as av
+    join article as child on av.article_id == child.id
+    -- left outer join retrieved articles reparented to root
+    left outer join article as parent on av.parent_id == parent.id
+    where av.status is "r"
+  )SQL";
+
+  SQLite::Statement st(pan_db, q);
+  int count(0);
+  while (st.executeStep()) {
+    std::string child_msg_id (st.getColumn(0).getText());
+    std::string prt_msg_id (st.getColumn(1).getText());
+    cb(child_msg_id, prt_msg_id);
+    count++;
+  }
+  return count;
+}
+
 void DataImpl ::MyTree ::update_article_view() const {
   TimeElapsed timer;
   LOG4CXX_TRACE(logger, "Update article_view");

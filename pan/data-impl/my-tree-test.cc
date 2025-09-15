@@ -519,6 +519,74 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 exposed count ", 7, count);
     }
 
+    // check reparented status of article.
+    void test_function_on_reparented_articles()
+    {
+      // init article view, some articles are shown
+      criteria.set_type_is_unread();
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      tree->update_article_after_gui_update();
+
+      // change status and re-apply filter, some articles are hidden
+      // and their children are reparented.
+      change_read_status("g1m1c1", true);
+      change_read_status("g1m1c2", true);
+      tree->update_article_view();
+      assert_hidden("step 2", "g1m1c1");
+      assert_hidden("step 2", "g1m1c2");
+      assert_reparented("step 2", "g1m1d1");
+      assert_reparented("step 2", "g1m1d2");
+
+      // msg_id -> new_parent_id
+      std::unordered_map<std::string, std::string> reparented;
+      auto insert_in_stack = [&reparented](Quark msg_id, Quark prt_id)
+      {
+        // std::cout << "check reparented " << msg_id << "\n";
+        reparented.insert({msg_id.to_string(), prt_id.to_string()});
+      };
+      int count = tree->call_on_reparented_articles(insert_in_stack);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check reparented nb", 2, count);
+      CPPUNIT_ASSERT_MESSAGE("check reparented g1m1d1",
+                             reparented.find("g1m1d1") != reparented.end());
+      CPPUNIT_ASSERT_MESSAGE("check reparented g1m1d2",
+                             reparented.find("g1m1d2") != reparented.end());
+      auto prt = reparented.at("g1m1d1");
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "check new g1m1d1 parent", std::string("g1m1b"), prt);
+      prt = reparented.at("g1m1d2");
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "check new g1m1d2 parent", std::string("g1m1b"), prt);
+
+      tree->update_article_after_gui_update();
+
+      // read an article just below root so that child article is reparented to root
+      change_read_status("g1m1a", true);
+      change_read_status("g1m1b", true);
+      tree->update_article_view();
+      assert_hidden("step 3", "g1m1a");
+      assert_hidden("step 3", "g1m1b");
+      assert_reparented("step 3", "g1m1d1");
+      assert_reparented("step 3", "g1m1d2");
+      reparented.clear();
+      count = tree->call_on_reparented_articles(insert_in_stack);
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check reparented nb", 2, count);
+      CPPUNIT_ASSERT_MESSAGE("check reparented g1m1d1",
+                             reparented.find("g1m1d1") != reparented.end());
+      CPPUNIT_ASSERT_MESSAGE("check reparented g1m1d2",
+                             reparented.find("g1m1d2") != reparented.end());
+      prt = reparented.at("g1m1d1");
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "check new g1m1d1 parent", std::string(""), prt);
+      prt = reparented.at("g1m1d2");
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(
+        "check new g1m1d2 parent", std::string(""), prt);
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_get_children);
     CPPUNIT_TEST(test_get_children_with_empty_criteria);
@@ -527,6 +595,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_article_deletion);
     CPPUNIT_TEST(test_function_on_exposed_articles);
+    CPPUNIT_TEST(test_function_on_reparented_articles);
     CPPUNIT_TEST_SUITE_END();
 };
 
