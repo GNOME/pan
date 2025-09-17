@@ -57,6 +57,7 @@ void DataImpl ::MyTree ::reset_article_view() const
 }
 
 void DataImpl::MyTree::set_parent_in_article_view() const {
+  TimeElapsed timer;
   std::string set_parent_id = R"SQL(
     -- Like article with added parent_status column,
     -- status can be null for articles not present in article_view.
@@ -100,7 +101,7 @@ void DataImpl::MyTree::set_parent_in_article_view() const {
   int count = set_parent_id_st.exec();
   LOG4CXX_TRACE(logger,
                 "set parent_id in article_view table done with " << count
-                                                                 << " rows");
+                << " rows" << " in " << timer.get_seconds_elapsed() << "s");
 }
 
 void DataImpl ::MyTree ::initialize_article_view() const
