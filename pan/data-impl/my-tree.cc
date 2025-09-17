@@ -428,16 +428,21 @@ void DataImpl ::MyTree ::mark_as_pending_deletion(
 
 void DataImpl ::MyTree ::update_article_view() const {
   TimeElapsed timer;
-  LOG4CXX_TRACE(logger, "Update article_view");
+  LOG4CXX_TRACE(logger, "start");
   SQLite::Transaction setup_article_view_transaction(pan_db);
 
   // mark all articles
   pan_db.exec("update article_view set mark = True;");
+  auto tmp_time = timer.get_seconds_elapsed();
+  LOG4CXX_TRACE(logger, "set mark in article_view done ("
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   // found article reset the mark
   int count = fill_article_view_from_article();
   LOG4CXX_TRACE(logger, "fill article_view done ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   // set marked articles as hidden
   pan_db.exec("update article_view set status = \"h\" where mark == True;");
@@ -446,13 +451,16 @@ void DataImpl ::MyTree ::update_article_view() const {
   // article_view table to compute parent_id)
   set_parent_in_article_view();
   LOG4CXX_TRACE(logger, "set_parent in article_view done ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   setup_article_view_transaction.commit();
 
-  LOG4CXX_TRACE(logger, "Update article_view done with "
-                            << count << " articles ("
-                            << timer.get_seconds_elapsed() << "s).");
+  LOG4CXX_TRACE(logger, "transaction commit done in "
+                            << timer.get_seconds_elapsed() - tmp_time << "s).");
+
+  LOG4CXX_TRACE(logger, "done with " << count << " articles (total time: "
+                                     << timer.get_seconds_elapsed() << "s).");
 }
 
 // delete (h)idden articles and set other to (s)hown
