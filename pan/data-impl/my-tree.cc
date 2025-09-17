@@ -113,21 +113,25 @@ void DataImpl ::MyTree ::initialize_article_view() const
   reset_article_view();
 
   int count = fill_article_view_from_article();
+  auto t = timer.get_seconds_elapsed();
   LOG4CXX_TRACE(
-    logger, "init: fill article_view done (" << timer.get_seconds_elapsed() << "s)");
+    logger, "init: fill article_view done (" << t << "s)");
+
 
   // second pass to setup parent_id in article view (this needs whole
   // article_view table to compute parent_id)
   set_parent_in_article_view();
+  auto t2 = timer.get_seconds_elapsed();
   LOG4CXX_TRACE(
-    logger, "init: set parent in article_view done (" << timer.get_seconds_elapsed() << "s)");
+    logger, "init: set parent in article_view done (" << t2 - t << "s)");
 
   setup_article_view_transaction.commit();
 
-  LOG4CXX_TRACE(logger,
-                "Initial load on article_view table done with "
-                  << count << " articles ("
-                  << timer.get_seconds_elapsed() << "s)");
+  auto t3 = timer.get_seconds_elapsed();
+  LOG4CXX_TRACE(logger, "Initial load on article_view table done with "
+                            << count << " articles (commit " << t3 - t2
+                            << "s, total " << timer.get_seconds_elapsed()
+                            << "s)");
 }
 
 // also apply filters to build article_view
