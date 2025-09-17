@@ -50,6 +50,7 @@ public:
          delete from article_group;
          delete from ghost;
          delete from article;
+         delete from removed_article;
          delete from server_group;
          delete from `group`;
          delete from author;

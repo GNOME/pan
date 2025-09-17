@@ -529,9 +529,27 @@ class DataImplTest : public CppUnit::TestFixture
       // change status and re-apply filter, some articles are hidden
       change_read_status("g1m1c1", true);
       change_read_status("g1m1c2", true);
+
+      // emulate article removal
+      pan_db.exec("delete from article where message_id == \"g1m1d2\"");
+
       tree->update_article_view();
+
+      SQLite::Statement q(pan_db, "select message_id from removed_article");
+      int rm_count(0);
+      while (q.executeStep())
+      {
+        std::string goner(q.getColumn(0).getText());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(
+          "check removed article", std::string("g1m1d2"), goner);
+        rm_count++;
+      }
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check nb of removed articles", 1, rm_count);
+
       assert_hidden("step 2", "g1m1c1");
       assert_hidden("step 2", "g1m1c2");
+      assert_reparented("step 2", "g1m1d1");
+      assert_unchanged("step 2", "g1m1b");
 
       // msg_id -> new_parent_id
       std::set<std::string> hidden;
@@ -540,11 +558,15 @@ class DataImplTest : public CppUnit::TestFixture
       };
       int count = tree->call_on_hidden_articles(insert_in_stack);
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 2, count);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 3, count);
       CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c1",
                              hidden.find("g1m1c1") != hidden.end());
       CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c2",
                              hidden.find("g1m1c2") != hidden.end());
+      // hidden via removed_article
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1d2",
+                             hidden.find("g1m1d2") != hidden.end());
+
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);
