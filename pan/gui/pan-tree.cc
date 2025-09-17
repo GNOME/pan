@@ -1057,6 +1057,7 @@ PanTreeStore :: insert (Row            * parent_row,
   gtk_tree_path_free (path);
 }
 
+// used by group-pane
 void
 PanTreeStore :: reparent (Row  * new_parent,
                           Row  * row,

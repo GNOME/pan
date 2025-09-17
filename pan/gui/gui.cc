@@ -1527,6 +1527,8 @@ void GUI :: do_delete_article ()
   {
     const std::set<const Article*> articles (_header_pane->get_nested_selection(false));
     _data.delete_articles (articles);
+    _header_pane->update_article_view();
+    _header_pane->update_tree();
 
     const Quark mid (_body_pane->get_message_id());
     foreach_const (std::set<const Article*>, articles, it)
@@ -2090,8 +2092,12 @@ void GUI :: do_clear_selected_groups ()
   if (do_delete)
   {
       const quarks_v groups (_group_pane->get_full_selection ());
-      foreach_const (quarks_v, groups, it)
-      _data.group_clear_articles (*it);
+      for (Quark it: groups)
+        {
+          _data.group_clear_articles (it);
+          _header_pane->update_article_view();
+          _header_pane->update_tree();
+        }
   }
 }
 

@@ -573,6 +573,7 @@ class Data :
             }
 
             virtual void on_tree_change(Diffs const &) = 0;
+            virtual void update_tree() = 0;
         };
 
       private:

@@ -51,6 +51,7 @@ public:
          delete from article_xref;
          delete from article_group;
          delete from article;
+         delete from removed_article;
          delete from server;
          delete from `group`;
          delete from profile;

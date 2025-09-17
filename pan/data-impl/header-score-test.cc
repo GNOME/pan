@@ -26,7 +26,7 @@
 
 using namespace pan;
 
-char const *db_file("/tmp/data-score-header.db");
+char const *db_file("/tmp/header-score-test.db");
 SQLiteDb pan_db(db_file, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 
 // copied from scorefile-test.cc

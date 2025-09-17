@@ -14,6 +14,18 @@ create table if not exists article_view
     status text check (status in ('r','u','h','e')) not null
   );
 
+-- no foreign keys as the articles were removed from article table
+create table if not exists removed_article
+  (
+    message_id text unique
+  );
+
+create trigger if not exists removed_article
+  after delete on article
+  begin
+    insert into removed_article values (old.message_id);
+  end;
+
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite
