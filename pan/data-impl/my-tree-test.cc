@@ -105,13 +105,15 @@ class DataImplTest : public CppUnit::TestFixture
     void tearDown() {}
 
     void add_article_db(std::string msg_id, std::string auth) {
+      static int time(1234);
       SQLite::Statement q_article(pan_db, R"SQL(
         insert into article (message_id,author_id, subject_id, time_posted)
           values (?, (select id from author where author like ?),
-                     (select id from subject where subject = "blah"), 1234);
+                     (select id from subject where subject = "blah"), ?);
       )SQL");
       q_article.bind(1, msg_id);
       q_article.bind(2, auth);
+      q_article.bind(3, time++);
       int res(q_article.exec());
       CPPUNIT_ASSERT_EQUAL_MESSAGE("insert article " + msg_id, 1, res);
     }
