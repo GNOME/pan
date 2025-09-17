@@ -71,12 +71,12 @@ void DataImpl::MyTree::set_parent_in_article_view() const {
     -- root or a parent with status != hidden is found
     v (count, article_id, new_parent_id, status, parent_status) as (
       select 0, article_id, parent_id, status, parent_status from article_status
-        where status is not null and status is not "h"
+        where status is not null and status not in ("h", "p")
       union all
       select count + 1, v.article_id, as2.parent_id, v.status, as2.parent_status
       from v
       join article_status as as2 on as2.article_id == v.new_parent_id
-      where v.parent_status is null or v.parent_status is "h"
+      where v.parent_status is null or v.parent_status in ("h","p")
       limit 20000 -- TODO : remove ?
     ),
     -- In v, the same article id may be present several time. Only the last is valid.
@@ -84,7 +84,7 @@ void DataImpl::MyTree::set_parent_in_article_view() const {
     -- See https://sqlite.org/lang_select.html#bare_columns_in_an_aggregate_query for max() usage
     v2 (count, article_id, new_parent_id, status, parent_status) as (
       select max(count),article_id, new_parent_id, status, parent_status from v
-      where status is not null and status is not "h"
+      where status is not null and status not in ("h","p")
       group by article_id
     )
    update article_view set parent_id = v2.new_parent_id,
@@ -147,9 +147,9 @@ int DataImpl ::MyTree ::fill_article_view_from_article() const
          and g.name == ?
        )
        insert into article_view (article_id, parent_id, status)
-       select distinct article_id, parent_id, "e" from f where true
-       on conflict
-       do update set status = "u"
+         select distinct article_id, parent_id, "e" from f where true
+       on conflict (article_id)
+         do update set status = "u" where status is ("h")
     )SQL";
   };
 
@@ -237,7 +237,7 @@ int DataImpl ::MyTree ::call_on_hidden_articles(
     select message_id
     from article_view as av
     join article on av.article_id == article.id
-    where av.status = "h"
+    where av.status in ("h","p")
   )SQL";
 
   SQLite::Statement st(pan_db, q);
@@ -248,6 +248,20 @@ int DataImpl ::MyTree ::call_on_hidden_articles(
     count++;
   }
   return count;
+}
+
+void DataImpl ::MyTree ::mark_as_pending_deletion(
+    const std::set<const Article *> goners) const {
+  std::string q = R"SQL(
+    update article_view set status = "p"
+    where article_id == (select id from article where message_id == ?)
+  )SQL";
+  SQLite::Statement st(pan_db,q);
+  for (const Article *a : goners) {
+    st.reset();
+    st.bind(1, a->message_id);
+    st.exec();
+  }
 }
 
 void DataImpl ::MyTree ::update_article_view() const {
@@ -287,7 +301,7 @@ void DataImpl ::MyTree ::get_children_sql(
 {
   std::string str("select message_id from article "
                   "join article_view as av on av.article_id == article.id "
-                  "where av.status is not \"h\" and av.parent_id ");
+                  "where av.status not in (\"h\",\"p\") and av.parent_id ");
   str +=
     mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
 
@@ -378,13 +392,6 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
     _filter.clear();
   }
   _show_type = show_type;
-
-  LOG4CXX_TRACE(logger,
-                "apply_sql_filter calls apply_filter in "
-                  << timer.get_seconds_elapsed() << "s.");
-  apply_sql_filter();
-  LOG4CXX_DEBUG(
-    logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
@@ -405,8 +412,9 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
   _data.ref_group(_group);
   _data._trees.insert(this);
 
-  set_filter(show_type, filter);
   set_rules(rules);
+  set_filter(show_type, filter);
+  initialize_article_view();
 }
 
 DataImpl ::MyTree ::~MyTree()
@@ -671,7 +679,9 @@ void DataImpl ::MyTree ::remove_articles(quarks_t const &mids)
   ArticleTree::Diffs diffs;
   std::set<ArticleNode *> parents;
 
-  LOG4CXX_WARN(logger, "deprecated function called");
+  LOG4CXX_WARN(logger,
+               "deprecated function called, removing " << mids.size()
+                                                       << " articles.");
   // zero out any corresponding nodes in the tree...
   nodes_v nodes;
   _data.find_nodes(mids, _nodes, nodes);
@@ -820,7 +830,7 @@ struct DataImpl ::MyTree ::TwoNodes
 
 void DataImpl ::MyTree ::add_articles(const_nodes_v const &nodes_in)
 {
-  LOG4CXX_WARN(logger, "deprecated add_articles called");
+  LOG4CXX_WARN(logger, "deprecated add_articles called with " << nodes_in.size() << " nodes");
   //  std::cerr<<"add articles nodes\n";
 
   NodeMidCompare compare;

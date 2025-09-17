@@ -36,10 +36,12 @@ class DataImplTest : public CppUnit::TestFixture
     Data::ArticleTree *tree;
     PrefsFile *prefs;
 
-    std::map<std::string, std::string> propMap = {{"hidden", "h"},
-                                                  {"exposed", "e"},
-                                                  {"reparented", "r"},
-                                                  {"unchanged", "u"}};
+    std::map<std::string, std::string> propMap = {
+      {"hidden", "h"},
+      {"exposed", "e"},
+      {"reparented", "r"},
+      {"unchanged", "u"},
+      {"pending_deletion", "p"}};
 
   public:
     void setUp()
@@ -193,6 +195,11 @@ class DataImplTest : public CppUnit::TestFixture
     void assert_reparented(std::string label, std::string msg_id)
     {
       assert_prop(label, "reparented", msg_id);
+    }
+
+    void assert_pending_deletion(std::string label, std::string msg_id)
+    {
+      assert_prop(label, "pending_deletion", msg_id);
     }
 
     void assert_prop(std::string label, std::string prop, std::string msg_id) {
@@ -528,9 +535,19 @@ class DataImplTest : public CppUnit::TestFixture
       // change status and re-apply filter, some articles are hidden
       change_read_status("g1m1c1", true);
       change_read_status("g1m1c2", true);
+
+      // emulate article removal
+      Article doomed(std::string("g1"),"g1m1d2");
+      std::set<const Article *> to_delete{&doomed};
+      tree->mark_as_pending_deletion(to_delete);
+
       tree->update_article_view();
+
+      assert_pending_deletion("step 2", "g1m1d2");
       assert_hidden("step 2", "g1m1c1");
       assert_hidden("step 2", "g1m1c2");
+      assert_reparented("step 2", "g1m1d1");
+      assert_unchanged("step 2", "g1m1b");
 
       // msg_id -> new_parent_id
       std::set<std::string> hidden;
@@ -539,11 +556,14 @@ class DataImplTest : public CppUnit::TestFixture
       };
       int count = tree->call_on_hidden_articles(insert_in_stack);
 
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 2, count);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 3, count);
       CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c1",
                              hidden.find("g1m1c1") != hidden.end());
       CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c2",
                              hidden.find("g1m1c2") != hidden.end());
+      // hidden via article with pending deletion
+      CPPUNIT_ASSERT_MESSAGE("check hidden g1m1d2",
+                             hidden.find("g1m1d2") != hidden.end());
     }
 
     CPPUNIT_TEST_SUITE(DataImplTest);

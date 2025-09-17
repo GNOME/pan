@@ -6,12 +6,17 @@ create table if not exists article_view
     article_id integer unique references article (id) on delete cascade,
     parent_id integer references article (id) on delete set null,
     -- track status of article in article_view
-    -- value is (e)xposed: article was exposed, i.e added to article_view and header list
+    -- value is:
+    -- (e)xposed: article was exposed, i.e added to article_view and header list
     -- (u)nchanged: article not changed
     -- (r)eparented: article reparented, i.e. its parent_id was changed
-    --               following addition or deletion of its parent
+    --     following addition or deletion of its parent
     -- (h)idden: article was filtered out and will be removed from article_view and header list
-    status text check (status in ('r','u','h','e')) not null
+    -- (p)ending_deletion: article is going to be deleted. Sequence is: mark for deletion,
+    --     update header-pane (some comparison may be done with deleted article data),
+    --     then remove article from article table. Foreign key ensures that
+    --     article in article view is also deleted
+    status text check (status in ('r','u','h','e','p')) not null
   );
 
 -- Local Variables:

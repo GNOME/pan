@@ -572,6 +572,7 @@ class Data :
             }
 
             virtual void on_tree_change(Diffs const &) = 0;
+            virtual void update_tree() = 0;
         };
 
       private:
@@ -591,6 +592,7 @@ class Data :
 
       virtual void initialize_article_view() const = 0;
       virtual void update_article_view() const = 0;
+      virtual void mark_as_pending_deletion(const std::set<const Article*>) const = 0;
       virtual int call_on_exposed_articles(
           std::function<void(Quark msg_id, Quark parent_id)> cb) const = 0;
       virtual int call_on_reparented_articles(
@@ -658,6 +660,7 @@ class Data :
     typedef std::set<Article const *> unique_articles_t;
 
     virtual void delete_articles(unique_articles_t const &) = 0;
+    virtual void delete_articles(std::vector<Article> const &) = 0;
 
     virtual void get_article_scores(Quark const &group,
                                     Article const &,

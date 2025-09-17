@@ -1525,8 +1525,23 @@ void GUI :: do_delete_article ()
 
   if (do_delete)
   {
-    const std::set<const Article*> articles (_header_pane->get_nested_selection(false));
-    _data.delete_articles (articles);
+    const std::set<const Article *> articles(
+        _header_pane->get_nested_selection(false));
+
+    // copy message_ids as articles content is voided by
+    // update_tree. I hope to clean this up later
+    std::vector<Article> art_v;
+    for (Article const *a : articles) {
+      art_v.push_back(*a);
+    }
+
+    _header_pane->mark_as_pending_deletion(articles);
+    _header_pane->update_article_view();
+    _header_pane->update_tree();
+    // article must be deleted after header-pane is updated, because
+    // header-pane does some comparison with article data when
+    // updating gtk tree.
+    _data.delete_articles (art_v);
 
     const Quark mid (_body_pane->get_message_id());
     foreach_const (std::set<const Article*>, articles, it)
@@ -2090,8 +2105,12 @@ void GUI :: do_clear_selected_groups ()
   if (do_delete)
   {
       const quarks_v groups (_group_pane->get_full_selection ());
-      foreach_const (quarks_v, groups, it)
-      _data.group_clear_articles (*it);
+      for (Quark it: groups)
+        {
+          _data.group_clear_articles (it);
+          _header_pane->update_article_view();
+          _header_pane->update_tree();
+        }
   }
 }
 
