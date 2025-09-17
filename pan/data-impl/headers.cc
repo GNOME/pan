@@ -1620,9 +1620,19 @@ void DataImpl ::group_clear_articles(Quark const &group)
   fire_group_counts(group);
 }
 
-void DataImpl ::delete_articles(unique_articles_t const &articles)
+void DataImpl ::delete_articles(unique_articles_t const &articles) {
+  std::vector<Article> art;
+  for (Article const *a : articles) {
+    art.push_back(*a);
+  }
+  delete_articles(art);
+}
+
+void DataImpl ::delete_articles(std::vector<Article> const &articles)
 {
   quarks_t all_mids;
+
+  LOG4CXX_DEBUG(logger,  "Deleting " << articles.size() << " articles from DB.");
 
   // info we need to batch these deletions per group...
   typedef std::map<Quark, PerGroup> per_groups_t;
@@ -1635,20 +1645,19 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
     where a.message_id == ?
   )SQL");
 
-  foreach_const (unique_articles_t, articles, it)
+  for (Article article: articles)
   {
     // populate the per_groups map
-    Article const *article(*it);
     quarks_t groups;
     get_group_q.reset();
 
-    get_group_q.bindNoCopy(1, article->message_id.c_str());
+    get_group_q.bindNoCopy(1, article.message_id.c_str());
     while (get_group_q.executeStep()) {
       std::string grp = get_group_q.getColumn(0);
       groups.insert(grp);
     }
 
-    bool const was_read(is_read(article));
+    bool const was_read(is_read(&article));
     foreach_const (quarks_t, groups, git)
     {
       PerGroup &per(per_groups[*git]);
@@ -1657,11 +1666,11 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
       {
         ++per.unread;
       }
-      per.mids.insert(article->message_id);
-      all_mids.insert(article->message_id);
+      per.mids.insert(article.message_id);
+      all_mids.insert(article.message_id);
     }
 
-    all_mids.insert(article->message_id);
+    all_mids.insert(article.message_id);
   }
 
   // process each group

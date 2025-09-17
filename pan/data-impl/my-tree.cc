@@ -253,6 +253,20 @@ int DataImpl ::MyTree ::call_on_hidden_articles(
   return count;
 }
 
+void DataImpl ::MyTree ::mark_as_pending_deletion(
+    const std::set<const Article *> goners) const {
+  std::string q = R"SQL(
+    update article set to_delete = True
+    where message_id == ?
+  )SQL";
+  SQLite::Statement st(pan_db,q);
+  for (const Article *a : goners) {
+    st.reset();
+    st.bind(1, a->message_id);
+    st.exec();
+  }
+}
+
 void DataImpl ::MyTree ::update_article_view() const {
   TimeElapsed timer;
   LOG4CXX_TRACE(logger, "Update article_view");
@@ -406,13 +420,6 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
     _filter.clear();
   }
   _show_type = show_type;
-
-  LOG4CXX_TRACE(logger,
-                "apply_sql_filter calls apply_filter in "
-                  << timer.get_seconds_elapsed() << "s.");
-  apply_sql_filter();
-  LOG4CXX_DEBUG(
-    logger, "apply_sql_filter done in " << timer.get_seconds_elapsed() << "s.");
 }
 
 /****
@@ -433,8 +440,9 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
   _data.ref_group(_group);
   _data._trees.insert(this);
 
-  set_filter(show_type, filter);
   set_rules(rules);
+  set_filter(show_type, filter);
+  initialize_article_view();
 }
 
 DataImpl ::MyTree ::~MyTree()
@@ -699,7 +707,9 @@ void DataImpl ::MyTree ::remove_articles(quarks_t const &mids)
   ArticleTree::Diffs diffs;
   std::set<ArticleNode *> parents;
 
-  LOG4CXX_WARN(logger, "deprecated function called");
+  LOG4CXX_WARN(logger,
+               "deprecated function called, removing " << mids.size()
+                                                       << " articles.");
   // zero out any corresponding nodes in the tree...
   nodes_v nodes;
   _data.find_nodes(mids, _nodes, nodes);
@@ -821,6 +831,9 @@ void DataImpl ::MyTree ::articles_changed(quarks_t const &mids,
     }
     fire_diffs(diffs);
   }
+
+  update_article_after_gui_update();
+  LOG4CXX_DEBUG(logger, "articles_changed done");
 }
 
 void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
@@ -848,7 +861,7 @@ struct DataImpl ::MyTree ::TwoNodes
 
 void DataImpl ::MyTree ::add_articles(const_nodes_v const &nodes_in)
 {
-  LOG4CXX_WARN(logger, "deprecated add_articles called");
+  LOG4CXX_WARN(logger, "deprecated add_articles called with " << nodes_in.size() << " nodes");
   //  std::cerr<<"add articles nodes\n";
 
   NodeMidCompare compare;

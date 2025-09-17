@@ -490,6 +490,7 @@ public:
         void reset_article_view() const;
         void initialize_article_view() const override;
         void update_article_view() const override;
+        void mark_as_pending_deletion(const std::set<const Article*>) const override;
         void update_article_after_gui_update() const override;
         void set_article_hidden_status(quarks_t &mids) const override;
         void get_children_sql(Quark const &mid,
@@ -555,6 +556,7 @@ public:
 
   public: // Data interface
     void delete_articles(unique_articles_t const &) override;
+    void delete_articles(std::vector<Article> const &) override;
 
     ArticleTree *group_get_articles(
       Quark const &group,

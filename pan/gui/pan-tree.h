@@ -259,10 +259,12 @@ struct PanTreeStore
      */
     void walk (WalkFunctor& walk, bool need_path=false) { prefix_walk (walk, nullptr, need_path); }
 
+    // depth first
     void prefix_walk (WalkFunctor   & walk_functor,
                       GtkTreeIter   * top = nullptr,
                       bool            need_path = false);
 
+   // breadth first
     void postfix_walk (WalkFunctor   & walk_functor,
                        GtkTreeIter   * top = nullptr,
                        bool            need_path = false);
