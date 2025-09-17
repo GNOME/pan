@@ -1,14 +1,14 @@
 # Georgian translation for pan.
 # Copyright (C) 2023 pan's COPYRIGHT HOLDER
 # This file is distributed under the same license as the pan package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues/\n"
-"POT-Creation-Date: 2024-05-08 17:14+0000\n"
-"PO-Revision-Date: 2024-07-15 05:57+0200\n"
+"POT-Creation-Date: 2025-09-14 08:15+0000\n"
+"PO-Revision-Date: 2025-09-17 17:39+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -16,31 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.7\n"
 
-#. update the titlebar
-#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
-#: pan/gui/dl-headers-ui.cc:119 pan/gui/gui.cc:1040 pan/gui/gui.cc:1665
-#: pan/gui/gui.cc:1985 pan/gui/score-add-ui.cc:600
+#: org.gnome.pan.desktop.in:2 org.gnome.pan.metainfo.xml.in:27
 msgid "Pan"
 msgstr "Pan"
 
-#: org.gnome.pan.desktop.in:4
+#: org.gnome.pan.desktop.in:3
 msgid "Newsreader"
-msgstr ""
+msgstr "ახალი ამბების მკითხველი"
 
-#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
+#: org.gnome.pan.desktop.in:4 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
-msgstr ""
+msgstr "წაიკითხეთ და დაპოსტეთ სტატიები Usenet-ში"
 
 #. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
-#: org.gnome.pan.desktop.in:7
+#: org.gnome.pan.desktop.in:6
 msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
-msgstr ""
+msgstr "usenet;news;newsreader;newsgroup;article;yenc;nzb;სტატიები;წაკითხვა;"
 
 #: org.gnome.pan.metainfo.xml.in:6
 msgid "Pan Newsreader"
-msgstr ""
+msgstr "ახალი ამბების პროგრამა Pan"
 
 #: org.gnome.pan.metainfo.xml.in:9
 msgid ""
@@ -48,3578 +45,511 @@ msgid ""
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
 "multiple servers, and secure connections."
 msgstr ""
+"Pan წარმოადგენს Usenet-ის სიახლეების წამკითხველს, რომელიც კარგად იქცევა "
+"როგორც ტექსტთან, ისე ბინარულ მონაცემებთან. აქვს ინტერნეტის გარეშე კითხვის, "
+"რეიტინგების და killfiles-ის, yEnc-ის, ZNB-ის, PGP-ის, ერთზე მეტი "
+"სერვერების და დაცული კავშირების მხარდაჭერა."
 
 #: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
 msgstr ""
-
-#: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
-#, c-format
-msgid "Error opening directory: \"%s\": %s"
-msgstr ""
-
-#: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
-#: pan/data-impl/data-io.cc:278 pan/data-impl/data-io.cc:310
-#: pan/gui/post-ui.cc:1767
-#, c-format
-msgid "Unable to save \"%s\" %s"
-msgstr ""
-
-#: pan/data/article-cache.cc:362
-#, c-format
-msgid "Error opening file \"%s\" %s"
-msgstr ""
-
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
-#: pan/data-impl/server.cc:495 pan/general/file-util.cc:311
-#: pan/gui/post-ui.cc:636 pan/gui/task-pane.cc:740
-#, c-format
-msgid "Error reading file \"%s\": %s"
-msgstr ""
-
-#: pan/data/cert-store.cc:261
-#, c-format
-msgid "Error opening SSL certificate directory: \"%s\": %s"
-msgstr ""
-
-#: pan/data/cert-store.cc:292
-#, c-format
-msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
-msgstr ""
-
-#: pan/data/cert-store.cc:312
-msgid ""
-"Error initializing Certificate Store. Check that the permissions for the "
-"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
-msgstr ""
-
-#: pan/data/cert-store.cc:361
-#, c-format
-msgid "Could not export certificate for server: %s"
-msgstr ""
-
-#. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:115
-#, c-format
-msgid "Loaded data backend in %.1f seconds"
-msgstr ""
-
-#: pan/data-impl/data-impl.cc:151
-msgid "Pan Newsreader's server passwords"
-msgstr ""
-
-#: pan/data-impl/groups.cc:102
-#, c-format
-msgid "Skipping newsrc file for server \"%s\""
-msgstr ""
-
-#: pan/data-impl/headers.cc:618
-#, c-format
-msgid "Expired %lu old articles from \"%s\""
-msgstr ""
-
-#: pan/data-impl/headers.cc:625
-#, c-format
-msgid ""
-"Unsupported data version for %s headers: %d.\n"
-"Are you running an old version of Pan by accident?"
-msgstr ""
-
-#: pan/data-impl/headers.cc:640
-#, c-format
-msgid "Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr ""
-
-#: pan/data-impl/headers.cc:869
-#, c-format
-msgid ""
-"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
-msgstr ""
-
-#: pan/data-impl/headers.cc:1202
-#, c-format
-msgid "Added %lu articles to %s."
-msgstr ""
-
-#: pan/data-impl/server.cc:263
-#, c-format
-msgid "Received no password from libsecret for server %s."
-msgstr ""
-
-#: pan/data-impl/xover.cc:241
-#, c-format
-msgid "Error reading from %s: unknown group \"%s\""
-msgstr ""
-
-#: pan/general/editor-spawner.cc:66
-#, c-format
-msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgstr ""
-
-#: pan/general/editor-spawner.cc:110
-#, c-format
-msgid "Error starting external editor: %s"
-msgstr ""
-
-#: pan/general/e-util.cc:164
-msgid "%l:%M %p"
-msgstr "%l:%M %p"
-
-#: pan/general/e-util.cc:165
-msgid "Today %l:%M %p"
-msgstr "დღეს %l:%M %p"
-
-#: pan/general/e-util.cc:166
-msgid "%a %l:%M %p"
-msgstr "%a %l:%M %p"
-
-#: pan/general/e-util.cc:167
-msgid "%b %d %l:%M %p"
-msgstr "%b %d %l:%M %p"
-
-#: pan/general/e-util.cc:168
-msgid "%b %d %Y"
-msgstr "%b %d %Y"
-
-#: pan/general/e-util.cc:200
-msgid "?"
-msgstr ""
-
-#: pan/general/text-match.cc:194
-#, c-format
-msgid "Can't use regular expression \"%s\": %s"
-msgstr ""
-
-#: pan/general/utf8-utils.cc:212
-msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr ""
-
-#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:451
-msgid "_File"
-msgstr "_ფაილი"
-
-#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:452
-msgid "_Edit"
-msgstr "_ჩასწორება"
-
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1138
-msgid "_Layout"
-msgstr "განლაგება"
-
-#: pan/gui/actions.cc:309
-msgid "_Group Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:310
-msgid "_Header Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:311
-msgid "_Body Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:312
-msgid "_View"
-msgstr "_ხედი"
-
-#: pan/gui/actions.cc:313
-msgid "Filte_r"
-msgstr "_ფილტრი"
-
-#: pan/gui/actions.cc:314
-msgid "_Go"
-msgstr "_წინ"
-
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1188
-msgid "_Actions"
-msgstr "მოქმედებები"
-
-#: pan/gui/actions.cc:316
-msgid "_Articles"
-msgstr "_სტატიები"
-
-#: pan/gui/actions.cc:317
-msgid "G_roups"
-msgstr "_ჯგუფები"
-
-#: pan/gui/actions.cc:318 pan/gui/actions.cc:319
-msgid "_Post"
-msgstr "_დაპოსტვა"
-
-#: pan/gui/actions.cc:320
-msgid "_Help"
-msgstr "_დახმარება"
-
-#: pan/gui/actions.cc:323
-msgid "_Read Group"
-msgstr ""
-
-#: pan/gui/actions.cc:324
-msgid "Read Group"
-msgstr ""
-
-#: pan/gui/actions.cc:328
-msgid "_Mark Selected Groups Read"
-msgstr ""
-
-#: pan/gui/actions.cc:329
-msgid "Mark Selected Groups Read"
-msgstr ""
-
-#: pan/gui/actions.cc:333
-msgid "_Delete Selected Groups' Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:334
-msgid "Delete Selected Groups' Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:338
-msgid "Get New _Headers in Selected Groups"
-msgstr ""
-
-#: pan/gui/actions.cc:339
-msgid "Get New Headers in Selected Groups"
-msgstr ""
-
-#: pan/gui/actions.cc:343 pan/gui/actions.cc:348
-msgid "Get New _Headers in Subscribed Groups"
-msgstr ""
-
-#: pan/gui/actions.cc:344 pan/gui/actions.cc:349
-msgid "Get New Headers in Subscribed Groups"
-msgstr ""
-
-#: pan/gui/actions.cc:353
-msgid "Get _Headers..."
-msgstr ""
-
-#: pan/gui/actions.cc:354
-msgid "Get Headers..."
-msgstr ""
-
-#: pan/gui/actions.cc:358 pan/gui/actions.cc:359
-msgid "Refresh Group List"
-msgstr ""
-
-#: pan/gui/actions.cc:363
-msgid "_Subscribe"
-msgstr "_გამოწერა"
-
-#: pan/gui/actions.cc:364
-msgid "Subscribe"
-msgstr "ხელმოწერა"
-
-#: pan/gui/actions.cc:368
-msgid "_Unsubscribe"
-msgstr "გამოწერის _გაუქმება"
-
-#: pan/gui/actions.cc:369
-msgid "Unsubscribe"
-msgstr "გამოწერის გაუქმება"
-
-#: pan/gui/actions.cc:373
-msgid "_Save Articles..."
-msgstr "_სტატიების შენახვა..."
-
-#: pan/gui/actions.cc:374
-msgid "Save Articles..."
-msgstr ""
-
-#: pan/gui/actions.cc:378
-msgid "Save Articles from Selected _NZB..."
-msgstr ""
-
-#: pan/gui/actions.cc:379
-msgid "Save Articles from Selected NZB"
-msgstr ""
-
-#: pan/gui/actions.cc:383
-msgid "Save Articles to an NZB _File..."
-msgstr ""
-
-#: pan/gui/actions.cc:384
-msgid "Save Articles to an NZB File"
-msgstr ""
-
-#: pan/gui/actions.cc:388 pan/gui/actions.cc:389
-msgid "Print"
-msgstr "ამობეჭდვა"
-
-#: pan/gui/actions.cc:393
-msgid "_Import NZB Files..."
-msgstr ""
-
-#: pan/gui/actions.cc:398
-msgid "_Cancel Last Task"
-msgstr ""
-
-#: pan/gui/actions.cc:403
-msgid "_Task Manager"
-msgstr ""
-
-#: pan/gui/actions.cc:408
-msgid "_Event Log"
-msgstr ""
-
-#: pan/gui/actions.cc:413
-msgid "_Quit"
-msgstr "დატოვება"
-
-#: pan/gui/actions.cc:418
-msgid "Select _All Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:423
-msgid "_Deselect All Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:428
-msgid "Add Su_bthreads to Selection"
-msgstr ""
-
-#: pan/gui/actions.cc:433
-msgid "Add _Threads to Selection"
-msgstr ""
-
-#: pan/gui/actions.cc:438
-msgid "Add _Similar Articles to Selection"
-msgstr ""
-
-#: pan/gui/actions.cc:443
-msgid "Select Article _Body"
-msgstr ""
-
-#: pan/gui/actions.cc:448
-msgid "Edit _Preferences"
-msgstr ""
-
-#: pan/gui/actions.cc:453
-msgid "Edit Selected _Group's Preferences"
-msgstr ""
-
-#: pan/gui/actions.cc:458
-msgid "Edit S_core File"
-msgstr ""
-
-#: pan/gui/actions.cc:463 pan/gui/post-ui.cc:468
-msgid "Edit P_osting Profiles"
-msgstr ""
-
-#: pan/gui/actions.cc:468
-msgid "Edit _News Servers"
-msgstr ""
-
-#: pan/gui/actions.cc:473
-msgid "Jump to _Group Tab"
-msgstr ""
-
-#: pan/gui/actions.cc:478
-msgid "Jump to _Header Tab"
-msgstr ""
-
-#: pan/gui/actions.cc:483
-msgid "Jump to _Body Tab"
-msgstr ""
-
-#: pan/gui/actions.cc:488
-msgid "_Rot13 Selected Text"
-msgstr ""
-
-#: pan/gui/actions.cc:493
-msgid "Clear _Header Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:498
-msgid "Clear _Body Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:503
-msgid "Cache Article"
-msgstr ""
-
-#: pan/gui/actions.cc:508
-msgid "Read Article"
-msgstr ""
-
-#: pan/gui/actions.cc:513
-msgid "Show Article Information"
-msgstr ""
-
-#: pan/gui/actions.cc:518
-msgid "Read _More"
-msgstr ""
-
-#: pan/gui/actions.cc:519
-msgid "Read More"
-msgstr "დაწვრილებით"
-
-#: pan/gui/actions.cc:523
-msgid "Read _Back"
-msgstr ""
-
-#: pan/gui/actions.cc:524
-msgid "Read Back"
-msgstr ""
-
-#: pan/gui/actions.cc:528
-msgid "Next _Unread Group"
-msgstr ""
-
-#: pan/gui/actions.cc:533
-msgid "Next _Group"
-msgstr ""
-
-#: pan/gui/actions.cc:538
-msgid "Next _Unread Article"
-msgstr ""
-
-#: pan/gui/actions.cc:539
-msgid "Next Unread Article"
-msgstr ""
-
-#: pan/gui/actions.cc:543
-msgid "Next _Article"
-msgstr ""
-
-#: pan/gui/actions.cc:544
-msgid "Next Article"
-msgstr ""
-
-#: pan/gui/actions.cc:548
-msgid "Next _Watched Article"
-msgstr ""
-
-#: pan/gui/actions.cc:553
-msgid "Next Unread _Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:554
-msgid "Next Unread Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:558
-msgid "Next Threa_d"
-msgstr ""
-
-#: pan/gui/actions.cc:563
-msgid "Pre_vious Article"
-msgstr ""
-
-#: pan/gui/actions.cc:568
-msgid "Previous _Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:573
-msgid "_Parent Article"
-msgstr ""
-
-#: pan/gui/actions.cc:578
-msgid "Ignore _Author"
-msgstr ""
-
-#: pan/gui/actions.cc:582
-msgid "_Watch Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:587
-msgid "_Ignore Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:592 pan/gui/actions.cc:593
-msgid "_Toggle Flag On/Off for Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:597 pan/gui/actions.cc:598
-msgid "_Turn Flag Off for Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:602 pan/gui/actions.cc:603
-msgid "_Select All Flagged Threads"
-msgstr ""
-
-#: pan/gui/actions.cc:607 pan/gui/actions.cc:608
-msgid "_Go to Next Flagged Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:612 pan/gui/actions.cc:613
-msgid "_Go to Last Flagged Thread"
-msgstr ""
-
-#: pan/gui/actions.cc:617 pan/gui/actions.cc:618
-msgid "_Invert Selection"
-msgstr "_უკუ მონიშვნა"
-
-#: pan/gui/actions.cc:622
-msgid "Edit Article's Watch/Ignore/Score..."
-msgstr ""
-
-#: pan/gui/actions.cc:627
-msgid "Add a _Scoring Rule..."
-msgstr ""
-
-#: pan/gui/actions.cc:632
-msgid "Cance_l Article..."
-msgstr ""
-
-#: pan/gui/actions.cc:637
-msgid "_Supersede Article..."
-msgstr ""
-
-#: pan/gui/actions.cc:642
-msgid "_Delete Article"
-msgstr ""
-
-#: pan/gui/actions.cc:647
-msgid "Clear Article Cache"
-msgstr ""
-
-#: pan/gui/actions.cc:652
-msgid "_Mark Article as Read"
-msgstr ""
-
-#: pan/gui/actions.cc:657
-msgid "Mark Article as _Unread"
-msgstr ""
-
-#: pan/gui/actions.cc:663
-msgid "_Mark Thread as Read"
-msgstr ""
-
-#: pan/gui/actions.cc:668
-msgid "Mark Thread as _Unread"
-msgstr ""
-
-#: pan/gui/actions.cc:673
-msgid "_Post to Newsgroup"
-msgstr ""
-
-#: pan/gui/actions.cc:674
-msgid "Post to Newsgroup"
-msgstr ""
-
-#: pan/gui/actions.cc:678
-msgid "_Followup to Newsgroup"
-msgstr ""
-
-#: pan/gui/actions.cc:679
-msgid "Followup to Newsgroup"
-msgstr ""
-
-#: pan/gui/actions.cc:683
-msgid "_Reply to Author in Mail"
-msgstr ""
-
-#: pan/gui/actions.cc:689
-msgid "_Contents"
-msgstr "_შინაარსი"
-
-#: pan/gui/actions.cc:695
-msgid "_Pan Home Page"
-msgstr ""
-
-#: pan/gui/actions.cc:700
-msgid "Give _Feedback or Report a Bug..."
-msgstr ""
-
-#: pan/gui/actions.cc:705
-msgid "_About"
-msgstr "_შესახებ"
-
-#: pan/gui/actions.cc:710
-msgid "Edit _SSL Certificates"
-msgstr ""
-
-#: pan/gui/actions.cc:725
-msgid "_Thread Headers"
-msgstr ""
-
-#: pan/gui/actions.cc:726
-msgid "Wrap Article Body"
-msgstr ""
-
-#: pan/gui/actions.cc:727
-msgid "Show Article Signature"
-msgstr ""
-
-#: pan/gui/actions.cc:728
-msgid "Mute _Quoted Text"
-msgstr ""
-
-#: pan/gui/actions.cc:729
-msgid "Show All _Headers in Body Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:730
-msgid "Show _Smilies as Graphics"
-msgstr ""
-
-#: pan/gui/actions.cc:731
-msgid "Show *Bold*, __Underlined__, and /Italic/"
-msgstr ""
-
-#: pan/gui/actions.cc:732
-msgid "Size Pictures to _Fit"
-msgstr ""
-
-#: pan/gui/actions.cc:733
-msgid "Use _Monospace Font"
-msgstr ""
-
-#: pan/gui/actions.cc:734
-msgid "Set Focus to Images"
-msgstr ""
-
-#: pan/gui/actions.cc:735
-msgid "Highlight _URLs"
-msgstr ""
-
-#: pan/gui/actions.cc:738
-msgid "_Work Online"
-msgstr ""
-
-#: pan/gui/actions.cc:739
-msgid "_Tabbed Layout"
-msgstr ""
-
-#: pan/gui/actions.cc:740
-msgid "Show Group _Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:741
-msgid "Show Hea_der Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:742
-msgid "Show Bod_y Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:743
-msgid "Show _Toolbar"
-msgstr ""
-
-#: pan/gui/actions.cc:744
-msgid "Abbreviate Group Names"
-msgstr ""
-
-#: pan/gui/actions.cc:746
-msgid "Match Only _Read Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:746
-msgid "Match Only Read Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:747
-msgid "Match Only _Unread Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:747
-msgid "Match Only Unread Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:748
-msgid "Match Only _Cached Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:748
-msgid "Match Only Cached Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:749
-msgid "Match Only _Complete Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:749
-msgid "Match Only Complete Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:750
-msgid "Match Only _My Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:750
-msgid "Match Only My Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:751
-msgid "Match Only _Watched Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:751
-msgid "Match Only Watched Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:753
-msgid "Match Scores of 9999 (_Watched)"
-msgstr ""
-
-#: pan/gui/actions.cc:754
-msgid "Match Scores of 5000...9998 (_High)"
-msgstr ""
-
-#: pan/gui/actions.cc:755
-msgid "Match Scores of 1...4999 (Me_dium)"
-msgstr ""
-
-#: pan/gui/actions.cc:756
-msgid "Match Scores of 0 (_Normal)"
-msgstr ""
-
-#: pan/gui/actions.cc:757
-msgid "Match Scores of -9998...-1 (_Low)"
-msgstr ""
-
-#: pan/gui/actions.cc:758
-msgid "Match Scores of -9999 (_Ignored)"
-msgstr ""
-
-#: pan/gui/actions.cc:760
-msgid "Enable/Disable All _Rules"
-msgstr ""
-
-#: pan/gui/actions.cc:788
-msgid "Show Matching _Articles"
-msgstr ""
-
-#: pan/gui/actions.cc:789
-msgid "Show Matching Articles' _Threads"
-msgstr ""
-
-#: pan/gui/actions.cc:790
-msgid "Show Matching Articles' _Subthreads"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1038
-msgid "Unnamed File"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1119 pan/gui/gui.cc:1956 pan/gui/header-pane.cc:1309
-#: pan/gui/header-pane.cc:1738 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:887
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:795
-msgid "Subject"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1121 pan/gui/gui.cc:1956
-msgid "From"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1123 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1817
-#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:883
-msgid "Date"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1130
-msgid "Newsgroups"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1137 pan/gui/body-pane.cc:1145
-#: pan/gui/body-pane.cc:1152
-msgid "User-Agent"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1158
-msgid "Followup-To"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1168
-msgid "Reply-To"
-msgstr "უპასუხეთ"
-
-#: pan/gui/body-pane.cc:1216
-msgid " from "
-msgstr " ვისგან "
-
-#: pan/gui/body-pane.cc:1218
-msgid " at "
-msgstr ""
-
-#: pan/gui/body-pane.cc:1307
-#, c-format
-msgid ""
-"<u>This is a <b>PGP-Signed</b> message.</u>\n"
-"\n"
-"<b>Signer:</b> %s ('%s')\n"
-"<b>Valid until:</b> %s\n"
-"<b>Created on:</b> %s"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1312
-msgid "always"
-msgstr "ყოველთვის"
-
-#: pan/gui/body-pane.cc:1532
-msgid "Copy _URL"
-msgstr "URL-ის _კოპირება"
-
-#: pan/gui/body-pane.cc:1720
-msgid "Save Attachment As..."
-msgstr "მიმაგრებული ფაილის შენახვა, როგორც..."
-
-#: pan/gui/body-pane.cc:1723
-msgid "Save All Attachments"
-msgstr ""
-
-#: pan/gui/body-pane.cc:1794
-msgid "Attachments:"
-msgstr "მიმაგრებული ფაილები:"
-
-#: pan/gui/body-pane.cc:1814
-msgid "Text View"
-msgstr "ტექსტის ხედი"
-
-#: pan/gui/body-pane.cc:1823
-msgid "HTML View"
-msgstr ""
+"ის ასევე წარმოადგენს ერთად-ერთ Unix-ის სიახლეების მკითხავს, რომელმაც კარგი "
+"ქულები აიღო."
 
 #: pan/gui/dl-headers-ui.cc:125
 #, c-format
 msgid "%d Group"
 msgid_plural "%d Groups"
-msgstr[0] ""
+msgstr[0] "%d ჯგუფი"
 
-#: pan/gui/dl-headers-ui.cc:148
-msgid "Get the last N _days' headers: "
-msgstr ""
-
-#: pan/gui/dl-headers-ui.cc:156
-msgid "Get _new headers"
-msgstr ""
-
-#: pan/gui/dl-headers-ui.cc:160
-msgid "Get _all headers"
-msgstr ""
-
-#: pan/gui/dl-headers-ui.cc:164
-msgid "Get the _latest N headers: "
-msgstr ""
-
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:880
-msgid "Action"
-msgstr ""
-
-#: pan/gui/e-action-combo-box.c:387
-msgid "A GtkRadioAction"
-msgstr ""
-
-#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:561
-msgid "Unknown"
-msgstr ""
-
-#: pan/gui/e-charset.c:52
-msgid "Arabic"
-msgstr "არაბული"
-
-#: pan/gui/e-charset.c:53
-msgid "Baltic"
-msgstr "ბალტიისპირეთის"
-
-#: pan/gui/e-charset.c:54
-msgid "Central European"
-msgstr "ცენტრალურ ევროპული"
-
-#: pan/gui/e-charset.c:55
-msgid "Chinese"
-msgstr "ჩინური"
-
-#: pan/gui/e-charset.c:56
-msgid "Cyrillic"
-msgstr "კირილიცა"
-
-#: pan/gui/e-charset.c:57
-msgid "Greek"
-msgstr "ბერძნული"
-
-#: pan/gui/e-charset.c:58
-msgid "Hebrew"
-msgstr "ივრითი"
-
-#: pan/gui/e-charset.c:59
-msgid "Japanese"
-msgstr "იაპონური"
-
-#: pan/gui/e-charset.c:60
-msgid "Korean"
-msgstr "კორეული"
-
-#: pan/gui/e-charset.c:61
-msgid "Thai"
-msgstr "ტაილანდური"
-
-#: pan/gui/e-charset.c:62
-msgid "Turkish"
-msgstr "თურქული"
-
-#: pan/gui/e-charset.c:63
-msgid "Unicode"
-msgstr "უნიკოდი"
-
-#: pan/gui/e-charset.c:64
-msgid "Western European"
-msgstr "დასავლეთ ევროპული"
-
-#: pan/gui/e-charset.c:65
-msgid "Western European, New"
-msgstr ""
-
-#: pan/gui/e-charset.c:84 pan/gui/e-charset.c:85 pan/gui/e-charset.c:86
-msgid "Traditional"
-msgstr "ტრადიციული"
-
-#: pan/gui/e-charset.c:87 pan/gui/e-charset.c:88 pan/gui/e-charset.c:89
-#: pan/gui/e-charset.c:90
-msgid "Simplified"
-msgstr "გამარტივებული"
-
-#: pan/gui/e-charset.c:93
-msgid "Ukrainian"
-msgstr "უკრაინული"
-
-#: pan/gui/e-charset.c:96
-msgid "Visual"
-msgstr "ვიზუალი"
-
-#: pan/gui/e-charset-combo-box.c:95 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:546
-#: pan/gui/prefs-ui.cc:791
-msgid "Character Encoding"
-msgstr ""
-
-#: pan/gui/e-charset-combo-box.c:97 pan/gui/e-charset-dialog.c:51
-#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:309
-msgid "Cancel"
-msgstr "გაუქმება"
-
-#: pan/gui/e-charset-combo-box.c:98 pan/gui/e-charset-dialog.c:52
-msgid "OK"
-msgstr ""
-
-#: pan/gui/e-charset-combo-box.c:119
-msgid "Enter the character set to use"
-msgstr ""
-
-#: pan/gui/e-charset-combo-box.c:338
-msgid "Other..."
-msgstr "სხვა..."
-
-#: pan/gui/e-cte-dialog.c:76
-msgid "Default Encoding"
-msgstr ""
-
-#: pan/gui/e-cte-dialog.c:78
-msgid "7-Bit Encoding"
-msgstr ""
-
-#: pan/gui/e-cte-dialog.c:80
-msgid "8-Bit Encoding"
-msgstr ""
-
-#: pan/gui/e-cte-dialog.c:82
-msgid "Base64 Encoding"
-msgstr ""
-
-#: pan/gui/e-cte-dialog.c:84
-msgid "Quoted-Printable Encoding"
-msgstr ""
-
-#: pan/gui/group-pane.cc:331
-msgid "Sent"
-msgstr "გაგზავნილია"
-
-#: pan/gui/group-pane.cc:332
-msgid "Drafts"
-msgstr "მონახაზები"
-
-#: pan/gui/group-pane.cc:543
-msgid "Group"
-msgstr ""
-
-#: pan/gui/group-pane.cc:544
-msgid "Group (regex)"
-msgstr ""
-
-#: pan/gui/group-pane.cc:987
-msgid "Local Folders"
-msgstr "ლოკალური საქაღალდეები"
-
-#: pan/gui/group-pane.cc:988
-msgid "Subscribed Groups"
-msgstr ""
-
-#: pan/gui/group-pane.cc:989
-msgid "Other Groups"
-msgstr ""
-
-#: pan/gui/group-pane.cc:1029 pan/gui/score-view-ui.cc:156
-msgid "Name"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:161
-msgid "No Profiles defined in Edit|Posting Profiles."
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:264
-msgid "Pan: Group Preferences"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:279
-msgid "Properties for Groups"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:281
-#, c-format
-msgid "Properties for %s"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:292
-msgid "Character _encoding:"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:294
-msgid "Directory for Saving Attachments"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:302
-msgid "Directory for _saving attachments:"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:304
-msgid "Posting _profile:"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:309
-msgid "Spellchecker _language:"
-msgstr ""
-
-#: pan/gui/group-prefs-dialog.cc:312
-msgid "Group color:"
-msgstr ""
-
-#: pan/gui/gui.cc:311
-msgid "Open the Task Manager"
-msgstr ""
-
-#: pan/gui/gui.cc:334
-msgid "Open the Event Log"
-msgstr ""
-
-#: pan/gui/gui.cc:610
-msgid "Save NZB's Files"
-msgstr ""
-
-#: pan/gui/gui.cc:637
-msgid "Untitled.nzb"
-msgstr ""
-
-#: pan/gui/gui.cc:639
-msgid "Save NZB File as..."
-msgstr ""
-
-#: pan/gui/gui.cc:808
-msgid "Import NZB Files"
-msgstr ""
-
-#: pan/gui/gui.cc:816 pan/gui/post-ui.cc:3349
-msgid "NZB Files"
-msgstr ""
-
-#: pan/gui/gui.cc:821
-msgid "All Files"
-msgstr ""
-
-#: pan/gui/gui.cc:1335
-msgid "Unable to supersede article."
-msgstr ""
-
-#: pan/gui/gui.cc:1336 pan/gui/gui.cc:1412
-msgid "The article doesn't match any of your posting profiles."
-msgstr ""
-
-#: pan/gui/gui.cc:1385
-msgid "Revise and send this article to replace the old one."
-msgstr ""
-
-#: pan/gui/gui.cc:1386 pan/gui/gui.cc:1450
-msgid "Be patient!  It will take time for your changes to take effect."
-msgstr ""
-
-#: pan/gui/gui.cc:1411
-msgid "Unable to cancel article."
-msgstr ""
-
-#: pan/gui/gui.cc:1449
-msgid "Send this article to ask your server to cancel your other one."
-msgstr ""
-
-#: pan/gui/gui.cc:1467
-msgid "You have marked some articles for deletion."
-msgstr ""
-
-#: pan/gui/gui.cc:1468
-msgid "Are you sure you want to delete them?"
-msgstr ""
-
-#: pan/gui/gui.cc:1494
-msgid "Do you want to accept it permanently? (You can change this later.)"
-msgstr ""
-
-#: pan/gui/gui.cc:1640
-msgid "Unable to open help file."
-msgstr "დახმარების ფაილის გახსნის შეცდომა."
-
-#: pan/gui/gui.cc:1668
-msgid "Copyright © 2002-2021 Charles Kerr and others"
-msgstr ""
-
-#: pan/gui/gui.cc:1673
-msgid "translator-credits"
-msgstr "თარგმანი-შესრულებულია"
-
-#: pan/gui/gui.cc:1801
-msgid "_1. Group Pane"
-msgstr ""
-
-#: pan/gui/gui.cc:1802
-msgid "_2. Header Pane"
-msgstr ""
-
-#: pan/gui/gui.cc:1803
-msgid "_3. Body Pane"
-msgstr ""
-
-#: pan/gui/gui.cc:1893 pan/gui/gui.cc:1908
-msgid " Bytes"
-msgstr ""
-
-#: pan/gui/gui.cc:1896
-msgid " KB"
-msgstr " კბ"
-
-#: pan/gui/gui.cc:1899
-msgid " MB"
-msgstr " მბ"
-
-#: pan/gui/gui.cc:1902
-msgid " GB"
-msgstr ""
-
-#: pan/gui/gui.cc:1905
-msgid " TB"
-msgstr ""
-
-#: pan/gui/gui.cc:1937
+#: pan/gui/gui.cc:1947
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
-msgstr[0] ""
+msgstr[0] "ეს სტატია შეიცავს %d ნაწილს."
 
-#: pan/gui/gui.cc:1939
+#: pan/gui/gui.cc:1949
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
-msgstr[0] ""
+msgstr[0] "ამ სტატიას აკლია %d ნაწილი %d-დან."
 
-#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1311 pan/gui/task-pane.cc:797
-msgid "Message-ID"
-msgstr ""
-
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1786 pan/gui/prefs-ui.cc:884
-msgid "Lines"
-msgstr "ხაზები"
-
-#: pan/gui/gui.cc:1958
-msgid "Size"
-msgstr ""
-
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:882
-msgid "Bytes"
-msgstr "ბაიტი"
-
-#: pan/gui/gui.cc:2009
-msgid ""
-"Error loading iconv library. Encoding certain character sets will not work "
-"in GUI."
-msgstr ""
-
-#: pan/gui/gui.cc:2155
-msgid "Body Pane Encoding"
-msgstr ""
-
-#: pan/gui/gui.cc:2186 pan/gui/task-pane.cc:612
-msgid "Offline"
-msgstr "გათიშული"
-
-#: pan/gui/gui.cc:2190
+#: pan/gui/gui.cc:2200
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
-msgstr[0] ""
-
-#: pan/gui/gui.cc:2192 pan/gui/gui.cc:2222
-msgid "No Connections"
-msgstr ""
-
-#: pan/gui/gui.cc:2196
-msgid "Connecting"
-msgstr "დაკავშირება"
-
-#: pan/gui/gui.cc:2209
-#, c-format
-msgid "%s: %d idle, %d active @ %.1f KiBps"
-msgstr ""
-
-#: pan/gui/gui.cc:2265
-msgid "No Tasks"
-msgstr "ამოცანების გარეშე"
-
-#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1121
-msgid "Tasks"
-msgstr "Tasks"
-
-#: pan/gui/gui.cc:2284 pan/gui/task-pane.cc:478
-#, c-format
-msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
-msgstr ""
-
-#: pan/gui/gui.cc:2336
-msgid ""
-"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
-"then use \"File|Work Online\" to continue."
-msgstr ""
-
-#: pan/gui/header-pane.cc:1307 pan/gui/task-pane.cc:793
-msgid "Subject or Author"
-msgstr ""
-
-#: pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:794
-msgid "Sub or Auth (regex)"
-msgstr ""
-
-#: pan/gui/header-pane.cc:1310 pan/gui/header-pane.cc:1770
-#: pan/gui/prefs-ui.cc:881 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:796
-msgid "Author"
-msgstr ""
-
-#: pan/gui/header-pane.cc:1755 pan/gui/prefs-ui.cc:885
-msgid "Score"
-msgstr "ქულები"
-
-#: pan/gui/log-ui.cc:105
-msgid "Save Event List"
-msgstr ""
-
-#: pan/gui/log-ui.cc:259
-msgid "Pan: Events"
-msgstr ""
-
-#: pan/gui/log-ui.cc:318
-msgid "Message"
-msgstr ""
-
-#: pan/gui/pan.cc:336
-msgid "Maximize"
-msgstr "გადიდება"
-
-#: pan/gui/pan.cc:376
-msgid "An error has occurred!"
-msgstr ""
-
-#: pan/gui/pan.cc:389
-msgid "New Articles!"
-msgstr ""
-
-#: pan/gui/pan.cc:390
-msgid ""
-"There are new\n"
-"articles available."
-msgstr ""
-
-#: pan/gui/pan.cc:470
-msgid ""
-"Thank you for trying Pan!\n"
-" \n"
-"To start newsreading, first Add a Server."
-msgstr ""
-
-#: pan/gui/pan.cc:552
-msgid ""
-"General Options\n"
-"  -h, --help               Show this usage information and exit.\n"
-"  -v, --version            Print release version and exit.\n"
-"  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode. Use --debug twice for verbose "
-"debug.\n"
-"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
-"\n"
-"URL Options\n"
-"  headers:group.name       Download new headers for the specified "
-"newsgroup.\n"
-"  news:message-id          When specified together with --no-gui, dump\n"
-"                           the message-id article to standard output.\n"
-"\n"
-"NZB Batch Options\n"
-"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
-"  -o path, --output=path   Path to save attachments listed in the NZB "
-"file(s).\n"
-"  --no-gui                 Only show console output, not the download "
-"queue.\n"
-msgstr ""
-
-#: pan/gui/pan.cc:885
-msgid "Error: --no-gui used without nzb files or news:message-id."
-msgstr ""
-
-#: pan/gui/pan.cc:889
-#, c-format
-msgid "Pan %s started"
-msgstr ""
-
-#: pan/gui/pan.cc:909
-msgid "Please configure Pan's news servers before using it as an nzb client."
-msgstr ""
-
-#: pan/gui/pan.cc:1029
-msgid "Pan notification"
-msgstr ""
-
-#: pan/gui/post-ui.cc:175
-#, c-format
-msgid "Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."
-msgstr ""
-
-#: pan/gui/post-ui.cc:281 pan/gui/post-ui.cc:312
-#, c-format
-msgid "Error setting custom spellchecker: %s"
-msgstr ""
-
-#: pan/gui/post-ui.cc:285 pan/gui/post-ui.cc:293 pan/gui/post-ui.cc:316
-#: pan/gui/post-ui.cc:324
-#, c-format
-msgid "Error setting spellchecker: %s"
-msgstr ""
-
-#: pan/gui/post-ui.cc:453
-msgid "_Profile"
-msgstr "_პროფილი"
-
-#: pan/gui/post-ui.cc:454
-msgid "Set Editor"
-msgstr ""
-
-#: pan/gui/post-ui.cc:456
-msgid "_Send Article"
-msgstr ""
-
-#: pan/gui/post-ui.cc:456
-msgid "Send Article Now"
-msgstr ""
-
-#: pan/gui/post-ui.cc:457
-msgid "_Send and Save Articles to NZB"
-msgstr ""
-
-#: pan/gui/post-ui.cc:457
-msgid "Send and Save Articles to NZB"
-msgstr ""
-
-#: pan/gui/post-ui.cc:458
-msgid "Set Character _Encoding..."
-msgstr ""
-
-#: pan/gui/post-ui.cc:459
-msgid "Set Content _Transfer Encoding..."
-msgstr ""
-
-#: pan/gui/post-ui.cc:460
-msgid "Sa_ve Draft"
-msgstr ""
-
-#: pan/gui/post-ui.cc:460
-msgid "Save as a Draft for Future Posting"
-msgstr ""
-
-#: pan/gui/post-ui.cc:461
-msgid "_Open Draft..."
-msgstr ""
-
-#: pan/gui/post-ui.cc:461
-msgid "Open an Article Draft"
-msgstr ""
-
-#: pan/gui/post-ui.cc:466
-msgid "_Rot13"
-msgstr ""
-
-#: pan/gui/post-ui.cc:466
-msgid "Rot13 Selected Text"
-msgstr ""
-
-#: pan/gui/post-ui.cc:467
-msgid "Run _Editor"
-msgstr ""
-
-#: pan/gui/post-ui.cc:467
-msgid "Run Editor"
-msgstr ""
-
-#: pan/gui/post-ui.cc:469
-msgid "Add _Files to Queue"
-msgstr ""
-
-#: pan/gui/post-ui.cc:469
-msgid "Add Files to Queue"
-msgstr ""
-
-#: pan/gui/post-ui.cc:484 pan/gui/post-ui.cc:485
-msgid "Remove from Queue"
-msgstr "რიგიდან წაშლა"
-
-#: pan/gui/post-ui.cc:489 pan/gui/post-ui.cc:490
-msgid "Clear List"
-msgstr "სიის გასუფთავება"
-
-#: pan/gui/post-ui.cc:494 pan/gui/post-ui.cc:495
-msgid "Select Needed Parts"
-msgstr ""
-
-#: pan/gui/post-ui.cc:499 pan/gui/post-ui.cc:500 pan/gui/task-pane.cc:680
-#: pan/gui/task-pane.cc:681
-msgid "Move Up"
-msgstr "აწევა"
-
-#: pan/gui/post-ui.cc:504 pan/gui/post-ui.cc:505 pan/gui/task-pane.cc:685
-#: pan/gui/task-pane.cc:686
-msgid "Move Down"
-msgstr "ჩამოწევა"
-
-#: pan/gui/post-ui.cc:509 pan/gui/post-ui.cc:510
-msgid "Move to Top"
-msgstr "თავში ატანა"
-
-#: pan/gui/post-ui.cc:514 pan/gui/post-ui.cc:515
-msgid "Move to Bottom"
-msgstr "ბოლოში ჩამოტანა"
-
-#: pan/gui/post-ui.cc:522
-msgid "_Wrap Text"
-msgstr ""
-
-#: pan/gui/post-ui.cc:522
-msgid "Wrap Text"
-msgstr "ტექსტის გადატანა"
-
-#: pan/gui/post-ui.cc:523
-msgid "Always Run Editor"
-msgstr ""
-
-#: pan/gui/post-ui.cc:524
-msgid "Remember Character Encoding for This Group"
-msgstr ""
-
-#: pan/gui/post-ui.cc:525
-msgid "Thread Attached Replies"
-msgstr ""
-
-#: pan/gui/post-ui.cc:526
-msgid "PGP-Encrypt the Article"
-msgstr ""
-
-#: pan/gui/post-ui.cc:527
-msgid "PGP-Sign the Article"
-msgstr ""
-
-#: pan/gui/post-ui.cc:528
-msgid "Check _Spelling"
-msgstr "მართლწერის შემოწმება"
-
-#: pan/gui/post-ui.cc:547
-msgid "New Article's Encoding:"
-msgstr ""
-
-#: pan/gui/post-ui.cc:557
-msgid "Content Transfer Encoding"
-msgstr ""
-
-#: pan/gui/post-ui.cc:558
-msgid "New Article's Content Transfer Encoding:"
-msgstr ""
-
-#: pan/gui/post-ui.cc:742
-msgid "Your changes will be lost!"
-msgstr ""
-
-#: pan/gui/post-ui.cc:743
-msgid "Close this window and lose your changes?"
-msgstr ""
-
-#: pan/gui/post-ui.cc:788 pan/gui/post-ui.cc:827
-msgid "There were problems with this post."
-msgstr ""
-
-#: pan/gui/post-ui.cc:790 pan/gui/post-ui.cc:829 pan/gui/post-ui.cc:894
-msgid "Go Back"
-msgstr "უკან დაბრუნება"
-
-#: pan/gui/post-ui.cc:792
-msgid "Continue Anyway"
-msgstr "მაინც გაგრძელება"
-
-#. Prompt the user
-#: pan/gui/post-ui.cc:821
-#, c-format
-msgid ""
-"Message uses characters not specified in charset '%s' - possibly use '%s' "
-msgstr ""
-
-#: pan/gui/post-ui.cc:844
-msgid "Go _Online"
-msgstr ""
-
-#: pan/gui/post-ui.cc:893
-msgid "The file queue is empty, so no files can be saved."
-msgstr ""
-
-#: pan/gui/post-ui.cc:1073
-msgid "IO Error"
-msgstr "შ/გ-ის შეცდომა"
-
-#: pan/gui/post-ui.cc:1073
-msgid "No space left on device"
-msgstr "მოწყობილობაზე ადგილი არ დარჩა"
-
-#: pan/gui/post-ui.cc:1074
-#, c-format
-msgid "Error copying message to %s folder. Reason: %s"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1080
-#, c-format
-msgid "Error creating message in %s mail folder: Invalid article."
-msgstr ""
-
-#: pan/gui/post-ui.cc:1102
-msgid ""
-"No posting server is set for this posting profile.\n"
-"Please edit the profile via Edit|Manage Posting Profiles."
-msgstr ""
-
-#: pan/gui/post-ui.cc:1107
-msgid ""
-"The selected posting server is currently disabled. Please choose an "
-"appropriate alternative."
-msgstr ""
-
-#: pan/gui/post-ui.cc:1149
-msgid "Pan is Offline."
-msgstr ""
-
-#: pan/gui/post-ui.cc:1150
-msgid "Go online to post the article?"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1199
-#, c-format
-msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email "
-"address (%s)?"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1349
-msgid "Error opening temporary file"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1360
-#, c-format
-msgid "Error creating temporary file: %s"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1368
-#, c-format
-msgid "Error writing article to temporary file: %s"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1441
-msgid "Open Draft Article"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1683
-msgid "Save Draft Article"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1721
-msgid "File already exists."
-msgstr ""
-
-#: pan/gui/post-ui.cc:1722
-msgid "Overwrite it?"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1931
-#, c-format
-msgid "Couldn't parse signature command \"%s\": %s"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1967
-msgid "Couldn't convert signature to UTF-8."
-msgstr ""
-
-#: pan/gui/post-ui.cc:2479
-msgid "F_rom"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2496
-msgid "_Subject"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2509
-msgid "_Newsgroups"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2523
-msgid "Mail _To"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2626
-msgid "Delete from Queue"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2639
-msgid "No."
-msgstr ""
-
-#: pan/gui/post-ui.cc:2643 pan/gui/post-ui.cc:2735 pan/gui/post-ui.cc:2776
-msgid "Filename"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2645
-msgid "Size (KB)"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2743
-msgid "The current filename"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2747
-msgid "Subject Line"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2755
-msgid "The current subject line"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2769
-msgid "No. "
-msgstr ""
-
-#: pan/gui/post-ui.cc:2773
-msgid "Enable/Disable"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2807
-msgid "Follo_wup-To"
-msgstr ""
-
-#. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2816
-msgid ""
-"The newsgroups where replies to your message should go.  This is only needed "
-"if it differs from the \"Newsgroups\" header.\n"
-"\n"
-"To direct all replies to your email address, use \"Followup-To: poster\""
-msgstr ""
-
-#: pan/gui/post-ui.cc:2823
-msgid "_Reply-To"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2831
-msgid ""
-"The email account where mail replies to your posted message should go. This "
-"is only needed if it differs from the \"From\" header."
-msgstr ""
-
-#: pan/gui/post-ui.cc:2838
-msgid "_Custom Headers"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2862
-msgid "Add \"_User-Agent\" header"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2869
-msgid "Add \"Message-_ID\" header"
-msgstr ""
-
-#: pan/gui/post-ui.cc:2997
-msgid "Select Parts"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3010
-msgid "_Parts"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3177
-msgid "Post Article"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3198
-msgid "_Message"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3199
-msgid "More _Headers"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3200
-msgid "File _Queue"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3231 pan/gui/profiles-dialog.cc:490
-#, no-c-format
-msgid "On %d, %n wrote:"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3260
-msgid "Add files to queue"
-msgstr ""
-
-#: pan/gui/post-ui.cc:3336
-msgid "Save Upload Queue as NZB File"
-msgstr ""
-
-#: pan/gui/prefs.cc:366
-#, c-format
-msgid "Couldn't parse %s color \"%s\""
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:139
-msgid "Grab Key"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:145
-#, c-format
-msgid ""
-"Press the combination of the keys\n"
-"you want to use for \"%s\"."
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:182
-msgid "Edit Shortcut"
-msgstr "მალსახმობის ჩასწორება"
-
-#: pan/gui/prefs-ui.cc:243
-msgid "Error: Shortcut key is invalid!"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:259
-msgid "Error: Shortcut key already exists!"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:593
-msgid "Show only icons"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:594
-msgid "Show only text"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:595
-msgid "Show icons and text"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:634
-msgid "Use GNOME Preferences"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:635
-msgid "Use KDE Preferences"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:636
-msgid "Use OS X Preferences"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:637
-msgid "Use Windows Preferences"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:638
-msgid "Custom Command:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:690
-msgid "Disabled"
-msgstr "გამორთულია"
-
-#: pan/gui/prefs-ui.cc:691
-msgid "Only new (score == 0)"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:692
-msgid "9999 or more"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:693
-msgid "5000 to 9998"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:694
-msgid "1 to 4999"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:695
-msgid "-9998 to -1"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:696
-msgid "-9999 or less"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:760
-#, c-format
-msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:792
-msgid "Global Character Set Settings"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:886 pan/gui/task-pane.cc:1067
-msgid "State"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:920
-msgid "Enabled"
-msgstr "გააქტიურებულია"
-
-#: pan/gui/prefs-ui.cc:924
-msgid "Column Name"
-msgstr "სვეტისსახელი"
-
-#: pan/gui/prefs-ui.cc:962
-msgid "Pan: Preferences"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:977
-msgid "Mouse"
-msgstr "თაგუნა"
-
-#: pan/gui/prefs-ui.cc:979
-msgid "Single-click activates, rather than selects, _groups"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:981
-msgid "Single-click activates, rather than selects, _articles"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:984
-msgid "Groups"
-msgstr "ჯგუფები"
-
-#: pan/gui/prefs-ui.cc:986
-msgid "Get new headers in subscribed groups on _startup"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:988
-msgid "Get new headers when _entering group"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:990
-msgid "Mark entire group _read when leaving group"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:992
-msgid "Mark entire group read before getting _new headers"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:994
-msgid "E_xpand all threads when entering group"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:999
-msgid "Articles"
-msgstr "სტატიები"
-
-#: pan/gui/prefs-ui.cc:1001
-msgid "Mark downloaded articles read"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1003
-msgid "Space selects next article rather than next unread"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1005
-msgid "Expand threads upon selection"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1007
-msgid "Always ask before deleting an article"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1009
-msgid "Smooth scrolling"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1014
-msgid "Article Cache"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1015
-msgid "Clear article cache on shutdown"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1018
-msgid "Size of article cache (in MiB):"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1022
-msgid "File extension for cached articles: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1026
-msgid "Tabs"
-msgstr "დაფები"
-
-#: pan/gui/prefs-ui.cc:1031
-msgid "_Behavior"
-msgstr "ქცევა"
-
-#: pan/gui/prefs-ui.cc:1031
-msgid "Behavior"
-msgstr "ქცევა"
-
-#: pan/gui/prefs-ui.cc:1037
-msgid "Task Pane"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1038
-msgid "Show task pane popups"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1040
-msgid "Show Download Meter"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1044
-msgid "_Panes"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1044
-msgid "Panes"
-msgstr "პანელები"
-
-#: pan/gui/prefs-ui.cc:1050
-msgid "Language Settings"
-msgstr "ენის პარამეტრები"
-
-#: pan/gui/prefs-ui.cc:1051
-msgid "Font"
-msgstr "ფონტი"
-
-#. systray and notify popup
-#: pan/gui/prefs-ui.cc:1058
-msgid "System Tray Behavior"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1060
-msgid "Start Pan minimized"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1063
-msgid "Show notifications"
-msgstr "გაფრთხილებების ჩვენება"
-
-#. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1068
-msgid "Startup Behavior"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1070
-msgid "Allow multiple instances of Pan"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1075
-msgid "Autosave Article Draft"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1077
-msgid "Minutes to autosave the current Article Draft: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1082
-msgid "Autosave Articles"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1084
-msgid "Minutes to autosave newsrc files: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1091
-msgid "Password Storage"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1093
-msgid "Save passwords in password storage"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1100
-msgid "_Miscellaneous"
-msgstr "_სხვადასხვა"
-
-#: pan/gui/prefs-ui.cc:1100
-msgid "Miscellaneous"
-msgstr "სხვადასხვა"
-
-#: pan/gui/prefs-ui.cc:1105
-msgid "Pane Layout"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1124
-msgid "1=Groups, 2=Headers, 3=Body"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1126
-msgid "1=Groups, 2=Body, 3=Headers"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1128
-msgid "1=Headers, 2=Groups, 3=Body"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1130
-msgid "1=Headers, 2=Body, 3=Groups"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1132
-msgid "1=Body, 2=Groups, 3=Headers"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1134
-msgid "1=Body, 2=Headers, 3=Groups"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1138
-msgid "Layout"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1143
-msgid "Header Pane Columns"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1147
-msgid "_Headers"
-msgstr "_თავსართები"
-
-#: pan/gui/prefs-ui.cc:1147
-msgid "Headers"
-msgstr "სათაურები"
-
-#: pan/gui/prefs-ui.cc:1153
-msgid ""
-"This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on an article's score."
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1158
-msgid "Mark affected articles read"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1167
-msgid "_Delete articles scoring at: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1173
-msgid "Mark articles read scoring at: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1179
-msgid "_Cache articles scoring at: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1185
-msgid "Download attachments of articles scoring at: "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1188
-msgid "Actions"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1193 pan/gui/prefs-ui.cc:1214
-msgid "Fonts"
-msgstr "ფონტები"
-
-#: pan/gui/prefs-ui.cc:1195
-msgid "Use custom font in Group Pane:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1200
-msgid "Use custom font in Header Pane:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1205
-msgid "Use custom font in Body Pane:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1210
-msgid "Monospace font:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1214
-msgid "_Fonts"
-msgstr "_ფონტები"
-
-#: pan/gui/prefs-ui.cc:1223
-msgid "Header Pane"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1226 pan/gui/prefs-ui.cc:1232 pan/gui/prefs-ui.cc:1238
-#: pan/gui/prefs-ui.cc:1244 pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256
-#: pan/gui/prefs-ui.cc:1265 pan/gui/prefs-ui.cc:1271 pan/gui/prefs-ui.cc:1277
-#: pan/gui/prefs-ui.cc:1283 pan/gui/prefs-ui.cc:1289 pan/gui/prefs-ui.cc:1299
-#: pan/gui/prefs-ui.cc:1309
-msgid "Text:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1228 pan/gui/prefs-ui.cc:1234 pan/gui/prefs-ui.cc:1240
-#: pan/gui/prefs-ui.cc:1246 pan/gui/prefs-ui.cc:1252 pan/gui/prefs-ui.cc:1258
-#: pan/gui/prefs-ui.cc:1267 pan/gui/prefs-ui.cc:1273 pan/gui/prefs-ui.cc:1279
-#: pan/gui/prefs-ui.cc:1285 pan/gui/prefs-ui.cc:1291 pan/gui/prefs-ui.cc:1301
-#: pan/gui/prefs-ui.cc:1311
-msgid "Background:"
-msgstr "ფონი:"
-
-#: pan/gui/prefs-ui.cc:1230
-msgid "Scores of 9999 or more:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1236
-msgid "Scores from 5000 to 9998:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1242
-msgid "Scores from 1 to 4999:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1248
-msgid "Scores from -9998 to -1:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1254
-msgid "Scores of -9999 or less:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1260
-msgid "Collapsed thread with unread articles:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1262
-msgid "Body Pane"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1269
-msgid "First level of quoted text:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1275
-msgid "Second level of quoted text:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1281
-msgid "Third level of quoted text:"
-msgstr ""
-
-#.
-#: pan/gui/prefs-ui.cc:1287
-msgid "URL:"
-msgstr ""
-
-#.
-#: pan/gui/prefs-ui.cc:1293
-msgid "Signature:"
-msgstr "ხელმოწერა :"
-
-#: pan/gui/prefs-ui.cc:1296
-msgid "Group Pane"
-msgstr ""
-
-#.
-#: pan/gui/prefs-ui.cc:1303
-msgid "Group Color:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1307
-msgid "Other Text"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1313
-msgid "Text Color:"
-msgstr "ტექსტის ფერი:"
-
-#: pan/gui/prefs-ui.cc:1316
-msgid "_Colors"
-msgstr "_ფერები"
-
-#: pan/gui/prefs-ui.cc:1316
-msgid "Colors"
-msgstr "ფერები"
-
-#: pan/gui/prefs-ui.cc:1321
-msgid "Preferred Applications"
-msgstr "სასურველი პროგრამები"
-
-#: pan/gui/prefs-ui.cc:1325
-msgid "_Web browser:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1328
-msgid "_Gemini client:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1331
-msgid "_Mail reader:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1333
-msgid "_Text editor:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1335
-msgid "_HTML previewer:"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1337
-msgid "_Applications"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1337
-msgid "Applications"
-msgstr "აპლიკაციები"
-
-#: pan/gui/prefs-ui.cc:1342 pan/gui/task-pane.cc:555
-msgid "Encoding"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1346
-msgid "Default bytes per file (for encoder): "
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:1351
-msgid "_Upload"
-msgstr "_ატვირთვა"
-
-#: pan/gui/prefs-ui.cc:1351
-msgid "Upload"
-msgstr "ატვირთვა"
-
-#: pan/gui/prefs-ui.cc:1360
-msgid "_Shortcuts"
-msgstr "მალ_სახმობები"
-
-#: pan/gui/prefs-ui.cc:1360
-msgid "Shortcuts"
-msgstr "მალსახმობები"
-
-#: pan/gui/profiles-dialog.cc:83
-msgid "Please choose your email address according to your PGP key's user id."
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:131
-msgid "Posting Profile"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:143
-msgid "Profile Information"
-msgstr "პროფილის ინფორმაცია"
-
-#: pan/gui/profiles-dialog.cc:147
-msgid "_Profile Name:"
-msgstr "პროფილის _სახელი:"
-
-#: pan/gui/profiles-dialog.cc:150
-msgid "Required Information"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:154
-msgid "_Full Name:"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:158
-msgid ""
-"Your email address.\n"
-"Note that this has to match your PGP signature's address\n"
-"if you want your messages to be PGP-signed or encrypted correctly."
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:162
-msgid "_Email Address:"
-msgstr "_ელფოსტის მისამართი:"
-
-#: pan/gui/profiles-dialog.cc:164
-msgid "_Post Articles via:"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:167
-msgid "Signature"
-msgstr "ხელმოწერა"
-
-#: pan/gui/profiles-dialog.cc:170
-msgid "_Use a Signature"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:174
-msgid "Signature File"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:184
-msgid "Text File"
-msgstr "ტექსტური ფაილი"
-
-#: pan/gui/profiles-dialog.cc:186
-msgid "Text"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:188
-msgid "Command"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:191
-msgid "PGP Signature"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:196
-msgid "Signature Type: "
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:227
-msgid "Avatars"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:230
-msgid ""
-"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
-"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:232
-msgid "_Face:"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:236
-msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code.\n"
-"Add the code without the trailing <b>\"X-Face:\"</b> \n"
-" if it was generated by a helper program (for example http://www.dairiki.org/"
-"xface/xface.php)."
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:239
-msgid "_X-Face:"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:241
-msgid "Optional Information"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:246
-msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.\n"
-"You can set a custom domain name here, or leave it blank to let Pan use the "
-"domain name from your email address."
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:249
-msgid "Message-ID _Domain Name:"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:253
-#, c-format
-msgid ""
-"%i for Message-ID\n"
-"%a for Author and Address\n"
-"%n for Author name\n"
-"%d for Date"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:254
-msgid "_Attribution:"
-msgstr ""
-
-#. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:279
-msgid ""
-"Extra headers to be included in your articles, such as\n"
-"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
-"Organization: Your Organization\n"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:289
-msgid "E_xtra Headers:"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:334
-msgid "Invalid email address."
-msgstr "არასწორი ელფოსტის მისამართი."
-
-#: pan/gui/profiles-dialog.cc:335
-msgid "Please use an address of the form joe@somewhere.org"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:491
-msgid "New Profile"
-msgstr "ახალი პროფილი"
-
-#: pan/gui/profiles-dialog.cc:537
-msgid "Posting Profiles"
-msgstr ""
-
-#: pan/gui/profiles-dialog.cc:553
-msgid "Profiles"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:44
-#, c-format
-msgid ""
-"%g - group as one directory (alt.binaries.pictures.trains)\n"
-"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s - Subject line excerpt\n"
-"%S - Subject line\n"
-"%n - Poster display name\n"
-"%e - Poster email address\n"
-"%d - Article timestamp\n"
-"\"/home/user/News/Pan/%g\" becomes\n"
-"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-"\"/home/user/News/Pan/%G\" becomes\n"
-"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:196 pan/gui/save-ui.cc:216
-msgid "Add to the queue sorted by date posted"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:197 pan/gui/save-ui.cc:217
-msgid "Add to the front of the queue"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
-msgid "Add to the back of the queue"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:230
-msgid "Pan: Save Attachments"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:255 pan/gui/save-attach-ui.cc:273
-#: pan/gui/save-ui.cc:270 pan/gui/save-ui.cc:291
-msgid "_Location:"
-msgstr "მ_დებარეობა:"
-
-#: pan/gui/save-attach-ui.cc:259 pan/gui/save-ui.cc:274
-msgid "Save Articles"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:276 pan/gui/save-ui.cc:294
-#, c-format
-msgid "_Group's path: %s"
-msgstr ""
-
-#: pan/gui/save-attach-ui.cc:287 pan/gui/save-ui.cc:309
-msgid "_Priority:"
-msgstr "_პრიორიტეტი:"
-
-#: pan/gui/save-ui.cc:44
-#, c-format
-msgid ""
-"%g - group as one directory (alt.binaries.pictures.trains)\n"
-"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s - subject line excerpt\n"
-"%S - subject line\n"
-"%n - Poster display name\n"
-"%e - Poster email address\n"
-"%d - Article timestamp\n"
-" \n"
-"\"/home/user/News/Pan/%g\" becomes\n"
-"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-"\"/home/user/News/Pan/%G\" becomes\n"
-"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
-msgstr ""
-
-#: pan/gui/save-ui.cc:207
-msgid "Save attachments"
-msgstr ""
-
-#: pan/gui/save-ui.cc:208
-msgid "Save text"
-msgstr ""
-
-#: pan/gui/save-ui.cc:209
-msgid "Save attachments and text"
-msgstr ""
-
-#: pan/gui/save-ui.cc:245
-msgid "Pan: Save Articles"
-msgstr ""
-
-#: pan/gui/save-ui.cc:305
-msgid "_Action:"
-msgstr "_ქმედება:"
-
-#: pan/gui/score-add-ui.cc:89
-msgid "is more than"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:90
-msgid "is at most"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:112
-msgid "increase the article's score by"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:113
-msgid "decrease the article's score by"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:114
-msgid "set the article's score to"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:115
-msgid "watch the article (set its score to 9999)"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:116
-msgid "ignore the article (set its score to -9999)"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:141
-msgid "References"
-msgstr "მიმართვები"
-
-#: pan/gui/score-add-ui.cc:142
-msgid "Line Count"
-msgstr "ხაზის რაოდენობა"
-
-#: pan/gui/score-add-ui.cc:143
-msgid "Byte Count"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:144
-msgid "Crosspost Group Count"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:145
-msgid "Age (in days)"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:167
-msgid "for the next month"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:168
-msgid "for the next six months"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:169
-msgid "forever"
-msgstr "სამუდამოდ"
-
-#: pan/gui/score-add-ui.cc:194
-msgid "contains"
-msgstr "შეიცავს"
-
-#: pan/gui/score-add-ui.cc:195
-msgid "doesn't contain"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:196
-msgid "is"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:197
-msgid "isn't"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:198
-msgid "starts with"
-msgstr "იწყება"
-
-#: pan/gui/score-add-ui.cc:199
-msgid "ends with"
-msgstr "მთავრდება"
-
-#: pan/gui/score-add-ui.cc:200
-msgid "matches regex"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:481
-msgid "Another rule already sets this article's score."
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:482
-msgid "You may want to go back or delete the old rule."
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:484
-msgid "Back"
-msgstr "უკან"
-
-#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1040
-msgid "Delete"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:486 pan/gui/score-add-ui.cc:607
-#: pan/gui/score-view-ui.cc:207
-msgid "Add"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:553
-msgid "Add and Re_score"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:602 pan/gui/score-add-ui.cc:622
-msgid "New Scoring Rule"
-msgstr ""
-
-#: pan/gui/score-add-ui.cc:633
-msgid "Group name"
-msgstr "ჯგუფის სახელი"
-
-#: pan/gui/score-add-ui.cc:640
-msgid "and"
-msgstr ""
-
-#: pan/gui/score-view-ui.cc:55
-msgid "Close and Re_score"
-msgstr ""
-
-#: pan/gui/score-view-ui.cc:153
-#, c-format
-msgid "File %s, Lines %d - %d"
-msgstr ""
-
-#: pan/gui/score-view-ui.cc:181
-msgid "Pan: Article's Scores"
-msgstr ""
-
-#: pan/gui/score-view-ui.cc:212
-msgid "New Score"
-msgstr ""
-
-#: pan/gui/score-view-ui.cc:217
-msgid "Criteria"
-msgstr "კრიტერიუმი"
-
-#: pan/gui/score-view-ui.cc:240
-msgid "Add a New Scoring Rule"
-msgstr ""
-
-#: pan/gui/score-view-ui.cc:247
-msgid "Remove the Selected Scoring Rule"
-msgstr ""
-
-#: pan/gui/server-ui.cc:292
-msgid "Please specify the server's address."
-msgstr ""
-
-#: pan/gui/server-ui.cc:344
-msgid "Import SSL Certificate (PEM Format) From File"
-msgstr ""
-
-#. create the dialog
-#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:996
-msgid "Add a Server"
-msgstr ""
-
-#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:1002
-msgid "Edit a Server's Settings"
-msgstr ""
-
-#: pan/gui/server-ui.cc:401
-msgid "Location"
-msgstr "ადგილმდებარეობა"
-
-#: pan/gui/server-ui.cc:405
-msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
-msgstr ""
-
-#: pan/gui/server-ui.cc:406
-msgid "_Address:"
-msgstr "მის_ამართი:"
-
-#: pan/gui/server-ui.cc:411
-msgid ""
-"The news server's port number.  Typically 119 for unencrypted and 563 for "
-"encrypted connections (SSL/TLS)."
-msgstr ""
-
-#: pan/gui/server-ui.cc:412
-msgid "Por_t:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:415
-msgid "Login (if Required)"
-msgstr ""
-
-#: pan/gui/server-ui.cc:419
-msgid "_Username:"
-msgstr "_მომხმარებელი:"
-
-#: pan/gui/server-ui.cc:420
-msgid ""
-"The username to give the server when asked.  If your server doesn't require "
-"authentication, you can leave this blank."
-msgstr ""
-
-#: pan/gui/server-ui.cc:424
-msgid "_Password:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:425
-msgid ""
-"The password to give the server when asked.  If your server doesn't require "
-"authentication, you can leave this blank."
-msgstr ""
-
-#: pan/gui/server-ui.cc:428
-msgid "Settings"
-msgstr ""
-
-#: pan/gui/server-ui.cc:435
-msgid "Connection _Limit:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:439
-msgid "After Two Weeks"
-msgstr ""
-
-#: pan/gui/server-ui.cc:440
-msgid "After One Month"
-msgstr ""
-
-#: pan/gui/server-ui.cc:441
-msgid "After Two Months"
-msgstr ""
-
-#: pan/gui/server-ui.cc:442
-msgid "After Three Months"
-msgstr ""
-
-#: pan/gui/server-ui.cc:443
-msgid "After Six Months"
-msgstr ""
-
-#: pan/gui/server-ui.cc:444
-msgid "Never Expire Old Articles"
-msgstr ""
-
-#: pan/gui/server-ui.cc:458
-msgid "E_xpire Old Articles:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:462
-msgid "Primary"
-msgstr "ძირითადი"
-
-#: pan/gui/server-ui.cc:463
-msgid "Fallback"
-msgstr "გადართვა შეცდომის შემთხვევაში"
-
-#: pan/gui/server-ui.cc:477
-msgid "Server Rank:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:481
-msgid ""
-"Fallback servers are used for articles that can't be found on the "
-"primaries.  One common approach is to use free servers as primaries and "
-"subscription servers as fallbacks."
-msgstr ""
-
-#: pan/gui/server-ui.cc:486
-msgid "Disable Compression (N/A)"
-msgstr ""
-
-#: pan/gui/server-ui.cc:487
-msgid "XZVER Compression (Astraweb)"
-msgstr ""
-
-#: pan/gui/server-ui.cc:488
-msgid "GZIP Compression (Giganews etc.)"
-msgstr ""
-
-#: pan/gui/server-ui.cc:502
-msgid "Header Compression:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:508
-msgid "Security"
-msgstr "უსაფრთხოება"
-
-#: pan/gui/server-ui.cc:513
-msgid "Use Unsecure (Plaintext) Connections"
-msgstr ""
-
-#: pan/gui/server-ui.cc:514
-msgid "Use Secure SSL Connections"
-msgstr ""
-
-#: pan/gui/server-ui.cc:529
-msgid "TLS (SSL) Settings:"
-msgstr ""
-
-#: pan/gui/server-ui.cc:534
-msgid ""
-"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
-"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
-"for privacy reasons."
-msgstr ""
-
-#: pan/gui/server-ui.cc:539
-msgid "Always trust this server's certificate"
-msgstr ""
-
-#: pan/gui/server-ui.cc:724
-#, c-format
-msgid "Really delete \"%s\"?"
-msgstr ""
-
-#: pan/gui/server-ui.cc:813
-msgid "No information available."
-msgstr ""
-
-#: pan/gui/server-ui.cc:823
-#, c-format
-msgid "Server Certificate for '%s'"
-msgstr ""
-
-#: pan/gui/server-ui.cc:922
-#, c-format
-msgid "Really delete certificate for \"%s\"?"
-msgstr ""
-
-#. dialog
-#: pan/gui/server-ui.cc:949 pan/gui/server-ui.cc:970 pan/gui/server-ui.cc:1068
-msgid "Servers"
-msgstr "სერვერები"
-
-#: pan/gui/server-ui.cc:1009
-msgid "Remove a Server"
-msgstr ""
-
-#. dialog
-#: pan/gui/server-ui.cc:1042
-msgid "SSL Certificates"
-msgstr ""
-
-#: pan/gui/server-ui.cc:1063
-msgid "Certificates"
-msgstr "სერტიფიკატები"
-
-#: pan/gui/server-ui.cc:1094
-msgid "Import Certificate"
-msgstr "სერტიფიკატის შემოტანა"
-
-#: pan/gui/server-ui.cc:1100
-msgid "Inspect Certificate"
-msgstr ""
-
-#: pan/gui/server-ui.cc:1107
-msgid "Remove Certificate"
-msgstr ""
-
-#: pan/gui/task-pane.cc:124
-#, c-format
-msgid ""
-"\n"
-"<u>Upload</u>\n"
-"\n"
-"<i>Subject:</i> <b>\"%s\"</b>\n"
-"<i>From:</i> <b>%s</b>\n"
-"<i>Groups:</i> <b>%s</b>\n"
-"<i>Sourcefile:</i> <b>%s</b>\n"
-msgstr ""
-
-#: pan/gui/task-pane.cc:136
-#, c-format
-msgid ""
-"\n"
-"<u>Download</u>\n"
-"\n"
-"<i>Subject:</i> <b>\"%s\"</b>\n"
-"<i>From:</i> <b>%s</b>\n"
-"<i>Date:</i> <b>%s</b>\n"
-"<i>Groups:</i> <b>%s</b>\n"
-"<i>Save Path:</i> <b>%s</b>\n"
-msgstr ""
-
-#: pan/gui/task-pane.cc:138
-msgid "unknown"
-msgstr ""
-
-#: pan/gui/task-pane.cc:306
-msgid "Choose New Destination for Selected Tasks"
-msgstr ""
-
-#: pan/gui/task-pane.cc:310
-msgid "Save"
-msgstr ""
-
-#: pan/gui/task-pane.cc:460
-#, c-format
-msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
-msgstr ""
-
-#: pan/gui/task-pane.cc:462
-#, c-format
-msgid "Pan: Tasks (%d Queued, %d Running)"
-msgstr ""
-
-#: pan/gui/task-pane.cc:464
-msgid "Pan: Tasks"
-msgstr ""
-
-#: pan/gui/task-pane.cc:489
-#, c-format
-msgid "%lu selected, %s"
-msgstr ""
-
-#: pan/gui/task-pane.cc:553
-msgid "Running"
-msgstr ""
-
-#: pan/gui/task-pane.cc:554
-msgid "Decoding"
-msgstr ""
-
-#: pan/gui/task-pane.cc:556
-msgid "Queued for Decode"
-msgstr ""
-
-#: pan/gui/task-pane.cc:557
-msgid "Queued for Encode"
-msgstr ""
-
-#: pan/gui/task-pane.cc:558
-msgid "Queued"
-msgstr "რიგშია"
-
-#: pan/gui/task-pane.cc:559
-msgid "Stopped"
-msgstr "შეჩერებულია"
-
-#: pan/gui/task-pane.cc:560
-msgid "Removing"
-msgstr "წაშლა"
-
-#: pan/gui/task-pane.cc:589
-#, c-format
-msgid "%d%% Done"
-msgstr ""
-
-#: pan/gui/task-pane.cc:595
-#, c-format
-msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
-msgstr ""
-
-#: pan/gui/task-pane.cc:690 pan/gui/task-pane.cc:691
-msgid "Move To Top"
-msgstr ""
-
-#: pan/gui/task-pane.cc:695 pan/gui/task-pane.cc:696
-msgid "Move To Bottom"
-msgstr ""
-
-#: pan/gui/task-pane.cc:700 pan/gui/task-pane.cc:701
-msgid "Show Task Information"
-msgstr ""
-
-#: pan/gui/task-pane.cc:705 pan/gui/task-pane.cc:706
-msgid "Stop Task"
-msgstr ""
-
-#: pan/gui/task-pane.cc:710 pan/gui/task-pane.cc:711
-msgid "Delete Task"
-msgstr "ამოცანის წაშლა"
-
-#: pan/gui/task-pane.cc:715 pan/gui/task-pane.cc:716
-msgid "Restart Task"
-msgstr ""
-
-#: pan/gui/task-pane.cc:720 pan/gui/task-pane.cc:721
-msgid "Change Download Destination"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1016
-msgid "_Online"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1026
-msgid "Move up"
-msgstr "აწევა"
-
-#: pan/gui/task-pane.cc:1027
-msgid "Move task up"
-msgstr "ამოცანის მაღლა აწევა"
-
-#: pan/gui/task-pane.cc:1028
-msgid "Move to top"
-msgstr "ზემოთ ატანა"
-
-#: pan/gui/task-pane.cc:1029
-msgid "Move task to top of the download queue"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1031
-msgid "Move down"
-msgstr "ქვემოთ ჩამოწევა"
-
-#: pan/gui/task-pane.cc:1032
-msgid "Move task down"
-msgstr "ამოცანის დაბლა ჩამოწევა"
-
-#: pan/gui/task-pane.cc:1033
-msgid "Move to bottom"
-msgstr "ბოლოში ჩამოტანა"
-
-#: pan/gui/task-pane.cc:1034
-msgid "Move task to the bottom of the download queue"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1036
-msgid "Restart"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1037
-msgid "Restart Tasks"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1038
-msgid "Stop"
-msgstr "გაჩერება"
-
-#: pan/gui/task-pane.cc:1039
-msgid "Stop Tasks"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1041
-msgid "Delete Tasks"
-msgstr "ამოცანების წაშლა"
-
-#: pan/gui/task-pane.cc:1043
-msgid "Close"
-msgstr ""
-
-#: pan/gui/task-pane.cc:1047
-msgid "Show popups"
-msgstr "მხტუნარების ჩვენება"
-
-#: pan/gui/url.cc:143
-#, c-format
-msgid "Error starting URL: %s (Command was: %s)"
-msgstr ""
-
-#: pan/tasks/decoder.cc:124
-#, c-format
-msgid "Couldn't save file \"%s\": %s"
-msgstr ""
-
-#: pan/tasks/decoder.cc:146 pan/tasks/encoder.cc:146
-msgid "Error initializing uulib"
-msgstr ""
-
-#: pan/tasks/decoder.cc:166 pan/tasks/socket-impl-gio.cc:360
-#: pan/tasks/socket-impl-openssl.cc:641
-#, c-format
-msgid "Error reading from %s: %s"
-msgstr ""
-
-#: pan/tasks/decoder.cc:206
-#, c-format
-msgid "Saved \"%s\""
-msgstr ""
-
-#: pan/tasks/decoder.cc:213
-#, c-format
-msgid ""
-"Error saving \"%s\":\n"
-"%s."
-msgstr ""
-
-#: pan/tasks/decoder.cc:326 pan/tasks/task-article.cc:351
-#, c-format
-msgid "Decoding %s"
-msgstr ""
-
-#: pan/tasks/encoder.cc:113 pan/tasks/encoder.cc:164
-#, c-format
-msgid "Error loading %s from cache."
-msgstr ""
-
-#: pan/tasks/encoder.cc:186
-#, c-format
-msgid "Error encoding %s: %s"
-msgstr ""
-
-#: pan/tasks/encoder.cc:276
-#, c-format
-msgid "Encoding %s"
-msgstr ""
-
-#: pan/tasks/nntp.cc:176
-#, c-format
-msgid "%s requires a username, but none is set."
-msgstr ""
-
-#: pan/tasks/nntp.cc:189
-#, c-format
-msgid "%s requires a password, but none is set."
-msgstr ""
-
-#: pan/tasks/nntp.cc:275
-#, c-format
-msgid "Sending \"%s\" to %s returned an error: %s"
-msgstr ""
-
-#: pan/tasks/nntp.cc:298
-#, c-format
-msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
-msgstr ""
-
-#: pan/tasks/nntp-pool.cc:241
-#, c-format
-msgid "Unable to connect to \"%s\""
-msgstr ""
-
-#: pan/tasks/queue.cc:778 pan/tasks/queue.cc:806 pan/tasks/queue.cc:833
-msgid "No space left on device."
-msgstr ""
-
-#: pan/tasks/socket-impl-gio.cc:173 pan/tasks/socket-impl-gio.cc:211
-#: pan/tasks/socket-impl-openssl.cc:213 pan/tasks/socket-impl-openssl.cc:251
-#, c-format
-msgid "Error connecting to \"%s\""
-msgstr ""
-
-#: pan/tasks/socket-impl-gio.cc:359 pan/tasks/socket-impl-openssl.cc:640
-msgid "Unknown Error"
-msgstr "უცნობი შეცდომა"
-
-#: pan/tasks/task-article.cc:59 pan/tasks/task-article.cc:157
-#, c-format
-msgid "Saving %s"
-msgstr "'%s'-ის შენახვა"
-
-#: pan/tasks/task-article.cc:61
-#, c-format
-msgid "Reading %s"
-msgstr ""
-
-#: pan/tasks/task-article.cc:323
-#, c-format
-msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
-msgstr ""
-
-#: pan/tasks/task-groups.cc:41
-#, c-format
-msgid "Getting group list from \"%s\""
-msgstr ""
-
-#: pan/tasks/task-groups.cc:134
-#, c-format
-msgid "Fetched %lu Groups"
-msgstr ""
-
-#: pan/tasks/task-post.cc:33
-#, c-format
-msgid "Posting \"%s\""
-msgstr ""
-
-#: pan/tasks/task-post.cc:74
-#, c-format
-msgid "Posting of \"%s\" failed: %s"
-msgstr ""
-
-#: pan/tasks/task-post.cc:79
-#, c-format
-msgid "Posting of \"%s\" successful: %s"
-msgstr ""
-
-#: pan/tasks/task-upload.cc:55
-#, c-format
-msgid "Uploading %s"
-msgstr ""
-
-#: pan/tasks/task-upload.cc:249
-#, c-format
-msgid "Uploading %s - Part %d of %d"
-msgstr ""
-
-#: pan/tasks/task-upload.cc:251
-#, c-format
-msgid "Uploading message body with subject \"%s\""
-msgstr ""
-
-#: pan/tasks/task-upload.cc:308
-#, c-format
-msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
-msgstr ""
-
-#: pan/tasks/task-upload.cc:317
-#, c-format
-msgid "Posting of file %s (part %d of %d) failed: %s"
-msgstr ""
-
-#: pan/tasks/task-upload.cc:328 pan/tasks/task-upload.cc:335
-#, c-format
-msgid "Posting of file %s (part %d of %d) successful: %s"
-msgstr ""
-
-#: pan/tasks/task-upload.cc:345
-#, c-format
-msgid "Posting of file %s successful: %s"
-msgstr ""
-
-#: pan/tasks/task-upload.cc:349
-#, c-format
-msgid ""
-"Posting of file %s not completely successful: Check the log (right-click "
-"list item)."
-msgstr ""
-
-#: pan/tasks/task-upload.cc:368
-#, c-format
-msgid ""
-"Posting of file %s not successful: Check the log (right-click list item)."
-msgstr ""
-
-#: pan/tasks/task-xover.cc:82
-#, c-format
-msgid "Getting all headers for \"%s\""
-msgstr ""
-
-#: pan/tasks/task-xover.cc:85
-#, c-format
-msgid "Getting new headers for \"%s\""
-msgstr ""
-
-#. SAMPLE
-#: pan/tasks/task-xover.cc:89
-#, c-format
-msgid "Sampling headers for \"%s\""
-msgstr ""
-
-#: pan/tasks/task-xover.cc:454
-#, c-format
-msgid "%s (%lu parts, %lu articles)"
-msgstr ""
-
-#: pan/tasks/task-xover.cc:528
-#, c-format
-msgid "Getting new headers for \"%s\" done."
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:215
-msgid "article doesn't have attachments"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:219
-msgid "the article has attachments"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:223
-msgid "the article isn't cached locally"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:227
-msgid "the article is cached locally"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:231
-msgid "the article wasn't posted by you"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:235
-msgid "the article was posted by you"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:239
-msgid "the article has been read"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:243
-msgid "the article hasn't been read"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:247
-#, c-format
-msgid "the article is less than %ld bytes long"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:252
-#, c-format
-msgid "the article is at least %ld bytes long"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:257
-#, c-format
-msgid "the article is less than %ld lines long"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:262
-#, c-format
-msgid "the article is at least %ld lines long"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:267
-#, c-format
-msgid "the article is less than %ld days old"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:272
-#, c-format
-msgid "the article is at least %ld days old"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:277
-#, c-format
-msgid "the article was posted to less than %ld groups"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:282
-#, c-format
-msgid "the article was posted to at least %ld groups"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:287
-#, c-format
-msgid "the article's score is less than %ld"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:292
-#, c-format
-msgid "the article's score is %ld or higher"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:301 pan/usenet-utils/filter-info.cc:311
-#, c-format
-msgid "%s doesn't contain \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:302 pan/usenet-utils/filter-info.cc:312
-#, c-format
-msgid "%s isn't \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:303 pan/usenet-utils/filter-info.cc:313
-#, c-format
-msgid "%s doesn't begin with \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:304 pan/usenet-utils/filter-info.cc:314
-#, c-format
-msgid "%s doesn't end with \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:305 pan/usenet-utils/filter-info.cc:315
-#, c-format
-msgid "%s doesn't match the regex \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:327
-#, c-format
-msgid "%s contains \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:328
-#, c-format
-msgid "%s is \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:329
-#, c-format
-msgid "%s begins with \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:330
-#, c-format
-msgid "%s ends with \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:331
-#, c-format
-msgid "%s matches the regex \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:337
-msgid "Any of these tests fail:"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:344
-msgid "All of these tests pass:"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:351
-msgid "None of these tests pass:"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:358
-msgid "Any of these tests pass:"
-msgstr ""
-
-#: pan/usenet-utils/gnksa.cc:880
-#, c-format
-msgid "No email address provided; generating message-id with domain \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:122
-msgid "Warning: Reply seems to be top-posted."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:143
-msgid "Warning: The signature marker should be \"-- \", not \"--\"."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:160
-msgid "Warning: Signature prefix with no signature."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:165
-msgid "Warning: Signature is more than 4 lines long."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:170
-msgid "Warning: Signature is more than 80 characters wide."
-msgstr ""
+msgstr[0] "დავხურავ %d კავშირს"
 
 #: pan/usenet-utils/message-check.cc:196
 #, c-format
 msgid "Warning: %d line is more than 80 characters wide."
 msgid_plural "Warning: %d lines are more than 80 characters wide."
-msgstr[0] ""
+msgstr[0] "გაფრთხილება: %d ხაზი 80-ზე მეტ სიმბოლოს შეიცავს."
 
-#: pan/usenet-utils/message-check.cc:221
-msgid "Error: Message is empty."
-msgstr ""
+#~ msgid "%l:%M %p"
+#~ msgstr "%l:%M %p"
 
-#: pan/usenet-utils/message-check.cc:256
-msgid "Warning: The message is entirely quoted text!"
-msgstr ""
+#~ msgid "Today %l:%M %p"
+#~ msgstr "დღეს %l:%M %p"
 
-#: pan/usenet-utils/message-check.cc:257
-msgid "Warning: The message is mostly quoted text."
-msgstr ""
+#~ msgid "%a %l:%M %p"
+#~ msgstr "%a %l:%M %p"
 
-#: pan/usenet-utils/message-check.cc:307
-msgid "Error: Message appears to have no new content."
-msgstr ""
+#~ msgid "%b %d %l:%M %p"
+#~ msgstr "%b %d %l:%M %p"
 
-#: pan/usenet-utils/message-check.cc:342 pan/usenet-utils/message-check.cc:381
+#~ msgid "%b %d %Y"
+#~ msgstr "%b %d %Y"
+
+#~ msgid "_File"
+#~ msgstr "_ფაილი"
+
+#~ msgid "_Edit"
+#~ msgstr "_ჩასწორება"
+
+#~ msgid "_Layout"
+#~ msgstr "განლაგება"
+
+#~ msgid "_View"
+#~ msgstr "_ხედი"
+
+#~ msgid "Filte_r"
+#~ msgstr "_ფილტრი"
+
+#~ msgid "_Go"
+#~ msgstr "_წინ"
+
+#~ msgid "_Actions"
+#~ msgstr "მოქმედებები"
+
+#~ msgid "_Articles"
+#~ msgstr "_სტატიები"
+
+#~ msgid "G_roups"
+#~ msgstr "_ჯგუფები"
+
+#~ msgid "_Post"
+#~ msgstr "_დაპოსტვა"
+
+#~ msgid "_Help"
+#~ msgstr "_დახმარება"
+
+#~ msgid "_Subscribe"
+#~ msgstr "_გამოწერა"
+
+#~ msgid "Subscribe"
+#~ msgstr "ხელმოწერა"
+
+#~ msgid "_Unsubscribe"
+#~ msgstr "გამოწერის _გაუქმება"
+
+#~ msgid "Unsubscribe"
+#~ msgstr "გამოწერის გაუქმება"
+
+#~ msgid "_Save Articles..."
+#~ msgstr "_სტატიების შენახვა..."
+
+#~ msgid "Print"
+#~ msgstr "ამობეჭდვა"
+
+#~ msgid "_Quit"
+#~ msgstr "დატოვება"
+
+#~ msgid "Read More"
+#~ msgstr "დაწვრილებით"
+
+#~ msgid "_Invert Selection"
+#~ msgstr "_უკუ მონიშვნა"
+
+#~ msgid "_Contents"
+#~ msgstr "_შინაარსი"
+
+#~ msgid "_About"
+#~ msgstr "_შესახებ"
+
+#~ msgid "Reply-To"
+#~ msgstr "უპასუხეთ"
+
+#~ msgid " from "
+#~ msgstr " ვისგან "
+
+#~ msgid "always"
+#~ msgstr "ყოველთვის"
+
+#~ msgid "Copy _URL"
+#~ msgstr "URL-ის _კოპირება"
+
+#~ msgid "Save Attachment As..."
+#~ msgstr "მიმაგრებული ფაილის შენახვა, როგორც..."
+
+#~ msgid "Attachments:"
+#~ msgstr "მიმაგრებული ფაილები:"
+
+#~ msgid "Text View"
+#~ msgstr "ტექსტის ხედი"
+
+#~ msgid "Arabic"
+#~ msgstr "არაბული"
+
+#~ msgid "Baltic"
+#~ msgstr "ბალტიისპირეთის"
+
+#~ msgid "Central European"
+#~ msgstr "ცენტრალურ ევროპული"
+
+#~ msgid "Chinese"
+#~ msgstr "ჩინური"
+
+#~ msgid "Cyrillic"
+#~ msgstr "კირილიცა"
+
+#~ msgid "Greek"
+#~ msgstr "ბერძნული"
+
+#~ msgid "Hebrew"
+#~ msgstr "ივრითი"
+
+#~ msgid "Japanese"
+#~ msgstr "იაპონური"
+
+#~ msgid "Korean"
+#~ msgstr "კორეული"
+
+#~ msgid "Thai"
+#~ msgstr "ტაილანდური"
+
+#~ msgid "Turkish"
+#~ msgstr "თურქული"
+
+#~ msgid "Unicode"
+#~ msgstr "უნიკოდი"
+
+#~ msgid "Western European"
+#~ msgstr "დასავლეთ ევროპული"
+
+#~ msgid "Traditional"
+#~ msgstr "ტრადიციული"
+
+#~ msgid "Simplified"
+#~ msgstr "გამარტივებული"
+
+#~ msgid "Ukrainian"
+#~ msgstr "უკრაინული"
+
+#~ msgid "Visual"
+#~ msgstr "ვიზუალი"
+
+#~ msgid "Cancel"
+#~ msgstr "გაუქმება"
+
+#~ msgid "Other..."
+#~ msgstr "სხვა..."
+
+#~ msgid "Sent"
+#~ msgstr "გაგზავნილია"
+
+#~ msgid "Drafts"
+#~ msgstr "მონახაზები"
+
+#~ msgid "Local Folders"
+#~ msgstr "ლოკალური საქაღალდეები"
+
+#~ msgid "Unable to open help file."
+#~ msgstr "დახმარების ფაილის გახსნის შეცდომა."
+
+#~ msgid "translator-credits"
+#~ msgstr "თარგმანი-შესრულებულია"
+
+#~ msgid " KB"
+#~ msgstr " კბ"
+
+#~ msgid " MB"
+#~ msgstr " მბ"
+
+#~ msgid "Lines"
+#~ msgstr "ხაზები"
+
+#~ msgid "Bytes"
+#~ msgstr "ბაიტი"
+
+#~ msgid "Offline"
+#~ msgstr "გათიშული"
+
+#~ msgid "Connecting"
+#~ msgstr "დაკავშირება"
+
+#~ msgid "No Tasks"
+#~ msgstr "ამოცანების გარეშე"
+
+#~ msgid "Tasks"
+#~ msgstr "Tasks"
+
+#~ msgid "Score"
+#~ msgstr "ქულები"
+
+#~ msgid "Maximize"
+#~ msgstr "გადიდება"
+
+#~ msgid "_Profile"
+#~ msgstr "_პროფილი"
+
+#~ msgid "Remove from Queue"
+#~ msgstr "რიგიდან წაშლა"
+
+#~ msgid "Clear List"
+#~ msgstr "სიის გასუფთავება"
+
+#~ msgid "Move Up"
+#~ msgstr "აწევა"
+
+#~ msgid "Move Down"
+#~ msgstr "ჩამოწევა"
+
+#~ msgid "Move to Top"
+#~ msgstr "თავში ატანა"
+
+#~ msgid "Move to Bottom"
+#~ msgstr "ბოლოში ჩამოტანა"
+
+#~ msgid "Wrap Text"
+#~ msgstr "ტექსტის გადატანა"
+
+#~ msgid "Check _Spelling"
+#~ msgstr "მართლწერის შემოწმება"
+
+#~ msgid "Go Back"
+#~ msgstr "უკან დაბრუნება"
+
+#~ msgid "Continue Anyway"
+#~ msgstr "მაინც გაგრძელება"
+
+#~ msgid "IO Error"
+#~ msgstr "შ/გ-ის შეცდომა"
+
+#~ msgid "No space left on device"
+#~ msgstr "მოწყობილობაზე ადგილი არ დარჩა"
+
+#~ msgid "Edit Shortcut"
+#~ msgstr "მალსახმობის ჩასწორება"
+
+#~ msgid "Disabled"
+#~ msgstr "გამორთულია"
+
+#~ msgid "Enabled"
+#~ msgstr "გააქტიურებულია"
+
+#~ msgid "Column Name"
+#~ msgstr "სვეტისსახელი"
+
+#~ msgid "Mouse"
+#~ msgstr "თაგუნა"
+
+#~ msgid "Groups"
+#~ msgstr "ჯგუფები"
+
+#~ msgid "Articles"
+#~ msgstr "სტატიები"
+
+#~ msgid "Tabs"
+#~ msgstr "დაფები"
+
+#~ msgid "_Behavior"
+#~ msgstr "ქცევა"
+
+#~ msgid "Behavior"
+#~ msgstr "ქცევა"
+
+#~ msgid "Panes"
+#~ msgstr "პანელები"
+
+#~ msgid "Language Settings"
+#~ msgstr "ენის პარამეტრები"
+
+#~ msgid "Font"
+#~ msgstr "ფონტი"
+
+#~ msgid "Show notifications"
+#~ msgstr "გაფრთხილებების ჩვენება"
+
+#~ msgid "_Miscellaneous"
+#~ msgstr "_სხვადასხვა"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "სხვადასხვა"
+
+#~ msgid "_Headers"
+#~ msgstr "_თავსართები"
+
+#~ msgid "Headers"
+#~ msgstr "სათაურები"
+
+#~ msgid "Fonts"
+#~ msgstr "ფონტები"
+
+#~ msgid "_Fonts"
+#~ msgstr "_ფონტები"
+
+#~ msgid "Background:"
+#~ msgstr "ფონი:"
+
+#~ msgid "Signature:"
+#~ msgstr "ხელმოწერა :"
+
+#~ msgid "Text Color:"
+#~ msgstr "ტექსტის ფერი:"
+
+#~ msgid "_Colors"
+#~ msgstr "_ფერები"
+
+#~ msgid "Colors"
+#~ msgstr "ფერები"
+
+#~ msgid "Preferred Applications"
+#~ msgstr "სასურველი პროგრამები"
+
+#~ msgid "Applications"
+#~ msgstr "აპლიკაციები"
+
+#~ msgid "_Upload"
+#~ msgstr "_ატვირთვა"
+
+#~ msgid "Upload"
+#~ msgstr "ატვირთვა"
+
+#~ msgid "_Shortcuts"
+#~ msgstr "მალ_სახმობები"
+
+#~ msgid "Shortcuts"
+#~ msgstr "მალსახმობები"
+
+#~ msgid "Profile Information"
+#~ msgstr "პროფილის ინფორმაცია"
+
+#~ msgid "_Profile Name:"
+#~ msgstr "პროფილის _სახელი:"
+
+#~ msgid "_Email Address:"
+#~ msgstr "_ელფოსტის მისამართი:"
+
+#~ msgid "Signature"
+#~ msgstr "ხელმოწერა"
+
+#~ msgid "Text File"
+#~ msgstr "ტექსტური ფაილი"
+
+#~ msgid "Invalid email address."
+#~ msgstr "არასწორი ელფოსტის მისამართი."
+
+#~ msgid "New Profile"
+#~ msgstr "ახალი პროფილი"
+
+#~ msgid "_Location:"
+#~ msgstr "მ_დებარეობა:"
+
+#~ msgid "_Priority:"
+#~ msgstr "_პრიორიტეტი:"
+
+#~ msgid "_Action:"
+#~ msgstr "_ქმედება:"
+
+#~ msgid "References"
+#~ msgstr "მიმართვები"
+
+#~ msgid "Line Count"
+#~ msgstr "ხაზის რაოდენობა"
+
+#~ msgid "forever"
+#~ msgstr "სამუდამოდ"
+
+#~ msgid "contains"
+#~ msgstr "შეიცავს"
+
+#~ msgid "starts with"
+#~ msgstr "იწყება"
+
+#~ msgid "ends with"
+#~ msgstr "მთავრდება"
+
+#~ msgid "Back"
+#~ msgstr "უკან"
+
+#~ msgid "Group name"
+#~ msgstr "ჯგუფის სახელი"
+
+#~ msgid "Criteria"
+#~ msgstr "კრიტერიუმი"
+
+#~ msgid "Location"
+#~ msgstr "ადგილმდებარეობა"
+
+#~ msgid "_Address:"
+#~ msgstr "მის_ამართი:"
+
+#~ msgid "_Username:"
+#~ msgstr "_მომხმარებელი:"
+
+#~ msgid "Primary"
+#~ msgstr "ძირითადი"
+
+#~ msgid "Fallback"
+#~ msgstr "გადართვა შეცდომის შემთხვევაში"
+
+#~ msgid "Security"
+#~ msgstr "უსაფრთხოება"
+
+#~ msgid "Servers"
+#~ msgstr "სერვერები"
+
+#~ msgid "Certificates"
+#~ msgstr "სერტიფიკატები"
+
+#~ msgid "Import Certificate"
+#~ msgstr "სერტიფიკატის შემოტანა"
+
+#~ msgid "Queued"
+#~ msgstr "რიგშია"
+
+#~ msgid "Stopped"
+#~ msgstr "შეჩერებულია"
+
+#~ msgid "Removing"
+#~ msgstr "წაშლა"
+
+#~ msgid "Delete Task"
+#~ msgstr "ამოცანის წაშლა"
+
+#~ msgid "Move up"
+#~ msgstr "აწევა"
+
+#~ msgid "Move task up"
+#~ msgstr "ამოცანის მაღლა აწევა"
+
+#~ msgid "Move to top"
+#~ msgstr "ზემოთ ატანა"
+
+#~ msgid "Move down"
+#~ msgstr "ქვემოთ ჩამოწევა"
+
+#~ msgid "Move task down"
+#~ msgstr "ამოცანის დაბლა ჩამოწევა"
+
+#~ msgid "Move to bottom"
+#~ msgstr "ბოლოში ჩამოტანა"
+
+#~ msgid "Stop"
+#~ msgstr "გაჩერება"
+
+#~ msgid "Delete Tasks"
+#~ msgstr "ამოცანების წაშლა"
+
+#~ msgid "Show popups"
+#~ msgstr "მხტუნარების ჩვენება"
+
+#~ msgid "Unknown Error"
+#~ msgstr "უცნობი შეცდომა"
+
 #, c-format
-msgid ""
-"Warning: The posting profile's server doesn't carry newsgroup\n"
-"\t\"%s\".\n"
-"\tIf the group name is correct, switch profiles in the \"From:\"\n"
-"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:353
-msgid "Warning: Following-Up to too many groups."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:364
-msgid "Error: No Subject specified."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:393
-#, c-format
-msgid "Warning: Group \"%s\" is read-only."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:402
-msgid "Error: Posting to a very large number of groups."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:407
-msgid "Warning: Posting to a large number of groups."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:414
-msgid "Warning: Crossposting without setting Followup-To header."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:439
-msgid "Error: Bad email address."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:448
-msgid "Warning: Most newsgroups frown upon HTML posts."
-msgstr ""
-
-#: pan/usenet-utils/message-check.cc:484
-msgid "Error: No Recipients."
-msgstr ""
-
-#: pan/usenet-utils/scorefile.cc:310
-#, c-format
-msgid "Error reading score in %*.*s, line %d: unexpected line."
-msgstr ""
-
-#: pan/usenet-utils/scorefile.cc:442
-#, c-format
-msgid ""
-"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
-"'Expires: DD-MM-YYYY'."
-msgstr ""
-
-#: pan/usenet-utils/scorefile.cc:452
-#, c-format
-msgid "Expired old score from %*.*s, line %d"
-msgstr ""
-
-#: pan/usenet-utils/scorefile.cc:589
-#, c-format
-msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr ""
-
-#: pan/usenet-utils/ssl-utils.cc:172
-#, c-format
-msgid "Error printing the server certificate for '%s'"
-msgstr ""
-
-#: pan/usenet-utils/ssl-utils.cc:191
-#, c-format
-msgid ""
-"The current server <b>'%s'</b> sent this security certificate:\n"
-"\n"
-msgstr ""
-
-#: pan/usenet-utils/ssl-utils.cc:197
-#, c-format
-msgid ""
-"Certificate information for server <b>'%s'</b>:\n"
-"\n"
-msgstr ""
-
-#: pan/usenet-utils/ssl-utils.cc:202
-#, c-format
-msgid ""
-"%s<b>Issuer information:</b>\n"
-"%s\n"
-"<b>Valid until:</b> %s\n"
-"\n"
-"<b>Not valid before:</b> %s\n"
-"\n"
-msgstr ""
-
-#: pan/usenet-utils/text-massager.cc:397
-msgid "> [quoted text muted]"
-msgstr ""
-
-#: pan/usenet-utils/text-massager.cc:579
-msgid "no_name"
-msgstr ""
-
-#: pan/usenet-utils/text-massager.cc:580
-msgid "no_mail"
-msgstr ""
+#~ msgid "Saving %s"
+#~ msgstr "'%s'-ის შენახვა"
