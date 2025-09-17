@@ -424,34 +424,40 @@ void DataImpl ::MyTree ::mark_as_pending_deletion(
 
 void DataImpl ::MyTree ::update_article_view() const {
   TimeElapsed timer;
-  LOG4CXX_TRACE(logger, "Update article_view");
+  LOG4CXX_TRACE(logger, "start");
   SQLite::Transaction setup_article_view_transaction(pan_db);
 
   // remove deletable articles
   int count = pan_db.exec("delete from article_view where status == \"h\"");
   LOG4CXX_TRACE(logger, "removed " << count << " old deletable articles from article_view ("
                             << timer.get_seconds_elapsed() << "s)");
+  auto tmp_time = timer.get_seconds_elapsed();
 
   // mark all remaining articles are deletable, except the one with pending deletion
   count = pan_db.exec("update article_view set status = \"h\" where status != \"p\"");
   LOG4CXX_TRACE(logger, "marked " << count << " articles as deletable in article_view ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   count = fill_article_view_from_article();
   LOG4CXX_TRACE(logger, "fill article_view done ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   // second pass to setup parent_id in article view (this needs whole
   // article_view table to compute parent_id)
   set_parent_in_article_view();
   LOG4CXX_TRACE(logger, "set_parent in article_view done ("
-                            << timer.get_seconds_elapsed() << "s)");
+                            << timer.get_seconds_elapsed() - tmp_time << "s)");
+  tmp_time = timer.get_seconds_elapsed();
 
   setup_article_view_transaction.commit();
 
-  LOG4CXX_TRACE(logger, "Update article_view done with "
-                            << count << " articles ("
-                            << timer.get_seconds_elapsed() << "s).");
+  LOG4CXX_TRACE(logger, "transaction commit done in "
+                            << timer.get_seconds_elapsed() - tmp_time << "s).");
+
+  LOG4CXX_TRACE(logger, "done with " << count << " articles (total time: "
+                                     << timer.get_seconds_elapsed() << "s).");
 }
 
 Article DataImpl ::MyTree ::get_parent(Quark const &mid) const
