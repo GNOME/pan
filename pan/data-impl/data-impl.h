@@ -420,7 +420,8 @@ public:
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
         int initial_call_on_shown_articles(
-            std::function<void(Quark msg_id, Quark parent_id)> cb) const override;
+            std::function<void(Quark msg_id, Quark parent_id)> cb,
+            header_column_enum sort_column, bool sort_ascending) const override;
         int call_on_sorted_shown_articles(
             std::function<void(Quark msg_id, Quark parent_id)> cb,
             header_column_enum header_column_id = COL_DATE,

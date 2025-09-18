@@ -607,7 +607,8 @@ void HeaderPane ::sort_column_changed_cb(GtkTreeSortable *sortable,
 
 PanTreeStore *HeaderPane ::build_model(Quark const &group,
                                        Data::ArticleTree *atree,
-                                       TextMatch const *)
+                                       int sort_column_id,
+                                       bool sort_ascending)
 {
   LOG4CXX_DEBUG(logger, "Build model: called on group " << group.c_str());
   TimeElapsed timer;
@@ -640,7 +641,13 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
       store->append(parent, child);
     };
 
-    int count = _atree->initial_call_on_shown_articles(insert_shown_row);
+    Data::header_column_enum sort_column =
+        Data::header_column_enum(sort_column_id);
+
+    LOG4CXX_DEBUG(logger, "sorting columns with col id " << sort_column);
+
+    int count = _atree->initial_call_on_shown_articles(
+        insert_shown_row, sort_column, sort_ascending);
 
     atree->update_article_after_gui_update();
 
@@ -677,10 +684,6 @@ void HeaderPane ::rebuild() {
     }
   }
 
-  _mid_to_row.clear();
-  _atree->initialize_article_view();
-  _tree_store = build_model(_group, _atree, nullptr);
-
   bool const sort_ascending =
       _group_prefs.get_flag(_group, "header-pane-sort-ascending", false);
   int sort_column =
@@ -690,6 +693,9 @@ void HeaderPane ::rebuild() {
   {
     sort_column = Data::COL_DATE;
   }
+
+  _mid_to_row.clear();
+  _tree_store = build_model(_group, _atree, sort_column, sort_ascending);
 
   GtkTreeModel *model(GTK_TREE_MODEL(_tree_store));
   GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
@@ -750,7 +756,7 @@ bool HeaderPane ::set_group(Quark const &new_group) {
       _atree = _data.group_get_articles(new_group, path, _show_type, &_filter,
                                         &_rules);
       _atree->add_listener(this);
-
+      _atree->initialize_article_view();
       rebuild();
       if (gtk_widget_get_realized(_tree_view)) {
         gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(_tree_view), 0, 0);

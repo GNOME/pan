@@ -208,22 +208,30 @@ void DataImpl::MyTree::set_join_and_column(header_column_enum &header_column_id,
 // not work, so we must recursively scan the article to find the
 // parents first.
 int DataImpl ::MyTree ::initial_call_on_shown_articles(
-    std::function<void(Quark msg_id, Quark parent_id)> cb) const {
+    std::function<void(Quark msg_id, Quark parent_id)> cb,
+    header_column_enum sort_column, bool sort_ascending) const {
 
   TimeElapsed timer;
+
+  // Map column IDs to database column names
+  std::string db_column, db_join;
+
+  set_join_and_column(sort_column, db_column, db_join);
 
   // See
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   std::string q = R"SQL(
-    with recursive hierarchy (step, a_id, m_id, p_id, time_posted) as (
-      select 1, a.id, message_id, av.parent_id, time_posted
+    with recursive hierarchy (step, a_id, m_id, p_id, sort_data) as (
+      select 1, a.id, message_id, av.parent_id, )SQL" + db_column + R"SQL(
       from article_view as av
       join article as a on a.id == av.article_id
+    )SQL" + (db_join.empty() ? "" : db_join) + R"SQL(
       where av.parent_id is null and status in ("e","r","s")
       union all
-      select step+1, a.id, a.message_id, av.parent_id, a.time_posted
+      select step+1, a.id, a.message_id, av.parent_id,)SQL" + db_column + R"SQL(
       from article_view as av
       join article as a on a.id == av.article_id
+    )SQL" + (db_join.empty() ? "" : db_join) + R"SQL(
       join hierarchy as h
 	    where status  in ("e","r","s") and av.parent_id is h.a_id
       limit 10000000 -- todo remove ?
@@ -231,8 +239,7 @@ int DataImpl ::MyTree ::initial_call_on_shown_articles(
     select hierarchy.m_id,
        (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
     from hierarchy
-    order by step, time_posted asc
-    )SQL" ;
+    order by step, sort_data )SQL" + (sort_ascending ? "asc" : "desc");
 
   LOG4CXX_TRACE(logger, "sql request is " << q);
 
@@ -241,11 +248,10 @@ int DataImpl ::MyTree ::initial_call_on_shown_articles(
   while (st.executeStep()) {
     Quark msg_id = st.getColumn(0).getText();
     Quark prt_id;
-    if (! st.getColumn(1).isNull())
-    {
+    if (!st.getColumn(1).isNull()) {
       prt_id = st.getColumn(1).getText();
     }
-    cb(msg_id,prt_id);
+    cb(msg_id, prt_id);
     count++;
   }
 

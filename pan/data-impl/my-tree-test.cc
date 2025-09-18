@@ -520,7 +520,7 @@ class DataImplTest : public CppUnit::TestFixture
         stack.insert(msg_id.to_string());
       };
 
-      int count = tree->initial_call_on_shown_articles(check);
+      int count = tree->initial_call_on_shown_articles(check, pan::Data::COL_DATE, true);
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 exposed count ", 10, count);
     }
 
@@ -585,6 +585,10 @@ class DataImplTest : public CppUnit::TestFixture
       };
 
       for (const auto a_test : all_tests) {
+          list.clear();
+          tree->initial_call_on_shown_articles(check, a_test.col, a_test.asc);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 sort by " + a_test.label, a_test.expect, list.front());
+
           list.clear();
           tree->call_on_sorted_shown_articles(check, a_test.col, a_test.asc);
           CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 sort by " + a_test.label, a_test.expect, list.front());
