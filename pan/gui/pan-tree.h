@@ -236,6 +236,8 @@ struct PanTreeStore
 
     void reparent (const parent_to_children_t& parents_to_children);
 
+    void update_children(Row *parent, std::vector<Row *>& children);
+
   public:
 
     void pause_sorting () { ++sort_paused; }
