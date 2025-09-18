@@ -372,7 +372,8 @@ class HeaderPane :
     Row *create_row(Article);
     PanTreeStore *build_model(Quark const &,
                               Data::ArticleTree *,
-                              TextMatch const *);
+                              int sort_column,
+                              bool sort_ascending);
     void build_tree_columns();
 
   private:
