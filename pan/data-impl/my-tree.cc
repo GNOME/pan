@@ -171,13 +171,13 @@ int DataImpl ::MyTree ::call_on_shown_articles (
       select a.id article_id, message_id, av.parent_id
       from article_view as av
 	    join article as a on a.id == av.article_id
-      where av.parent_id is null and show == 1
+      where av.parent_id is null and status is not "h"
       union all
       select a.id, a.message_id, av.parent_id
       from article_view as av
 	    join article as a on a.id == av.article_id
       join hierarchy as h
-	    where show == 1 and av.parent_id is not null and av.parent_id = h.article_id
+	    where status is not "h" and av.parent_id is not null and av.parent_id = h.article_id
 	    limit 10000000 -- todo remove ?
     )
     select hierarchy.message_id, parent.message_id
