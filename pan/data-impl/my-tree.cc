@@ -201,8 +201,62 @@ void DataImpl::MyTree::set_join_and_column(header_column_enum &header_column_id,
   }
 }
 
+// apply function on shown articles. In theory, article thread result
+// from exchange between servers, a parent article always have a time
+// stamp lower than its children, so ordering articles by time stamp
+// is enough to get parents before children. In practice, this does
+// not work, so we must recursively scan the article to find the
+// parents first.
+int DataImpl ::MyTree ::initial_call_on_shown_articles(
+    std::function<void(Quark msg_id, Quark parent_id)> cb) const {
+
+  TimeElapsed timer;
+
+  // See
+  // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
+  std::string q = R"SQL(
+    with recursive hierarchy (step, a_id, m_id, p_id) as (
+      select 1, a.id, message_id, av.parent_id
+      from article_view as av
+      join article as a on a.id == av.article_id
+      where av.parent_id is null and status in ("e","r","s")
+      union all
+      select step+1, a.id, a.message_id, av.parent_id
+      from article_view as av
+      join article as a on a.id == av.article_id
+      join hierarchy as h
+	    where status  in ("e","r","s") and av.parent_id is h.a_id
+      limit 10000000 -- todo remove ?
+    )
+    select hierarchy.m_id,
+       (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
+    from hierarchy
+    order by step
+    )SQL" ;
+
+  LOG4CXX_TRACE(logger, "sql request is " << q);
+
+  SQLite::Statement st(pan_db, q);
+  int count(0);
+  while (st.executeStep()) {
+    Quark msg_id = st.getColumn(0).getText();
+    Quark prt_id;
+    if (! st.getColumn(1).isNull())
+    {
+      prt_id = st.getColumn(1).getText();
+    }
+    cb(msg_id,prt_id);
+    count++;
+  }
+
+  LOG4CXX_DEBUG(logger, "sql request done for " << count << " articles in "
+                                                << timer.get_seconds_elapsed());
+
+  return count;
+}
+
 // apply function on shown articles in breadth first order
-int DataImpl ::MyTree ::call_on_shown_articles(
+int DataImpl ::MyTree ::call_on_sorted_shown_articles(
     std::function<void(Quark msg_id, Quark parent_id)> cb,
     header_column_enum header_column_id, bool ascending) const {
 
@@ -213,35 +267,15 @@ int DataImpl ::MyTree ::call_on_shown_articles(
 
   set_join_and_column(header_column_id, db_column, db_join);
 
-  // see
-  // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   std::string q = R"SQL(
-    with recursive hierarchy (a_id, m_id, p_id, order_item) as (
-      select a.id, message_id, av.parent_id, )SQL" +
-                  db_column +
-                  R"SQL(
-      from article_view as av
-	    join article as a on a.id == av.article_id
-      )SQL" + db_join + R"SQL(
-      where av.parent_id is null and status in ("e","r","s")
-      union all
-      select a.id, a.message_id, av.parent_id, )SQL" +
-                  db_column +
-                  R"SQL(
-      from article_view as av
-	    join article as a on a.id == av.article_id
-      join hierarchy as h
-      )SQL" + db_join + R"SQL(
-	    where status  in ("e","r","s") and av.parent_id is h.a_id
-      order by )SQL" +
-                  db_column + " " + (ascending ? "asc" : "desc") +
-                  R"SQL(
-	    limit 10000000 -- todo remove ?
-    )
-    select hierarchy.m_id, parent.message_id
-	  from hierarchy
-	  left outer join article as parent on hierarchy.p_id == parent.id
-  )SQL";
+    select message_id,
+      (select message_id from article as a_in where a_in.id = av.parent_id) as prt_msg_id
+    from article_view as av
+    join article as a on a.id == av.article_id
+  )SQL" + db_join + R"SQL(
+    where status is not "h"
+    order by prt_msg_id,
+  )SQL" + db_column + " " + (ascending ? "asc" : "desc") ;
 
   LOG4CXX_TRACE(logger, "sql request is " << q);
 

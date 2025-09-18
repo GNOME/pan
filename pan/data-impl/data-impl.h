@@ -419,7 +419,9 @@ public:
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
-        int call_on_shown_articles(
+        int initial_call_on_shown_articles(
+            std::function<void(Quark msg_id, Quark parent_id)> cb) const override;
+        int call_on_sorted_shown_articles(
             std::function<void(Quark msg_id, Quark parent_id)> cb,
             header_column_enum header_column_id = COL_DATE,
             bool ascending = false) const override;
@@ -429,7 +431,7 @@ public:
           std::function<void(Quark msg_id, Quark new_parent_id)> cb) const override;
         int call_on_hidden_articles(
           std::function<void(Quark msg_id)> cb) const override;
-        void get_shown_parent_ids(std::vector<Quark> &shown_parents_ids) const;
+        void get_shown_parent_ids(std::vector<Quark> &shown_parents_ids) const override;
 
       private:
         void set_parent_in_article_view() const;

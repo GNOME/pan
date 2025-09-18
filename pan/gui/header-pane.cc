@@ -45,6 +45,7 @@
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/rules-info.h>
+#include <vector>
 
 using namespace pan;
 
@@ -634,10 +635,12 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
       Article shown_article(_group, msg_id);
       Row *child(create_row(shown_article));
       Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
+      // sanity check: a child must not be parentless in the tree widget
+      g_assert(!do_thread || prt_id.empty() || parent != nullptr);
       store->append(parent, child);
     };
 
-    int count = _atree->call_on_shown_articles(insert_shown_row);
+    int count = _atree->initial_call_on_shown_articles(insert_shown_row);
 
     atree->update_article_after_gui_update();
 
@@ -1906,22 +1909,27 @@ void HeaderPane::rebuild_tree_with_sorted_data(gint sort_column_id,
 
   LOG4CXX_DEBUG(logger, "sorting columns with col id " << sort_column);
 
-  LOG4CXX_TRACE(logger, "clearing tree store");
-  bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore *store(_tree_store);
-  store->clear();
-  _mid_to_row.clear();
+  bool const do_thread(_prefs.get_flag("thread-headers", true));
 
-  LOG4CXX_TRACE(logger, "filling tree store");
-  auto insert_shown_row = [this, do_thread, store](Quark msg_id, Quark prt_id) {
-    Article shown_article(_group, msg_id);
-    Row *child(create_row(shown_article));
-    Row *parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
-    store->append(parent, child);
+  std::vector<PanTreeStore::Row*> children;
+  PanTreeStore::Row *parent(nullptr);
+
+  LOG4CXX_TRACE(logger, "Sorting tree store");
+  bool changed(false);
+  auto insert_shown_row = [this, do_thread, store, &children, &parent](Quark msg_id, Quark prt_id) {
+    Row *tmp_child(get_row(msg_id));
+    Row *tmp_parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
+    if (parent != tmp_parent) {
+      store->update_children(parent,children);
+      parent = tmp_parent;
+      children.clear();
+    }
+    children.push_back(tmp_child);
   };
   bool is_asc = sort_order == GTK_SORT_ASCENDING;
   int count =
-      _atree->call_on_shown_articles(insert_shown_row, sort_column, is_asc);
+      _atree->call_on_sorted_shown_articles(insert_shown_row, sort_column, is_asc);
 }
 
 void HeaderPane ::refilter()

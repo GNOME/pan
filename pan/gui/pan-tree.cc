@@ -446,6 +446,62 @@ PanTreeStore :: row_compare_func (gconstpointer a_gpointer,
   return val;
 }
 
+void PanTreeStore ::update_children(Row *parent, std::vector<Row *>& children) {
+  if (!parent)
+    parent = root;
+
+  const int n (parent->n_children());
+  // LOG4CXX_TRACE(logger, "update " << n  << " old children with " << children.size() << " new ones.");
+
+  if (n < 2) {
+    return;
+  }
+
+  if (children.size() != n) {
+    LOG4CXX_TRACE(logger, "problem with parent message");
+  }
+
+  // check array boundary
+  g_assert(children.size() == n);
+
+  // First, create a map from Row* to old position
+  std::unordered_map<Row*, int> old_positions(n);
+  for (size_t i = 0; i < n; ++i) {
+    old_positions[parent->children[i]] = i;
+  }
+
+  // Then create the new_order array
+  std::vector<int> new_order(children.size());
+  for (size_t new_pos = 0; new_pos < children.size(); ++new_pos) {
+    new_order[new_pos] = old_positions[children[new_pos]];
+  }
+
+  // update the child indices...
+  bool reordered (false);
+  for (int i=0; i<n; ++i) {
+    Row * child = children[i];
+    reordered |= (child->child_index != i);
+    child->child_index = i;
+    parent->children[i] = child;
+    g_assert (child->parent == parent);
+  }
+
+  if (reordered) {
+    // update the gtk widget
+    GtkTreeModel *model(GTK_TREE_MODEL(this));
+    if (parent == root) {
+      GtkTreePath *path(gtk_tree_path_new());
+      gtk_tree_model_rows_reordered(model, path, nullptr, new_order.data());
+      gtk_tree_path_free(path);
+    } else {
+      GtkTreeIter it(get_iter(parent));
+      GtkTreePath *path(get_path(parent));
+      gtk_tree_model_rows_reordered(model, path, &it, new_order.data());
+      gtk_tree_path_free(path);
+    }
+  }
+}
+
 void
 PanTreeStore :: sort_children (SortInfo  & sort_info,
                                Row       * parent,
