@@ -630,13 +630,6 @@ class Data :
       public:
         typedef std::vector<Article const *> articles_t;
 
-        /**
-         * if message_id is empty, the root nodes are returned.
-         */
-        virtual void get_children_sql(Quark const &mid,
-                                      Quark const &group,
-                                      std::vector<Article> &setme) const = 0;
-
         virtual size_t size() const = 0;
 
         virtual Article const *get_parent(Quark const &mid) const = 0;

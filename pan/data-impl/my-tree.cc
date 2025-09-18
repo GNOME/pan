@@ -370,35 +370,6 @@ void DataImpl ::MyTree ::set_article_hidden_status(quarks_t &mids) const {
   }
 };
 
-void DataImpl ::MyTree ::get_children_sql(
-  Quark const &mid, Quark const &group, std::vector<Article> &setme) const
-{
-  std::string str("select message_id from article "
-                  "join article_view as av on av.article_id == article.id "
-                  "where av.status is not \"h\" and av.parent_id ");
-  str +=
-    mid.empty() ? "isnull" : "= (select id from article where message_id == ?)";
-
-  LOG4CXX_TRACE(logger, "query on article_view with «" << str << "»");
-  SQLite::Statement q(pan_db, str);
-
-  if (! mid.empty())
-  {
-    q.bind(1, mid);
-  }
-
-  int count(0);
-  while (q.executeStep())
-  {
-    std::string msg_id = q.getColumn(0);
-    Article a(group, msg_id);
-    setme.push_back(a);
-    count++;
-  }
-  LOG4CXX_TRACE(
-    logger, "query on article_view table done with " << count << " articles");
-}
-
 Article const *DataImpl ::MyTree ::get_parent(Quark const &mid) const
 {
   LOG4CXX_WARN(logger, "deprecated function called");

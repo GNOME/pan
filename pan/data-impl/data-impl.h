@@ -496,9 +496,6 @@ public:
         void mark_as_pending_deletion(const std::set<const Article*>) const override;
         void update_article_after_gui_update() const override;
         void set_article_hidden_status(quarks_t &mids) const override;
-        void get_children_sql(Quark const &mid,
-                              Quark const &group,
-                              std::vector<Article> &setme) const override;
         Article const *get_parent(Quark const &mid) const override;
         Article const *get_article(Quark const &mid) const override;
         size_t size() const override;
