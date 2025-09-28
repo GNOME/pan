@@ -15,6 +15,7 @@ create table if not exists article_view
   );
 
 create index if not exists article_view_parent_id on `article_view` (parent_id);
+create index if not exists article_view_status on `article_view` (status);
 
 -- no foreign keys as the articles were removed from article table
 create table if not exists removed_article
