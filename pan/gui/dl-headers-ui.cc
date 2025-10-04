@@ -28,6 +28,7 @@
 #include <pan/tasks/queue.h>
 #include <pan/tasks/task-xover.h>
 #include "pad.h"
+#include "pan/gui/load-gtk-xml.h"
 
 
 namespace pan {
@@ -110,70 +111,60 @@ namespace
   }
 }
 
-void headers_dialog (Data& data, Prefs& prefs, Queue& queue,
-                       const quarks_t& groups,
-                       GtkWindow * parent)
-{
-  if (!groups.empty())
-  {
-    std::string title (_("Pan"));
+void headers_dialog(Data &data, Prefs &prefs,
+                    Queue &queue, const quarks_t &groups, GtkWindow *parent) {
+  if (!groups.empty()) {
+    std::string title(_("Pan"));
     title += ": ";
     if (groups.size() == 1)
       title += groups.begin()->c_str();
     else {
       char buf[64];
-      g_snprintf (buf, sizeof(buf), ngettext("%d Group","%d Groups", (int)groups.size()), (int)groups.size());
+      g_snprintf(buf, sizeof(buf),
+                 ngettext("%d Group", "%d Groups", (int)groups.size()),
+                 (int)groups.size());
       title += buf;
     }
 
-    State * state = new State (data, prefs, queue);
+    State *state = new State(data, prefs, queue);
     state->groups = groups;
-    state->dialog = gtk_dialog_new_with_buttons (
-      title.c_str(), parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-      GTK_STOCK_EXECUTE, GTK_RESPONSE_ACCEPT,
-      nullptr);
-    gtk_dialog_set_default_response (GTK_DIALOG(state->dialog), GTK_RESPONSE_ACCEPT);
 
-    GtkWidget * t = gtk_table_new (4, 2, FALSE); // rows, cols, homogenous
-    gtk_container_set_border_width (GTK_CONTAINER(t), PAD_BIG);
-    gtk_table_set_row_spacings (GTK_TABLE(t), PAD);
-    gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
+    GtkBuilder *builder = gtk_builder_new();
+    load_gtk_xml(builder, "dl-headers.ui");
 
-    const int n_headers (prefs.get_int ("get-latest-n-headers", 300));
-    const int n_days (prefs.get_int ("get-latest-n-days-headers", 7));
-    GtkWidget *w, *x;
-    GtkAdjustment * adj;
-    int row = 0;
-    state->n_days_rb = w = gtk_radio_button_new_with_mnemonic (nullptr, _("Get the last N _days' headers: "));
-    gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
-    gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
-    adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_days, 1, INT_MAX, 1, 1, 0));
-    state->n_days_spinbutton = x = gtk_spin_button_new (adj, 1, 0);
-    g_signal_connect (x, "focus_in_event", G_CALLBACK(spin_tickled_cb), state->n_days_rb);
-    gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);
-    ++row;
-    state->new_headers_rb = w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Get _new headers"));
-    gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
-    gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
-    ++row;
-    state->all_headers_rb = w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Get _all headers"));
-    gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
-    gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
-    ++row;
-    state->n_headers_rb   = w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Get the _latest N headers: "));
-    gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
-    gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
-    adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_headers, 0, INT_MAX, 50, 50, 0));
-    state->n_headers_spinbutton = x = gtk_spin_button_new (adj, 1, 0);
-    g_signal_connect (x, "focus_in_event", G_CALLBACK(spin_tickled_cb), state->n_headers_rb);
-    gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);
+    state->dialog = GTK_WIDGET(gtk_builder_get_object(builder, "main_dialog"));
+    state->n_days_rb = GTK_WIDGET(gtk_builder_get_object(builder, "n_days_rb"));
+    state->n_days_spinbutton =
+        GTK_WIDGET(gtk_builder_get_object(builder, "n_days_spinbutton"));
+    state->new_headers_rb =
+        GTK_WIDGET(gtk_builder_get_object(builder, "new_headers_rb"));
+    state->all_headers_rb =
+        GTK_WIDGET(gtk_builder_get_object(builder, "all_headers_rb"));
+    state->n_headers_rb =
+        GTK_WIDGET(gtk_builder_get_object(builder, "n_headers_rb"));
+    state->n_headers_spinbutton =
+        GTK_WIDGET(gtk_builder_get_object(builder, "n_headers_spinbutton"));
 
-    gtk_container_add ( GTK_CONTAINER( gtk_dialog_get_content_area( GTK_DIALOG(state->dialog))), t);
-    g_signal_connect (state->dialog, "response", G_CALLBACK(response_cb), state);
-    g_object_set_data_full (G_OBJECT(state->dialog), "state", state, delete_state);
-    gtk_widget_show_all (state->dialog);
+    // Set values from preferences
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(state->n_days_spinbutton),
+                              prefs.get_int("get-latest-n-days-headers", 7));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(state->n_headers_spinbutton),
+                              prefs.get_int("get-latest-n-headers", 300));
+
+    // Connect signals
+    g_signal_connect(state->n_days_spinbutton, "value_changed",
+                     G_CALLBACK(spin_tickled_cb), state->n_days_rb);
+    g_signal_connect(state->n_headers_spinbutton, "value_changed",
+                     G_CALLBACK(spin_tickled_cb), state->n_headers_rb);
+    g_signal_connect(state->dialog, "response", G_CALLBACK(response_cb), state);
+
+    g_object_set_data_full(G_OBJECT(state->dialog), "state", state,
+                           delete_state);
+    gtk_window_set_title(GTK_WINDOW(state->dialog), title.c_str());
+    gtk_window_set_transient_for(GTK_WINDOW(state->dialog), GTK_WINDOW(parent));
+    gtk_widget_show_all(state->dialog);
+
+    g_object_unref(builder);
   }
 }
-
-}
+} // namespace pan

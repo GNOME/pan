@@ -233,7 +233,7 @@ After compilation, you **must** run pan from the repository root:
 
 If pan was installed with a package, you can run pan from anywhere.
 
-Why ? Pan searches for icon in 2 locations:
+Why ? Pan searches for icons in 2 locations:
 - =./pan/icons= which is useful when hacking pan
 - =$PAN_SYSTEM_ICON_PATH= (which is =/usr/share/pan/icons= on
   Linux). This directory should be provided by pan package.
@@ -241,6 +241,16 @@ Why ? Pan searches for icon in 2 locations:
 When icons are not found, pan shows this kind of messages:
 #+begin_example
 Unable to load icon_article_read.png icon. Use --debug flag for more details
+#+end_example
+
+Likewise, pan searches for ui files in =./pan/gui/xml= or in
+=${CMAKE_INSTALL_DATAROOTDIR}/pan/gui/xml/= (which is
+=/usr/share/pan/gui/xml/= on Linux).
+
+When ui files are not found, pan crashes with this kind of message:
+#+begin_example
+Unable to load dl-headers.ui gtk_xml. Use --debug flag for more details
+pan: [...] void pan::load_gtk_xml(GtkBuilder*, const gchar*): Assertion `0' failed.
 #+end_example
 
 ** CC++ language server support

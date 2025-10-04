@@ -9,6 +9,7 @@ set(SRC_CC_FILES
  header-pane.cc
  hig.cc
  load-icon.cc
+ load-gtk-xml.cc
  log-ui.cc
  pan-file-entry.cc
  pan-tree.cc
@@ -86,3 +87,13 @@ target_compile_options(pan-cc-gui PRIVATE "-Wreorder" "${CXX_STD}"  "-Wzero-as-n
 if(WIN32)
   target_sources(pan PRIVATE panrc.rc)
 endif()
+
+# install GTK xml files
+file(GLOB gtk_ui_files xml/*.ui)
+
+foreach(xml_file IN LISTS gtk_ui_files)
+  # install xml files
+  cmake_path(GET xml_file FILENAME rel_file)
+  install(FILES "xml/${rel_file}" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/pan/gui/xml/")
+endforeach()
+
