@@ -24,7 +24,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
 #include <enchant.h>
 #endif
 #include <pan/general/debug.h>
@@ -60,7 +60,7 @@ namespace
     langs->langs = g_list_insert_sorted(langs->langs, g_strdup(lang_tag), (GCompareFunc) strcmp);
   }
 
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
   static EnchantBroker *broker = nullptr;
   static GList *langs = nullptr;
   static GtkTextView* view = nullptr;
@@ -68,7 +68,7 @@ namespace
 #endif
   void init_spell()
   {
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
     view = GTK_TEXT_VIEW(gtk_text_view_new());
     broker = enchant_broker_init();
     l.langs = langs;
@@ -78,7 +78,7 @@ namespace
 
   void deinit_spell()
   {
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
     if (view) g_object_ref_sink(view);
     if (broker) enchant_broker_free(broker);
 #endif
@@ -113,7 +113,7 @@ GroupPrefsDialog :: save_from_gui ()
     _group_prefs.set_string (*it, "default-group-save-path", pch);
 
   // spellchecker language
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
   GtkTreeIter iter;
   if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(_spellchecker_language), &iter))
 		return;
@@ -184,7 +184,7 @@ namespace
   {
     GtkWidget * w(nullptr);
 
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
     init_spell();
     deinit_spell();
 
@@ -304,7 +304,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
   l = HIG :: workarea_add_row (t, &row, _("Posting _profile:"), w);
 
   gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
-#ifdef HAVE_GTKSPELL
+#ifdef HAVE_GSPELL
   w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
   HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
 #endif

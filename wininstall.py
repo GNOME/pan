@@ -343,7 +343,7 @@ def read_configure(build_dir: str) -> dict[str, str]:
                 dbus = True # better to say multiple pans?
             elif words[1] == 'HAVE_GMIME_CRYPTO':
                 gmime_crypto = True
-            elif words[1] == 'HAVE_GTKSPELL':
+            elif words[1] == 'HAVE_GSPELL':
                 spellcheck = True
             elif words[1] == 'HAVE_GTK':
                 gtk_version = 3
