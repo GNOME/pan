@@ -20,9 +20,7 @@
 #ifndef _PanColors_h_
 #define _PanColors_h_
 
-#include <config.h>
 #include <string>
-#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <pan/general/singleton-template.h>
 

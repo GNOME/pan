@@ -22,11 +22,9 @@
 
 #include <map>
 #include <set>
-#include <iostream>
 #include <string>
-#include <vector>
 #include <pan/general/string-view.h>
-#include <pan/gui/pan-colors.h>
+#include <pan/general/pan-colors.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 

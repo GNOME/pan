@@ -33,12 +33,8 @@
 #include <pan/data/data.h>
 #include "e-charset-combo-box.h"
 #include "hig.h"
-#include "pad.h"
 #include "pan-file-entry.h"
-#include "pan-colors.h"
-
-#include <iostream>
-
+#include "pan/general/pan-colors.h"
 
 namespace pan {
 
