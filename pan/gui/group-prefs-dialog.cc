@@ -268,6 +268,18 @@ void GroupPrefsDialog::setup_dialog_buttons(GtkWindow *&parent_window) {
                    G_CALLBACK(delete_dialog_from_button), this);
 }
 
+void GroupPrefsDialog::setup_dialog_label(const quarks_v &groups) {
+  char buf[512];
+  if (groups.size() != 1)
+    g_snprintf(buf, sizeof(buf), _("Properties for Groups"));
+  else
+    g_snprintf(buf, sizeof(buf), _("Properties for %s"), groups[0].c_str());
+
+  auto dialog_label =
+      GTK_LABEL(gtk_builder_get_object(_builder, "dialog-label"));
+  gtk_label_set_text(dialog_label, buf);
+}
+
 GroupPrefsDialog ::GroupPrefsDialog(Data &data, const quarks_v &groups,
                                     Prefs &prefs, GroupPrefs &group_prefs,
                                     GtkWindow *parent_window)
@@ -282,18 +294,16 @@ GroupPrefsDialog ::GroupPrefsDialog(Data &data, const quarks_v &groups,
   _root = dialog;
 
   setup_dialog_buttons(parent_window);
+  setup_dialog_label(groups);
 
+  // TODO: migrate the widgets below in Gtk glade as well (HIG is pan
+  // specific and has deprecated calls)
+ 
   int row (0);
   GtkWidget *t, *w, *l;
+
   t = HIG :: workarea_create ();
 
-  char buf[512];
-  if (groups.size() != 1)
-    g_snprintf (buf, sizeof(buf), _("Properties for Groups"));
-  else
-    g_snprintf (buf, sizeof(buf), _("Properties for %s"), groups[0].c_str());
-
-  HIG::workarea_add_section_title (t, &row, buf);
   HIG :: workarea_add_section_spacer (t, row, 4);
   w = _charset = e_charset_combo_box_new( );
 

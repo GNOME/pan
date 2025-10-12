@@ -55,6 +55,7 @@ namespace pan
       static void response_cb(gpointer, gpointer);
       void save_from_gui();
       void setup_dialog_buttons(GtkWindow *&parent_window);
+      void setup_dialog_label(const quarks_v &groups);
 
     public:
       	 GtkWidget* get_color_button() { return _group_color; }
