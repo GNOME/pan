@@ -5,7 +5,6 @@ set(SRC_CC_FILES
  editor-spawner.cc
  group-pane.cc
  group-prefs-dialog.cc
- group-prefs.cc
  header-pane.cc
  hig.cc
  load-icon.cc
@@ -16,7 +15,6 @@ set(SRC_CC_FILES
  post-ui.cc
  prefs-file.cc
  prefs-ui.cc
- prefs.cc
  profiles-dialog.cc
  progress-view.cc
  render-bytes.cc

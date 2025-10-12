@@ -35,7 +35,7 @@
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/scorefile.h>
 
-#include <pan/gui/prefs.h>
+#include <pan/general/prefs.h>
 #include <pan/gui/progress-view.h>
 
 #ifdef HAVE_GKR

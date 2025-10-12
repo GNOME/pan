@@ -22,7 +22,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <pan/general/quark.h>
-#include "prefs.h"
+#include "pan/general/prefs.h"
 
 namespace pan
 {

@@ -27,10 +27,10 @@
 #include <pan/general/e-util.h>
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/gui/action-manager.h>
-#include <pan/gui/group-prefs.h>
+#include <pan/general/group-prefs.h>
 #include <pan/gui/gui.h>
 #include <pan/gui/pan-tree.h>
-#include <pan/gui/prefs.h>
+#include <pan/general/prefs.h>
 #include <pan/gui/wait.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/filter-info.h>

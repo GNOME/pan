@@ -26,8 +26,8 @@
 #include <pan/data/data.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-tree.h>
-#include <pan/gui/prefs.h>
-#include <pan/gui/group-prefs.h>
+#include <pan/general/prefs.h>
+#include <pan/general/group-prefs.h>
 
 namespace pan
 {

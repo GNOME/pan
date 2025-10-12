@@ -23,8 +23,8 @@
 #include <list>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-#include <pan/gui/prefs.h>
-#include <pan/gui/group-prefs.h>
+#include <pan/general/prefs.h>
+#include <pan/general/group-prefs.h>
 
 namespace pan
 {

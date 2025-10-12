@@ -40,7 +40,7 @@
 #include <pan/general/map-vector.h>
 #include <pan/general/quark.h>
 #include <pan/general/sorted-vector.h>
-#include <pan/gui/prefs.h>
+#include <pan/general/prefs.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/blowfish.h>
 #include <pan/usenet-utils/numbers.h>

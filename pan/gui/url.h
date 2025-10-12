@@ -21,7 +21,7 @@
 
 #include <set>
 #include <string>
-#include "prefs.h"
+#include "pan/general/prefs.h"
 
 namespace pan
 {

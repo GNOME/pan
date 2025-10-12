@@ -30,7 +30,7 @@
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
-#include "group-prefs.h"
+#include "pan/general/group-prefs.h"
 
 namespace pan {
 

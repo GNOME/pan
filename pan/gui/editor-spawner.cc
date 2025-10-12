@@ -20,7 +20,7 @@
 #include "editor-spawner.h"
 
 #include <pan/general/log.h>
-#include <pan/gui/prefs.h>
+#include <pan/general/prefs.h>
 #include <pan/gui/url.h> //For get_default_editors
 
 #include <glib/gi18n.h> // for _

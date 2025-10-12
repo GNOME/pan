@@ -29,8 +29,8 @@
 #include <pan/data/cert-store.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
-#include <pan/gui/prefs.h>
-#include <pan/gui/group-prefs.h>
+#include <pan/general/prefs.h>
+#include <pan/general/group-prefs.h>
 #include <pan/gui/wait.h>
 
 #include <memory>

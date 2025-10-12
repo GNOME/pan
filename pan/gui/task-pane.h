@@ -25,7 +25,7 @@
 #include <vector>
 #include <pan/tasks/task.h>
 #include <pan/tasks/queue.h>
-#include "prefs.h"
+#include "pan/general/prefs.h"
 
 typedef Queue::tasks_t tasks_t;
 

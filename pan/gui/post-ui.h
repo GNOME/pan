@@ -21,13 +21,13 @@
 #define __PostUI_h__
 
 #include <gmime/gmime-message.h>
-#include <pan/gui/prefs.h>
+#include <pan/general/prefs.h>
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/tasks/upload-queue.h>
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/encode-cache.h>
-#include "group-prefs.h"
+#include "pan/general/group-prefs.h"
 
 #include <memory>
 

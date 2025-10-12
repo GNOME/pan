@@ -73,7 +73,7 @@ extern "C" {
 #include <pan/data-impl/data-impl.h>
 #include <pan/data-impl/data-io.h>
 #include "gui.h"
-#include "group-prefs.h"
+#include "pan/general/group-prefs.h"
 #include "prefs-file.h"
 #include "task-pane.h"
 #include "server-ui.h"

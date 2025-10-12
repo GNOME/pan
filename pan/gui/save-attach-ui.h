@@ -29,8 +29,8 @@
 #include <pan/tasks/task-article.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-#include "group-prefs.h"
-#include "prefs.h"
+#include "pan/general/group-prefs.h"
+#include "pan/general/prefs.h"
 
 namespace pan
 {

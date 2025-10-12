@@ -35,7 +35,7 @@
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 #include <pan/tasks/socket-impl-main.h>
-#include <pan/gui/prefs.h>
+#include <pan/general/prefs.h>
 #include <pan/data/data.h>
 
 #ifdef HAVE_GNUTLS

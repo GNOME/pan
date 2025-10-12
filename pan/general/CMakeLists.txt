@@ -3,8 +3,10 @@ add_library(generalutils
  debug.cc
  e-util.cc
  file-util.cc
+ group-prefs.cc
  log.cc
  line-reader.cc
+ prefs.cc
  progress.cc
  quark.cc
  string-view.cc

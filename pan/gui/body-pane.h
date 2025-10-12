@@ -20,8 +20,8 @@
 #ifndef _BodyPane_h_
 #define _BodyPane_h_
 
-#include "group-prefs.h"
-#include "prefs.h"
+#include "pan/general/group-prefs.h"
+#include "pan/general/prefs.h"
 #include <config.h>
 #include <gdk/gdk.h>
 #include <gmime/gmime.h>

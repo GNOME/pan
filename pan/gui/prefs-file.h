@@ -20,7 +20,7 @@
 #ifndef _PrefsFile_h_
 #define _PrefsFile_h_
 
-#include "prefs.h"
+#include "pan/general/prefs.h"
 
 namespace pan
 {
