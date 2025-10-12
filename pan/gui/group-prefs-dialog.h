@@ -32,11 +32,8 @@ namespace pan
   class GroupPrefsDialog
   {
     public:
-      GroupPrefsDialog (Data            & data,
-                        const quarks_v  & groups,
-                        Prefs           & prefs,
-                        GroupPrefs      & group_prefs,
-                        GtkWindow       * parent_window);
+      GroupPrefsDialog(Data &data, const quarks_v &groups, Prefs &prefs,
+                       GroupPrefs &group_prefs, GtkWindow *parent_window);
 
       ~GroupPrefsDialog () {}
       GtkWidget * root() { return _root; }
@@ -50,12 +47,14 @@ namespace pan
       GtkWidget    * _profile;
       GtkWidget    * _spellchecker_language;
       GtkWidget    * _group_color;
-      GtkWidget    * _save_path;
+      GtkWidget *_save_path;
+      GtkBuilder *_builder;
       GdkRGBA _color;
 
     private:
-      static void response_cb (GtkDialog*, int, gpointer);
-      void save_from_gui ();
+      static void response_cb(gpointer, gpointer);
+      void save_from_gui();
+      void setup_dialog_buttons(GtkWindow *&parent_window);
 
     public:
       	 GtkWidget* get_color_button() { return _group_color; }

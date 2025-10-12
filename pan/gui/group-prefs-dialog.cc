@@ -18,6 +18,7 @@
  */
 
 #include "group-prefs-dialog.h"
+#include "pan/gui/load-gtk-xml.h"
 
 #include <config.h>
 #include <glib/gi18n.h>
@@ -88,11 +89,16 @@ namespace
   {
     delete static_cast<GroupPrefsDialog*>(castme);
   }
+  void delete_dialog_from_button(gpointer button, gpointer ptr) {
+    GroupPrefsDialog *dialog = static_cast<GroupPrefsDialog *>(ptr);
+    auto root  = dialog->root();
+    gtk_widget_destroy(GTK_WIDGET(root));
+  }
 }
 
-void
-GroupPrefsDialog :: save_from_gui ()
-{
+void GroupPrefsDialog ::save_from_gui() {
+  pan_debug("saving group pref data");
+
   // charset...
   const char * tmp = e_charset_combo_box_get_charset (E_CHARSET_COMBO_BOX(_charset));
   foreach_const (quarks_v, _groups, it)
@@ -134,13 +140,11 @@ GroupPrefsDialog :: save_from_gui ()
 
 }
 
-void
-GroupPrefsDialog :: response_cb (GtkDialog  * dialog,
-                                 int          ,
-                                 gpointer     user_data)
-{
-  static_cast<GroupPrefsDialog*>(user_data)->save_from_gui ();
-  gtk_widget_destroy (GTK_WIDGET(dialog));
+void GroupPrefsDialog ::response_cb(gpointer ok_btn, gpointer ptr) {
+  GroupPrefsDialog *dialog = static_cast<GroupPrefsDialog *>(ptr);
+  auto root = dialog->root();
+  dialog->save_from_gui();
+  gtk_widget_destroy(GTK_WIDGET(root));
 }
 
 namespace
@@ -250,25 +254,34 @@ namespace
 
 }
 
+void GroupPrefsDialog::setup_dialog_buttons(GtkWindow *&parent_window) {
+  gtk_window_set_transient_for(GTK_WINDOW(_root), parent_window);
+  gtk_window_set_role(GTK_WINDOW(_root), "pan-group-dialog");
 
-GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
-                                      const quarks_v  & groups,
-                                      Prefs           & prefs,
-                                      GroupPrefs      & group_prefs,
-                                      GtkWindow       * parent_window):
-  _groups (groups),
-  _prefs(prefs),
-  _group_prefs (group_prefs)
-{
+  auto ok_button = GTK_WIDGET(gtk_builder_get_object(_builder, "gpd-ok"));
+  g_signal_connect(ok_button, "clicked", G_CALLBACK(response_cb), this);
+  g_signal_connect_swapped(_root, "destroy", G_CALLBACK(delete_dialog), this);
 
-  GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Group Preferences"),
-                                                    parent_window,
-                                                    GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                                    nullptr);
-  gtk_window_set_role (GTK_WINDOW(dialog), "pan-group-dialog");
-  g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
-  g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_dialog), this);
+  auto cancel_button =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "gpd-cancel"));
+  g_signal_connect(cancel_button, "clicked",
+                   G_CALLBACK(delete_dialog_from_button), this);
+}
+
+GroupPrefsDialog ::GroupPrefsDialog(Data &data, const quarks_v &groups,
+                                    Prefs &prefs, GroupPrefs &group_prefs,
+                                    GtkWindow *parent_window)
+    : _groups(groups), _prefs(prefs), _group_prefs(group_prefs) {
+
+  _builder = gtk_builder_new();
+  load_gtk_xml(_builder, "group-prefs-dialog.ui");
+
+  // Get widgets
+  GtkWidget *dialog =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "group_prefs_dialog"));
+  _root = dialog;
+
+  setup_dialog_buttons(parent_window);
 
   int row (0);
   GtkWidget *t, *w, *l;
@@ -312,9 +325,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
   HIG :: workarea_add_row(t, &row, _("Group color:"), w);
 
   gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);
-  _root = dialog;
   gtk_widget_show_all (t);
-
 }
 
 } //namespace pan
