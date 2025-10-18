@@ -2814,18 +2814,18 @@ void HeaderPane ::read_next_unread_article()
 }
 
 void HeaderPane ::read_previous_article() {
-  if (_atree && _atree->size() > 0)
+  if (_atree && _atree->has_article())
     read_prev_if(ArticleExists());
 }
 
 void HeaderPane ::read_next_article() {
-  if (_atree && _atree->size() > 0)
+  if (_atree && _atree->has_article())
     read_next_if(ArticleExists());
 }
 
 void HeaderPane ::read_next_thread()
 {
-  if (_atree && _atree->size() > 0)
+  if (_atree && _atree->has_article())
   {
     read_next_if(ArticleIsNotInThread(*_atree, get_first_selected_article()));
   }
@@ -2833,7 +2833,7 @@ void HeaderPane ::read_next_thread()
 
 void HeaderPane ::read_next_unread_thread()
 {
-  if (_atree && _atree->size() > 0)
+  if (_atree && _atree->has_article())
   {
     read_next_if(ArticleIsUnreadAndNotInThread(
       _data, *_atree, get_first_selected_article()));
@@ -2842,7 +2842,7 @@ void HeaderPane ::read_next_unread_thread()
 
 void HeaderPane ::read_previous_thread()
 {
-  if (_atree && _atree->size() > 0)
+  if (_atree && _atree->has_article())
   {
     read_prev_if(ArticleIsNotInThread(*_atree, get_first_selected_article()));
   }
@@ -2850,7 +2850,7 @@ void HeaderPane ::read_previous_thread()
 
 void HeaderPane ::read_parent_article()
 {
-  if (_atree && _atree->size() > 0)
+  if (_atree && _atree->has_article())
   {
     read_prev_if(ArticleIsParentOf(*_atree, get_first_selected_article()));
   }

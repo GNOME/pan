@@ -614,7 +614,7 @@ class Data :
       public:
         typedef std::vector<Article const *> articles_t;
 
-        virtual size_t size() const = 0;
+        virtual bool has_article() const = 0;
 
         virtual Article get_parent(Quark const &mid) const = 0;
 

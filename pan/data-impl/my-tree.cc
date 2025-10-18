@@ -387,9 +387,24 @@ Article DataImpl ::MyTree ::get_parent(Quark const &mid) const
   return parent;
 }
 
-size_t DataImpl ::MyTree ::size() const
-{
-  return _nodes.size();
+bool DataImpl ::MyTree ::has_article() const {
+  // see https://stackoverflow.com/a/9756276 for select exists trick
+  SQLite::Statement q(pan_db, R"SQL(
+     select exists(
+       select 1 from article_group as ag
+         join `group` as g on ag.group_id = g.id
+         where g.name == ?
+     )
+  )SQL");
+  q.bind(1,_group);
+
+  bool result(false);
+  while (q.executeStep())
+    {
+      result = q.getColumn(0).getInt();
+    }
+  LOG4CXX_TRACE(logger, "has_article: group " << _group << " result is " << result);
+  return result;
 }
 
 void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
