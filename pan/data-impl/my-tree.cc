@@ -436,7 +436,6 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 DataImpl ::MyTree ::~MyTree()
 {
   LOG4CXX_DEBUG(logger, "Destroying MyTree of group " << _group);
-  _nodes.clear();
   _data._trees.erase(this);
   _data.unref_group(_group);
 }
