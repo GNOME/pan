@@ -495,7 +495,7 @@ public:
         void update_article_view() const override;
         void mark_as_pending_deletion(const std::set<const Article*>) const override;
         Article get_parent(Quark const &mid) const override;
-        size_t size() const override;
+        bool has_article() const override;
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
