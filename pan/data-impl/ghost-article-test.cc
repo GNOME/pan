@@ -20,7 +20,7 @@
 
 using namespace pan;
 
-char const *db_file("/tmp/data-impl-article.db");
+char const *db_file("/tmp/ghost-article-test.db");
 SQLiteDb pan_db(db_file, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
 
 class DataImplTest : public CppUnit::TestFixture
@@ -124,13 +124,8 @@ public:
       data->store_references(msg_id, references);
     }
 
-    void deleteArticle(std::string msg_id)
-    {
-      SQLite::Statement setup(pan_db, R"SQL(
-           delete from article where message_id = ?
-        )SQL");
-      setup.bind(1, msg_id);
-      setup.exec();
+    void deleteArticle(std::string msg_id) {
+        data->delete_one_article(msg_id);
     }
 
     void test_normal_insertion()
@@ -245,42 +240,75 @@ public:
       addArticle(d6, b1 + " " + d2 + " " + d3 + " " + d4 + " " + d5);
 
       deleteArticle(d3);
+      // b1 -> d2 ->(d3)-> d4 -> d5 -> d6
+      //   \-> b2 -> c3
+      //         \-> b3
       checkGhostPresence(d3, true);
       checkGhostTree("del d3->d4", d4, {d4,d2,d3,d2});
 
       deleteArticle(d2);
+      // b1 ->(d2)->(d3)-> d4 -> d5 -> d6
+      //   \-> b2 -> c3
+      //         \-> b3
       checkGhostPresence(d2, true);
+      checkGhostPresence(d3, true);
       checkGhostTree("del d2->d4", d4, {d4,b1,d3,d2});
 
       deleteArticle(d4);
+      // b1 ->(d2)->(d3)->(d4)-> d5 -> d6
+      //   \-> b2 -> c3
+      //         \-> b3
+      checkGhostPresence(d2, true);
+      checkGhostPresence(d3, true);
       checkGhostPresence(d4, true);
       checkGhostTree("del d4->d5", d5, {d5,b1,d4,d3});
 
       deleteArticle(b2);
+      // b1 ->(d2)->(d3)->(d4)-> d5 -> d6
+      //   \->(b2)-> c3
+      //         \-> b3
       checkGhostPresence(b2, true);
+      checkGhostPresence(d2, true);
+      checkGhostPresence(d3, true);
+      checkGhostPresence(d4, true);
       checkGhostTree("del b2->c3", c3, {c3,b1,b2,b1});
       checkGhostTree("del b2->b3", b3, {b3,b1,b2,b1});
 
       deleteArticle(b1);
+      //(b1)->(d2)->(d3)->(d4)-> d5 -> d6
+      //   \->(b2)-> c3
+      //         \-> b3
       checkGhostPresence(b1, true);
+      checkGhostPresence(b2, true);
+      checkGhostPresence(d2, true);
+      checkGhostPresence(d3, true);
+      checkGhostPresence(d4, true);
       checkGhostTree("del b1->c3", c3, {c3,"",b2,b1});
       checkGhostTree("del b1->b3", b3, {b3,"",b2,b1});
 
       // triggers a complete deletion of c3 since there's no other child
       deleteArticle(c3);
+      //(b1)->(d2)->(d3)->(d4)-> d5 -> d6
+      //   \->(b2)
+      //         \-> b3
       checkGhostPresence(c3, false);
+      checkGhostPresence(b1, true);
       checkGhostPresence(b2, true);
 
       // triggers a complete deletion of b3 and b2 since there's no
       // other child
+      //(b1)->(d2)->(d3)->(d4)-> d5 -> d6
       deleteArticle(b3);
       checkGhostPresence(b3, false);
       checkGhostPresence(b2, false);
+      checkGhostPresence(b1, true);
 
       deleteArticle(d6);
+      //(b1)->(d2)->(d3)->(d4)-> d5
       checkGhostPresence(d6, false);
+      checkGhostPresence(d5, false);
 
-      // delete last article which shoould suppress remaining ghosts
+      // delete last article which should suppress remaining ghosts
       deleteArticle(d5);
       checkGhostPresence(d5, false);
       checkGhostPresence(d4, false);
