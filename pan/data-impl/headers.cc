@@ -1417,22 +1417,32 @@ void DataImpl ::group_clear_articles(Quark const &group)
 
 void DataImpl ::delete_articles(unique_articles_t const &articles)
 {
-
   quarks_t all_mids;
 
   // info we need to batch these deletions per group...
   typedef std::map<Quark, PerGroup> per_groups_t;
   per_groups_t per_groups;
 
-  // populate the per_groups map
+  SQLite::Statement get_group_q(pan_db, R"SQL(
+    select name from `group` as g
+    join article_group as ag on ag.group_id == g.id
+    join article as a on ag.article_id == a.id
+    where a.message_id == ?
+  )SQL");
+
   foreach_const (unique_articles_t, articles, it)
   {
+    // populate the per_groups map
     Article const *article(*it);
     quarks_t groups;
-    foreach_const (Xref, article->xref, xit)
-    {
-      groups.insert(xit->group);
+    get_group_q.reset();
+
+    get_group_q.bindNoCopy(1, article->message_id.c_str());
+    while (get_group_q.executeStep()) {
+      std::string grp = get_group_q.getColumn(0);
+      groups.insert(grp);
     }
+
     bool const was_read(is_read(article));
     foreach_const (quarks_t, groups, git)
     {
@@ -1445,6 +1455,8 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
       per.mids.insert(article->message_id);
       all_mids.insert(article->message_id);
     }
+
+    all_mids.insert(article->message_id);
   }
 
   // process each group
@@ -1462,7 +1474,35 @@ void DataImpl ::delete_articles(unique_articles_t const &articles)
     }
   }
 
+  // trigger action before actually deleting because existing and
+  // deleted articles can be compared for time (or other property)
+  // while re-arranging header pane
   on_articles_removed(all_mids);
+
+  // remove articles from DB
+  SQLite::Statement delete_article_q(pan_db, R"SQL(
+    delete from article where message_id == ?
+  )SQL");
+
+  for (Quark msg_id: all_mids) {
+    delete_article_q.reset();
+
+    delete_article_q.bindNoCopy(1, msg_id);
+    assert(delete_article_q.exec() == 1);
+
+    LOG4CXX_TRACE(logger, "Deleted article " << msg_id);
+  }
+
+  // delete orphan authors
+  SQLite::Statement author_q(pan_db, R"SQL(
+    delete from author where id in (
+      select distinct author.id from author
+      left outer join article on author.id == article.author_id
+      where article.author_id is null
+    )
+  )SQL");
+  author_q.exec();
+
 }
 
 void DataImpl ::on_articles_removed(quarks_t const &mids) const
