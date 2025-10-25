@@ -31,6 +31,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <functional>
+#include <glib.h>
 #include <log4cxx/logger.h>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
@@ -163,6 +164,51 @@ int DataImpl ::MyTree ::fill_article_view_from_article() const
   q.bind(param_count, _group);
 
   return q.exec();
+}
+
+// apply function on shown articles in breadth first order
+int DataImpl ::MyTree ::call_on_shown_articles (
+  std::function<void(Quark msg_id, Quark parent_id)> cb) const
+{
+  // see https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
+  TimeElapsed timer;
+
+  std::string q = R"SQL(
+    with recursive hierarchy as (
+      select a.id article_id, message_id, av.parent_id
+      from article_view as av
+	    join article as a on a.id == av.article_id
+      where av.parent_id is null and status in ("e","r","s")
+      union all
+      select a.id, a.message_id, av.parent_id
+      from article_view as av
+	    join article as a on a.id == av.article_id
+      join hierarchy as h
+	    where status  in ("e","r","s") and av.parent_id is h.article_id
+	    limit 10000000 -- todo remove ?
+    )
+    select hierarchy.message_id, parent.message_id
+	  from hierarchy
+	  left outer join article as parent on hierarchy.parent_id == parent.id
+  )SQL";
+
+  SQLite::Statement st(pan_db, q);
+  int count(0);
+  while (st.executeStep()) {
+    Quark msg_id = st.getColumn(0).getText();
+    Quark prt_id;
+    if (! st.getColumn(1).isNull())
+    {
+      prt_id = st.getColumn(1).getText();
+    }
+    cb(msg_id,prt_id);
+    count++;
+  }
+
+  LOG4CXX_DEBUG(logger, "sql request done for " << count << " articles in "
+                                                << timer.get_seconds_elapsed());
+
+  return count;
 }
 
 // apply function on exposed article in breadth first order.

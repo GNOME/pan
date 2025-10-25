@@ -595,6 +595,8 @@ class Data :
       virtual void mark_as_pending_deletion(const std::set<const Article*>) const = 0;
       virtual void update_article_after_gui_update() const = 0;
       virtual void set_article_hidden_status(quarks_t &mids) const = 0;
+      virtual int call_on_shown_articles(
+          std::function<void(Quark msg_id, Quark parent_id)> cb) const = 0;
       virtual int call_on_exposed_articles(
           std::function<void(Quark msg_id, Quark parent_id)> cb) const = 0;
       virtual int call_on_reparented_articles(

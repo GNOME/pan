@@ -476,6 +476,36 @@ class DataImplTest : public CppUnit::TestFixture
 
     // emulates showing article using a callback, and with articles
     // sorted in hierarchy
+    void test_function_on_shown_articles()
+    {
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+
+      // function that checks that parent_id is either null or already
+      // provided.
+      std::set<std::string> stack;
+      auto check
+      = [&stack](Quark msg_id, Quark prt_id)
+      {
+        // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
+        if (! prt_id.empty())
+        {
+          auto search = stack.find(prt_id.to_string());
+          CPPUNIT_ASSERT_MESSAGE("step 1 msg_id " + msg_id.to_string()
+                                   + " parent_id " + prt_id.to_string()
+                                   + " consistency",
+                                 search != stack.end());
+        }
+        stack.insert(msg_id.to_string());
+      };
+
+      int count = tree->call_on_shown_articles(check);
+      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 exposed count ", 10, count);
+    }
+
+    // emulates showing article using a callback, and with articles
+    // sorted in hierarchy
     void test_function_on_exposed_articles()
     {
       change_read_status("g1m2", true);
@@ -645,6 +675,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_middle_thread);
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_article_deletion);
+    CPPUNIT_TEST(test_function_on_shown_articles);
     CPPUNIT_TEST(test_function_on_exposed_articles);
     CPPUNIT_TEST(test_function_on_reparented_articles);
     CPPUNIT_TEST(test_function_on_hidden_articles);
