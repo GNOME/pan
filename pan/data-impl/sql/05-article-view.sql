@@ -20,6 +20,8 @@ create table if not exists article_view
     mark integer default (0)
   );
 
+create index if not exists article_view_parent_id on `article_view` (parent_id);
+
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite

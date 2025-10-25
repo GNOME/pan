@@ -39,6 +39,7 @@ create table if not exists article (
 
 create unique index if not exists article_message_id on `article` (message_id);
 create index if not exists article_to_delete on `article` (to_delete);
+create index if not exists article_parent_id on `article` (parent_id);
 
 -- filled with message_id extracted from references header for missing
 -- articles this table is emptied when articles are found or when
