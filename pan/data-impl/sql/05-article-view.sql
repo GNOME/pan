@@ -19,6 +19,8 @@ create table if not exists article_view
     status text check (status in ('r','u','h','e','p')) not null
   );
 
+create index if not exists article_view_parent_id on `article_view` (parent_id);
+
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite
