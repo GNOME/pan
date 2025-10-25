@@ -615,8 +615,8 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
 
     default:
     { // COL_DATE
-      const time_t a_time(row_a.article.get_time_posted());
-      const time_t b_time(row_b.article.get_time_posted());
+      time_t const a_time(row_a.article.get_time_posted());
+      time_t const b_time(row_b.article.get_time_posted());
       if (a_time < b_time)
       {
         ret = -1;
@@ -648,7 +648,7 @@ void HeaderPane ::sort_column_changed_cb(GtkTreeSortable *sortable,
 
   HeaderPane *self(static_cast<HeaderPane *>(user_data));
 
-  const articles_set old_selection(self->get_full_selection());
+  articles_set const old_selection(self->get_full_selection());
 
   if (! old_selection.empty())
   {
@@ -695,8 +695,10 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     int count = _atree->call_on_shown_articles(insert_shown_row);
 
-    LOG4CXX_INFO(logger, "Build model: added " << count << " articles of group " << group.c_str()
-                 << " in " << timer.get_seconds_elapsed() << "s.");
+    LOG4CXX_INFO(logger,
+                 "Build model: added " << count << " articles of group "
+                                       << group.c_str() << " in "
+                                       << timer.get_seconds_elapsed() << "s.");
   }
   return store;
 }
@@ -723,7 +725,7 @@ void HeaderPane ::rebuild()
   quarks_t selectme;
   if (1)
   {
-    const articles_set old_selection(get_full_selection());
+    articles_set const old_selection(get_full_selection());
     foreach_const (articles_set, old_selection, it)
     {
       selectme.insert((*it)->message_id);
@@ -773,12 +775,14 @@ void HeaderPane ::rebuild()
 
 bool HeaderPane ::set_group(Quark const &new_group)
 {
-  LOG4CXX_TRACE(logger, "set_group called for group " << new_group <<
-                ", old group was " << (_group.empty() ? "null" : _group));
+  LOG4CXX_TRACE(logger,
+                "set_group called for group "
+                  << new_group << ", old group was "
+                  << (_group.empty() ? "null" : _group));
 
   set_cleared(new_group.empty());
 
-  const Quark old_group(_group);
+  Quark const old_group(_group);
   bool change(old_group != new_group);
 
   if (change)
@@ -936,7 +940,7 @@ void HeaderPane ::on_tree_change(Data::ArticleTree::Diffs const &diffs)
                   << " reparented; " << diffs.removed.size() << " removed");
 
   // we might need to change the selection after the update.
-  const article_v old_selection(get_full_selection_v());
+  article_v const old_selection(get_full_selection_v());
   quarks_t new_selection;
   foreach_const (article_v, old_selection, it)
   {
@@ -1077,7 +1081,7 @@ void HeaderPane ::update_tree()
   LOG4CXX_TRACE(logger, "update_tree called...");
 
   // we might need to change the selection after the update.
-  const article_v old_selection(get_full_selection_v());
+  article_v const old_selection(get_full_selection_v());
 
   SQLite::Statement is_old_selection_shown(pan_db, R"SQL(
     select 1 from article_view
@@ -1120,7 +1124,7 @@ void HeaderPane ::update_tree()
   quarks_t hidden;
   auto insert_hidden_row = [&hidden](Quark msg_id)
   {
-      hidden.insert(msg_id);
+    hidden.insert(msg_id);
   };
   _atree->call_on_hidden_articles(insert_hidden_row);
 
@@ -1139,9 +1143,10 @@ void HeaderPane ::update_tree()
   // exposed articles...
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore::parent_to_children_t exposed;
-  auto insert_exposed_row = [this, do_thread, &exposed](Quark msg_id, Quark prt_id)
+  auto insert_exposed_row =
+    [this, do_thread, &exposed](Quark msg_id, Quark prt_id)
   {
-    Article exposed_article (_group, msg_id);
+    Article exposed_article(_group, msg_id);
     Row *child(create_row(exposed_article));
     Row *parent(do_thread && ! prt_id.empty() ? get_row(prt_id) : nullptr);
     exposed[parent].push_back(child);
@@ -1228,7 +1233,6 @@ void HeaderPane ::update_tree()
   }
 
 }
-
 
 /****
 *****  SELECTION
