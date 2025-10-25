@@ -270,11 +270,11 @@ class DataImplTest : public CppUnit::TestFixture
     }
 
     // emulates showing all articles, with no criteria
-    void test_get_children_with_empty_criteria()
-    {
-      tree =
-        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+    void test_get_children_with_empty_criteria() {
+      // group_get_articles calls initialize_article_view
+      tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
+                                      &criteria);
+
       assert_result("", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
     }
 
@@ -288,9 +288,10 @@ class DataImplTest : public CppUnit::TestFixture
 
       // init article view
       criteria.set_type_is_unread();
+      // group_get_articles calls initialize_article_view
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+
 
       std::vector<std::string> original_roots(
         {"g1m1c1", "g1m1c2", "g1m2a", "g1m2"});
@@ -331,9 +332,10 @@ class DataImplTest : public CppUnit::TestFixture
 
       // init article view
       criteria.set_type_is_unread();
+      // group_get_articles calls initialize_article_view
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+
       assert_exposed("step 1", "g1m1d1");
       assert_exposed("step 1", "g1m1c2");
 
@@ -377,9 +379,10 @@ class DataImplTest : public CppUnit::TestFixture
 
       // init article view
       criteria.set_type_is_unread();
+      // group_get_articles calls initialize_article_view
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+
 
       std::vector<std::string> original_roots({"g1m1a", "g1m2a", "g1m2"});
       assert_result("step 1", Quark(), "g1", original_roots);
@@ -424,9 +427,10 @@ class DataImplTest : public CppUnit::TestFixture
 
       // init article view
       criteria.set_type_is_read();
+      // group_get_articles calls initialize_article_view
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+
       // we can view the 3 read articles. They are in separate threads
       // so they have no children
       assert_result("step 1", Quark(), "g1", {"g1m1c1", "g1m2", "g1m2a"});
@@ -465,9 +469,10 @@ class DataImplTest : public CppUnit::TestFixture
     {
       // init article view, some articles are shown
       criteria.set_type_is_unread();
+      // group_get_articles calls initialize_article_view
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+
 
       // change status and re-apply filter, some articles are hidden
       // and their children are reparented.
@@ -528,9 +533,10 @@ class DataImplTest : public CppUnit::TestFixture
     void test_function_on_hidden_articles() {
       // init article view, some articles are shown
       criteria.set_type_is_unread();
+      // group_get_articles calls initialize_article_view
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
                                       &criteria);
-      tree->initialize_article_view();
+
 
       // change status and re-apply filter, some articles are hidden
       change_read_status("g1m1c1", true);
