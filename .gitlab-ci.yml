@@ -4,8 +4,8 @@ stages:
 variables:
   DEBIAN_FRONTEND: noninteractive
 
-cmake-ubuntu:
-  image: ubuntu:rolling
+cmake-debain:
+  image: debian:sid-slim
   stage: build
   variables:
     BUILD_DIR: cmake-build
@@ -43,7 +43,7 @@ cmake-ubuntu:
     - cmake --build $BUILD_DIR
 
 cmake-ubuntu-bare-bones:
-  image: ubuntu:rolling
+  image: debian:sid-slim
   stage: build
   variables:
     BUILD_DIR: cmake-build
