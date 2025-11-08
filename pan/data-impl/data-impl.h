@@ -336,9 +336,13 @@ public:
     void server_get_groups(Quark const &server, quarks_t &) const override;
 
     void store_references(Quark message_id, std::string references);
+
     /**
     ***  HEADERS
     **/
+  public:
+    void delete_articles(std::vector<Quark> const &goners);
+    void delete_one_article(Quark const goner);
 
   private: // implementation
     void store_parent_articles(Quark &message_id, std::string &references);
@@ -354,6 +358,13 @@ public:
     void update_part_states(Quark const &group) override;
     void migrate_read_ranges(Quark const &group);
     void load_headers_from_db(Quark const &group);
+
+    void create_ghost_article(const Quark &old_msg_id, const int64_t old_id);
+    void delete_ghost_articles(const Quark &old_msg_id,
+                               const std::vector<std::string> &ghost_ids);
+    void get_ghost_articles_to_delete(const Quark &old_msg_id,
+                                      const int64_t old_id,
+                                      std::vector<std::string> &setme);
 
     void fire_article_flag_changed(articles_t &a, Quark const &group) override;
 

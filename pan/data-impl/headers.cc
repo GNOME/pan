@@ -953,7 +953,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   // when it must be expired on all servers, i.e. do not expire an
   // article if it's not expired on any server.
   SQLite::Statement get_expired_articles_q(pan_db,R"SQL(
-      select a.id from article as a
+      select a.message_id from article as a
       join article_group as ag on ag.article_id == a.id
       join `group` as g on ag.group_id == g.id
       where g.name == ?
@@ -979,23 +979,14 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   // I've tried to use a CTE and a subquery to avoid this loop. Both had a statement like
   // delete from article where id in (CTE or subquery). Both statements did not finish.
   // That may be a bug in sqlite or an unknown interaction between "delete from article"
-  // and all the complicated "select from articles" in the subquery.
-  std::vector<int64_t> goners;
+  // and all the complicated "select from article" in the subquery.
+  std::vector<Quark> goners;
   while (get_expired_articles_q.executeStep()) {
-    goners.push_back(get_expired_articles_q.getColumn(0));
+    goners.push_back(get_expired_articles_q.getColumn(0).getText());
   }
 
-  SQLite::Statement delete_article_q(pan_db, R"SQL(
-    delete from article where article.id == ?
-  )SQL");
-
-  for (int64_t db_id: goners) {
-    delete_article_q.reset();
-    delete_article_q.bind(1, db_id);
-    delete_article_q.exec();
-  }
-  
   unsigned int expire_count(goners.size());
+  delete_articles(goners);
 
   if (expire_count) {
     LOG4CXX_INFO(logger, "Expired " << expire_count << " articles from group " << group.c_str()
@@ -1031,6 +1022,185 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
                    / (fabs(seconds) < 0.001 ? 0.001 : seconds));
 
   LOG4CXX_DEBUG(logger, "Loaded " << article_count << " articles in " << timer.get_seconds_elapsed() << "s.");
+}
+
+void DataImpl ::delete_articles(std::vector<Quark> const &goners) {
+  for (Quark msg_id: goners) {
+    delete_one_article(msg_id);
+  }
+}
+
+void DataImpl ::delete_one_article(Quark const old_msg_id) {
+  LOG4CXX_TRACE(logger, "Deleting article " << old_msg_id << " from DB");
+  // get primary key to simplify later queries
+  SQLite::Statement get_article_id(pan_db, R"SQL(
+    select id from article where article.message_id == ?
+  )SQL");
+  get_article_id.bind(1,old_msg_id);
+  int64_t old_id(0);
+  while (get_article_id.executeStep())
+    old_id = get_article_id.getColumn(0).getInt64();
+
+  if (old_id == 0) {
+    LOG4CXX_FATAL(logger, "Article " << old_msg_id << " already deleted");
+    assert(0);
+  }
+
+  std::vector<std::string> ghosts_to_delete;
+  get_ghost_articles_to_delete(old_msg_id, old_id, ghosts_to_delete);
+
+  create_ghost_article(old_msg_id, old_id);
+
+  delete_ghost_articles(old_msg_id, ghosts_to_delete);
+
+  LOG4CXX_TRACE(logger, "Deleting article " << old_msg_id);
+  SQLite::Statement delete_article_q(pan_db, R"SQL(
+    delete from article where article.id == ?
+  )SQL");
+
+  delete_article_q.reset();
+  delete_article_q.bind(1, old_id);
+  delete_article_q.exec();
+
+}
+
+void DataImpl::create_ghost_article(const Quark &old_msg_id, const int64_t old_id) {
+  LOG4CXX_TRACE(logger, "Checking ghost creation for article " << old_msg_id << " id " << old_id);
+  // check if the deleted article has a real or a ghost child
+  SQLite::Statement check_ghost_child(pan_db, R"SQL(
+    select
+    -- the deleted article has a real children
+    exists (select 1 from article where parent_id == ?)
+    or
+    -- the deleted article has a ghost chidren
+    exists (select 1 from ghost where ghost_parent_msg_id == ?)
+  )SQL");
+  check_ghost_child.bind(1, old_id);
+  check_ghost_child.bind(2, old_msg_id);
+  check_ghost_child.executeStep();
+  bool has_child(check_ghost_child.getColumn(0).getInt());
+
+  if (!has_child)
+    return;
+
+  LOG4CXX_TRACE(logger, "Creating ghost for article " << old_msg_id);
+  // create article ghost
+  SQLite::Statement create_article_ghost(pan_db, R"SQL(
+    -- create new ghost article from deleted article
+    insert into ghost (ghost_msg_id, ghost_parent_msg_id)
+    values (:old_message_id, (
+      case -- prefer ghost_msg_id over parent_id because the latter is a short-circuit
+        when (select ghost_parent_id from article where id == :old_id) notnull
+        then (select ghost_msg_id from ghost where id == (select ghost_parent_id from article where id == :old_id))
+        else (select message_id from article where id == (select parent_id from article where id == :old_id))
+      end
+    ));
+  )SQL");
+  create_article_ghost.bind(1, old_msg_id);
+  create_article_ghost.bind(2, old_id);
+  create_article_ghost.exec();
+
+  LOG4CXX_TRACE(logger, "Updating ghost_parent_id for article " << old_msg_id);
+  // create article ghost
+  SQLite::Statement update_ghost_parent(pan_db, R"SQL(
+    -- update ghost_parent of children article only if they don't already have a ghost_parent
+    update article
+       set ghost_parent_id = (select id from ghost where ghost_msg_id == :old_message_id)
+       where parent_id == :old_id and ghost_parent_id is null;
+  )SQL");
+  update_ghost_parent.bind(1, old_msg_id);
+  update_ghost_parent.bind(2, old_id);
+  update_ghost_parent.exec();
+
+  LOG4CXX_TRACE(logger, "Creating ghost for article " << old_msg_id);
+  // create article ghost
+  SQLite::Statement update_parent_id(pan_db, R"SQL(
+    -- update parent_id of chidren article to the parent of deleted article
+    update article
+       set parent_id = (select parent_id from article where id == :old_id)
+     where parent_id == :old_id;
+  )SQL");
+  update_parent_id.bind(1, old_id);
+  update_parent_id.exec();
+}
+
+void DataImpl::get_ghost_articles_to_delete(const Quark &old_msg_id,
+                                           const int64_t old_id,
+                                           std::vector<std::string> &setme) {
+  LOG4CXX_TRACE(logger, "Checking ghost deletion for article "
+                            << old_msg_id << " id " << old_id);
+
+  // check if the deleted article has a ghost parent
+  SQLite::Statement check_ghost_parent(pan_db, R"SQL(
+    select ghost_parent_id from article where id == ?
+  )SQL");
+  check_ghost_parent.bind(1, old_id);
+  check_ghost_parent.executeStep();
+  bool has_ghost_parent(check_ghost_parent.getColumn(0).getInt());
+
+  if (!has_ghost_parent)
+    return;
+
+  LOG4CXX_TRACE(logger, "Deleting ghost for article " << old_msg_id);
+  //  retrieve the list of ghost ancestors of the deleted article
+  SQLite::Statement get_ghost_ancestors(pan_db, R"SQL(
+    -- retrieve the list of ghost ancestors of the deleted article
+    -- until one of them has another child (be it real or ghost)
+    with recursive p(count, ghost_id, msg_id, ghost_parent_msg_id) as (
+      select 0, null, a.message_id, g.ghost_msg_id from article as a
+      join ghost as g on g.id == a.ghost_parent_id
+        where a.message_id == $old_msg_id
+        and not exists (
+          -- check if article has a ghost child
+          select 1 from ghost as g
+            where g.ghost_parent_msg_id is not null
+              and g.ghost_parent_msg_id == $old_msg_id
+          union all
+          -- check if article has a real article child
+          select 1 from article as a
+            where a.parent_id == (select id from article as a2 where a2.message_id = $old_msg_id)
+        )
+      union all
+      select count + 1, g.id, ghost_msg_id, g.ghost_parent_msg_id from ghost as g
+        join p on g.ghost_msg_id == p.ghost_parent_msg_id
+        where (
+          -- check if ghost has other ghost child, i.e they have the same ghost_parent_msg_id
+          select count() from ghost as g
+          where g.ghost_parent_msg_id == p.ghost_parent_msg_id
+        ) < 2
+        and (
+          -- check if ghost has real article child
+          select count() from article as a
+          where g.id == a.ghost_parent_id
+            and a.message_id != $old_msg_id
+        ) == 0
+        limit 500 -- safety net
+   )
+   select ghost.ghost_msg_id from ghost
+   join p on ghost.id == p.ghost_id
+  )SQL");
+  get_ghost_ancestors.bind(1, old_msg_id);
+
+  while (get_ghost_ancestors.executeStep()) {
+    std::string g_id (get_ghost_ancestors.getColumn(0));
+    LOG4CXX_TRACE(logger, "Will delete ghost id " << g_id << " for article " << old_msg_id);
+    setme.push_back(g_id);
+  }
+}
+
+void DataImpl::delete_ghost_articles(const Quark &old_msg_id, const std::vector<std::string> &ghost_ids) {
+  // delete article ghost
+  SQLite::Statement delete_article_ghost(pan_db, R"SQL(
+    delete from ghost where ghost_msg_id == ?
+  )SQL");
+
+  for (std::string g_id : ghost_ids) {
+    LOG4CXX_TRACE(logger, "Deleting ghost " << g_id << " for article " << old_msg_id << " id ");
+
+    delete_article_ghost.reset();
+    delete_article_ghost.bind(1, g_id);
+    delete_article_ghost.exec();
+  }
 }
 
 namespace {
