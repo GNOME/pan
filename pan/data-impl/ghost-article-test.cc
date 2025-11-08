@@ -141,6 +141,15 @@ public:
       data->store_references(msg_id, references);
     }
 
+    void delete_article(std::string msg_id)
+    {
+      SQLite::Statement setup(pan_db, R"SQL(
+           delete from article where message_id = ?
+        )SQL");
+      setup.bind(1, msg_id);
+      setup.exec();
+    }
+
     void test_normal_insertion()
     {
       // create an article tree from ancestor to child: a1 -> a2 -> a3
@@ -232,6 +241,7 @@ public:
       check_ghost_presence(d2,false);
       check_ghost_tree("d2", d2, {d2,b1,"",""});
     }
+
     // seen in the wild: references from sibling lead to a circular reference
     void test_circular_references() {
       // g1m1a -> g1m1b +--> g1m1c1 -> g1m1d1
@@ -272,12 +282,77 @@ public:
       assert_no_ghost_article();
     }
 
+    void test_article_delete()
+    {
+      // Test delete on the same tree as above. -> means parent to child
+      // b1 -> d2 -> d3 -> d4 -> d5 -> d6
+      //   \-> b2 -> c3
+      //         \-> b3
+
+      std::string b1("<b1>"), b2("<b2>"), b3("<b3>"), c3("<c3>"), d2("<d2>"),
+          d3("<d3>"), d4("<d4>"), d5("<d5>"), d6 ("<d6>");
+      add_article(b3, b1 + " " + b2);
+      add_article(c3, b1 + " " + b2);
+      add_article(b2, b1);
+      add_article(b1, "");
+      add_article(d4, b1 + " " + d2 + " " + d3);
+      add_article(d3, b1 + " " + d2);
+      add_article(d2, b1);
+      add_article(d5, b1 + " " + d2 + " " + d3 + " " + d4 );
+      add_article(d6, b1 + " " + d2 + " " + d3 + " " + d4 + " " + d5);
+
+      delete_article(d3);
+      check_ghost_presence(d3, true);
+      check_ghost_tree("del d3->d4", d4, {d4,d2,d3,d2});
+
+      delete_article(d2);
+      check_ghost_presence(d2, true);
+      check_ghost_tree("del d2->d4", d4, {d4,b1,d3,d2});
+
+      delete_article(d4);
+      check_ghost_presence(d4, true);
+      check_ghost_tree("del d4->d5", d5, {d5,b1,d4,d3});
+
+      delete_article(b2);
+      check_ghost_presence(b2, true);
+      check_ghost_tree("del b2->c3", c3, {c3,b1,b2,b1});
+      check_ghost_tree("del b2->b3", b3, {b3,b1,b2,b1});
+
+      delete_article(b1);
+      check_ghost_presence(b1, true);
+      check_ghost_tree("del b1->c3", c3, {c3,"",b2,b1});
+      check_ghost_tree("del b1->b3", b3, {b3,"",b2,b1});
+
+      // triggers a complete deletion of c3 since there's no other child
+      delete_article(c3);
+      check_ghost_presence(c3, false);
+      check_ghost_presence(b2, true);
+
+      // triggers a complete deletion of b3 and b2 since there's no
+      // other child
+      delete_article(b3);
+      check_ghost_presence(b3, false);
+      check_ghost_presence(b2, false);
+
+      delete_article(d6);
+      check_ghost_presence(d6, false);
+
+      // delete last article which shoould suppress remaining ghosts
+      delete_article(d5);
+      check_ghost_presence(d5, false);
+      check_ghost_presence(d4, false);
+      check_ghost_presence(d3, false);
+      check_ghost_presence(d2, false);
+      check_ghost_presence(b1, false);
+    }
+
     CPPUNIT_TEST_SUITE(DataImplTest);
     CPPUNIT_TEST(test_normal_insertion);
     CPPUNIT_TEST(test_reverse_insertion);
     CPPUNIT_TEST(test_complex_tree);
     CPPUNIT_TEST(test_circular_references);
     CPPUNIT_TEST(test_circular_references_reverse_order);
+    CPPUNIT_TEST(test_article_delete);
     CPPUNIT_TEST_SUITE_END();
 };
 

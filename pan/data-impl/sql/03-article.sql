@@ -46,6 +46,68 @@ create table if not exists ghost (
   ghost_parent_msg_id integer
 );
 
+create trigger if not exists article_delete_create_ghost before delete on article
+  when (
+    -- the deleted article has a real children
+    exists (select * from article where parent_id == old.id)
+    or
+    -- the deleted article has a ghost chidren
+    exists (select * from ghost where ghost_parent_msg_id == old.message_id)
+    )
+  begin
+    -- create new ghost article from deleted article
+    insert into ghost (ghost_msg_id, ghost_parent_msg_id)
+    values (old.message_id, (
+      case -- prefer ghost_msg_id over parent_id because the latter is a short-circuit
+      when old.ghost_parent_id notnull
+        then (select ghost_msg_id from ghost where id == old.ghost_parent_id)
+      else  (select message_id from article where id == old.parent_id)
+      end
+    ));
+
+    -- update ghost_parent of children article only if they don't already have a ghost_parent
+    update article
+       set ghost_parent_id = (select id from ghost where ghost_msg_id == old.message_id)
+     where parent_id == old.id and ghost_parent_id is null;
+
+    -- update parent_id of chidren article to the parent of deleted article
+    update article
+       set parent_id = old.parent_id
+     where parent_id == old.id;
+  end;
+
+create trigger if not exists article_delete_ghost after delete on article
+  -- when article has a ghost ancestor (no need to check otherwise)
+  when old.ghost_parent_id is not null
+  begin
+    delete from ghost where ghost_msg_id in (
+      -- retrieve the list of ghost ancestors of the deleted article
+      with recursive p(id,msg_id, p_msg_id) as (
+        select id, ghost_msg_id, ghost_parent_msg_id from ghost where ghost_msg_id == ghost.ghost_msg_id
+         union all
+        select g.id, ghost_msg_id, ghost_parent_msg_id from ghost as g join p on g.ghost_msg_id == p.p_msg_id
+	     limit 500 -- safety net
+      )
+          -- select the id, the join is used to check the ghost id with the ghost parent id
+      select distinct p1.msg_id from p as p1, p as p2
+       where
+         --  delete the ghost that do not have children other that the ones in the list provided by the CTE above (aka p)
+         not exists (
+           select * from ghost as g
+            where g.ghost_parent_msg_id is not null
+              and g.ghost_parent_msg_id == p1.msg_id
+              and p1.msg_id != p2.msg_id
+         )
+         and
+         -- that do not have real article children
+         not exists (
+           select * from article as a
+            where a.ghost_parent_id is not null
+              and p1.id == a.ghost_parent_id
+         )
+    );
+  end;
+
 create table if not exists author (
   id integer primary key asc autoincrement,
   author text not null unique
