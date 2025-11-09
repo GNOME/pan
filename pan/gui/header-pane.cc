@@ -31,6 +31,7 @@
 #include <cmath>
 #include <config.h>
 #include <gdk/gdk.h>
+#include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <log4cxx/logger.h>
@@ -958,12 +959,12 @@ void HeaderPane ::update_tree() {
     for (Quark a_msg_id: a_thread.children_id) {
       Article shown_article(_group, a_msg_id);
       Row *child(get_row(a_msg_id));
-      if (child == nullptr){
-        child = create_row(shown_article);
-        exposed++;
-      }
+      g_assert(child == nullptr);
+      child = create_row(shown_article);
+      exposed++;
       children.push_back(child);
     }
+
     // children is empty when no child is exposed
     if (children.size() != 0) {
       shown[parent] = children;
