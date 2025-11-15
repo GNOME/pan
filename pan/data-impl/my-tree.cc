@@ -240,15 +240,21 @@ int run_sql(std::string &q,
   return count;
 }
 
+int DataImpl ::MyTree ::get_shown_threads(
+  std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+  header_column_enum sort_column, bool sort_ascending) const {
+  return get_threads(threads, sort_column, sort_ascending, R"-(in ("e","r","s"))-");
+}
+
 // apply function on shown articles. In theory, article thread result
 // from exchange between servers, a parent article always have a time
 // stamp lower than its children, so ordering articles by time stamp
 // is enough to get parents before children. In practice, this does
 // not work, so we must recursively scan the article to find the
 // parents first.
-int DataImpl ::MyTree ::get_shown_threads(
+int DataImpl ::MyTree ::get_threads(
   std::vector<Data::ArticleTree::ParentAndChildren> &threads,
-  header_column_enum sort_column, bool sort_ascending) const {
+  header_column_enum sort_column, bool sort_ascending, std::string status_cond) const {
 
   threads.clear(); // safety measure
 
@@ -261,18 +267,25 @@ int DataImpl ::MyTree ::get_shown_threads(
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   std::string q = R"SQL(
     with recursive hierarchy (step, a_id, m_id, p_id, sort_data) as (
-      select 1, a.id, message_id, av.parent_id, )SQL" + db_column + R"SQL(
+      select 1, a.id, message_id, av.parent_id, )SQL" +
+                  db_column + R"SQL(
       from article_view as av
       join article as a on a.id == av.article_id
-    )SQL" + (db_join.empty() ? "" : db_join) + R"SQL(
-      where av.parent_id is null and status in ("e","r","s")
+    )SQL" + (db_join.empty() ? "" : db_join) +
+                  R"SQL(
+      where av.parent_id is null and status )SQL" +
+                  status_cond + R"SQL(
       union all
-      select step+1, a.id, a.message_id, av.parent_id,)SQL" + db_column + R"SQL(
+      select step+1, a.id, a.message_id, av.parent_id,)SQL" +
+                  db_column + R"SQL(
       from article_view as av
       join article as a on a.id == av.article_id
-    )SQL" + (db_join.empty() ? "" : db_join) + R"SQL(
+    )SQL" + (db_join.empty() ? "" : db_join) +
+                  R"SQL(
       join hierarchy as h
-	    where status  in ("e","r","s") and av.parent_id is h.a_id
+	    where status  )SQL" +
+                  status_cond +
+                  R"SQL( and av.parent_id is not null and av.parent_id = h.a_id
       limit 10000000 -- todo remove ?
     )
     select hierarchy.m_id,

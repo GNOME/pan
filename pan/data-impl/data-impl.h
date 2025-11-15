@@ -430,6 +430,10 @@ public:
         void set_filter(const ShowType show_type = SHOW_ARTICLES,
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
+        int
+        get_threads(std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+                    header_column_enum sort_column, bool sort_ascending,
+                    std::string status_cond) const override;
         int get_shown_threads(
           std::vector<Data::ArticleTree::ParentAndChildren> &threads,
           header_column_enum sort_column, bool sort_ascending) const override;

@@ -612,6 +612,10 @@ class Data :
       virtual void mark_as_pending_deletion(const std::set<const Article*>) const = 0;
       virtual void update_article_after_gui_update() const = 0;
       virtual void set_article_hidden_status(quarks_t &mids) const = 0;
+      virtual int
+      get_threads(std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+                  header_column_enum sort_column, bool sort_ascending,
+                  std::string status_cond) const = 0;
       virtual int get_shown_threads(
         std::vector<Data::ArticleTree::ParentAndChildren> &threads,
         header_column_enum sort_column, bool sort_ascending) const = 0;
