@@ -643,15 +643,15 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                   "got " << _threads.size() << " threads in " << t << "s.");
 
     int count(0);
-    for (Data::ArticleTree::ParentAndChildren a_thread : _threads) {
+    for (Data::ArticleTree::Thread a_thread : _threads) {
       Quark prt_id(a_thread.parent_id);
       Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
       // sanity check: a child must not be parentless in the tree widget
       g_assert(!do_thread || prt_id.empty() || parent != nullptr);
       PanTreeStore::rows_t children;
 
-      for (Quark a_msg_id: a_thread.children_id) {
-        Article shown_article(_group, a_msg_id);
+      for ( Data::ArticleTree::Thread::Child child : a_thread.children) {
+        Article shown_article(_group, child.msg_id);
         children.push_back(create_row(shown_article));
         count++;
       }
@@ -936,7 +936,7 @@ void HeaderPane ::update_tree() {
   }
 
   // exposed articles...
-  std::vector<Data::ArticleTree::ParentAndChildren> threads;
+  std::vector<Data::ArticleTree::Thread> threads;
   bool sort_ascending;
   int sort_column;
   get_sort_order(sort_column, sort_ascending);
@@ -949,20 +949,20 @@ void HeaderPane ::update_tree() {
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore::parent_to_children_t shown;
   int exposed(0);
-  for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+  for (Data::ArticleTree::Thread a_thread : threads) {
     Quark prt_id(a_thread.parent_id);
     Row *parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
     // sanity check: a child must not be parentless in the tree widget
     g_assert(!do_thread || prt_id.empty() || parent != nullptr);
     PanTreeStore::rows_t children;
 
-    for (Quark a_msg_id: a_thread.children_id) {
-      Article shown_article(_group, a_msg_id);
-      Row *child(get_row(a_msg_id));
-      g_assert(child == nullptr);
-      child = create_row(shown_article);
+    for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+      Article shown_article(_group, child.msg_id);
+      Row *child_row(get_row(child.msg_id));
+      g_assert(child_row == nullptr);
+      child_row = create_row(shown_article);
       exposed++;
-      children.push_back(child);
+      children.push_back(child_row);
     }
 
     // children is empty when no child is exposed
@@ -1960,7 +1960,7 @@ void HeaderPane::rebuild_tree_with_sorted_data(gint sort_column_id,
   PanTreeStore *store(_tree_store);
   bool const do_thread(_prefs.get_flag("thread-headers", true));
 
-  std::vector<Data::ArticleTree::ParentAndChildren> threads;
+  std::vector<Data::ArticleTree::Thread> threads;
   bool is_asc = sort_order == GTK_SORT_ASCENDING;
   _atree->get_sorted_shown_threads(threads, sort_column, is_asc);
 
@@ -1972,12 +1972,12 @@ void HeaderPane::rebuild_tree_with_sorted_data(gint sort_column_id,
   PanTreeStore::Row *parent(nullptr);
 
   int count(0);
-  for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+  for (Data::ArticleTree::Thread a_thread : threads) {
     Quark prt_id(a_thread.parent_id);
     Row *tmp_parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
 
-    for (Quark a_msg_id: a_thread.children_id) {
-      Row *tmp_child(get_row(a_msg_id));
+    for (Data::ArticleTree::Thread::Child child: a_thread.children) {
+      Row *tmp_child(get_row(child.msg_id));
       if (parent != tmp_parent) {
         store->update_children(parent,children);
         parent = tmp_parent;

@@ -501,7 +501,7 @@ class DataImplTest : public CppUnit::TestFixture
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
       tree->initialize_article_view();
 
-      std::vector<Data::ArticleTree::ParentAndChildren> threads;
+      std::vector<Data::ArticleTree::Thread> threads;
 
       // function that checks that parent_id is either null or already
       // provided.
@@ -510,7 +510,7 @@ class DataImplTest : public CppUnit::TestFixture
 
       int count = tree->get_shown_threads(threads, pan::Data::COL_DATE, true);
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 shown count ", 10, count);
-      for (Data::ArticleTree::ParentAndChildren a_thread : threads) {
+      for (Data::ArticleTree::Thread a_thread : threads) {
         Quark prt_id(a_thread.parent_id);
 
         if (!prt_id.empty()) {
@@ -520,8 +520,8 @@ class DataImplTest : public CppUnit::TestFixture
                                      " consistency",
                                  search != stack.end());
         }
-        for (Quark a_msg_id : a_thread.children_id) {
-          stack.insert(a_msg_id.to_string());
+        for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+          stack.insert(child.msg_id.to_string());
         }
       }
     }
@@ -596,25 +596,26 @@ class DataImplTest : public CppUnit::TestFixture
       };
 
       for (const auto a_test : all_tests) {
-        std::vector<Data::ArticleTree::ParentAndChildren> threads;
+        std::vector<Data::ArticleTree::Thread> threads;
         tree->get_shown_threads(threads, a_test.col, a_test.asc);
 
         CPPUNIT_ASSERT_EQUAL_MESSAGE(a_test.label + " 1 - check thread count",
                                      a_test.expect.size(), threads.size());
 
         for (int thread_idx = 0; thread_idx < threads.size(); thread_idx++) {
-          std::vector<Quark> test_children(threads[thread_idx].children_id);
+          std::vector<Data::ArticleTree::Thread::Child> test_children(
+              threads[thread_idx].children);
           CPPUNIT_ASSERT_EQUAL_MESSAGE(
               "check article count in thread " + std::to_string(thread_idx),
               a_test.expect[thread_idx].size(), test_children.size());
 
           for (int child_idx = 0; child_idx < test_children.size();
                child_idx++) {
-            CPPUNIT_ASSERT_EQUAL_MESSAGE("1. step " + std::to_string(thread_idx) +
-                                             "." + std::to_string(child_idx) +
-                                             " sort by " + a_test.label,
-                                         a_test.expect[thread_idx][child_idx],
-                                         test_children[child_idx].to_string());
+            CPPUNIT_ASSERT_EQUAL_MESSAGE(
+                "1. step " + std::to_string(thread_idx) + "." +
+                    std::to_string(child_idx) + " sort by " + a_test.label,
+                a_test.expect[thread_idx][child_idx],
+                test_children[child_idx].msg_id.to_string());
           }
         }
         threads.clear();
@@ -624,7 +625,8 @@ class DataImplTest : public CppUnit::TestFixture
                                      a_test.expect.size(), threads.size());
 
         for (int thread_idx = 0; thread_idx < threads.size(); thread_idx++) {
-          std::vector<Quark> test_children(threads[thread_idx].children_id);
+          std::vector<Data::ArticleTree::Thread::Child>
+              test_children(threads[thread_idx].children);
           CPPUNIT_ASSERT_EQUAL_MESSAGE(
               "check article count in thread " + std::to_string(thread_idx),
               a_test.expect[thread_idx].size(), test_children.size());
@@ -635,7 +637,7 @@ class DataImplTest : public CppUnit::TestFixture
                                              "." + std::to_string(child_idx) +
                                              " sort by " + a_test.label,
                                          a_test.expect[thread_idx][child_idx],
-                                         test_children[child_idx].to_string());
+                                         test_children[child_idx].msg_id.to_string());
           }
         }
       }
@@ -686,23 +688,23 @@ class DataImplTest : public CppUnit::TestFixture
 
       assert_children("step 2", Quark(), "g1", {"g1m1a", "g1m2b"});
 
-      std::vector<Data::ArticleTree::ParentAndChildren> threads;
+      std::vector<Data::ArticleTree::Thread> threads;
 
       int count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 exposed count ", 7, count);
 
       // check that parent_id is either null or already provided.
       std::set<std::string> stack;
-      for (Data::ArticleTree::ParentAndChildren it : threads) {
+      for (Data::ArticleTree::Thread thread : threads) {
         // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
-        if (!it.parent_id.empty()) {
-          auto search = stack.find(it.parent_id.to_string());
+        if (!thread.parent_id.empty()) {
+          auto search = stack.find(thread.parent_id.to_string());
           CPPUNIT_ASSERT_MESSAGE("step 3 parent_id " +
-                                     it.parent_id.to_string() + " consistency",
+                                     thread.parent_id.to_string() + " consistency",
                                  search != stack.end());
         }
-        for (Quark child : it.children_id)
-          stack.insert(child.to_string());
+        for (Data::ArticleTree::Thread::Child child : thread.children)
+          stack.insert(child.msg_id.to_string());
       };
     }
 

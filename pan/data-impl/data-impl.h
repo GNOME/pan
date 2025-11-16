@@ -431,18 +431,18 @@ public:
                         FilterInfo const *criteria = nullptr) final override;
         void set_rules(RulesInfo const *rules = nullptr) final override;
         int
-        get_threads(std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+        get_threads(std::vector<Data::ArticleTree::Thread> &threads,
                     header_column_enum sort_column, bool sort_ascending,
                     std::string status_cond) const override;
         int get_shown_threads(
-          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          std::vector<Data::ArticleTree::Thread> &threads,
           header_column_enum sort_column, bool sort_ascending) const override;
         int get_sorted_shown_threads(
-            std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+            std::vector<Data::ArticleTree::Thread> &threads,
             header_column_enum header_column_id = COL_DATE,
             bool ascending = false) const override;
         int get_exposed_articles(
-          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          std::vector<Data::ArticleTree::Thread> &threads,
           header_column_enum header_column_id = COL_DATE,
           bool ascending = false) const override;
         int call_on_reparented_articles(

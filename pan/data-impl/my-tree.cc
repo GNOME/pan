@@ -207,7 +207,7 @@ void DataImpl::MyTree::set_join_and_column(header_column_enum &header_column_id,
 }
 
 int run_sql(std::string &q,
-            std::vector<Data::ArticleTree::ParentAndChildren> &threads) {
+            std::vector<Data::ArticleTree::Thread> &threads) {
   TimeElapsed timer;
 
   LOG4CXX_TRACE(logger, "sql request is " << q);
@@ -215,7 +215,7 @@ int run_sql(std::string &q,
   SQLite::Statement st(pan_db, q);
   int count(0);
   Quark current_prt_id;
-  Data::ArticleTree::ParentAndChildren root;
+  Data::ArticleTree::Thread root;
   std::map<Quark, bool> checkPrt;
 
   threads.push_back(root);
@@ -223,19 +223,20 @@ int run_sql(std::string &q,
   checkPrt[current_prt_id] = true;
 
   while (st.executeStep()) {
-    Quark msg_id = st.getColumn(0).getText();
+    Data::ArticleTree::Thread::Child child;
+    child.msg_id = st.getColumn(0).getText();
     Quark prt_id;
     if (!st.getColumn(1).isNull()) {
       prt_id = st.getColumn(1).getText();
     }
     if (prt_id != current_prt_id) {
-      Data::ArticleTree::ParentAndChildren pac;
-      pac.parent_id = prt_id;
+      Data::ArticleTree::Thread thread;
+      thread.parent_id = prt_id;
       current_prt_id = prt_id;
       assert(!checkPrt[current_prt_id]);
-      threads.push_back(pac);
+      threads.push_back(thread);
     }
-    threads.back().children_id.push_back(msg_id);
+    threads.back().children.push_back(child);
     count++;
   }
 
@@ -246,7 +247,7 @@ int run_sql(std::string &q,
 }
 
 int DataImpl ::MyTree ::get_shown_threads(
-  std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+  std::vector<Data::ArticleTree::Thread> &threads,
   header_column_enum sort_column, bool sort_ascending) const {
   return get_threads(threads, sort_column, sort_ascending, R"-(in ("e","r","s"))-");
 }
@@ -258,7 +259,7 @@ int DataImpl ::MyTree ::get_shown_threads(
 // not work, so we must recursively scan the article to find the
 // parents first.
 int DataImpl ::MyTree ::get_threads(
-  std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+  std::vector<Data::ArticleTree::Thread> &threads,
   header_column_enum sort_column, bool sort_ascending, std::string status_cond) const {
 
   threads.clear(); // safety measure
@@ -310,7 +311,7 @@ int DataImpl ::MyTree ::get_threads(
 // change. So there's no need to create a complex SQL query that
 // returns ordered threads.
 int DataImpl ::MyTree ::get_sorted_shown_threads(
-  std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+  std::vector<Data::ArticleTree::Thread> &threads,
     header_column_enum header_column_id, bool ascending) const {
 
   // Map column IDs to database column names
@@ -355,7 +356,7 @@ void DataImpl ::MyTree ::get_shown_parent_ids(
 // apply function on exposed article in breadth first order.
 // Returns the number of exposed articles
 int DataImpl ::MyTree ::get_exposed_articles (
-          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          std::vector<Data::ArticleTree::Thread> &threads,
           header_column_enum header_column_id,
           bool ascending) const {
   return get_threads(threads, header_column_id, ascending, "is \"e\"");

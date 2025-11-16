@@ -20,6 +20,7 @@
 #ifndef __Data_h__
 #define __Data_h__
 
+#include <cstdint>
 #include <list>
 #include <map>
 #include <string>
@@ -573,9 +574,15 @@ class Data :
             quarks_t changed;
         };
 
-        struct ParentAndChildren {
+        struct Thread {
+
+          struct Child {
+            Quark msg_id;
+            int64_t sort_index;
+          };
+
           Quark parent_id;
-          std::vector<Quark> children_id;
+          std::vector<Child> children;
         };
 
         /**
@@ -613,20 +620,20 @@ class Data :
       virtual void update_article_after_gui_update() const = 0;
       virtual void set_article_hidden_status(quarks_t &mids) const = 0;
       virtual int
-      get_threads(std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+      get_threads(std::vector<Data::ArticleTree::Thread> &threads,
                   header_column_enum sort_column, bool sort_ascending,
                   std::string status_cond) const = 0;
       virtual int get_shown_threads(
-        std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+        std::vector<Data::ArticleTree::Thread> &threads,
         header_column_enum sort_column, bool sort_ascending) const = 0;
       virtual int get_sorted_shown_threads(
-          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          std::vector<Data::ArticleTree::Thread> &threads,
           header_column_enum header_column_id = COL_DATE,
           bool ascending = false) const = 0;
       virtual void
       get_shown_parent_ids(std::vector<Quark> &shown_parents_ids) const = 0;
       virtual int get_exposed_articles(
-          std::vector<Data::ArticleTree::ParentAndChildren> &threads,
+          std::vector<Data::ArticleTree::Thread> &threads,
           header_column_enum header_column_id = COL_DATE,
           bool ascending = false) const = 0;
       virtual int call_on_reparented_articles(
