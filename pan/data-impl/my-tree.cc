@@ -17,9 +17,9 @@
  *
  */
 
+#include <fmt/format.h>
 #include "data-impl.h"
 #include "pan/data-impl/header-filter.h"
-#include "pan/data-impl/header-rules.h"
 #include "pan/data/data.h"
 #include "pan/data/pan-db.h"
 #include "pan/general/log4cxx.h"
@@ -27,8 +27,6 @@
 #include <SQLiteCpp/Statement.h>
 #include <cassert>
 #include <config.h>
-#include <cstdint>
-#include <cstdio>
 #include <functional>
 #include <glib.h>
 #include <log4cxx/logger.h>
@@ -38,7 +36,6 @@
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
-#include <vector>
 
 using namespace pan;
 
@@ -225,9 +222,10 @@ int run_sql(std::string &q,
   while (st.executeStep()) {
     Data::ArticleTree::Thread::Child child;
     child.msg_id = st.getColumn(0).getText();
+    child.sort_index = st.getColumn(1);
     Quark prt_id;
-    if (!st.getColumn(1).isNull()) {
-      prt_id = st.getColumn(1).getText();
+    if (!st.getColumn(2).isNull()) {
+      prt_id = st.getColumn(2).getText();
     }
     if (prt_id != current_prt_id) {
       Data::ArticleTree::Thread thread;
@@ -266,40 +264,50 @@ int DataImpl ::MyTree ::get_threads(
 
   // Map column IDs to database column names
   std::string db_column, db_join;
-
   set_join_and_column(sort_column, db_column, db_join);
 
+  std::string direction(sort_ascending ? "asc" : "desc");
   // See
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
-  std::string q = R"SQL(
-    with recursive hierarchy (step, a_id, m_id, p_id, h_time, sort_data) as (
-      select 1, a.id, message_id, av.parent_id, a.time_posted, )SQL" +
-                  db_column + R"SQL(
+  // see https://sqlite.org/windowfunctions.html for row_number function
+  std::string format = R"SQL(
+    with recursive hierarchy (step, a_id, m_id, p_id, h_time, status, sort_data) as (
+      -- all non-filtered not hidden root articles
+      select 1, a.id, message_id, av.parent_id, a.time_posted, av.status, {0}
       from article_view as av
       join article as a on a.id == av.article_id
-    )SQL" + (db_join.empty() ? "" : db_join) +
-                  R"SQL(
-      where av.parent_id is null and status )SQL" +
-                  status_cond + R"SQL(
+      {1}
+      where av.parent_id is null and av.status is not "h"
+
       union all
-      select step+1, a.id, a.message_id, av.parent_id, a.time_posted, )SQL" +
-                  db_column + R"SQL(
+
+      -- all non-filtered not hidden children of a parent article
+      select step+1, a.id, a.message_id, av.parent_id, a.time_posted, av.status, {0}
       from article_view as av
       join article as a on a.id == av.article_id
-    )SQL" + (db_join.empty() ? "" : db_join) +
-                  R"SQL(
+      {1}
       join hierarchy as h
-	    where status  )SQL" +
-                  status_cond +
-                  R"SQL( and av.parent_id is not null and av.parent_id = h.a_id
+	    where av.status is not "h" and av.parent_id is not null and av.parent_id = h.a_id
       limit 10000000 -- todo remove ?
+    ),
+    all_visible_article (step, msg_id, sort_index, status, prt_msg_id) as (
+      -- inject row_number and parent_message_id
+      select step, hierarchy.m_id, row_number() over thread_window, status,
+        (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
+      from hierarchy
+      window thread_window as (
+        partition by hierarchy.p_id
+        -- article within threads are always sorted by ascending date
+        order by case step when 1 then sort_data end {3}, h_time asc
+      )
     )
-    select hierarchy.m_id,
-       (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
-    from hierarchy
-    -- article within threads are always sorted by ascending date
-    order by step, case step when 1 then sort_data end )SQL" +
-    (sort_ascending ? "asc" : "desc") + ", h_time asc" ;
+    -- now we can filter by required status
+    select msg_id, sort_index, prt_msg_id from all_visible_article
+    where status {2}
+    order by step, prt_msg_id, sort_index
+  )SQL";
+
+  std::string q = fmt::format(format,db_column, db_join, status_cond, direction);
 
   return run_sql(q, threads);
 }
@@ -316,19 +324,35 @@ int DataImpl ::MyTree ::get_sorted_shown_threads(
 
   // Map column IDs to database column names
   std::string db_column, db_join;
+  std::string direction(ascending ? "asc" : "desc");
 
   set_join_and_column(header_column_id, db_column, db_join);
 
-  std::string q = R"SQL(
-    select message_id,
-      (select message_id from article as a_in where a_in.id = av.parent_id) as prt_msg_id
-    from article_view as av
-    join article as a on a.id == av.article_id
-  )SQL" + db_join + R"SQL(
-    where status is not "h"
-    -- articles within thread are always sorted by ascending date
-    order by prt_msg_id, case when prt_msg_id is null then )SQL" + db_column + " end " +
-    (ascending ? "asc" : "desc") + ", a.time_posted asc" ;
+  // prt_msg_id is not allowed in window definition, must use a CTE
+  std::string format = R"SQL(
+    with thread (msg_id, time_posted, sort_data, prt_msg_id) as (
+      select message_id, time_posted, {0},
+            (select message_id from article as a_in where a_in.id = av.parent_id) as prt_msg_id
+      from article_view as av
+      join article as a on a.id == av.article_id
+      {1}
+      where status is not "h"
+    )
+    select msg_id, row_number() over thread_window, prt_msg_id
+    from thread
+    window thread_window as (
+      partition by prt_msg_id
+      -- articles within thread are always sorted by ascending date
+      order by prt_msg_id,
+        case when prt_msg_id is null then sort_data end {2},
+             time_posted asc
+    )
+    order by prt_msg_id,
+      case when prt_msg_id is null then sort_data end {2},
+           time_posted asc
+  )SQL";
+
+  std::string q = fmt::format(format, db_column, db_join, direction);
 
   return run_sql(q, threads);
 }

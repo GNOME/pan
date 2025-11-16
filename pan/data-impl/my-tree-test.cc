@@ -6,6 +6,8 @@
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
 #include <config.h>
+#include <cstdint>
+#include <fmt/format.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/data/article.h>
 #include <pan/general/file-util.h>
@@ -187,11 +189,10 @@ class DataImplTest : public CppUnit::TestFixture
       std::string user_message(label + " "
                                + (parent_mid.empty() ? "root" : parent_mid.to_string()));
       int count(0);
-      while (q.executeStep())
-      {
+      while (q.executeStep()) {
         std::string msg_id = q.getColumn(0);
-        CPPUNIT_ASSERT_EQUAL_MESSAGE(
-          user_message + " child msg_id ", expected_children_mid[count], msg_id);
+        auto str = fmt::format("{} child msg_id {}", user_message, count);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(str, expected_children_mid[count], msg_id);
         count++;
       }
 
@@ -256,6 +257,37 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE(
           label + " msg_id " + msg_id + " is not in view", true, count == 0);
     };
+
+    void assert_equal_threads(std::string label, int line,
+                              std::vector<Data::ArticleTree::Thread> expected,
+                              std::vector<Data::ArticleTree::Thread> actual) {
+
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(label + " nb of threads", expected.size(), actual.size());
+
+      for (int i = 0; i < expected.size(); i++) {
+        auto l = fmt::format("line {} {} thread {}: ", line, label, i);
+        assert_equal_thread(l, expected[i], actual[i]);
+      }
+    }
+
+    void assert_equal_thread(std::string l,
+                             Data::ArticleTree::Thread a,
+                             Data::ArticleTree::Thread b) {
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(l + "parent_id", a.parent_id.to_string(),
+                                   b.parent_id.to_string());
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(l + "nb of children", a.parent_id.size(),
+                                   b.parent_id.size());
+
+      for (int i = 0; i < a.children.size(); i++) {
+        auto l2 = fmt::format("{}child {} ", l, i);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(l2 + "msg_id",
+                                     a.children[i].msg_id.to_string(),
+                                     b.children[i].msg_id.to_string());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(l2 + "sort index",
+                                     a.children[i].sort_index,
+                                     b.children[i].sort_index);
+      }
+    }
 
     void change_read_status(Quark const mid, bool status)
     {
@@ -609,13 +641,18 @@ class DataImplTest : public CppUnit::TestFixture
               "check article count in thread " + std::to_string(thread_idx),
               a_test.expect[thread_idx].size(), test_children.size());
 
-          for (int child_idx = 0; child_idx < test_children.size();
+          for (int64_t child_idx = 0; child_idx < test_children.size();
                child_idx++) {
             CPPUNIT_ASSERT_EQUAL_MESSAGE(
                 "1. step " + std::to_string(thread_idx) + "." +
                     std::to_string(child_idx) + " sort by " + a_test.label,
                 a_test.expect[thread_idx][child_idx],
                 test_children[child_idx].msg_id.to_string());
+            CPPUNIT_ASSERT_EQUAL_MESSAGE(
+                "1. step " + std::to_string(thread_idx) + "." +
+                    std::to_string(child_idx) + " sort index " + a_test.label,
+                child_idx+1,
+                test_children[child_idx].sort_index);
           }
         }
         threads.clear();
@@ -631,13 +668,18 @@ class DataImplTest : public CppUnit::TestFixture
               "check article count in thread " + std::to_string(thread_idx),
               a_test.expect[thread_idx].size(), test_children.size());
 
-          for (int child_idx = 0; child_idx < test_children.size();
+          for (int64_t child_idx = 0; child_idx < test_children.size();
                child_idx++) {
             CPPUNIT_ASSERT_EQUAL_MESSAGE("2. step " + std::to_string(thread_idx) +
                                              "." + std::to_string(child_idx) +
                                              " sort by " + a_test.label,
                                          a_test.expect[thread_idx][child_idx],
                                          test_children[child_idx].msg_id.to_string());
+            CPPUNIT_ASSERT_EQUAL_MESSAGE(
+                "2. step " + std::to_string(thread_idx) + "." +
+                    std::to_string(child_idx) + " sort index " + a_test.label,
+                child_idx+1,
+                test_children[child_idx].sort_index);
           }
         }
       }
@@ -666,32 +708,54 @@ class DataImplTest : public CppUnit::TestFixture
     {
       add_test_articles();
       change_read_status("g1m2", true);
-      change_read_status("g1m2a", true);
+      change_read_status("g1m1a", true);
       change_read_status("g1m1c1", true);
+      //[g1m1a]-> g1m1b +-->[g1m1c1]-> g1m1d1
+      //                 \-> g1m1c2 -> g1m1d2
+      // g1m2a -> g1m2b -> g1m2c
+      //[g1m2]
 
-      // init article view
+      // step 1 - init article view
+      std::string step = "step 1";
       criteria.set_type_is_read();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
       tree->initialize_article_view();
 
+      std::vector<Data::ArticleTree::Thread> threads, exp_threads;
+
       // we can view the 3 read articles. They are in separate threads
       // so they have no children
-      assert_children("step 1", Quark(), "g1", {"g1m1c1", "g1m2", "g1m2a"});
+      assert_children(step, Quark(), "g1", {"g1m1a", "g1m2"});
+
+      exp_threads = {
+        {"", {{"g1m1a", 1}, {"g1m2", 2}}},
+        {"g1m1a", {{"g1m1c1",1}}}
+        };
+      int count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(step + " exposed count ", 3, count);
+      assert_equal_threads(step, __LINE__, exp_threads, threads);
 
       tree->update_article_after_gui_update();
 
-      // change filter
+      // step 2 - change filter
+      // hide read articles and expose non-read articles
+      step = "step 2";
       criteria.set_type_is_unread();
+      threads.clear();
       tree->set_filter(Data::SHOW_ARTICLES, &criteria);
       tree->update_article_view();
 
-      assert_children("step 2", Quark(), "g1", {"g1m1a", "g1m2b"});
+      exp_threads = {
+          {"",  {{"g1m1b",1},{"g1m2a",2}}},
+          {"g1m1b",  {{"g1m1c2",1},{"g1m1d1",2}}}, // c2 added before d1
+          {"g1m2a",  {{"g1m2b",1}}},
+          {"g1m1c2", {{"g1m1d2",1}}},
+          {"g1m2b",  {{"g1m2c",1}}},
+      };
 
-      std::vector<Data::ArticleTree::Thread> threads;
-
-      int count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 exposed count ", 7, count);
+      count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(step + " exposed count ", 7, count);
 
       // check that parent_id is either null or already provided.
       std::set<std::string> stack;
@@ -699,13 +763,32 @@ class DataImplTest : public CppUnit::TestFixture
         // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
         if (!thread.parent_id.empty()) {
           auto search = stack.find(thread.parent_id.to_string());
-          CPPUNIT_ASSERT_MESSAGE("step 3 parent_id " +
+          CPPUNIT_ASSERT_MESSAGE(step + " parent_id " +
                                      thread.parent_id.to_string() + " consistency",
                                  search != stack.end());
         }
         for (Data::ArticleTree::Thread::Child child : thread.children)
           stack.insert(child.msg_id.to_string());
       };
+
+      assert_equal_threads(step, __LINE__, exp_threads, threads);
+
+      tree->update_article_after_gui_update();
+
+      // step 3 - reset filter - expose the 3 read articles
+      step = "step 3";
+      criteria.clear();
+      threads.clear();
+      tree->set_filter(Data::SHOW_ARTICLES, &criteria);
+      tree->update_article_view();
+      count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
+
+      exp_threads = {
+        {"", {{"g1m1a", 1}, {"g1m2", 3}}},
+        {"g1m1b", {{"g1m1c1",1}}}
+        };
+
+      assert_equal_threads(step, __LINE__, exp_threads, threads);
     }
 
     // check reparented status of article.
