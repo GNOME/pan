@@ -298,7 +298,7 @@ int DataImpl ::MyTree ::get_threads(
       window thread_window as (
         partition by hierarchy.p_id
         -- article within threads are always sorted by ascending date
-        order by case step when 1 then sort_data end {3}, h_time asc
+        order by case step when 1 then sort_data end collate nocase {3}, h_time asc
       )
     )
     -- now we can filter by required status
