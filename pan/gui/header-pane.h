@@ -21,6 +21,7 @@
 #define _HeaderPane_h_
 
 #include "pan/general/string-view.h"
+#include <cstdint>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <pan/data/article-cache.h>
@@ -243,6 +244,11 @@ class HeaderPane :
       public:
         Article const article;
 
+        // sort index attribute that is filled while reading DB.
+        // This index is used by the compare function to let gkt tree
+        // re-order the header-pane columns.
+        int64_t index;
+
       private:
         HeaderPane const &_header_pane;
         static Quark build_short_author(StringView const &full_author)
@@ -319,13 +325,9 @@ class HeaderPane :
         }
 
       public:
-        Row(HeaderPane const &h_pane, Article a) :
-          article(a),
-          _header_pane(h_pane),
-          collated_subject(nullptr),
-          collated_author(nullptr)
-        {
-        }
+        Row(HeaderPane const &h_pane, Article a, int64_t index)
+            : article(a), index(index), _header_pane(h_pane),
+              collated_subject(nullptr), collated_author(nullptr) {}
 
         virtual ~Row() override
         {
@@ -370,7 +372,7 @@ class HeaderPane :
     static Article get_article(GtkTreeModel *, GtkTreeIter *);
     int get_article_action(bool flag, Quark const &message_id) const;
     int find_highest_followup_score(GtkTreeModel *, GtkTreeIter *) const;
-    Row *create_row(Article);
+    Row *create_row(Article, int sort_index);
     PanTreeStore *build_model(Quark const &,
                               Data::ArticleTree *,
                               int sort_column,
@@ -408,6 +410,7 @@ class HeaderPane :
 
   public: // public so that anonymous namespace can reach -- don't call
     void filter(std::string const &text, int mode);
+    void refresh_row_sort_indexes();
     void rules(bool enable = false);
     static void do_popup_menu(GtkWidget *, GdkEventButton *, gpointer);
     static void on_row_activated(GtkTreeView *,

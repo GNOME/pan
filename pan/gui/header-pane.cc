@@ -31,6 +31,7 @@
 #include <cmath>
 #include <config.h>
 #include <gdk/gdk.h>
+#include <glib-object.h>
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -467,9 +468,9 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
   return it == _mid_to_row.end() ? nullptr : *it;
 }
 
-HeaderPane::Row *HeaderPane ::create_row(Article a)
+HeaderPane::Row *HeaderPane ::create_row(Article a, int sort_index)
 {
-  Row *row = new Row(*this, a);
+  Row *row = new Row(*this, a, sort_index);
 
   std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
   if (!result.second)
@@ -481,112 +482,20 @@ HeaderPane::Row *HeaderPane ::create_row(Article a)
   return row;
 }
 
-int HeaderPane ::column_compare_func(GtkTreeModel *model,
-                                     GtkTreeIter *iter_a,
-                                     GtkTreeIter *iter_b,
-                                     gpointer)
-{
+int HeaderPane ::column_compare_func(GtkTreeModel *model, GtkTreeIter *iter_a,
+                                     GtkTreeIter *iter_b, gpointer) {
   int ret(0);
   PanTreeStore const *store(reinterpret_cast<PanTreeStore *>(model));
   Row const &row_a(*static_cast<Row const *>(store->get_row(iter_a)));
   Row const &row_b(*static_cast<Row const *>(store->get_row(iter_b)));
 
-  int sortcol;
-  GtkSortType order;
-  store->get_sort_column_id(sortcol, order);
-
-  bool const is_root(store->is_root(iter_a));
-  if (! is_root)
-  {
-    sortcol = Data::COL_DATE;
-  }
-
-  switch (sortcol)
-  {
-    case Data::COL_STATE:
-      ret = row_a.get_state() - row_b.get_state();
-      break;
-
-    case Data::COL_ACTION:
-      // const int a_action (store->get_cell_int (iter_a, Data::COL_ACTION));
-      // const int b_action (store->get_cell_int (iter_b, Data::COL_ACTION));
-      // ret = a_action - b_action;
-      break;
-
-    case Data::COL_SUBJECT:
-      ret = strcmp(row_a.get_collated_subject(), row_b.get_collated_subject());
-      break;
-
-    case Data::COL_SCORE:
-      ret = row_a.article.get_score() - row_b.article.get_score();
-      break;
-
-    case Data::COL_BYTES:
-    {
-      unsigned long const a_bytes(row_a.article.get_byte_count());
-      unsigned long const b_bytes(row_b.article.get_byte_count());
-      if (a_bytes < b_bytes)
-      {
-        ret = -1;
-      }
-      else if (a_bytes > b_bytes)
-      {
-        ret = 1;
-      }
-      else
-      {
-        ret = 0;
-      }
-      break;
-    }
-
-    case Data::COL_LINES:
-    {
-      unsigned long const a_lines(row_a.article.get_line_count());
-      unsigned long const b_lines(row_b.article.get_line_count());
-      if (a_lines < b_lines)
-      {
-        ret = -1;
-      }
-      else if (a_lines > b_lines)
-      {
-        ret = 1;
-      }
-      else
-      {
-        ret = 0;
-      }
-      break;
-    }
-
-    case Data::COL_SHORT_AUTHOR:
-      ret = strcmp(row_a.get_collated_author(), row_b.get_collated_author());
-      break;
-
-    default:
-    { // Data::COL_DATE
-      time_t const a_time(row_a.article.get_time_posted());
-      time_t const b_time(row_b.article.get_time_posted());
-      if (a_time < b_time)
-      {
-        ret = -1;
-      }
-      else if (a_time > b_time)
-      {
-        ret = 1;
-      }
-      else
-      {
-        ret = 0;
-      }
-      break;
-    }
-  }
-
-  // we _always_ want the lower levels to be sorted by date
-  if (! is_root && order == GTK_SORT_DESCENDING)
-  {
-    ret = -ret;
+  // compare with the sort_index provided by the DB
+  if (row_a.index < row_b.index) {
+    ret = -1;
+  } else if (row_a.index > row_b.index) {
+    ret = 1;
+  } else {
+    ret = 0;
   }
 
   return ret;
@@ -595,8 +504,9 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model,
 void HeaderPane ::sort_column_changed_cb(GtkTreeSortable *sortable,
                                          gpointer user_data)
 {
-
   HeaderPane *self(static_cast<HeaderPane *>(user_data));
+
+  self->refresh_row_sort_indexes();
 
   articles_set const old_selection(self->get_full_selection());
 
@@ -626,6 +536,13 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                             G_TYPE_STRING,  // subject
                             G_TYPE_STRING); // short author
 
+  GtkTreeSortable *sort = GTK_TREE_SORTABLE(store);
+  for (int i = 0; i < Data::N_COLUMNS; ++i) {
+    gtk_tree_sortable_set_sort_func(
+      // TODO: remove GINT_TO_POINTER, nullptr should be enough
+      sort, i, column_compare_func, GINT_TO_POINTER(i), nullptr);
+  }
+
   if (! group.empty())
   {
     bool const do_thread(_prefs.get_flag("thread-headers", true));
@@ -652,7 +569,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
       for ( Data::ArticleTree::Thread::Child child : a_thread.children) {
         Article shown_article(_group, child.msg_id);
-        children.push_back(create_row(shown_article));
+        children.push_back(create_row(shown_article, child.sort_index));
         count++;
       }
 
@@ -698,6 +615,37 @@ void HeaderPane ::get_sort_order(int &sort_column, bool &sort_ascending) {
   }
 }
 
+void HeaderPane::refresh_row_sort_indexes() {
+  TimeElapsed timer;
+  gint sort_column_id(0);
+  GtkSortType sort_type;
+
+  auto tree = this->_tree_store;
+  gtk_tree_sortable_get_sort_column_id(GTK_TREE_SORTABLE(tree), &sort_column_id,
+                                       &sort_type);
+
+  bool ascending = sort_type == GTK_SORT_ASCENDING;
+
+  Data::header_column_enum sort_column =
+      Data::header_column_enum(sort_column_id);
+  LOG4CXX_DEBUG(logger, "refresh sort column id "
+                            << sort_column_id << " ascending ? " << ascending);
+  _atree->get_shown_threads(_threads, sort_column, ascending);
+
+  auto t = timer.get_seconds_elapsed();
+  LOG4CXX_TRACE(logger, "refresh sort done. Got "
+                            << _threads.size() << " threads in " << t << "s.");
+
+  int count(0);
+  for (Data::ArticleTree::Thread a_thread : _threads) {
+    for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+      Row *child_row(get_row(child.msg_id));
+      assert(child_row != nullptr);
+      child_row->index = child.sort_index;
+    }
+  };
+}
+
 void HeaderPane ::rebuild() {
   LOG4CXX_DEBUG(logger, "rebuild started");
   quarks_t selectme;
@@ -714,6 +662,10 @@ void HeaderPane ::rebuild() {
 
   _mid_to_row.clear();
   _tree_store = build_model(_group, _atree, sort_column, sort_ascending);
+
+  auto gtk_sort = sort_ascending ? GTK_SORT_ASCENDING : GTK_SORT_DESCENDING;
+  gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_tree_store),
+                                       sort_column, gtk_sort);
 
   GtkTreeModel *model(GTK_TREE_MODEL(_tree_store));
   GtkTreeView *view(GTK_TREE_VIEW(_tree_view));
@@ -960,7 +912,7 @@ void HeaderPane ::update_tree() {
       Article shown_article(_group, child.msg_id);
       Row *child_row(get_row(child.msg_id));
       g_assert(child_row == nullptr);
-      child_row = create_row(shown_article);
+      child_row = create_row(shown_article, child.sort_index);
       exposed++;
       children.push_back(child_row);
     }
@@ -1867,10 +1819,6 @@ void HeaderPane::build_tree_columns() {
 
     if (config.sort_column_id != -1) {
       gtk_tree_view_column_set_sort_column_id(col, config.sort_column_id);
-      gtk_tree_view_column_set_clickable(col, TRUE);
-
-      // Connect to clicked signal for sorting
-      g_signal_connect(col, "clicked", G_CALLBACK(on_column_clicked), this);
     }
 
     gtk_tree_view_column_set_cell_data_func(col, r, config.data_func, this,
@@ -1901,90 +1849,6 @@ void HeaderPane::build_tree_columns() {
         }
         break;
       }
-    }
-  }
-}
-
-// Column clicked callback
-void HeaderPane::on_column_clicked(GtkTreeViewColumn *column,
-                                   gpointer user_data) {
-  HeaderPane *instance = static_cast<HeaderPane *>(user_data);
-
-  // Get the sort column ID to identify which column was clicked
-  gint sort_column_id = gtk_tree_view_column_get_sort_column_id(column);
-
-  // Get current sort order, or default to ascending if not set
-  GtkSortType current_order = gtk_tree_view_column_get_sort_order(column);
-
-  // Toggle sort order
-  GtkSortType new_order = (current_order == GTK_SORT_ASCENDING)
-                              ? GTK_SORT_DESCENDING
-                              : GTK_SORT_ASCENDING;
-
-  // Clear sort indicators on all other columns
-  instance->clear_other_column_sort_indicators(column);
-
-  // Update the clicked column's sort indicator
-  gtk_tree_view_column_set_sort_order(column, new_order);
-  gtk_tree_view_column_set_sort_indicator(column, TRUE);
-
-  // Call method to rebuild tree with sorted data
-  instance->rebuild_tree_with_sorted_data(sort_column_id, new_order);
-}
-
-// Clear sort indicators on other columns
-void HeaderPane::clear_other_column_sort_indicators(
-    GtkTreeViewColumn *clicked_column) {
-  GtkTreeView *tree_view = GTK_TREE_VIEW(_tree_view);
-  GList *columns = gtk_tree_view_get_columns(tree_view);
-
-  for (GList *l = columns; l != nullptr; l = l->next) {
-    GtkTreeViewColumn *col = GTK_TREE_VIEW_COLUMN(l->data);
-    if (col != clicked_column) {
-      gtk_tree_view_column_set_sort_indicator(col, FALSE);
-    }
-  }
-
-  g_list_free(columns);
-}
-
-// Rebuild tree with sorted data from database
-void HeaderPane::rebuild_tree_with_sorted_data(gint sort_column_id,
-                                               GtkSortType sort_order) {
-  Data::header_column_enum sort_column =
-      Data::header_column_enum(sort_column_id);
-
-  TimeElapsed timer;
-  LOG4CXX_DEBUG(logger, "sorting tree store with col id " << sort_column);
-
-  PanTreeStore *store(_tree_store);
-  bool const do_thread(_prefs.get_flag("thread-headers", true));
-
-  std::vector<Data::ArticleTree::Thread> threads;
-  bool is_asc = sort_order == GTK_SORT_ASCENDING;
-  _atree->get_sorted_shown_threads(threads, sort_column, is_asc);
-
-  auto t = timer.get_seconds_elapsed();
-  LOG4CXX_TRACE(logger,
-                "got " << threads.size() << " threads in " << t << "s.");
-
-  std::vector<PanTreeStore::Row*> children;
-  PanTreeStore::Row *parent(nullptr);
-
-  int count(0);
-  for (Data::ArticleTree::Thread a_thread : threads) {
-    Quark prt_id(a_thread.parent_id);
-    Row *tmp_parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
-
-    for (Data::ArticleTree::Thread::Child child: a_thread.children) {
-      Row *tmp_child(get_row(child.msg_id));
-      if (parent != tmp_parent) {
-        store->update_children(parent,children);
-        parent = tmp_parent;
-        children.clear();
-        count++;
-      }
-      children.push_back(tmp_child);
     }
   }
 }
