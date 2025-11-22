@@ -938,7 +938,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   assert(group_id != 0);
 
   SQLite::Statement read_article_q(pan_db,R"SQL(
-    select message_id, `references`
+    select message_id
       from article
       join article_group as ag on ag.article_id = article.id
       where ag.group_id = ?
@@ -1003,8 +1003,7 @@ void DataImpl ::load_headers_from_db(Quark const &group) {
   while (read_article_q.executeStep()) {
     Article &a(h->alloc_new_article());
 
-    int i(0);
-    char const *message_id = read_article_q.getColumn(i++);
+    char const *message_id = read_article_q.getColumn(0);
     a.group = group;
     a.message_id = Quark(message_id);
     ++article_count;
