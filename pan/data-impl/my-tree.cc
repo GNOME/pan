@@ -142,8 +142,8 @@ int DataImpl ::MyTree ::fill_article_view_from_article() const
     // then update article view with show status, create new entry if needed
     // set again parent_id so  set_parent_in_article_view() works as expected
   return R"SQL(
-       with f (article_id, parent_id, to_delete) as (
-         select article.id, article.parent_id, to_delete
+       with f (article_id) as (
+         select article.id
          from article
          join article_group as ag on ag.article_id = article.id
          join `group` as g on ag.group_id = g.id
@@ -151,8 +151,8 @@ int DataImpl ::MyTree ::fill_article_view_from_article() const
          join + "where " + (where.empty() ? "true" : where) + R"SQL(
          and g.name == ? and not article.to_delete
        )
-       insert into article_view (article_id, parent_id, status)
-       select distinct article_id, parent_id, "e" from f where not to_delete
+       insert into article_view (article_id, status)
+       select distinct article_id, "e" from f where true
        on conflict (article_id)
        do update set mark = False
     )SQL";
