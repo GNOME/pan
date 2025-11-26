@@ -495,7 +495,11 @@ int HeaderPane ::column_compare_func(GtkTreeModel *model, GtkTreeIter *iter_a,
   } else if (row_a.index > row_b.index) {
     ret = 1;
   } else {
-    ret = 0;
+    LOG4CXX_ERROR(logger, "Duplicated sort index " << row_a.index << " for msg "
+                                                   << row_a.article.message_id
+                                                   << " and "
+                                                   << row_b.article.message_id);
+    assert(0);
   }
 
   return ret;
