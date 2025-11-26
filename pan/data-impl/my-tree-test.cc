@@ -154,6 +154,24 @@ class DataImplTest : public CppUnit::TestFixture
       q_article_xref.exec();
     }
 
+    void assert_parent_mid(std::string label,
+                       Quark const &mid,
+                       std::string expected_parent_mid)
+    {
+      std::string str("select av.parent_id from article "
+                      " join article_view as av on av.article_id == article.id"
+                      " where message_id == ?");
+
+      SQLite::Statement q(pan_db, str);
+      q.bind(1, mid);
+
+      while (q.executeStep()) {
+        std::string parent_msg_id = q.getColumn(0);
+        auto str = fmt::format("{} parent msg_id", label);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(str, expected_parent_mid, parent_msg_id);
+      }
+    }
+
     void mark_to_delete_article(std::string msg_id)
     {
       // mark articles as pending deletion
@@ -859,6 +877,34 @@ class DataImplTest : public CppUnit::TestFixture
       prt = reparented.at("g1m1d2");
       CPPUNIT_ASSERT_EQUAL_MESSAGE(
         "check new g1m1d2 parent", std::string(""), prt);
+    }
+
+    // check reparented status of article.
+    void test_reparent_to_root()
+    {
+      add_test_articles();
+      criteria.set_type_is_unread();
+
+      // g1m1a -> g1m1b +--> g1m1c1 -> g1m1d1
+      //                 \-> g1m1c2 -> g1m1d2
+
+      // init article view, some articles are shown
+      tree =
+        data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
+      tree->initialize_article_view();
+      tree->update_article_after_gui_update();
+
+      // filter on g1m1b, which must be reparented to root, i.e. its
+      // parent_id in article_view must by null, even if its parent_id
+      // is not null in article table.
+      TextMatch::Description d;
+      d.text = "g1m1b";
+      criteria.set_type_text(Quark("Message-Id"), d);
+      tree->set_filter(Data::SHOW_ARTICLES, &criteria);
+
+      tree->update_article_view();
+      assert_reparented("step 1", "g1m1b");
+      assert_parent_mid("", "g1m1b", "");
     }
 
     // check hidden status of articles
