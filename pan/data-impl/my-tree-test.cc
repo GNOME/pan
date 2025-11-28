@@ -938,11 +938,8 @@ class DataImplTest : public CppUnit::TestFixture
       assert_shown("step 2", "g1m1b");
 
       // msg_id -> new_parent_id
-      std::set<std::string> hidden;
-      auto insert_in_stack = [&hidden](Quark msg_id) {
-        hidden.insert(msg_id.to_string());
-      };
-      int count = tree->call_on_hidden_articles(insert_in_stack);
+      quarks_t hidden;
+      int count = tree->get_hidden_articles(hidden);
 
       CPPUNIT_ASSERT_EQUAL_MESSAGE("check hidden nb", 3, count);
       CPPUNIT_ASSERT_MESSAGE("check hidden g1m1c1",

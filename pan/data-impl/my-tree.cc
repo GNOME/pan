@@ -412,8 +412,7 @@ int DataImpl ::MyTree ::call_on_reparented_articles(
 
 // apply function on hidden articles
 // Returns the number of hidden articles
-int DataImpl ::MyTree ::call_on_hidden_articles(
-    std::function<void(Quark msg_id)> cb) const {
+int DataImpl ::MyTree ::get_hidden_articles(quarks_t &fillme) const {
   std::string q = R"SQL(
     select message_id
     from article_view as av
@@ -425,7 +424,7 @@ int DataImpl ::MyTree ::call_on_hidden_articles(
   int count(0);
   while (st.executeStep()) {
     std::string msg_id (st.getColumn(0).getText());
-    cb(msg_id);
+    fillme.insert(msg_id);
     count++;
   }
   return count;

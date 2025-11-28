@@ -447,8 +447,7 @@ public:
           bool ascending = false) const override;
         int call_on_reparented_articles(
           std::function<void(Quark msg_id, Quark new_parent_id)> cb) const override;
-        int call_on_hidden_articles(
-          std::function<void(Quark msg_id)> cb) const override;
+        int get_hidden_articles(quarks_t &fillme) const override;
         void get_shown_parent_ids(std::vector<Quark> &shown_parents_ids) const override;
 
       private:

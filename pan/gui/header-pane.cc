@@ -28,7 +28,6 @@
 #include <SQLiteCpp/Statement.h>
 #include <algorithm>
 #include <cctype>
-#include <cmath>
 #include <config.h>
 #include <gdk/gdk.h>
 #include <glib-object.h>
@@ -876,8 +875,7 @@ void HeaderPane ::update_tree() {
                             << selection_was_visible << get_elapsed_time());
 
   quarks_t hidden;
-  auto insert_hidden_row = [&hidden](Quark msg_id) { hidden.insert(msg_id); };
-  _atree->call_on_hidden_articles(insert_hidden_row);
+  _atree->get_hidden_articles(hidden);
 
   LOG4CXX_TRACE(logger, "nb of hidden or removed articles: "
                             << hidden.size() << get_elapsed_time());
