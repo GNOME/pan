@@ -903,19 +903,19 @@ void HeaderPane ::update_tree() {
     action_next_if(tester, actor);
   }
 
-
-  // store sort index of unchanged or reparented articles
-  count= _atree->get_threads(threads, sort_column, sort_ascending, R"-(in ("r","s"))-");
-  LOG4CXX_TRACE(logger, "nb of shown or reparented articles: " << count
-                                                         << get_elapsed_time());
-
+  // store sort index of shown (i.e. unchanged) or reparented articles
+  count = 0;
   for (Data::ArticleTree::Thread a_thread : threads) {
     for (Data::ArticleTree::Thread::Child child : a_thread.children) {
-      Row *child_row(get_row(child.msg_id));
-      g_assert(child_row);
-      child_row->index = child.sort_index;
+      if (child.status == 's' || child.status == 'r') {
+        Row *child_row(get_row(child.msg_id));
+        g_assert(child_row);
+        child_row->index = child.sort_index;
+      }
     }
   }
+  LOG4CXX_TRACE(logger, "nb of shown or reparented articles: " << count
+                                                         << get_elapsed_time());
 
   // exposed articles...
   count = _atree->get_exposed_articles(threads, sort_column, sort_ascending);
