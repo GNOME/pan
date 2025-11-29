@@ -874,8 +874,22 @@ void HeaderPane ::update_tree() {
                             << new_selection.size() << " was visible "
                             << selection_was_visible << get_elapsed_time());
 
+  std::vector<Data::ArticleTree::Thread> threads;
+  bool sort_ascending;
+  int sort_column_int, count;
+  get_sort_order(sort_column_int, sort_ascending);
+  auto sort_column = Data::header_column_enum(sort_column_int);
+  count = _atree->get_threads(threads, sort_column, sort_ascending);
+  LOG4CXX_TRACE(logger, "nb of articles in view: " << count << get_elapsed_time());
+
   quarks_t hidden;
-  _atree->get_hidden_articles(hidden);
+  for (Data::ArticleTree::Thread a_thread : threads) {
+    for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+      if (child.status == 'h') {
+        hidden.insert(child.msg_id);
+      }
+    }
+  }
 
   LOG4CXX_TRACE(logger, "nb of hidden or removed articles: "
                             << hidden.size() << get_elapsed_time());
@@ -889,11 +903,6 @@ void HeaderPane ::update_tree() {
     action_next_if(tester, actor);
   }
 
-  std::vector<Data::ArticleTree::Thread> threads;
-  bool sort_ascending;
-  int sort_column_int, count;
-  get_sort_order(sort_column_int, sort_ascending);
-  Data::header_column_enum sort_column = Data::header_column_enum(sort_column_int);
 
   // store sort index of unchanged or reparented articles
   count= _atree->get_threads(threads, sort_column, sort_ascending, R"-(in ("r","s"))-");
