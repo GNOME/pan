@@ -578,6 +578,7 @@ class Data :
 
           struct Child {
             Quark msg_id;
+            char status; // either h e r or s
             int64_t sort_index;
           };
 

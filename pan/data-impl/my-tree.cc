@@ -222,10 +222,11 @@ int run_sql(std::string &q,
   while (st.executeStep()) {
     Data::ArticleTree::Thread::Child child;
     child.msg_id = st.getColumn(0).getText();
-    child.sort_index = st.getColumn(1);
+    child.status = st.getColumn(1)[0];
+    child.sort_index = st.getColumn(2);
     Quark prt_id;
-    if (!st.getColumn(2).isNull()) {
-      prt_id = st.getColumn(2).getText();
+    if (!st.getColumn(3).isNull()) {
+      prt_id = st.getColumn(3).getText();
     }
     if (prt_id != current_prt_id) {
       Data::ArticleTree::Thread thread;
@@ -302,7 +303,7 @@ int DataImpl ::MyTree ::get_threads(
       )
     )
     -- now we can filter by required status
-    select msg_id, sort_index, prt_msg_id from all_visible_article
+    select msg_id, status, sort_index, prt_msg_id from all_visible_article
     where status {2}
     order by step, prt_msg_id, sort_index
   )SQL";
@@ -330,15 +331,15 @@ int DataImpl ::MyTree ::get_sorted_shown_threads(
 
   // prt_msg_id is not allowed in window definition, must use a CTE
   std::string format = R"SQL(
-    with thread (msg_id, time_posted, sort_data, prt_msg_id) as (
-      select message_id, time_posted, {0},
+    with thread (msg_id, status, time_posted, sort_data, prt_msg_id) as (
+      select message_id, status, time_posted, {0},
             (select message_id from article as a_in where a_in.id = av.parent_id) as prt_msg_id
       from article_view as av
       join article as a on a.id == av.article_id
       {1}
       where status is not "h"
     )
-    select msg_id, row_number() over thread_window, prt_msg_id
+    select msg_id, status, row_number() over thread_window, prt_msg_id
     from thread
     window thread_window as (
       partition by prt_msg_id

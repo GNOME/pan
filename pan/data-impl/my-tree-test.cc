@@ -304,6 +304,12 @@ class DataImplTest : public CppUnit::TestFixture
         CPPUNIT_ASSERT_EQUAL_MESSAGE(l2 + "sort index",
                                      a.children[i].sort_index,
                                      b.children[i].sort_index);
+        char s(a.children[i].status);
+        bool ok = s == 'h' || s == 'e' || s == 'r' || s == 's';
+        CPPUNIT_ASSERT_MESSAGE(l2 + "status correct",ok);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(l2 + "status match",
+                                     a.children[i].status,
+                                     b.children[i].status);
       }
     }
 
@@ -747,9 +753,9 @@ class DataImplTest : public CppUnit::TestFixture
       assert_children(step, Quark(), "g1", {"g1m1a", "g1m2"});
 
       exp_threads = {
-        {"", {{"g1m1a", 1}, {"g1m2", 2}}},
-        {"g1m1a", {{"g1m1c1",1}}}
-        };
+        {"",      {{"g1m1a", 'e', 1}, {"g1m2",'e', 2}}},
+        {"g1m1a", {{"g1m1c1",'e',1}}}
+      };
       int count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
       CPPUNIT_ASSERT_EQUAL_MESSAGE(step + " exposed count ", 3, count);
       assert_equal_threads(step, __LINE__, exp_threads, threads);
@@ -765,11 +771,11 @@ class DataImplTest : public CppUnit::TestFixture
       tree->update_article_view();
 
       exp_threads = {
-          {"",  {{"g1m1b",1},{"g1m2a",2}}},
-          {"g1m1b",  {{"g1m1c2",1},{"g1m1d1",2}}}, // c2 added before d1
-          {"g1m2a",  {{"g1m2b",1}}},
-          {"g1m1c2", {{"g1m1d2",1}}},
-          {"g1m2b",  {{"g1m2c",1}}},
+          {"",       {{"g1m1b", 'e',1}, {"g1m2a", 'e',2}}},
+          {"g1m1b",  {{"g1m1c2",'e',1}, {"g1m1d1",'e',2}}}, // c2 added before d1
+          {"g1m2a",  {{"g1m2b", 'e',1}}},
+          {"g1m1c2", {{"g1m1d2",'e',1}}},
+          {"g1m2b",  {{"g1m2c", 'e',1}}},
       };
 
       count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
@@ -802,8 +808,8 @@ class DataImplTest : public CppUnit::TestFixture
       count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
 
       exp_threads = {
-        {"", {{"g1m1a", 1}, {"g1m2", 3}}},
-        {"g1m1b", {{"g1m1c1",1}}}
+        {"", {{"g1m1a",'e', 1}, {"g1m2",'e', 3}}},
+        {"g1m1b", {{"g1m1c1",'e',1}}}
         };
 
       assert_equal_threads(step, __LINE__, exp_threads, threads);
