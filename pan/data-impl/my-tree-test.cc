@@ -548,6 +548,31 @@ class DataImplTest : public CppUnit::TestFixture
       assert_not_in_view("step 3", "g1m1d2");
     }
 
+    void test_get_threads()
+    {
+      add_test_articles();
+      // g1m1a -> g1m1b +--> g1m1c1 -> g1m1d1
+      //                 \-> g1m1c2 -> g1m1d2
+      // g1m2a -> g1m2b -> g1m2c
+      // g1m2
+      tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
+      tree->initialize_article_view();
+
+      std::vector<Data::ArticleTree::Thread> threads, exp_threads;
+      exp_threads = {
+        {"",       {{"g1m1a",  'e', 1}, {"g1m2a", 'e', 2}, {"g1m2", 'e', 3}}},
+        {"g1m1a",  {{"g1m1b",  'e', 1}}},
+        {"g1m2a",  {{"g1m2b",  'e', 1}}},
+        {"g1m1b",  {{"g1m1c1", 'e', 1}, {"g1m1c2", 'e', 2}}},
+        {"g1m2b",  {{"g1m2c",  'e', 1}}},
+        {"g1m1c1", {{"g1m1d1", 'e', 1}}},
+        {"g1m1c2", {{"g1m1d2", 'e', 1}}},
+      };
+
+      int count = tree->get_threads(threads, pan::Data::COL_DATE, true );
+      assert_equal_threads("get threads ", __LINE__, exp_threads, threads);
+    }
+
     // emulates showing article using a callback, and with articles
     // sorted in hierarchy
     void test_function_on_shown_articles()
@@ -564,7 +589,9 @@ class DataImplTest : public CppUnit::TestFixture
       std::set<std::string> stack;
       int step(1);
 
-      int count = tree->get_shown_threads(threads, pan::Data::COL_DATE, true);
+      // after initialize_article_view, all articles have (e)xposed
+      // status, so get_threads or get_shown_threads yield the same result
+      int count = tree->get_threads(threads, pan::Data::COL_DATE, true);
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 shown count ", 10, count);
       for (Data::ArticleTree::Thread a_thread : threads) {
         Quark prt_id(a_thread.parent_id);
@@ -771,7 +798,19 @@ class DataImplTest : public CppUnit::TestFixture
       tree->update_article_view();
 
       exp_threads = {
-          {"",       {{"g1m1b", 'e',1}, {"g1m2a", 'e',2}}},
+        {"", {{"g1m1a", 'h', 1}, {"g1m1b", 'e', 2}, {"g1m2a", 'e', 3}}},
+        {"g1m1a", {{"g1m1c1", 'h', 1}}},
+        {"g1m1b", {{"g1m1c2", 'e', 1}, {"g1m1d1", 'e', 2}}}, // c2 added before d1
+        {"g1m2a", {{"g1m2b", 'e', 1}}},
+        {"g1m1c2", {{"g1m1d2", 'e', 1}}},
+        {"g1m2b", {{"g1m2c", 'e', 1}}}
+      };
+
+      count = tree->get_threads(threads, pan::Data::COL_DATE, true );
+      assert_equal_threads(step, __LINE__, exp_threads, threads);
+
+      exp_threads = {
+          {"",       {{"g1m1b", 'e',2}, {"g1m2a", 'e',3}}},
           {"g1m1b",  {{"g1m1c2",'e',1}, {"g1m1d1",'e',2}}}, // c2 added before d1
           {"g1m2a",  {{"g1m2b", 'e',1}}},
           {"g1m1c2", {{"g1m1d2",'e',1}}},
@@ -987,8 +1026,9 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_middle_thread);
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_article_deletion);
-    CPPUNIT_TEST(test_function_on_shown_articles);
     CPPUNIT_TEST(test_article_sort);
+    CPPUNIT_TEST(test_get_threads);
+    CPPUNIT_TEST(test_function_on_shown_articles);
     CPPUNIT_TEST(test_function_on_exposed_articles);
     CPPUNIT_TEST(test_exposed_articles_from_scratch);
     CPPUNIT_TEST(test_function_on_reparented_articles);

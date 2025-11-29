@@ -433,7 +433,7 @@ public:
         int
         get_threads(std::vector<Data::ArticleTree::Thread> &threads,
                     header_column_enum sort_column, bool sort_ascending,
-                    std::string status_cond) const override;
+                    std::string status_cond = "") const override;
         int get_shown_threads(
           std::vector<Data::ArticleTree::Thread> &threads,
           header_column_enum sort_column, bool sort_ascending) const override;

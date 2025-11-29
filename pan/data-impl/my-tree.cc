@@ -278,7 +278,7 @@ int DataImpl ::MyTree ::get_threads(
       from article_view as av
       join article as a on a.id == av.article_id
       {1}
-      where av.parent_id is null and av.status is not "h"
+      where av.parent_id is null
 
       union all
 
@@ -288,7 +288,7 @@ int DataImpl ::MyTree ::get_threads(
       join article as a on a.id == av.article_id
       {1}
       join hierarchy as h
-	    where av.status is not "h" and av.parent_id is not null and av.parent_id = h.a_id
+	    where av.parent_id is not null and av.parent_id = h.a_id
       limit 10000000 -- todo remove ?
     ),
     all_visible_article (step, msg_id, sort_index, status, prt_msg_id) as (
@@ -304,11 +304,12 @@ int DataImpl ::MyTree ::get_threads(
     )
     -- now we can filter by required status
     select msg_id, status, sort_index, prt_msg_id from all_visible_article
-    where status {2}
+    {2}
     order by step, prt_msg_id, sort_index
   )SQL";
 
-  std::string q = fmt::format(format,db_column, db_join, status_cond, direction);
+  std::string where = status_cond.empty() ? "" : "where status " + status_cond ;
+  std::string q = fmt::format(format,db_column, db_join, where, direction);
 
   return run_sql(q, threads);
 }
