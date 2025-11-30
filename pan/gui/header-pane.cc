@@ -918,15 +918,16 @@ void HeaderPane ::update_tree() {
                                                          << get_elapsed_time());
 
   // exposed articles...
-  count = _atree->get_exposed_articles(threads, sort_column, sort_ascending);
-
-  LOG4CXX_TRACE(logger, "nb of exposed articles: " << count
-                                                         << get_elapsed_time());
+  count = 0;
 
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore::parent_to_children_t shown;
   int exposed(0);
   for (const Data::ArticleTree::Thread& a_thread : threads) {
+    if (a_thread.is_hidden()) {
+      continue;
+    }
+
     Quark prt_id(a_thread.parent_id);
     Row *parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
     // sanity check: a child must not be parentless in the tree widget
@@ -934,12 +935,14 @@ void HeaderPane ::update_tree() {
     PanTreeStore::rows_t children;
 
     for (const Data::ArticleTree::Thread::Child& child : a_thread.children) {
-      Article shown_article(_group, child.msg_id);
-      Row *child_row(get_row(child.msg_id));
-      g_assert(child_row == nullptr);
-      child_row = create_row(shown_article, child.sort_index);
-      exposed++;
-      children.push_back(child_row);
+      if (child.is_exposed()) {
+        Article shown_article(_group, child.msg_id);
+        Row *child_row(get_row(child.msg_id));
+        g_assert(child_row == nullptr);
+        child_row = create_row(shown_article, child.sort_index);
+        exposed++;
+        children.push_back(child_row);
+      }
     }
 
     // children is empty when no child is exposed
@@ -947,6 +950,9 @@ void HeaderPane ::update_tree() {
       shown[parent] = children;
     }
   }
+
+  LOG4CXX_TRACE(logger,
+                "nb of exposed articles: " << exposed << get_elapsed_time());
 
   if (exposed > 0) {
     g_object_ref(G_OBJECT(_tree_store));
