@@ -293,6 +293,9 @@ class DataImplTest : public CppUnit::TestFixture
                              Data::ArticleTree::Thread b) {
       CPPUNIT_ASSERT_EQUAL_MESSAGE(l + "parent_id", a.parent_id.to_string(),
                                    b.parent_id.to_string());
+      if (!a.parent_id.empty()) {
+          CPPUNIT_ASSERT_EQUAL_MESSAGE(l + "prt_status", a.str_status(), b.str_status());
+      }
       CPPUNIT_ASSERT_EQUAL_MESSAGE(l + "nb of children", a.parent_id.size(),
                                    b.parent_id.size());
 
@@ -304,12 +307,12 @@ class DataImplTest : public CppUnit::TestFixture
         CPPUNIT_ASSERT_EQUAL_MESSAGE(l2 + "sort index",
                                      a.children[i].sort_index,
                                      b.children[i].sort_index);
-        char s(a.children[i].status);
-        bool ok = s == 'h' || s == 'e' || s == 'r' || s == 's';
+        auto c(a.children[i]);
+        bool ok = c.is_exposed() || c.is_hidden() || c.is_reparented() || c.is_reparented();
         CPPUNIT_ASSERT_MESSAGE(l2 + "status correct",ok);
         CPPUNIT_ASSERT_EQUAL_MESSAGE(l2 + "status match",
-                                     a.children[i].status,
-                                     b.children[i].status);
+                                     a.children[i].str_status(),
+                                     b.children[i].str_status());
       }
     }
 
@@ -560,13 +563,13 @@ class DataImplTest : public CppUnit::TestFixture
 
       std::vector<Data::ArticleTree::Thread> threads, exp_threads;
       exp_threads = {
-        {"",       {{"g1m1a",  'e', 1}, {"g1m2a", 'e', 2}, {"g1m2", 'e', 3}}},
-        {"g1m1a",  {{"g1m1b",  'e', 1}}},
-        {"g1m2a",  {{"g1m2b",  'e', 1}}},
-        {"g1m1b",  {{"g1m1c1", 'e', 1}, {"g1m1c2", 'e', 2}}},
-        {"g1m2b",  {{"g1m2c",  'e', 1}}},
-        {"g1m1c1", {{"g1m1d1", 'e', 1}}},
-        {"g1m1c2", {{"g1m1d2", 'e', 1}}},
+        {"",       "x", {{"g1m1a",  "e", 1}, {"g1m2a", "e", 2}, {"g1m2", "e", 3}}},
+        {"g1m1a",  "e", {{"g1m1b",  "e", 1}}},
+        {"g1m2a",  "e", {{"g1m2b",  "e", 1}}},
+        {"g1m1b",  "e", {{"g1m1c1", "e", 1}, {"g1m1c2", "e", 2}}},
+        {"g1m2b",  "e", {{"g1m2c",  "e", 1}}},
+        {"g1m1c1", "e", {{"g1m1d1", "e", 1}}},
+        {"g1m1c2", "e", {{"g1m1d2", "e", 1}}},
       };
 
       int count = tree->get_threads(threads, pan::Data::COL_DATE, true );
@@ -780,8 +783,8 @@ class DataImplTest : public CppUnit::TestFixture
       assert_children(step, Quark(), "g1", {"g1m1a", "g1m2"});
 
       exp_threads = {
-        {"",      {{"g1m1a", 'e', 1}, {"g1m2",'e', 2}}},
-        {"g1m1a", {{"g1m1c1",'e',1}}}
+        {"",      "x", {{"g1m1a", "e", 1}, {"g1m2","e", 2}}},
+        {"g1m1a", "e", {{"g1m1c1","e",1}}}
       };
       int count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
       CPPUNIT_ASSERT_EQUAL_MESSAGE(step + " exposed count ", 3, count);
@@ -798,23 +801,23 @@ class DataImplTest : public CppUnit::TestFixture
       tree->update_article_view();
 
       exp_threads = {
-        {"", {{"g1m1a", 'h', 1}, {"g1m1b", 'e', 2}, {"g1m2a", 'e', 3}}},
-        {"g1m1a", {{"g1m1c1", 'h', 1}}},
-        {"g1m1b", {{"g1m1c2", 'e', 1}, {"g1m1d1", 'e', 2}}}, // c2 added before d1
-        {"g1m2a", {{"g1m2b", 'e', 1}}},
-        {"g1m1c2", {{"g1m1d2", 'e', 1}}},
-        {"g1m2b", {{"g1m2c", 'e', 1}}}
+        {"",      "x", {{"g1m1a", "h", 1}, {"g1m1b", "e", 2}, {"g1m2a", "e", 3}}},
+        {"g1m1a", "h", {{"g1m1c1", "h", 1}}},
+        {"g1m1b", "e", {{"g1m1c2", "e", 1}, {"g1m1d1", "e", 2}}}, // c2 added before d1
+        {"g1m2a", "e", {{"g1m2b", "e", 1}}},
+        {"g1m1c2","e", {{"g1m1d2", "e", 1}}},
+        {"g1m2b", "e", {{"g1m2c", "e", 1}}}
       };
 
       count = tree->get_threads(threads, pan::Data::COL_DATE, true );
       assert_equal_threads(step, __LINE__, exp_threads, threads);
 
       exp_threads = {
-          {"",       {{"g1m1b", 'e',2}, {"g1m2a", 'e',3}}},
-          {"g1m1b",  {{"g1m1c2",'e',1}, {"g1m1d1",'e',2}}}, // c2 added before d1
-          {"g1m2a",  {{"g1m2b", 'e',1}}},
-          {"g1m1c2", {{"g1m1d2",'e',1}}},
-          {"g1m2b",  {{"g1m2c", 'e',1}}},
+          {"",      "x", {{"g1m1b", "e",2}, {"g1m2a", "e",3}}},
+          {"g1m1b", "e", {{"g1m1c2","e",1}, {"g1m1d1","e",2}}}, // c2 added before d1
+          {"g1m2a", "e", {{"g1m2b", "e",1}}},
+          {"g1m1c2","e", {{"g1m1d2","e",1}}},
+          {"g1m2b", "e", {{"g1m2c", "e",1}}},
       };
 
       count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
@@ -847,8 +850,8 @@ class DataImplTest : public CppUnit::TestFixture
       count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
 
       exp_threads = {
-        {"", {{"g1m1a",'e', 1}, {"g1m2",'e', 3}}},
-        {"g1m1b", {{"g1m1c1",'e',1}}}
+        {"",      "x", {{"g1m1a","e", 1}, {"g1m2","e", 3}}},
+        {"g1m1b", "r", {{"g1m1c1","e",1}}}
         };
 
       assert_equal_threads(step, __LINE__, exp_threads, threads);

@@ -574,16 +574,68 @@ class Data :
             quarks_t changed;
         };
 
-        struct Thread {
+      enum class ThreadStatus { Unknown, Hidden, Exposed, Reparented, Shown };
 
-          struct Child {
+        struct StatusHolder {
+          ThreadStatus status{ThreadStatus::Unknown};
+
+          std::map<std::string, pan::Data::ArticleTree::ThreadStatus> statusMap{
+              {"h", pan::Data::ArticleTree::ThreadStatus::Hidden},
+              {"e", pan::Data::ArticleTree::ThreadStatus::Exposed},
+              {"r", pan::Data::ArticleTree::ThreadStatus::Reparented},
+              {"s", pan::Data::ArticleTree::ThreadStatus::Shown},
+              {"x", pan::Data::ArticleTree::ThreadStatus::Unknown},
+          };
+          bool is_hidden() const { return status == ThreadStatus::Hidden; }
+          bool is_exposed() const { return status == ThreadStatus::Exposed; }
+          bool is_reparented() const {
+            return status == ThreadStatus::Reparented;
+          }
+          bool is_shown() const { return status == ThreadStatus::Shown; }
+          void set_status(ThreadStatus new_status) { status = new_status; }
+          void set_status(std::string new_status) {
+            status = statusMap[new_status];
+          }
+          std::string str_status() {
+            if (is_hidden()) return "h";
+            if (is_exposed()) return "e";
+            if (is_reparented()) return "r";
+            if (is_shown()) return "s";
+            return "x";
+          }
+          StatusHolder() = default;
+          StatusHolder(ThreadStatus st) : status(st) {};
+          StatusHolder(std::string st) {
+            status = statusMap[st];
+          };
+        };
+
+        struct Thread : public StatusHolder {
+          struct Child : public StatusHolder {
             Quark msg_id;
-            char status; // either h e r or s
-            int64_t sort_index;
+            int64_t sort_index{0};
+            Child() = default;
+            Child(Quark id, ThreadStatus st, int64_t index)
+              : msg_id(id), sort_index(index) {
+              status = st; // Initialize the inherited status
+            }
+            Child(Quark id, std::string st, int64_t index)
+              : msg_id(id), sort_index(index) {
+              status = statusMap[st]; // Initialize the inherited status
+            }
           };
 
           Quark parent_id;
           std::vector<Child> children;
+          Thread() = default;
+          Thread(Quark id, ThreadStatus st, std::vector<Child> children)
+              : parent_id(id), children(children) {
+              status = st; // Initialize the inherited status
+            }
+          Thread(Quark id, std::string st, std::vector<Child> children)
+              : parent_id(id), children(children) {
+              status = statusMap[st]; // Initialize the inherited status
+            }
         };
 
         /**

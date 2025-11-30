@@ -885,7 +885,7 @@ void HeaderPane ::update_tree() {
   quarks_t hidden;
   for (Data::ArticleTree::Thread a_thread : threads) {
     for (Data::ArticleTree::Thread::Child child : a_thread.children) {
-      if (child.status == 'h') {
+      if (child.is_hidden()) {
         hidden.insert(child.msg_id);
       }
     }
@@ -907,7 +907,7 @@ void HeaderPane ::update_tree() {
   count = 0;
   for (Data::ArticleTree::Thread a_thread : threads) {
     for (Data::ArticleTree::Thread::Child child : a_thread.children) {
-      if (child.status == 's' || child.status == 'r') {
+      if (child.is_shown() || child.is_reparented()) {
         Row *child_row(get_row(child.msg_id));
         g_assert(child_row);
         child_row->index = child.sort_index;

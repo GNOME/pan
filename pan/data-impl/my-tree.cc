@@ -207,33 +207,40 @@ int run_sql(std::string &q,
             std::vector<Data::ArticleTree::Thread> &threads) {
   TimeElapsed timer;
 
+  threads.clear(); // safety measure
+
   LOG4CXX_TRACE(logger, "sql request is " << q);
 
   SQLite::Statement st(pan_db, q);
   int count(0);
-  Quark current_prt_id;
-  Data::ArticleTree::Thread root;
+  Quark current_prt_id, prt_id;
+  Data::ArticleTree::Thread root, thread;
+  Data::ArticleTree::Thread::Child child;
   std::map<Quark, bool> checkPrt;
 
-  threads.push_back(root);
   root.parent_id = current_prt_id;
+  root.status = pan::Data::ArticleTree::ThreadStatus::Unknown;
+  threads.push_back(root);
+
   checkPrt[current_prt_id] = true;
 
   while (st.executeStep()) {
-    Data::ArticleTree::Thread::Child child;
     child.msg_id = st.getColumn(0).getText();
-    child.status = st.getColumn(1)[0];
+    child.set_status(st.getColumn(1));
     child.sort_index = st.getColumn(2);
-    Quark prt_id;
-    if (!st.getColumn(3).isNull()) {
+    if (st.getColumn(3).isNull()) {
+      prt_id.clear();
+    }
+    else {
       prt_id = st.getColumn(3).getText();
     }
     if (prt_id != current_prt_id) {
-      Data::ArticleTree::Thread thread;
       thread.parent_id = prt_id;
+      thread.set_status(st.getColumn(4));
       current_prt_id = prt_id;
       assert(!checkPrt[current_prt_id]);
       threads.push_back(thread);
+      thread.children.clear();
     }
     threads.back().children.push_back(child);
     count++;
@@ -261,8 +268,6 @@ int DataImpl ::MyTree ::get_threads(
   std::vector<Data::ArticleTree::Thread> &threads,
   header_column_enum sort_column, bool sort_ascending, std::string status_cond) const {
 
-  threads.clear(); // safety measure
-
   // Map column IDs to database column names
   std::string db_column, db_join;
   set_join_and_column(sort_column, db_column, db_join);
@@ -272,9 +277,9 @@ int DataImpl ::MyTree ::get_threads(
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   // see https://sqlite.org/windowfunctions.html for row_number function
   std::string format = R"SQL(
-    with recursive hierarchy (step, a_id, m_id, p_id, h_time, status, sort_data) as (
+    with recursive hierarchy (step, a_id, m_id, p_id, h_time, status, prt_status, sort_data) as (
       -- all non-filtered not hidden root articles
-      select 1, a.id, message_id, av.parent_id, a.time_posted, av.status, {0}
+      select 1, a.id, message_id, av.parent_id, a.time_posted, av.status, null, {0}
       from article_view as av
       join article as a on a.id == av.article_id
       {1}
@@ -283,7 +288,7 @@ int DataImpl ::MyTree ::get_threads(
       union all
 
       -- all non-filtered not hidden children of a parent article
-      select step+1, a.id, a.message_id, av.parent_id, a.time_posted, av.status, {0}
+      select step+1, a.id, a.message_id, av.parent_id, a.time_posted, av.status, h.status, {0}
       from article_view as av
       join article as a on a.id == av.article_id
       {1}
@@ -291,10 +296,12 @@ int DataImpl ::MyTree ::get_threads(
 	    where av.parent_id is not null and av.parent_id = h.a_id
       limit 10000000 -- todo remove ?
     ),
-    all_visible_article (step, msg_id, sort_index, status, prt_msg_id) as (
+    -- use another CTE because window used to add sort_index cannot be used in recursive CTE
+    all_visible_article (step, msg_id, sort_index, status, prt_msg_id, prt_status) as (
       -- inject row_number and parent_message_id
       select step, hierarchy.m_id, row_number() over thread_window, status,
-        (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
+        (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id,
+        prt_status
       from hierarchy
       window thread_window as (
         partition by hierarchy.p_id
@@ -302,8 +309,8 @@ int DataImpl ::MyTree ::get_threads(
         order by case step when 1 then sort_data end collate nocase {3}, h_time asc
       )
     )
-    -- now we can filter by required status
-    select msg_id, status, sort_index, prt_msg_id from all_visible_article
+    -- now we can order by required status
+    select msg_id, status, sort_index, prt_msg_id, prt_status from all_visible_article
     {2}
     order by step, prt_msg_id, sort_index
   )SQL";
@@ -332,15 +339,16 @@ int DataImpl ::MyTree ::get_sorted_shown_threads(
 
   // prt_msg_id is not allowed in window definition, must use a CTE
   std::string format = R"SQL(
-    with thread (msg_id, status, time_posted, sort_data, prt_msg_id) as (
+    with thread (msg_id, status, time_posted, sort_data, prt_msg_id, prt_status) as (
       select message_id, status, time_posted, {0},
-            (select message_id from article as a_in where a_in.id = av.parent_id) as prt_msg_id
+            (select message_id from article as a_in where a_in.id = av.parent_id) as prt_msg_id,
+            (select status from article_view as av_in where av_in.article_id = av.parent_id) as prt_status
       from article_view as av
       join article as a on a.id == av.article_id
       {1}
       where status is not "h"
     )
-    select msg_id, status, row_number() over thread_window, prt_msg_id
+    select msg_id, status, row_number() over thread_window, prt_msg_id, prt_status
     from thread
     window thread_window as (
       partition by prt_msg_id
