@@ -883,8 +883,8 @@ void HeaderPane ::update_tree() {
   LOG4CXX_TRACE(logger, "nb of articles in view: " << count << get_elapsed_time());
 
   quarks_t hidden;
-  for (Data::ArticleTree::Thread a_thread : threads) {
-    for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+  for (const Data::ArticleTree::Thread& a_thread : threads) {
+    for (const Data::ArticleTree::Thread::Child& child : a_thread.children) {
       if (child.is_hidden()) {
         hidden.insert(child.msg_id);
       }
@@ -905,8 +905,8 @@ void HeaderPane ::update_tree() {
 
   // store sort index of shown (i.e. unchanged) or reparented articles
   count = 0;
-  for (Data::ArticleTree::Thread a_thread : threads) {
-    for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+  for (const Data::ArticleTree::Thread& a_thread : threads) {
+    for (const Data::ArticleTree::Thread::Child& child : a_thread.children) {
       if (child.is_shown() || child.is_reparented()) {
         Row *child_row(get_row(child.msg_id));
         g_assert(child_row);
@@ -926,14 +926,14 @@ void HeaderPane ::update_tree() {
   bool const do_thread(_prefs.get_flag("thread-headers", true));
   PanTreeStore::parent_to_children_t shown;
   int exposed(0);
-  for (Data::ArticleTree::Thread a_thread : threads) {
+  for (const Data::ArticleTree::Thread& a_thread : threads) {
     Quark prt_id(a_thread.parent_id);
     Row *parent((do_thread && !prt_id.empty()) ? get_row(prt_id) : nullptr);
     // sanity check: a child must not be parentless in the tree widget
     g_assert(!do_thread || prt_id.empty() || parent != nullptr);
     PanTreeStore::rows_t children;
 
-    for (Data::ArticleTree::Thread::Child child : a_thread.children) {
+    for (const Data::ArticleTree::Thread::Child& child : a_thread.children) {
       Article shown_article(_group, child.msg_id);
       Row *child_row(get_row(child.msg_id));
       g_assert(child_row == nullptr);
