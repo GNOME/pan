@@ -967,14 +967,26 @@ void HeaderPane ::update_tree() {
   // reparent...
   PanTreeStore::parent_to_children_t reparented;
   if (do_thread) {
-    auto insert_reparented_row = [this, do_thread, &reparented](Quark msg_id,
-                                                                Quark prt_id) {
-      Row *child(get_row(msg_id));
-      g_assert(child);
-      Row *parent(do_thread && !prt_id.empty() ? get_row(prt_id) : nullptr);
-      reparented[parent].push_back(child);
-    };
-    count = _atree->call_on_reparented_articles(insert_reparented_row);
+    count = 0;
+    for (const Data::ArticleTree::Thread& a_thread : threads) {
+      if (a_thread.is_hidden()) {
+        continue;
+      }
+      auto prt_id = a_thread.parent_id;
+
+      for (const Data::ArticleTree::Thread::Child &child : a_thread.children) {
+        if (child.is_reparented()) {
+          auto msg_id = child.msg_id;
+          Row *child_row(get_row(msg_id));
+          g_assert(child_row);
+          Row *parent_row(do_thread && !prt_id.empty() ? get_row(prt_id)
+                                                       : nullptr);
+          reparented[parent_row].push_back(child_row);
+          count++;
+        }
+      }
+    }
+
     if (count > 0) {
       _tree_store->reparent(reparented);
     }
