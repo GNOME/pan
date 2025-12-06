@@ -18,6 +18,7 @@
  */
 
 
+#include <cstdlib>
 #include <log4cxx/logger.h>
 #include <memory>
 #include <fstream>
@@ -523,27 +524,30 @@ namespace
   void usage ()
   {
     console();
-    std::cerr << "Pan " << PAN_VERSION << "\n\n" <<
-_("General Options\n"
-"  -h, --help               Show this usage information and exit.\n"
-"  -v, --version            Print release version and exit.\n"
-"  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode. Use --debug twice for verbose debug.\n"
-"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
-"\n"
-"URL Options\n"
 /** NOT IMPLEMENTED
-"  news:message-id          Show the specified article.\n"
-"  news:group.name          Show the specified newsgroup.\n"
+"  news:message-id          Show the specified article.
+"  news:group.name          Show the specified newsgroup.
 */
-"  headers:group.name       Download new headers for the specified newsgroup.\n"
-"  news:message-id          When specified together with --no-gui, dump\n"
-"                           the message-id article to standard output.\n"
-"\n"
-"NZB Batch Options\n"
-"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
-"  -o path, --output=path   Path to save attachments listed in the NZB file(s).\n"
-"  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
+    std::cerr
+        << "Pan " << PAN_VERSION << "\n\n"
+        << _(R"(General Options
+  -h, --help               Show this usage information and exit.
+  -v, --version            Print release version and exit.
+  --verbose                Be verbose (in non-GUI mode).
+  --debug                  Run in debug mode. Use --debug twice for verbose debug.
+  --debug-ssl              Run in TLS (aka SSL) debug mode.
+  --cleanup-db             Cleanup database.
+
+URL Options
+  headers:group.name       Download new headers for the specified newsgroup.
+  news:message-id          When specified together with --no-gui, dump
+                           the message-id article to standard output.
+
+NZB Batch Options
+  --nzb file1 file2 ...    Process NZB files in non-GUI mode.
+  -o path, --output=path   Path to save attachments listed in the NZB file(s).
+  --no-gui                 Only show console output, not the download queue.
+)") << std::endl;
   }
 
 #ifdef HAVE_DBUS
@@ -795,6 +799,7 @@ main (int argc, char *argv[])
   std::string nzb_str;
   bool fatal_dbg(true);
   bool console_active(false);
+  bool cleanup_db(false);
 
   for (int i=1; i<argc; ++i)
   {
@@ -820,6 +825,8 @@ main (int argc, char *argv[])
       }
     else if (!strcmp (tok, "--nzb"))
       nzb = true;
+    else if (!strcmp (tok, "--cleanup-db"))
+      cleanup_db = true;
     else if (!strcmp (tok, "--debug-ssl")) {
       // undocumented, internal(!) debug flag for ssl problems (after 0.136)
       _dbg_ssl = true;
@@ -880,6 +887,13 @@ main (int argc, char *argv[])
     // instantiate the backend...
     int const cache_megs = prefs.get_int("cache-size-megs", 10);
     DataImpl data (prefs.get_string("cache-file-extension","msg"), prefs, false, cache_megs);
+
+    if (cleanup_db) {
+      data.cleanup_db();
+      std::cerr << _("DB cleanup done.") << std::endl;
+      return EXIT_SUCCESS;
+    }
+
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
     CertStore& certstore (data.get_certstore());

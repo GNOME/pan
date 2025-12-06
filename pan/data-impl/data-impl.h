@@ -150,6 +150,7 @@ public:
     gboolean password_encrypt(PasswordData const &) override;
     gchar *password_decrypt(PasswordData &) const override;
 #endif
+    void cleanup_db() const override;
   private:
     void rebuild_backend();
     void rebuild_server_data();

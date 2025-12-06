@@ -126,17 +126,19 @@ void load_db_schema_file(SQLiteDb &pan_db, char const *file)
 
 void load_db_schema(SQLiteDb &pan_db)
 {
+  TimeElapsed timer;
   // this may not be portable across distributions
   pan_db.loadExtension("/usr/lib/sqlite3/pcre.so", nullptr);
 
   std::vector<std::string> sql_files{
       "01-server.sql",          "02-group.sql",        "03-article.sql",
-      "04-posting-profile.sql", "05-article-view.sql", "99-cleanup.sql"};
+      "04-posting-profile.sql", "05-article-view.sql"};
 
   for (int i = 0; i < sql_files.size(); i++)
   {
     load_db_schema_file(pan_db, sql_files[i].c_str());
   }
+  LOG4CXX_DEBUG(logger, "Loaded SQLite schema backend in " << timer.get_seconds_elapsed() <<"ms");
 }
 } // namespace pan
 
@@ -160,6 +162,10 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   load_db_schema(pan_db);
 
   rebuild_backend ();
+}
+
+void DataImpl::cleanup_db() const {
+  load_db_schema_file(pan_db, "99-cleanup.sql");
 }
 
 void

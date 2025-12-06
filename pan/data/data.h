@@ -292,6 +292,8 @@ class Data :
     virtual gboolean password_encrypt(PasswordData const &) = 0;
     virtual gchar *password_decrypt(PasswordData &) const = 0;
 #endif
+    virtual void cleanup_db() const = 0;
+
     /** Gets a quark to the provided hostname */
     bool find_server_by_host_name(std::string const &server,
                                   Quark &setme) const override = 0;
