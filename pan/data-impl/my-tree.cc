@@ -271,8 +271,8 @@ int DataImpl ::MyTree ::get_threads(
   // See
   // https://www.geeksforgeeks.org/hierarchical-data-and-how-to-query-it-in-sql/
   std::string q = R"SQL(
-    with recursive hierarchy (step, a_id, m_id, p_id, sort_data) as (
-      select 1, a.id, message_id, av.parent_id, )SQL" +
+    with recursive hierarchy (step, a_id, m_id, p_id, h_time, sort_data) as (
+      select 1, a.id, message_id, av.parent_id, a.time_posted, )SQL" +
                   db_column + R"SQL(
       from article_view as av
       join article as a on a.id == av.article_id
@@ -281,7 +281,7 @@ int DataImpl ::MyTree ::get_threads(
       where av.parent_id is null and status )SQL" +
                   status_cond + R"SQL(
       union all
-      select step+1, a.id, a.message_id, av.parent_id,)SQL" +
+      select step+1, a.id, a.message_id, av.parent_id, a.time_posted, )SQL" +
                   db_column + R"SQL(
       from article_view as av
       join article as a on a.id == av.article_id
@@ -296,7 +296,9 @@ int DataImpl ::MyTree ::get_threads(
     select hierarchy.m_id,
        (select message_id from article as a where a.id = hierarchy.p_id) as prt_msg_id
     from hierarchy
-    order by step, sort_data )SQL" + (sort_ascending ? "asc" : "desc");
+    -- article within threads are always sorted by ascending date
+    order by step, case step when 1 then sort_data end )SQL" +
+    (sort_ascending ? "asc" : "desc") + ", h_time asc" ;
 
   return run_sql(q, threads);
 }
@@ -323,8 +325,9 @@ int DataImpl ::MyTree ::get_sorted_shown_threads(
     join article as a on a.id == av.article_id
   )SQL" + db_join + R"SQL(
     where status is not "h"
-    order by prt_msg_id,
-  )SQL" + db_column + " " + (ascending ? "asc" : "desc") ;
+    -- articles within thread are always sorted by ascending date
+    order by prt_msg_id, case when prt_msg_id is null then )SQL" + db_column + " end " +
+    (ascending ? "asc" : "desc") + ", a.time_posted asc" ;
 
   return run_sql(q, threads);
 }

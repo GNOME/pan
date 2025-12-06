@@ -532,11 +532,15 @@ class DataImplTest : public CppUnit::TestFixture
     {
       // add articles with test values
       pan_db.exec(R"SQL(
-        insert into subject (subject) values ("Bla"), ("Meh");
+        insert into subject (subject) values ("Bla"), ("Re: Bla"), ("Meh");
         insert into article (message_id,author_id, subject_id, time_posted, part_state, line_count, bytes)
           values
             ("g1m1", (select id from author where author like "Me%"),
                      (select id from subject where subject = "Bla"), 1234, "I", 10, 56),
+            ("g1m1a", (select id from author where author like "Me%"),
+                      (select id from subject where subject = "Re: Bla"), 1241, "I", 30, 300),
+            ("g1m1b", (select id from author where author like "Me%"),
+                      (select id from subject where subject = "Re: Bla"), 1251, "I", 20, 200),
             ("g1o1", (select id from author where author like "Other%"),
                      (select id from subject where subject = "Meh"), 1235, "C", 11, 65);
       )SQL");
@@ -554,7 +558,16 @@ class DataImplTest : public CppUnit::TestFixture
           where article_id == (select id from article where message_id == "g1m1");
         update article_group set score = 6
           where article_id == (select id from article where message_id == "g1o1");
+        update article_group set score = 7
+          where article_id == (select id from article where message_id == "g1m1a");
+        update article_group set score = 8
+          where article_id == (select id from article where message_id == "g1m1b");
       )SQL");
+
+
+      // add ancestor
+      data->store_references("g1m1a", "g1m1");
+      data->store_references("g1m1b", "g1m1");
 
       // setup my_tree
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
@@ -566,30 +579,65 @@ class DataImplTest : public CppUnit::TestFixture
         std::string label;
         pan::Data::header_column_enum col;
         bool asc;
-        std::string expect;
+        std::vector<std::vector<std::string>> expect;
       };
 
+      std::vector<std::string> in({"g1m1a","g1m1b"});
       Exp all_tests[] = {
-          {"state desc", pan::Data::COL_STATE, false, "g1m1"},
-          {"subject desc", pan::Data::COL_SUBJECT, false, "g1o1"},
-          {"score desc", pan::Data::COL_SCORE, false, "g1o1"},
-          {"author desc", pan::Data::COL_SHORT_AUTHOR, false, "g1o1"},
-          {"author asc", pan::Data::COL_SHORT_AUTHOR, true, "g1m1"},
-          {"lines desc", pan::Data::COL_LINES, false, "g1o1"},
-          {"bytes desc", pan::Data::COL_BYTES, false, "g1o1"},
-          {"date asc", pan::Data::COL_DATE, true, "g1m1"},
+          {"state desc", pan::Data::COL_STATE, false, {{"g1m1","g1o1"},in}},
+          {"subject desc", pan::Data::COL_SUBJECT, false, {{"g1o1","g1m1"}, in}},
+          {"score asc", pan::Data::COL_SCORE, false, {{"g1o1","g1m1"}, in}},
+          {"score desc", pan::Data::COL_SCORE, false, {{"g1o1","g1m1"}, in}},
+          {"author desc", pan::Data::COL_SHORT_AUTHOR, false, {{"g1o1","g1m1"}, in}},
+          {"author asc", pan::Data::COL_SHORT_AUTHOR, true, {{"g1m1","g1o1"},in}},
+          {"lines desc", pan::Data::COL_LINES, false, {{"g1o1","g1m1"}, in}},
+          {"bytes desc", pan::Data::COL_BYTES, false, {{"g1o1","g1m1"}, in}},
+          {"date asc", pan::Data::COL_DATE, true, {{"g1m1","g1o1"},in}},
       };
 
       for (const auto a_test : all_tests) {
-          std::vector<Data::ArticleTree::ParentAndChildren> threads;
-          tree->get_shown_threads(threads, a_test.col, a_test.asc);
-          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3.1 sort by " + a_test.label, a_test.expect,
-                                       threads[0].children_id[0].to_string());
-          threads.clear();
+        std::vector<Data::ArticleTree::ParentAndChildren> threads;
+        tree->get_shown_threads(threads, a_test.col, a_test.asc);
 
-          tree->get_sorted_shown_threads(threads, a_test.col, a_test.asc);
-          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3.2 sort by " + a_test.label, a_test.expect,
-                                       threads[0].children_id[0].to_string());
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(a_test.label + " 1 - check thread count",
+                                     a_test.expect.size(), threads.size());
+
+        for (int thread_idx = 0; thread_idx < threads.size(); thread_idx++) {
+          std::vector<Quark> test_children(threads[thread_idx].children_id);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE(
+              "check article count in thread " + std::to_string(thread_idx),
+              a_test.expect[thread_idx].size(), test_children.size());
+
+          for (int child_idx = 0; child_idx < test_children.size();
+               child_idx++) {
+            CPPUNIT_ASSERT_EQUAL_MESSAGE("1. step " + std::to_string(thread_idx) +
+                                             "." + std::to_string(child_idx) +
+                                             " sort by " + a_test.label,
+                                         a_test.expect[thread_idx][child_idx],
+                                         test_children[child_idx].to_string());
+          }
+        }
+        threads.clear();
+
+        tree->get_sorted_shown_threads(threads, a_test.col, a_test.asc);
+        CPPUNIT_ASSERT_EQUAL_MESSAGE(a_test.label + " 2 - check thread count",
+                                     a_test.expect.size(), threads.size());
+
+        for (int thread_idx = 0; thread_idx < threads.size(); thread_idx++) {
+          std::vector<Quark> test_children(threads[thread_idx].children_id);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE(
+              "check article count in thread " + std::to_string(thread_idx),
+              a_test.expect[thread_idx].size(), test_children.size());
+
+          for (int child_idx = 0; child_idx < test_children.size();
+               child_idx++) {
+            CPPUNIT_ASSERT_EQUAL_MESSAGE("2. step " + std::to_string(thread_idx) +
+                                             "." + std::to_string(child_idx) +
+                                             " sort by " + a_test.label,
+                                         a_test.expect[thread_idx][child_idx],
+                                         test_children[child_idx].to_string());
+          }
+        }
       }
     }
 
