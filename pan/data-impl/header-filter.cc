@@ -5,6 +5,7 @@
 #include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Statement.h>
 #include <algorithm>
+#include <fmt/format.h>
 #include <log4cxx/logger.h>
 #include <string>
 
@@ -565,10 +566,17 @@ std::vector<SqlCond> HeaderFilter::get_sql_filter(
       else if (criteria._header == references)
       {
         std::string sql_snippet, param;
-        if (criteria._text.create_sql_search(
-              "article.`references`", sql_snippet, param))
-        {
-          res.push_back(SqlCond(sql_snippet, param));
+        if (criteria._text.create_sql_search("rh.ref_header", sql_snippet,
+                                             param)) {
+          std::string fmt_sql(R"SQL(
+            (
+              select count() from ref_header as rh
+              join article as a on rh.article_id == article.id
+              where {}
+            ) > 0
+          )SQL");
+          auto sql = fmt::format(fmt_sql, sql_snippet);
+          res.push_back(SqlCond(sql, param));
         }
       }
       else if (! criteria._needs_body)

@@ -93,7 +93,9 @@ void DataImpl ::get_article_references(Article const *article,
                                        std::string &setme) const
 {
   SQLite::Statement ref_q(pan_db, R"SQL(
-    select `references` from article where message_id = ?
+    select ref_header from ref_header
+    join article on ref_header.article_id = article.id
+    where article.message_id = ?
   )SQL" );
 
   ref_q.bind(1, article->message_id);
@@ -284,10 +286,15 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
   _scorefile.get_matching_sections(StringView(group), score_sections);
 
   SQLite::Statement set_article_q(pan_db,R"SQL(
-    insert into `article` (flag, message_id,subject_id, author_id, `references`,
+    insert into `article` (flag, message_id,subject_id, author_id,
                            time_posted, binary, expected_parts,line_count)
     values (?,?,(select id from subject where subject = ?),
-            (select id from author where author = ?),?,?,?,?,?) on conflict do nothing;
+            (select id from author where author = ?),?,?,?,?) on conflict do nothing;
+  )SQL");
+
+  SQLite::Statement set_ref_header_q(pan_db,R"SQL(
+    insert into ref_header (article_id, ref_header)
+       values ((select id from article where message_id = ?),?) on conflict do nothing;
   )SQL");
 
   SQLite::Statement set_subject_q(pan_db, R"SQL(
@@ -414,6 +421,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         set_article_q.reset();
         set_subject_q.reset();
         set_author_q.reset();
+        set_ref_header_q.reset();
 
         int bind_idx = 1;
 
@@ -463,14 +471,7 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
           in->getline(s);
           s.ltrim();
         }
-        if (references.empty())
-        {
-          set_article_q.bind(bind_idx++); // bind null
-        }
-        else
-        {
-          set_article_q.bind(bind_idx++, references.c_str());
-        }
+        // references must be stored after the article is created
 
         // date-posted line
         unsigned long long time_posted = view_to_ull(s);
@@ -537,6 +538,13 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
         set_article_q.exec();
         article_count++;
         LOG4CXX_TRACE(logger, "Stored article " << message_id);
+
+        // now the references can be stored
+        if (!references.empty()) {
+          set_ref_header_q.bind(1, message_id);
+          set_ref_header_q.bind(2, references.c_str());
+          set_ref_header_q.exec();
+        }
 
         // Then xref data can also be stored in DB
         foreach_const (Xref::targets_t, targets, it)
@@ -627,11 +635,12 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
   delete in;
 
   SQLite::Statement get_article_with_references(pan_db, R"SQL(
-    select message_id, `references` from `article` as a
+    select message_id, rh.ref_header from `article` as a
+    join ref_header as rh on rh.article_id == a.id
     join article_group as ag on ag.article_id == a.id
     join article_xref as x on x.article_group_id == ag.id
     join `group` as g on ag.group_id == g.id
-    where g.name = ? and `references` is not null
+    where g.name = ? and rh.ref_header is not null
     order by time_posted
   )SQL");
   get_article_with_references.bind(1,group);

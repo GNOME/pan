@@ -328,7 +328,8 @@ public:
       add_article_in_group("g1m1", "g1");
       add_article_in_group("g1m2", "g1");
       pan_db.exec(R"SQL(
-        update article set `references` = "g1m1" where message_id = "g1m2"
+        insert into ref_header (article_id, ref_header)
+          values ((select id from article where message_id = "g1m2"),"g1m1")
       )SQL");
 
       // test that g2 is not part of xref

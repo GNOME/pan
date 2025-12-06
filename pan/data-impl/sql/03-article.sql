@@ -5,13 +5,12 @@ create table if not exists article (
   message_id text not null unique, 
   author_id integer not null references author (id) on delete restrict,
   subject_id integer not null references subject (id) on delete restrict,
-  `references` text, -- somewhat redundant with of parent_id and ghost_parent_id
 
   -- parent_id is used to create a tree model of the article thread.
   parent_id integer references article (id) on delete set null,
 
   -- like parent_id, but keep track of article mentioned in references
-  -- but missing in DB
+  -- header but missing in DB
   ghost_parent_id integer references ghost (id) on delete set null,
 
   time_posted integer not null,
@@ -46,6 +45,12 @@ create table if not exists article (
 create unique index if not exists article_message_id on `article` (message_id);
 create index if not exists article_to_delete on `article` (to_delete);
 create index if not exists article_parent_id on `article` (parent_id);
+
+create table if not exists ref_header (
+  id integer primary key asc autoincrement,
+  article_id integer not null unique references article (id) on delete cascade,
+  ref_header text -- somewhat redundant with of parent_id and ghost_parent_id
+);
 
 -- filled with message_id extracted from references header for missing
 -- articles this table is emptied when articles are found or when
