@@ -30,7 +30,6 @@
 #include <fstream>
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <iostream>
 #include <log4cxx/logger.h>
 #include <map>
 #include <ostream>
@@ -493,10 +492,8 @@ void DataImpl ::update_part_states(Quark const &group)
     where article.id == upd.id
   )SQL");
 
-  pan_db.exec("begin transaction");
   q.bind(1,group.c_str());
   int count(q.exec());
-  pan_db.exec("end transaction");
 
   LOG4CXX_INFO(logger, "Updated " << count << " articles part states of group " << group.c_str()
                << " in " << timer.get_seconds_elapsed() << "s.");
@@ -852,6 +849,23 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
   }
   delete in;
 
+  SQLite::Statement get_article_with_references(pan_db, R"SQL(
+    select message_id, `references` from `article` as a
+    join article_group as ag on ag.article_id == a.id
+    join article_xref as x on x.article_group_id == ag.id
+    join `group` as g on ag.group_id == g.id
+    where g.name = ? and `references` is not null
+    order by time_posted
+  )SQL");
+  get_article_with_references.bind(1,group);
+
+  while (get_article_with_references.executeStep())
+  {
+    Quark msg_id(get_article_with_references.getColumn(0).getText());
+    std::string a_ref(get_article_with_references.getColumn(1).getText());
+    store_parent_articles(msg_id, a_ref);
+  }
+
   if (in_transaction) {
     pan_db.exec("end transaction");
   }
@@ -872,6 +886,185 @@ void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
       seconds,
       static_cast<uint64_t>(article_count)
         / (fabs(seconds) < 0.001 ? 0.001 : seconds));
+  }
+}
+
+void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
+{
+  SQLite::Statement update_parent_in_article(pan_db, R"SQL(
+      with p(p_id) as (
+        select id from article where message_id == $parent_msg_id
+      )
+      update article
+      set parent_id = (select p_id from p)
+      where message_id == $current_msg_id and (select p_id from p) is not null
+    )SQL");
+
+  // insert a ghost article if real article is not found
+  SQLite::Statement insert_ghost(pan_db, R"SQL(
+      insert or ignore into ghost (ghost_msg_id)
+      select $msg_id
+      where (select count() from article where message_id == $msg_id) == 0
+    )SQL");
+
+  SQLite::Statement update_ghost_parent_id(pan_db, R"SQL(
+      with p(p_id) as (
+        select id from ghost where ghost_msg_id == ?
+      )
+      update article
+      set ghost_parent_id = (select p_id from p)
+      where message_id == ? and (select p_id from p) is not null
+    )SQL");
+
+  SQLite::Statement update_ghost(pan_db, R"SQL(
+      update ghost
+      set ghost_parent_msg_id = $parent_msg_id
+      where ghost_msg_id == $msg_id
+    )SQL");
+
+  StringView current_msg_id(message_id), parent_msg_id, refs(references);
+  LOG4CXX_TRACE(tree_logger,
+                "references msg " << message_id << ": storing refs " << refs);
+
+  // get newest reference first
+  while (refs.pop_last_token(parent_msg_id, ' '))
+  {
+    parent_msg_id.trim();
+    if (parent_msg_id.empty())
+    {
+      break;
+    }
+
+    LOG4CXX_TRACE(tree_logger,
+                  "references msg " << message_id << ": current "
+                                    << current_msg_id << " parent "
+                                    << parent_msg_id);
+    if (parent_msg_id != message_id.c_str())
+    {
+      int found(0);
+      // try to insert current ref in child message if it exists
+      update_parent_in_article.reset();
+      update_parent_in_article.bind(1, parent_msg_id);
+      update_parent_in_article.bind(2, current_msg_id);
+      found = update_parent_in_article.exec();
+
+      LOG4CXX_TRACE(tree_logger,
+                    "references msg " << message_id << ": found " << found
+                                      << " real article");
+      if (found != 0)
+      {
+        // real parent is found, so there's no need to explore further the
+        // references
+        break;
+      }
+
+      // insert ghost message linked to current real article
+      // ghost message must also store its parent message_id (ghost or not
+      // ghost)
+      insert_ghost.reset();
+      insert_ghost.bind(1, parent_msg_id);
+      int inserted = insert_ghost.exec();
+      LOG4CXX_TRACE(tree_logger,
+                    "references msg " << message_id << ": added " << inserted
+                                      << " ghost article for parent msg id "
+                                      << parent_msg_id);
+
+      // insert parent in ghost article
+      update_ghost.reset();
+      update_ghost.bind(1, parent_msg_id);
+      update_ghost.bind(2, current_msg_id);
+      found = update_ghost.exec();
+
+      // update in real article
+      update_ghost_parent_id.reset();
+      update_ghost_parent_id.bind(1, parent_msg_id);
+      update_ghost_parent_id.bind(2, current_msg_id);
+      update_ghost_parent_id.exec();
+    }
+    else
+    {
+      LOG4CXX_TRACE(tree_logger,
+                    "references msg " << message_id << ": skipped wrong ref "
+                                      << parent_msg_id);
+    }
+
+    current_msg_id = parent_msg_id;
+  }
+}
+
+void DataImpl::store_references(Quark message_id, std::string references)
+{
+  if (! references.empty())
+  {
+    store_parent_articles(message_id, references);
+  }
+
+  // now handle the case where a real article replaces a ghost article
+
+  // first add the parent_id pointing to the new real article in the
+  // real child articles that points to the ghost to be replaced
+  SQLite::Statement set_current_parent_id(pan_db, R"SQL(
+    with recursive p(id,msg_id) as (
+     select id, ghost_msg_id from ghost where ghost_msg_id == $msg_id
+     union all
+     select g.id, ghost_msg_id from ghost as g join p on p.msg_id == g.ghost_parent_msg_id
+	   limit 500 -- safety net
+    )
+    update article
+      set parent_id = (select id from article where message_id = $msg_id)
+	    where id in (select a.id from article as a join p on p.id = ghost_parent_id)
+  )SQL");
+  set_current_parent_id.bind(1, message_id);
+  int changed = set_current_parent_id.exec();
+
+  LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": changed " << changed << " real parent id");
+
+  // found a real article, so any matching ghost article must be deleted
+  SQLite::Statement delete_ghost(pan_db, R"SQL(
+    delete from ghost where ghost_msg_id == ?
+  )SQL");
+  delete_ghost.bind(1, message_id);
+  delete_ghost.exec();
+  LOG4CXX_TRACE(tree_logger,
+                "references msg " << message_id << ": delete ghost article");
+
+  // now handle the case where a real article is added with some
+  // references (stored above) and where one of these references is a
+  // real article. In this case the parent id of the new article must
+  // point to the first real article found in the reference chain
+  SQLite::Statement insert_parent_from_ancestor(pan_db, R"SQL(
+    with recursive p(ghost_id, msg_id) as (
+      select g.id, ghost_parent_msg_id from article as a
+      join ghost as g on a.ghost_parent_id == g.id
+      where message_id == $msg_id
+      union all
+      select id, ghost_parent_msg_id from ghost
+      join p
+      where ghost_msg_id == p.msg_id
+      limit 1000
+    )
+    update article
+    set parent_id = (select id from article as a join p on a.message_id == p.msg_id where true)
+	    where ghost_parent_id == (select ghost_id from p)
+  )SQL");
+  insert_parent_from_ancestor.bind(1,message_id);
+  changed = insert_parent_from_ancestor.exec();
+  LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": changed " << changed << " real parent id to an ancestor");
+
+  // safety check
+  if (_debug_flag) {
+    SQLite::Statement consistency_check(pan_db, R"SQL(
+      select message_id from article as a
+      join ghost as g on a.message_id == ghost_msg_id
+    )SQL");
+
+    int bad(0);
+    while (consistency_check.executeStep()) {
+      bad++;
+      std::string bad_id = consistency_check.getColumn(1);
+      LOG4CXX_TRACE(tree_logger, "found both real and ghost article: ");
+    }
+    assert(bad == 0);
   }
 }
 
