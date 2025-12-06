@@ -104,21 +104,21 @@ class DataImplTest : public CppUnit::TestFixture
 
     void tearDown() {}
 
-    void add_article(std::string msg_id)
-    {
+    void add_article_db(std::string msg_id, std::string auth) {
       SQLite::Statement q_article(pan_db, R"SQL(
         insert into article (message_id,author_id, subject_id, time_posted)
-          values (?, (select id from author where author like "Me%"),
+          values (?, (select id from author where author like ?),
                      (select id from subject where subject = "blah"), 1234);
       )SQL");
       q_article.bind(1, msg_id);
+      q_article.bind(2, auth);
       int res(q_article.exec());
       CPPUNIT_ASSERT_EQUAL_MESSAGE("insert article " + msg_id, 1, res);
     }
 
-    void add_article_in_group(std::string msg_id, std::string group)
-    {
-      add_article(msg_id);
+    void add_article_in_group(std::string msg_id, std::string group,
+                              std::string auth = "Me%") {
+      add_article_db(msg_id, auth);
       link_article_in_group_db(msg_id, group);
     }
 
@@ -504,16 +504,15 @@ class DataImplTest : public CppUnit::TestFixture
       // function that checks that parent_id is either null or already
       // provided.
       std::set<std::string> stack;
-      auto check
-      = [&stack](Quark msg_id, Quark prt_id)
-      {
+      int step(1);
+      auto check = [&](Quark msg_id, Quark prt_id) {
         // std::cout << "check " << msg_id << " parent " << prt_id << "\n";
         if (! prt_id.empty())
         {
           auto search = stack.find(prt_id.to_string());
-          CPPUNIT_ASSERT_MESSAGE("step 1 msg_id " + msg_id.to_string()
-                                   + " parent_id " + prt_id.to_string()
-                                   + " consistency",
+          CPPUNIT_ASSERT_MESSAGE("step " + std::to_string(step) + " msg_id " +
+                                     msg_id.to_string() + " parent_id " +
+                                     prt_id.to_string() + " consistency",
                                  search != stack.end());
         }
         stack.insert(msg_id.to_string());
@@ -521,6 +520,73 @@ class DataImplTest : public CppUnit::TestFixture
 
       int count = tree->call_on_shown_articles(check);
       CPPUNIT_ASSERT_EQUAL_MESSAGE("step 1 exposed count ", 10, count);
+    }
+
+    // emulates showing article using a callback, and with articles
+    // sorted in hierarchy
+    void test_article_sort()
+    {
+      // add articles with test values
+      pan_db.exec(R"SQL(
+        insert into subject (subject) values ("Bla"), ("Meh");
+        insert into article (message_id,author_id, subject_id, time_posted, part_state, line_count, bytes)
+          values
+            ("g1m1", (select id from author where author like "Me%"),
+                     (select id from subject where subject = "Bla"), 1234, "I", 10, 56),
+            ("g1o1", (select id from author where author like "Other%"),
+                     (select id from subject where subject = "Meh"), 1235, "C", 11, 65);
+      )SQL");
+
+      // add articles in group
+      SQLite::Statement q(pan_db, "select message_id from article");
+      while (q.executeStep()) {
+        std::string msg_id = q.getColumn(0);
+        link_article_in_group_db(msg_id, "g1");
+      }
+
+      // add dummy scores in rows created by add_article_in_group_db
+      pan_db.exec(R"SQL(
+        update article_group set score = 5
+          where article_id == (select id from article where message_id == "g1m1");
+        update article_group set score = 6
+          where article_id == (select id from article where message_id == "g1o1");
+      )SQL");
+
+      // setup my_tree
+      tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
+                                      &criteria);
+      tree->initialize_article_view();
+
+      // store articles
+      std::vector<std::string> list;
+      auto check = [&](Quark msg_id, Quark prt_id) {
+        list.push_back(msg_id.to_string());
+      };
+
+      // test results
+      struct Exp {
+        std::string label;
+        pan::Data::header_column_enum col;
+        bool asc;
+        std::string expect;
+      };
+
+      Exp all_tests[] = {
+          {"state desc", pan::Data::COL_STATE, false, "g1m1"},
+          {"subject desc", pan::Data::COL_SUBJECT, false, "g1o1"},
+          {"score desc", pan::Data::COL_SCORE, false, "g1o1"},
+          {"author desc", pan::Data::COL_SHORT_AUTHOR, false, "g1o1"},
+          {"author asc", pan::Data::COL_SHORT_AUTHOR, true, "g1m1"},
+          {"lines desc", pan::Data::COL_LINES, false, "g1o1"},
+          {"bytes desc", pan::Data::COL_BYTES, false, "g1o1"},
+          {"date asc", pan::Data::COL_DATE, true, "g1m1"},
+      };
+
+      for (const auto a_test : all_tests) {
+          list.clear();
+          tree->call_on_shown_articles(check, a_test.col, a_test.asc);
+          CPPUNIT_ASSERT_EQUAL_MESSAGE("step 3 sort by " + a_test.label, a_test.expect, list.front());
+      }
     }
 
     void test_exposed_articles_from_scratch()
@@ -715,6 +781,7 @@ class DataImplTest : public CppUnit::TestFixture
     CPPUNIT_TEST(test_get_unread_children_end_thread);
     CPPUNIT_TEST(test_article_deletion);
     CPPUNIT_TEST(test_function_on_shown_articles);
+    CPPUNIT_TEST(test_article_sort);
     CPPUNIT_TEST(test_function_on_exposed_articles);
     CPPUNIT_TEST(test_exposed_articles_from_scratch);
     CPPUNIT_TEST(test_function_on_reparented_articles);
