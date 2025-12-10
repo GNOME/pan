@@ -526,6 +526,15 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 {
   LOG4CXX_DEBUG(logger, "Build model: called on group " << group.c_str());
   TimeElapsed timer;
+  auto tmp_time = timer.get_seconds_elapsed();
+
+  auto get_elapsed_time = [&timer, &tmp_time]() -> std::string {
+    auto t = timer.get_seconds_elapsed();
+    auto ret = t - tmp_time;
+    tmp_time = t;
+    return std::string(" (" + std::to_string(ret) + "s)");
+  };
+
   PanTreeStore *store =
     PanTreeStore ::new_tree(Data::N_COLUMNS,
                             G_TYPE_STRING,  // date string
@@ -560,7 +569,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     auto t = timer.get_seconds_elapsed();
     LOG4CXX_TRACE(logger,
-                  "got " << _threads.size() << " threads in " << t << "s.");
+                  "got " << _threads.size() << " threads from DB " << get_elapsed_time());
 
     int count(0);
     for (Data::ArticleTree::Thread a_thread : _threads) {
@@ -580,12 +589,15 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
         store->append(parent, children);
     };
 
+    LOG4CXX_TRACE(logger, "updated header-pane content " << get_elapsed_time());
+
     atree->update_article_after_gui_update();
+    LOG4CXX_TRACE(logger, "updated article view after gui updates "
+                              << get_elapsed_time());
 
     auto new_t = timer.get_seconds_elapsed();
     LOG4CXX_INFO(logger, "added " << count << " articles of group "
-                                  << group.c_str() << " in " << new_t - t
-                                  << "s, total " << new_t << "s.");
+                                  << group.c_str() << " in " << new_t << "s.");
   }
   return store;
 }
