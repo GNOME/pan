@@ -372,7 +372,7 @@ class HeaderPane :
     static Article get_article(GtkTreeModel *, GtkTreeIter *);
     int get_article_action(bool flag, Quark const &message_id) const;
     int find_highest_followup_score(GtkTreeModel *, GtkTreeIter *) const;
-    Row *create_row(Article, int sort_index);
+    Row *create_row(Article &, int sort_index);
     PanTreeStore *build_model(Quark const &,
                               Data::ArticleTree *,
                               int sort_column,

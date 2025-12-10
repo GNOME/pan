@@ -467,7 +467,7 @@ HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
   return it == _mid_to_row.end() ? nullptr : *it;
 }
 
-HeaderPane::Row *HeaderPane ::create_row(Article a, int sort_index)
+HeaderPane::Row *HeaderPane ::create_row(Article &a, int sort_index)
 {
   Row *row = new Row(*this, a, sort_index);
 
@@ -572,15 +572,19 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
                   "got " << _threads.size() << " threads from DB " << get_elapsed_time());
 
     int count(0);
+    PanTreeStore::rows_t children;
+    Article shown_article;
+    shown_article.group = _group;
+
     for (Data::ArticleTree::Thread a_thread : _threads) {
       Quark prt_id(a_thread.parent_id);
       Row *parent((do_thread && !prt_id.empty())? get_row(prt_id) : nullptr);
       // sanity check: a child must not be parentless in the tree widget
       g_assert(!do_thread || prt_id.empty() || parent != nullptr);
-      PanTreeStore::rows_t children;
+      children.clear();
 
       for ( Data::ArticleTree::Thread::Child child : a_thread.children) {
-        Article shown_article(_group, child.msg_id);
+        shown_article.message_id = child.msg_id;
         children.push_back(create_row(shown_article, child.sort_index));
         count++;
       }
