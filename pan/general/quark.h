@@ -247,4 +247,13 @@ namespace pan
   };
 }
 
+namespace std {
+template <> struct hash<pan::Quark> {
+  size_t operator()(const pan::Quark &q) const {
+    // Implement a hash function for Quark
+    return std::hash<std::string>()(q.c_str());
+  }
+};
+} // namespace std
+
 #endif

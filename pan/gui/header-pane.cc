@@ -463,20 +463,22 @@ void HeaderPane ::render_subject(GtkTreeViewColumn *,
 
 HeaderPane::Row *HeaderPane ::get_row(Quark const &message_id)
 {
-  mid_to_row_t::iterator it(_mid_to_row.find(message_id));
-  return it == _mid_to_row.end() ? nullptr : *it;
+  auto search = _mid_to_row.find(message_id);
+  if (search != _mid_to_row.end())
+    return search->second;
+  else
+    return nullptr;
 }
 
 HeaderPane::Row *HeaderPane ::create_row(Article &a, int sort_index)
 {
   Row *row = new Row(*this, a, sort_index);
 
-  std::pair<mid_to_row_t::iterator, bool> result(_mid_to_row.insert(row));
-  if (!result.second)
-    {
+  const auto [it, success] = _mid_to_row.insert({a.message_id, row});
+  if (!success) {
       LOG4CXX_ERROR(logger, "Attempted to create a duplicate row for article " << a.message_id);
-    }
-  g_assert(result.second);
+  }
+  g_assert(success);
 
   return row;
 }
@@ -1013,13 +1015,16 @@ void HeaderPane ::update_tree() {
   // hidden or removed articles...
   if (!hidden.empty()) {
     RowLessThan o;
-    std::vector<Row *> keep;
     PanTreeStore::rows_t kill;
-    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), hidden.begin(),
-                        hidden.end(), inserter(keep, keep.begin()), o);
-    std::set_difference(_mid_to_row.begin(), _mid_to_row.end(), keep.begin(),
-                        keep.end(), inserter(kill, kill.begin()), o);
-    g_assert(keep.size() + kill.size() == _mid_to_row.size());
+    kill.reserve(hidden.size());
+
+    int old_size = _mid_to_row.size();
+    for (Quark to_hide : hidden) {
+      auto nh = _mid_to_row.extract(to_hide);
+      assert(!nh.empty());
+      kill.push_back(nh.mapped());
+    }
+    assert(_mid_to_row.size() + kill.size() == old_size);
 
     g_object_ref(G_OBJECT(_tree_store));
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
@@ -1027,7 +1032,6 @@ void HeaderPane ::update_tree() {
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view),
                             GTK_TREE_MODEL(_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
-    _mid_to_row.get_container().swap(keep);
     LOG4CXX_TRACE(logger, "hide articles done" << get_elapsed_time());
   }
 

@@ -38,6 +38,7 @@
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/rules-info.h>
+#include <unordered_map>
 
 namespace pan {
 /**
@@ -363,9 +364,7 @@ class HeaderPane :
         }
     };
 
-    typedef sorted_vector<Row *, true, RowLessThan> mid_to_row_t;
-
-    mid_to_row_t _mid_to_row;
+    std::unordered_map<Quark, Row *> _mid_to_row;
 
   private:
     static Article const *get_article_ptr(GtkTreeModel *, GtkTreeIter *);
