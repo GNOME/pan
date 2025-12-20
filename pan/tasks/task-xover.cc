@@ -433,7 +433,14 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 	if (_mode == DAYS && time_posted < _days_cutoff) {
 		_server_to_minitasks[nntp->_server].clear();
 		return;
-	}
+  }
+
+  time_t today;
+  if (time_posted > time(&today)) {
+    std::cerr << "Warning found time posted in future: " << time_posted
+              << " from date string «" << date.str << "», line «" << line << "»"
+              << std::endl;
+    }
 
 	++_parts_so_far;
 
