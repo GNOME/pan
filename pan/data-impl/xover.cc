@@ -179,6 +179,50 @@ bool parse_multipart_subject(StringView const &subj,
 
     return art_mid;
   }
+
+  void add_article_in_db(Quark const &group, Quark const &art_mid,
+                         StringView const &author,
+                         std::string const &multipart_subject, int part_count,
+                         int time_posted, std::string const &references) {
+    // Create author
+    SQLite::Statement set_author_q(pan_db, R"SQL(
+        insert into `author` (author) values (?) on conflict do nothing
+      )SQL");
+    set_author_q.bind(1, author);
+    set_author_q.exec();
+
+    // create subject
+    SQLite::Statement set_subject_q(pan_db, R"SQL(
+        insert into `subject` (subject) values (?) on conflict do nothing
+      )SQL");
+    set_subject_q.bind(1, multipart_subject);
+    set_subject_q.exec();
+
+    // Create the article in DB, line_count is updated in insert_part_in_db()
+    SQLite::Statement create_article_q(pan_db, R"SQL(
+        insert into `article` (author_id, subject_id, message_id, binary,
+                               expected_parts, part_state, time_posted)
+        values ((select id from author where author = ?),
+                (select id from subject where subject = ?),?,?,?,?,?)
+      )SQL");
+    create_article_q.bind(1, author);
+    create_article_q.bind(2, multipart_subject);
+    create_article_q.bind(3, art_mid);
+    create_article_q.bind(4, part_count >= 1);
+    create_article_q.bind(5, part_count > 1 ? part_count : 1);
+    create_article_q.bind(6, part_count > 1 ? "I" : "S");
+    create_article_q.bind(7, time_posted);
+    create_article_q.exec();
+
+    if (!references.empty()) {
+      SQLite::Statement set_ref_header_q(pan_db, R"SQL(
+          insert into ref_header (article_id, ref_header)
+             values ((select id from article where message_id = ?),?)
+        )SQL");
+      set_ref_header_q.bind(1, art_mid);
+      set_ref_header_q.bind(2, references);
+    }
+  }
 } // namespace
 
 void DataImpl ::xover_clear_workarea(Quark const &group)
@@ -337,44 +381,8 @@ Article const *DataImpl ::xover_add(Quark const &server,
     if (count == 0) {
       workarea._added_batch.insert (art_mid);
 
-      // Create author
-      SQLite::Statement set_author_q(pan_db, R"SQL(
-        insert into `author` (author) values (?) on conflict do nothing
-      )SQL");
-      set_author_q.bind(1, author);
-      set_author_q.exec();
-
-      // create subject
-      SQLite::Statement set_subject_q(pan_db, R"SQL(
-        insert into `subject` (subject) values (?) on conflict do nothing
-      )SQL");
-      set_subject_q.bind(1, multipart_subject_quark);
-      set_subject_q.exec();
-
-      // Create the article in DB, line_count is updated in insert_part_in_db()
-      SQLite::Statement create_article_q(pan_db, R"SQL(
-        insert into `article` (author_id, subject_id, message_id, binary,
-                               expected_parts, part_state, time_posted)
-        values ((select id from author where author = ?),
-                (select id from subject where subject = ?),?,?,?,?,?)
-      )SQL");
-      create_article_q.bind(1, author);
-      create_article_q.bind(2, multipart_subject_quark);
-      create_article_q.bind(3, art_mid);
-      create_article_q.bind(4, part_count >= 1 );
-      create_article_q.bind(5, part_count > 1 ? part_count : 1);
-      create_article_q.bind(6, part_count > 1 ? "I" : "S");
-      create_article_q.bind(7, time_posted);
-      create_article_q.exec();
-
-      if (!references.empty()) {
-        SQLite::Statement set_ref_header_q(pan_db,R"SQL(
-          insert into ref_header (article_id, ref_header)
-             values ((select id from article where message_id = ?),?)
-        )SQL");
-        set_ref_header_q.bind(1, art_mid);
-        set_ref_header_q.bind(2, references);
-      }
+      add_article_in_db(group, art_mid, author, multipart_subject, part_count,
+                        time_posted, references);
 
       insert_xref_in_db(server, art_mid, xref);
 
