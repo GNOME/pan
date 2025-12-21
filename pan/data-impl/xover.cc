@@ -31,9 +31,11 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
+#include <string>
 #include "data-impl.h"
 #include "pan/general/log4cxx.h"
 #include "pan/general/time-elapsed.h"
+#include <fmt/format.h>
 
 using namespace pan;
 
@@ -142,7 +144,7 @@ bool parse_multipart_subject(StringView const &subj,
       parts = 0;
   }
 
-  Quark find_article(Quark const &group, StringView const &author,
+  Quark find_article_in_db(Quark const &group, StringView const &author,
                      std::string const &multipart_subject, int part_count) {
     Quark art_mid;
 
@@ -289,13 +291,30 @@ Article const *DataImpl ::xover_add(Quark const &server,
   find_parts (subject, group, line_count, part_index, part_count, multipart_subject);
   const Quark multipart_subject_quark (multipart_subject);
   Quark art_mid;
+  std::string cache_key = group.to_string() + author.to_string() +
+                          multipart_subject + std::to_string(part_count);
 
-  if (part_count > 1)
-  {
-    // walk through the articles we've already got for the group
-    // to see if there's already an Article allocated to this
-    // multipart.  If there is, we use it here instead of adding a new one
-    art_mid = find_article(group, author, multipart_subject, part_count);
+  if (part_count > 1) {
+    auto search = _mid_cache.find(cache_key);
+    if (search != _mid_cache.end()) {
+      art_mid = search->second;
+      LOG4CXX_TRACE(logger, "found cached mid "
+                                << art_mid << " for key " << cache_key << " in "
+                                << timer.get_seconds_elapsed() << " s.");
+    } else {
+      // walk through the articles we've already got for the group
+      // to see if there's already an Article allocated to this
+      // multipart.  If there is, we use it here instead of adding a new one
+      art_mid = find_article_in_db(group, author, multipart_subject, part_count);
+      // memoize the result
+      if (!art_mid.empty()) {
+        _mid_cache[cache_key] = art_mid;
+        LOG4CXX_TRACE(
+            logger, fmt::format("added mid {} in cache for key {} in {} s.",
+                                art_mid == nullptr ? "<null>" : art_mid.c_str(),
+                                cache_key, timer.get_seconds_elapsed()));
+      }
+    }
   }
 
 
@@ -357,6 +376,9 @@ Article const *DataImpl ::xover_add(Quark const &server,
       }
 
       insert_xref_in_db(server, art_mid, xref);
+
+      // memoize the result
+      _mid_cache[cache_key] = art_mid;
     }
 
     // now update the article thread from references. i.e. set
@@ -388,8 +410,13 @@ Article const *DataImpl ::xover_add(Quark const &server,
 
   // maybe flush the batched changes
   // TODO: check if the change applied during flush won't clobber what was setup
-  if ((time(nullptr) - workarea._last_flush_time) >= 10)
-    xover_flush (group);
+  if ((time(nullptr) - workarea._last_flush_time) >= 10) {
+    xover_flush(group);
+    // clear the cache as applying rules during flush may delete
+    // articles from DB, which would invalidate the cache entries of
+    // the deleted articles.
+    _mid_cache.clear();
+  }
 
   if (is_virtual)
       unref_group(group);

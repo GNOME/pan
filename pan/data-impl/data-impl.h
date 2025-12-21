@@ -573,6 +573,9 @@ public:
     XOverEntry *_cached_xover_entry;
     Quark _cached_xover_group;
 
+    // used to cache subject to article mid
+    std::unordered_map<std::string, Quark> _mid_cache;
+
     /**
      * Destroy the workarea.
      * Don't call this directly -- xover_unref() do its job.
