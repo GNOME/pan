@@ -141,7 +141,43 @@ bool parse_multipart_subject(StringView const &subj,
     if (part == 0)
       parts = 0;
   }
-}
+
+  Quark find_article(Quark const &group, StringView const &author,
+                     std::string const &multipart_subject, int part_count) {
+    Quark art_mid;
+
+    // search the article in DB
+    SQLite::Statement search_article_q(pan_db, R"SQL(
+      select message_id
+      from article as art
+      join article_group as ag on ag.article_id == art.id
+      join `group` as g on ag.group_id == g.id
+      join author as auth on art.author_id == auth.id
+      join subject on subject.id == art.subject_id
+      where g.name == ?
+        and subject.subject == ?
+        and auth.author == ?
+        and art.expected_parts == ?
+      limit 1
+    )SQL");
+
+    // find all articles with same subject, author and part count to
+    // make sure that found article if a good match for this
+    // part. Note that part identifier like [3/50] are stripped before
+    // being stored.
+    search_article_q.reset();
+    search_article_q.bind(1, group);
+    search_article_q.bind(2, multipart_subject);
+    search_article_q.bind(3, author);
+    search_article_q.bind(4, part_count);
+    while (search_article_q.executeStep()) {
+      // ok, we'll use this article as the article for this part
+      art_mid = Quark(search_article_q.getColumn(0).getText());
+    }
+
+    return art_mid;
+  }
+} // namespace
 
 void DataImpl ::xover_clear_workarea(Quark const &group)
 {
@@ -259,36 +295,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
     // walk through the articles we've already got for the group
     // to see if there's already an Article allocated to this
     // multipart.  If there is, we use it here instead of adding a new one
-
-    // search the article in DB
-    SQLite::Statement search_article_q(pan_db, R"SQL(
-      select message_id
-      from article as art
-      join article_group as ag on ag.article_id == art.id
-      join `group` as g on ag.group_id == g.id
-      join author as auth on art.author_id == auth.id
-      join subject on subject.id == art.subject_id
-      where g.name == ?
-        and subject.subject == ?
-        and auth.author == ?
-        and art.expected_parts == ?
-      limit 1
-    )SQL");
-
-    // find all articles with same subject, author and part count to
-    // make sure that found article if a good match for this
-    // part. Note that part identifier like [3/50] are stripped before
-    // being stored.
-    search_article_q.reset();
-    search_article_q.bind(1, group);
-    search_article_q.bind(2, multipart_subject_quark);
-    search_article_q.bind(3, author);
-    search_article_q.bind(4, part_count);
-    while (search_article_q.executeStep())
-    {
-        // ok, we'll use this article as the article for this part
-      art_mid = Quark(search_article_q.getColumn(0).getText());
-    }
+    art_mid = find_article(group, author, multipart_subject, part_count);
   }
 
 
