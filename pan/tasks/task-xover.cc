@@ -427,10 +427,10 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 	const char * fallback_charset = NULL; // FIXME
 
 	// are we done?
-	GDateTime * time_posted_gd = g_mime_utils_header_decode_date(date.str);
+	GDateTime * time_posted_gd = g_mime_utils_header_decode_date(date.to_string().c_str());
   const time_t time_posted = g_date_time_to_unix(time_posted_gd);
   if (time_posted_gd) {
-    g_object_unref(time_posted_gd);
+    g_free(time_posted_gd);
   }
 	if (_mode == DAYS && time_posted < _days_cutoff) {
 		_server_to_minitasks[nntp->_server].clear();
