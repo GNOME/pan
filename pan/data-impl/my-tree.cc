@@ -610,7 +610,7 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 {
   LOG4CXX_DEBUG(logger, "creating new MyTree for group " << group);
   _data.ref_group(_group);
-  _data._trees.insert(this);
+  _data._tree = this;
 
   set_rules(rules);
   set_filter(show_type, filter);
@@ -619,7 +619,7 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 DataImpl ::MyTree ::~MyTree()
 {
   LOG4CXX_DEBUG(logger, "Destroying MyTree of group " << _group);
-  _data._trees.erase(this);
+  _data._tree = nullptr;
   _data.unref_group(_group);
 }
 

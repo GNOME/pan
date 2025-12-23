@@ -477,7 +477,7 @@ public:
         void download_articles(std::set<Article const *> s);
     };
 
-    std::set<MyTree *> _trees;
+    MyTree *_tree;
     void on_articles_added(Quark const &group, quarks_t const &mids);
     void on_articles_changed(Quark const &group,
                              quarks_t const &mids,

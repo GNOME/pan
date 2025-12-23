@@ -1419,16 +1419,10 @@ void DataImpl ::rescore()
   _scorefile.clear();
   _scorefile.parse_file(filename);
 
-  for (MyTree *it: _trees)
-  {
-    rescore_group_articles(it->_group);
-  }
+  rescore_group_articles(_tree->_group);
 
   // notify the trees that the articles have changed...
-  foreach (std::set<MyTree *>, _trees, it)
-  {
-    (*it)->articles_changed(true);
-  }
+  _tree->articles_changed(true);
 }
 
 void DataImpl ::add_score(StringView const &section_wildmat,
@@ -1650,17 +1644,12 @@ void DataImpl ::delete_orphan_author()
 }
 
 // called when articles are read, rescored or added
-void DataImpl ::on_articles_changed(Quark const &group,
-                                    quarks_t const &mids,
-                                    bool do_refilter)
-{
+void DataImpl ::on_articles_changed(Quark const &group, quarks_t const &mids,
+                                    bool do_refilter) {
+  assert(_tree->_group == group);
   rescore_articles(group, mids);
 
-  // notify the trees that the articles have changed...
-  foreach (std::set<MyTree *>, _trees, it)
-  {
-    (*it)->articles_changed(do_refilter);
-  }
+  _tree->articles_changed(do_refilter);
 }
 
 void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
@@ -1670,17 +1659,12 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
   {
     Log::add_info_va(
       _("Added %lu articles to %s."), mids.size(), group.c_str());
+    assert(_tree->_group == group);
 
     rescore_articles(group, mids);
 
-    foreach (std::set<MyTree *>, _trees, it)
-    {
-      if ((*it)->_group == group)
-      {
-        LOG4CXX_DEBUG(logger,"Adding " << mids.size() << " articles to group " << group);
-        (*it)->add_articles(mids);
-      }
-    }
+    LOG4CXX_DEBUG(logger,"Adding " << mids.size() << " articles to group " << group);
+    _tree->add_articles(mids);
 
     fire_group_counts(group);
   }
