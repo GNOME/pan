@@ -651,7 +651,7 @@ class Data :
             {
             }
 
-            virtual void update_tree() = 0;
+            virtual void update_gui_tree() = 0;
         };
 
       protected:

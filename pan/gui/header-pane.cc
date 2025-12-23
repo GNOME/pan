@@ -842,8 +842,8 @@ void HeaderPane ::mark_as_pending_deletion(const std::set<const Article *> goner
   _atree->mark_as_pending_deletion(goners);
 }
 
-void HeaderPane ::update_tree() {
-  LOG4CXX_TRACE(logger, "update_tree called...");
+void HeaderPane ::update_gui_tree() {
+  LOG4CXX_TRACE(logger, "update_gui_tree called...");
   TimeElapsed timer;
   auto tmp_time = timer.get_seconds_elapsed();
 
@@ -871,7 +871,7 @@ void HeaderPane ::update_tree() {
       new_selection.insert((*it)->message_id);
     }
   }
-  LOG4CXX_TRACE(logger, "update_tree: got old selection" << get_elapsed_time());
+  LOG4CXX_TRACE(logger, "update_gui_tree: got old selection" << get_elapsed_time());
 
   // if the old selection survived,
   // is it visible on the screen?
@@ -1675,7 +1675,7 @@ void HeaderPane ::filter(std::string const &text, int mode) {
     }
 
     _atree->update_article_view();
-    update_tree();
+    update_gui_tree();
     _atree->update_article_after_gui_update();
     _wait.watch_cursor_off();
   }

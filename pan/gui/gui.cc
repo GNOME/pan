@@ -1537,7 +1537,7 @@ void GUI :: do_delete_article ()
 
     _header_pane->mark_as_pending_deletion(articles);
     _header_pane->update_article_view();
-    _header_pane->update_tree();
+    _header_pane->update_gui_tree();
     // article must be deleted after header-pane is updated, because
     // header-pane does some comparison with article data when
     // updating gtk tree.
@@ -2109,7 +2109,7 @@ void GUI :: do_clear_selected_groups ()
         {
           _data.group_clear_articles (it);
           _header_pane->update_article_view();
-          _header_pane->update_tree();
+          _header_pane->update_gui_tree();
         }
   }
 }

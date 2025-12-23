@@ -191,7 +191,7 @@ class HeaderPane :
 
   public:
     void on_article_flag_changed(articles_t &a, Quark const &group) override;
-    virtual void update_tree() override;
+    virtual void update_gui_tree() override;
     // forwarded to _atree
     virtual void update_article_view();
     virtual void mark_as_pending_deletion(const std::set<const Article*>);

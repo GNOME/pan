@@ -630,7 +630,7 @@ void DataImpl ::MyTree ::fire_updates() const
   listeners_t::iterator it, e;
   for (it = _listeners.begin(), e = _listeners.end(); it != e;)
   {
-    (*it++)->update_tree();
+    (*it++)->update_gui_tree();
   }
   update_article_after_gui_update();
 }
