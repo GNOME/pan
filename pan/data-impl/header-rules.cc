@@ -35,10 +35,7 @@ int HeaderRules::apply_read_rule(RulesInfo &rule, Quark const &group) {
   return q.exec();
 }
 
-int HeaderRules::apply_delete_rule(Data const &data,
-                                 RulesInfo &rule,
-                                 Quark const &group)
-{
+int HeaderRules::apply_delete_rule(RulesInfo &rule, Quark const &group) {
   std::string sql(R"SQL(
     delete from article
     where id in (
@@ -126,7 +123,7 @@ int HeaderRules::apply_rules(Data &data,
       // will eventually be removed when my-tree is removed.
       apply_some_rule(data, rules, group, _deleted, false);
       // remove article from DB
-      return apply_delete_rule(data, rules, group);
+      return apply_delete_rule(rules, group);
       break;
 
     case pan::RulesInfo::TYPE__ERR:

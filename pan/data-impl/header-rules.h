@@ -31,8 +31,10 @@ class HeaderRules
     // marked articles.
     int apply_read_rule(RulesInfo &rule, Quark const &group);
 
-    int apply_delete_rule(Data const &data,
-                          RulesInfo &rule,
+    // Delete articles from DB depending on their score. Score limits
+    // are contained in rule parameter. Returns the number of marked
+    // articles.
+    int apply_delete_rule(RulesInfo &rule,
                           Quark const &group);
 
     // apply rules and trigger actions. If dry_run is set, actions are
