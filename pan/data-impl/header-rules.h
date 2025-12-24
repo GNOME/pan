@@ -26,7 +26,10 @@ class HeaderRules
       _auto_cache_mark_read(cache),
       _auto_dl_mark_read(dl) {};
 
-    int apply_read_rule(Data const &data, RulesInfo &rule, Quark const &group);
+    // Mark articles as read in DB depending on their score. Score
+    // limits are contained in rule parameter. Returns the number of
+    // marked articles.
+    int apply_read_rule(RulesInfo &rule, Quark const &group);
 
     int apply_delete_rule(Data const &data,
                           RulesInfo &rule,

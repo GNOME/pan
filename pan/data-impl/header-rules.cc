@@ -8,8 +8,6 @@
 #include "pan/usenet-utils/scorefile.h"
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Statement.h>
-#include <algorithm>
-#include <deque>
 #include <log4cxx/logger.h>
 #include <string>
 #include <vector>
@@ -20,17 +18,14 @@ namespace  {
 log4cxx::LoggerPtr logger(getLogger("header-rules"));
 }
 
-int HeaderRules::apply_read_rule(Data const &data,
-                                 RulesInfo &rule,
-                                 Quark const &group)
-{
+int HeaderRules::apply_read_rule(RulesInfo &rule, Quark const &group) {
   std::string sql(R"SQL(
     update article set is_read = True
     where id in (
       select article_id from article_group as ag
       join `group` as g on g.id == ag.group_id
       where g.name = $group
-        and ag.score between $lb and  $hb
+        and ag.score between $lb and $hb
     )
   )SQL");
   SQLite::Statement q(pan_db, sql);
@@ -115,7 +110,7 @@ int HeaderRules::apply_rules(Data &data,
       break;
 
     case RulesInfo::MARK_READ:
-      return apply_read_rule(data, rules, group);
+      return apply_read_rule(rules, group);
       break;
 
     case RulesInfo::AUTOCACHE:
