@@ -875,6 +875,7 @@ class DataImplTest : public CppUnit::TestFixture
       change_read_status("g1m1c1", true);
       change_read_status("g1m1c2", true);
       tree->update_article_view();
+      tree->update_article_view(); // test idempotency
       assert_hidden("step 2", "g1m1c1");
       assert_hidden("step 2", "g1m1c2");
       assert_reparented("step 2", "g1m1d1");
@@ -907,6 +908,8 @@ class DataImplTest : public CppUnit::TestFixture
       change_read_status("g1m1a", true);
       change_read_status("g1m1b", true);
       tree->update_article_view();
+      tree->update_article_view(); // test idempotency
+      tree->update_article_view(); // test idempotency
       assert_hidden("step 3", "g1m1a");
       assert_hidden("step 3", "g1m1b");
       assert_reparented("step 3", "g1m1d1");
@@ -951,6 +954,7 @@ class DataImplTest : public CppUnit::TestFixture
       tree->set_filter(Data::SHOW_ARTICLES, &criteria);
 
       tree->update_article_view();
+      tree->update_article_view(); // test idempotency
       assert_reparented("step 1", "g1m1b");
       assert_parent_mid("", "g1m1b", "");
     }
@@ -1014,6 +1018,7 @@ class DataImplTest : public CppUnit::TestFixture
       change_read_status("g1m1d1", true);
       change_read_status("g1m1d2", true);
       tree->update_article_view();
+      tree->update_article_view(); // test idempotency
 
       std::vector<Quark> result;
       tree->get_shown_parent_ids(result);
