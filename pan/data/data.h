@@ -655,18 +655,17 @@ class Data :
         };
 
       protected:
-        typedef std::set<Listener *> listeners_t;
-        listeners_t _listeners;
+        Listener * _listener;
 
       public:
-        virtual void add_listener(Listener *l)
+        virtual void set_listener(Listener *l)
         {
-          _listeners.insert(l);
+          _listener = l;
         }
 
         virtual void remove_listener(Listener *l)
         {
-          _listeners.erase(l);
+          _listener = nullptr;
         }
 
       virtual void initialize_article_view() const = 0;

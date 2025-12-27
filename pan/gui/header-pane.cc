@@ -746,7 +746,7 @@ bool HeaderPane ::set_group(Quark const &new_group) {
     if (!_group.empty()) {
       _atree = _data.group_get_articles(new_group, path, _show_type, &_filter,
                                         &_rules);
-      _atree->add_listener(this);
+      _atree->set_listener(this);
       _atree->initialize_article_view();
       rebuild();
       if (gtk_widget_get_realized(_tree_view)) {
