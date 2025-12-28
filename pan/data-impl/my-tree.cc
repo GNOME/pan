@@ -101,7 +101,7 @@ void DataImpl::MyTree::set_parent_in_article_view() const {
                 << " rows" << " in " << timer.get_seconds_elapsed() << "s");
 }
 
-void DataImpl ::MyTree ::initialize_article_view() const
+void DataImpl ::MyTree ::initialize_article_view_table() const
 {
   TimeElapsed timer;
   LOG4CXX_TRACE(logger, "Initial load on article_view table");
@@ -454,7 +454,7 @@ void DataImpl ::MyTree ::mark_as_pending_deletion(
   }
 }
 
-void DataImpl ::MyTree ::update_article_view() const {
+void DataImpl ::MyTree ::update_article_view_table() const {
   TimeElapsed timer;
   LOG4CXX_TRACE(logger, "start");
   SQLite::Transaction setup_article_view_transaction(pan_db);
@@ -487,13 +487,14 @@ void DataImpl ::MyTree ::update_article_view() const {
   LOG4CXX_TRACE(logger, "transaction commit done in "
                             << timer.get_seconds_elapsed() - tmp_time << "s).");
 
-  LOG4CXX_TRACE(logger, "done with " << count << " articles (total time: "
-                                     << timer.get_seconds_elapsed() << "s).");
+  LOG4CXX_DEBUG(logger, "update_article_view_table done with "
+                            << count << " articles (total time: "
+                            << timer.get_seconds_elapsed() << "s).");
 }
 
 // delete (h)idden articles and set other to (s)hown
 void DataImpl ::MyTree ::
-    update_article_after_gui_update() const {
+    update_article_tables_after_gui_update() const {
   LOG4CXX_DEBUG(logger, "updating article view after GUI update");
   pan_db.exec(R"SQL(
     update article_view set status = "s" where status in ("e","r");
@@ -628,7 +629,7 @@ DataImpl ::MyTree ::~MyTree()
 void DataImpl ::MyTree ::fire_updates() const
 {
   _listener->update_gui_tree();
-  update_article_after_gui_update();
+  update_article_tables_after_gui_update();
 }
 
 void DataImpl ::MyTree ::cache_articles(std::set<Article const *> s)
@@ -691,6 +692,7 @@ void DataImpl ::MyTree ::download_articles(std::set<Article const *> s)
   }
 }
 
+// article may be changed after rescore for instance
 void DataImpl ::MyTree ::articles_changed(bool do_refilter)
 {
   LOG4CXX_DEBUG(logger, "group " << _group << ": articles were changed");
@@ -699,12 +701,12 @@ void DataImpl ::MyTree ::articles_changed(bool do_refilter)
 
   if (do_refilter)
   {
-    update_article_view();
+    update_article_view_table();
   }
 
   fire_updates();
 
-  update_article_after_gui_update();
+  update_article_tables_after_gui_update();
   LOG4CXX_DEBUG(logger, "articles_changed done");
 }
 
@@ -714,7 +716,7 @@ void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
-  update_article_view();
+  update_article_view_table();
   fire_updates();
 }
 

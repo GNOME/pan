@@ -597,7 +597,7 @@ PanTreeStore *HeaderPane ::build_model(Quark const &group,
 
     LOG4CXX_TRACE(logger, "updated header-pane content " << get_elapsed_time());
 
-    atree->update_article_after_gui_update();
+    atree->update_article_tables_after_gui_update();
     LOG4CXX_TRACE(logger, "updated article view after gui updates "
                               << get_elapsed_time());
 
@@ -747,7 +747,7 @@ bool HeaderPane ::set_group(Quark const &new_group) {
       _atree = _data.group_get_articles(new_group, path, _show_type, &_filter,
                                         &_rules);
       _atree->set_listener(this);
-      _atree->initialize_article_view();
+      _atree->initialize_article_view_table();
       rebuild();
       if (gtk_widget_get_realized(_tree_view)) {
         gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(_tree_view), 0, 0);
@@ -836,7 +836,7 @@ void HeaderPane ::select_message_id(Quark const &mid, bool do_scroll) {
   gtk_tree_path_free(path);
 }
 
-void HeaderPane ::update_article_view() { _atree->update_article_view(); }
+void HeaderPane ::update_article_view() { _atree->update_article_view_table(); }
 
 void HeaderPane ::mark_as_pending_deletion(const std::set<const Article *> goners) {
   _atree->mark_as_pending_deletion(goners);
@@ -1674,9 +1674,9 @@ void HeaderPane ::filter(std::string const &text, int mode) {
       _atree->set_filter(_show_type, &_filter);
     }
 
-    _atree->update_article_view();
+    _atree->update_article_view_table();
     update_gui_tree();
-    _atree->update_article_after_gui_update();
+    _atree->update_article_tables_after_gui_update();
     _wait.watch_cursor_off();
   }
 }

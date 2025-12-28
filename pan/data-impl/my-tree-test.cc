@@ -337,7 +337,7 @@ class DataImplTest : public CppUnit::TestFixture
     {
       add_test_articles();
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       // assert results in DB
       assert_children("", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
@@ -351,7 +351,7 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE(
         "check parent", std::string("g1m1b"), p_msg_id);
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
       assert_shown("step 2", "g1m1a");
     }
 
@@ -360,7 +360,7 @@ class DataImplTest : public CppUnit::TestFixture
       add_test_articles();
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
                                       &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       assert_children("", Quark(), "g1", {"g1m1a", "g1m2a", "g1m2"});
     }
@@ -378,7 +378,7 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       std::vector<std::string> original_roots(
         {"g1m1c1", "g1m1c2", "g1m2a", "g1m2"});
@@ -393,12 +393,12 @@ class DataImplTest : public CppUnit::TestFixture
       assert_exposed("step 1", "g1m1c1");
 
       // now emulate GUI update
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
       assert_shown("gui 1", "g1m1c1");
 
       // read another article
       change_read_status("g1m1c2", true);
-      tree->update_article_view();
+      tree->update_article_view_table();
       // new articles in root
       assert_children(
         "step 2", Quark(), "g1", {"g1m1c1", "g1m1d2", "g1m2a", "g1m2"});
@@ -410,11 +410,11 @@ class DataImplTest : public CppUnit::TestFixture
       assert_shown("gui 2", "g1m1c1");
 
       // now emulate GUI update
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // mark same article as unread
       change_read_status("g1m1c2", false);
-      tree->update_article_view();
+      tree->update_article_view_table();
       // check content of added article and reparented ?
       assert_children("step 3", Quark(), "g1", original_roots);
       assert_exposed("step 3", "g1m1c2");
@@ -433,7 +433,7 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
                                       &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       assert_exposed("step 1", "g1m1d1");
       assert_exposed("step 1", "g1m1c2");
@@ -443,11 +443,11 @@ class DataImplTest : public CppUnit::TestFixture
       // the read articles (g1m1b and g1m1c1) are not in tree
       assert_children("step 1", "g1m1a", "g1", {"g1m1c2", "g1m1d1"});
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // now read another article
       change_read_status("g1m1c2", true);
-      tree->update_article_view();
+      tree->update_article_view_table();
       // no change in root
       assert_children("step 2", Quark(), "g1", original_roots);
       // g1m1c2 is removed from tree, new child is g1m1d2
@@ -456,11 +456,11 @@ class DataImplTest : public CppUnit::TestFixture
       assert_shown("step 2", "g1m1d1");
       assert_reparented("step 2", "g1m1d2");
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // mark an article as unread
       change_read_status("g1m1c1", false);
-      tree->update_article_view();
+      tree->update_article_view_table();
       // no change in root
       assert_children("step 3", Quark(), "g1", original_roots);
       // g1m1c1 is back in tree
@@ -485,7 +485,7 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       std::vector<std::string> original_roots({"g1m1a", "g1m2a", "g1m2"});
       assert_children("step 1", Quark(), "g1", original_roots);
@@ -494,11 +494,11 @@ class DataImplTest : public CppUnit::TestFixture
       assert_children("step 1", "g1m1a", "g1", {"g1m1b"});
       assert_children("step 1", "g1m1b", "g1", {"g1m1c2"});
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // now read another article
       change_read_status("g1m1c2", true);
-      tree->update_article_view();
+      tree->update_article_view_table();
       // no change in root
       assert_children("step 2", Quark(), "g1", original_roots);
 
@@ -508,11 +508,11 @@ class DataImplTest : public CppUnit::TestFixture
       assert_not_in_view("step 2", "g1m1d1");
       assert_not_in_view("step 2", "g1m1d2");
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // mark an article as unread
       change_read_status("g1m1c1", false);
-      tree->update_article_view();
+      tree->update_article_view_table();
       // no change in root
       assert_children("step 3", Quark(), "g1", original_roots);
       assert_children("step 3", "g1m1a", "g1", {"g1m1b"});
@@ -530,23 +530,23 @@ class DataImplTest : public CppUnit::TestFixture
       add_test_articles();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
-      tree->update_article_after_gui_update();
+      tree->initialize_article_view_table();
+      tree->update_article_tables_after_gui_update();
 
       // g1m1a -> g1m1b +-->[g1m1c1]-> g1m1d1
       //                 \-> g1m1c2 ->[g1m1d2]
       mark_to_delete_article("g1m1c1");
       mark_to_delete_article("g1m1d2");
-      tree->update_article_view();
+      tree->update_article_view_table();
 
       assert_hidden("step 1", "g1m1c1");
       assert_hidden("step 1", "g1m1d2");
       assert_reparented("step 1", "g1m1d1");
       assert_shown("step 1", "g1m1c2");
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
-      tree->update_article_view();
+      tree->update_article_view_table();
       assert_not_in_view("step 3", "g1m1c1");
       assert_not_in_view("step 3", "g1m1d2");
     }
@@ -559,7 +559,7 @@ class DataImplTest : public CppUnit::TestFixture
       // g1m2a -> g1m2b -> g1m2c
       // g1m2
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       std::vector<Data::ArticleTree::Thread> threads, exp_threads;
       exp_threads = {
@@ -583,7 +583,7 @@ class DataImplTest : public CppUnit::TestFixture
       add_test_articles();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       std::vector<Data::ArticleTree::Thread> threads;
 
@@ -658,7 +658,7 @@ class DataImplTest : public CppUnit::TestFixture
       // setup my_tree
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
                                       &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       // test results
       struct Exp {
@@ -744,11 +744,11 @@ class DataImplTest : public CppUnit::TestFixture
       // init article view on empty group
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       // emulate get new headers
       add_test_articles();
-      tree->update_article_view();
+      tree->update_article_view_table();
 
       // we can view the 3 read articles. They are in separate threads
       // so they have no children
@@ -774,7 +774,7 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_read();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       std::vector<Data::ArticleTree::Thread> threads, exp_threads;
 
@@ -790,7 +790,7 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE(step + " exposed count ", 3, count);
       assert_equal_threads(step, __LINE__, exp_threads, threads);
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // step 2 - change filter
       // hide read articles and expose non-read articles
@@ -798,7 +798,7 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       threads.clear();
       tree->set_filter(Data::SHOW_ARTICLES, &criteria);
-      tree->update_article_view();
+      tree->update_article_view_table();
 
       exp_threads = {
         {"",      "x", {{"g1m1a", "h", 1}, {"g1m1b", "e", 2}, {"g1m2a", "e", 3}}},
@@ -839,14 +839,14 @@ class DataImplTest : public CppUnit::TestFixture
 
       assert_equal_threads(step, __LINE__, exp_threads, threads);
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // step 3 - reset filter - expose the 3 read articles
       step = "step 3";
       criteria.clear();
       threads.clear();
       tree->set_filter(Data::SHOW_ARTICLES, &criteria);
-      tree->update_article_view();
+      tree->update_article_view_table();
       count = tree->get_exposed_articles(threads, pan::Data::COL_DATE, true );
 
       exp_threads = {
@@ -865,17 +865,17 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // change status and re-apply filter, some articles are hidden
       // and their children are reparented.
       change_read_status("g1m1c1", true);
       change_read_status("g1m1c2", true);
-      tree->update_article_view();
-      tree->update_article_view(); // test idempotency
+      tree->update_article_view_table();
+      tree->update_article_view_table(); // test idempotency
       assert_hidden("step 2", "g1m1c1");
       assert_hidden("step 2", "g1m1c2");
       assert_reparented("step 2", "g1m1d1");
@@ -902,14 +902,14 @@ class DataImplTest : public CppUnit::TestFixture
       CPPUNIT_ASSERT_EQUAL_MESSAGE(
         "check new g1m1d2 parent", std::string("g1m1b"), prt);
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // read an article just below root so that child article is reparented to root
       change_read_status("g1m1a", true);
       change_read_status("g1m1b", true);
-      tree->update_article_view();
-      tree->update_article_view(); // test idempotency
-      tree->update_article_view(); // test idempotency
+      tree->update_article_view_table();
+      tree->update_article_view_table(); // test idempotency
+      tree->update_article_view_table(); // test idempotency
       assert_hidden("step 3", "g1m1a");
       assert_hidden("step 3", "g1m1b");
       assert_reparented("step 3", "g1m1d1");
@@ -942,8 +942,8 @@ class DataImplTest : public CppUnit::TestFixture
       // init article view, some articles are shown
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
-      tree->update_article_after_gui_update();
+      tree->initialize_article_view_table();
+      tree->update_article_tables_after_gui_update();
 
       // filter on g1m1b, which must be reparented to root, i.e. its
       // parent_id in article_view must by null, even if its parent_id
@@ -953,8 +953,8 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_text(Quark("Message-Id"), d);
       tree->set_filter(Data::SHOW_ARTICLES, &criteria);
 
-      tree->update_article_view();
-      tree->update_article_view(); // test idempotency
+      tree->update_article_view_table();
+      tree->update_article_view_table(); // test idempotency
       assert_reparented("step 1", "g1m1b");
       assert_parent_mid("", "g1m1b", "");
     }
@@ -966,12 +966,12 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,
                                       &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
 
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
       // check idempotency
-      tree->update_article_after_gui_update();
+      tree->update_article_tables_after_gui_update();
 
       // change status and re-apply filter, some articles are hidden
       change_read_status("g1m1c1", true);
@@ -980,9 +980,9 @@ class DataImplTest : public CppUnit::TestFixture
       // emulate article removal
       mark_to_delete_article("g1m1d2");
 
-      tree->update_article_view();
+      tree->update_article_view_table();
       // check idempotency
-      tree->update_article_view();
+      tree->update_article_view_table();
 
       assert_hidden("step 2", "g1m1c1");
       assert_hidden("step 2", "g1m1c2");
@@ -1011,14 +1011,14 @@ class DataImplTest : public CppUnit::TestFixture
       criteria.set_type_is_unread();
       tree =
         data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES, &criteria);
-      tree->initialize_article_view();
+      tree->initialize_article_view_table();
 
       // read 2 articles, which are removed from view, then their
       // parents are childless and no longer counted as parents
       change_read_status("g1m1d1", true);
       change_read_status("g1m1d2", true);
-      tree->update_article_view();
-      tree->update_article_view(); // test idempotency
+      tree->update_article_view_table();
+      tree->update_article_view_table(); // test idempotency
 
       std::vector<Quark> result;
       tree->get_shown_parent_ids(result);

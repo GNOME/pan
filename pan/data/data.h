@@ -668,10 +668,10 @@ class Data :
           _listener = nullptr;
         }
 
-      virtual void initialize_article_view() const = 0;
-      virtual void update_article_view() const = 0;
+      virtual void initialize_article_view_table() const = 0;
+      virtual void update_article_view_table() const = 0;
       virtual void mark_as_pending_deletion(const std::set<const Article*>) const = 0;
-      virtual void update_article_after_gui_update() const = 0;
+      virtual void update_article_tables_after_gui_update() const = 0;
       virtual void set_article_hidden_status(quarks_t &mids) const = 0;
       virtual int
       get_threads(std::vector<Data::ArticleTree::Thread> &threads,
