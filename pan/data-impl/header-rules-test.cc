@@ -227,28 +227,13 @@ class DataImplTest : public CppUnit::TestFixture
 
       assert_apply_result("auto delete article", "g1", 2);
 
-      int size(hr._deleted.size());
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted article count", 2, size);
-      std::string mid(hr._deleted[0].message_id.to_string());
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted article id", std::string("m1"), mid);
-      mid = hr._deleted[1].message_id.to_string();
-      CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted article id", std::string("m3"), mid);
-
       SQLite::Statement q(pan_db, R"SQL(
-        select count() from article where message_id == ?;
+        select count() from article where message_id in ("m1","m3");
       )SQL");
 
-      for (Article a : hr._deleted)
-      {
-        q.reset();
-        q.bind(1, a.message_id);
-        while (q.executeStep())
-        {
-          CPPUNIT_ASSERT_EQUAL_MESSAGE(
-            "deleted article " + a.message_id.to_string() + " is gone",
-            0,
-            q.getColumn(0).getInt());
-        }
+      while (q.executeStep()) {
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted articles are gone", 0,
+                                     q.getColumn(0).getInt());
       }
     }
 

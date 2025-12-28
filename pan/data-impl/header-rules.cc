@@ -115,9 +115,6 @@ int HeaderRules::apply_rules(Data &data,
       break;
 
     case RulesInfo::DELETE_ARTICLE:
-      // fill list of deleted article, used to cleanup my-tree. This
-      // will eventually be removed when my-tree is removed.
-      apply_some_rule(rules, group, _deleted, false);
       // remove article from DB
       return apply_delete_rule(rules, group);
       break;
@@ -126,12 +123,13 @@ int HeaderRules::apply_rules(Data &data,
       return 0;
   }
 
+  // top level is always an aggregate rule so the following code is
+  // indeed executed.
   if (! dry_run)
   {
     // act on apply_rules results
     cache_articles(data);
     download_articles(data, save_path);
-    delete_articles(data);
   }
 
   LOG4CXX_INFO(logger, "aggregate apply_rules done in " << timer.get_seconds_elapsed() << "s.");
@@ -193,17 +191,3 @@ void HeaderRules::download_articles(Data &data, Quark const &save_path)
   _downloaded.clear();
 }
 
-void HeaderRules::delete_articles(Data &data)
-{
-  std::set<Article const *> const tmp;
-  std::set<Article const *> articleSet;
-  for (auto const &article : _deleted)
-  {
-    articleSet.insert(&article);
-  }
-  if (! tmp.empty())
-  {
-    data.delete_articles(tmp);
-  }
-  _deleted.clear();
-}

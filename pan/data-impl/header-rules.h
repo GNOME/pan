@@ -48,10 +48,6 @@ class HeaderRules
 
     std::vector<Article> _cached, _downloaded;
 
-    // This is used to cleanup my-tree. This will eventually be
-    // removed when my-tree is removed.
-    std::vector<Article> _deleted;
-
     // used by tests
     void reset()
     {
@@ -73,7 +69,6 @@ class HeaderRules
   public:
     void cache_articles(Data &data);
     void download_articles(Data &data, Quark const &save_path);
-    void delete_articles(Data  &data);
 
 }; // namespace pan
 
