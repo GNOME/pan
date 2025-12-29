@@ -61,7 +61,7 @@ class HeaderRules
     // score. Score limits are contained in rule parameter. Read
     // article can be excluded from the result when skip_read is
     // true. Returns the number of stored articles.
-    int apply_some_rule(RulesInfo &rule,
+    int append_articles_affected_by_rule(RulesInfo &rule,
                         Quark const &group,
                         std::vector<Article> &setme,
                         bool skip_read);

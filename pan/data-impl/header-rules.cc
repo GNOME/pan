@@ -52,7 +52,7 @@ int HeaderRules::apply_delete_rule(RulesInfo &rule, Quark const &group) {
   return q.exec();
 }
 
-int HeaderRules::apply_some_rule(RulesInfo &rule, Quark const &group,
+int HeaderRules::append_articles_affected_by_rule(RulesInfo &rule, Quark const &group,
                                  std::vector<Article> &setme, bool skip_read) {
   std::string sql(R"SQL(
     select message_id from article
@@ -107,11 +107,11 @@ int HeaderRules::apply_rules(Data &data,
       break;
 
     case RulesInfo::AUTOCACHE:
-      return apply_some_rule(rules, group, _cached, true);
+      return append_articles_affected_by_rule(rules, group, _cached, true);
       break;
 
     case RulesInfo::AUTODOWNLOAD:
-      return apply_some_rule(rules, group, _downloaded, true);
+      return append_articles_affected_by_rule(rules, group, _downloaded, true);
       break;
 
     case RulesInfo::DELETE_ARTICLE:
