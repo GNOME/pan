@@ -36,8 +36,9 @@ int HeaderRules::apply_read_rule(RulesInfo &rule, Quark const &group) {
 }
 
 int HeaderRules::apply_delete_rule(RulesInfo &rule, Quark const &group) {
+  // Articles will be really deleted once GUI is updated
   std::string sql(R"SQL(
-    delete from article
+    update article set to_delete = True
     where id in (
       select article_id from article_group as ag
       join `group` as g on g.id == ag.group_id
@@ -94,6 +95,7 @@ int HeaderRules::apply_rules(Data &data,
   switch (rules._type)
   {
     case RulesInfo::AGGREGATE_RULES:
+      // only used at top level
       LOG4CXX_DEBUG(logger, "aggregate apply_rules called");
       for (int i = 0; i < rules._aggregates.size(); i++)
       {

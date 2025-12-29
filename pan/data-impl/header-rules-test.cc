@@ -228,11 +228,11 @@ class DataImplTest : public CppUnit::TestFixture
       assert_apply_result("auto delete article", "g1", 2);
 
       SQLite::Statement q(pan_db, R"SQL(
-        select count() from article where message_id in ("m1","m3");
+        select count() from article where message_id in ("m1","m3") and to_delete is True;
       )SQL");
 
       while (q.executeStep()) {
-        CPPUNIT_ASSERT_EQUAL_MESSAGE("deleted articles are gone", 0,
+        CPPUNIT_ASSERT_EQUAL_MESSAGE("articles to be deleted are marked", 2,
                                      q.getColumn(0).getInt());
       }
     }
