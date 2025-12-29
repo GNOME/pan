@@ -68,6 +68,8 @@ class HeaderFilter
     bool score_article(Data const &data,
                        std::deque<Scorefile::Section> const &sections,
                        Article const &article) const;
+    // Compute article score and store the result in DB. Returns true
+    // if the score was changed, false otherwise.
     bool score_article(Data const &data,
                        std::vector<Scorefile::Section> const &sections,
                        Article const &article) const;
