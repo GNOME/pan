@@ -84,22 +84,22 @@ class DataImplTest : public CppUnit::TestFixture
       //                 \-> g1m1c2 -> g1m1d2
       add_article_in_group("g1m1a", "g1");
       add_article_in_group("g1m1b", "g1");
-      data->store_references("g1m1b", "g1m1a"); // add ancestor
+      data->process_references("g1m1b", "g1m1a"); // add ancestor
       add_article_in_group("g1m1c1", "g1");
-      data->store_references("g1m1c1", "g1m1a g1m1b"); // add ancestors
+      data->process_references("g1m1c1", "g1m1a g1m1b"); // add ancestors
       add_article_in_group("g1m1c2", "g1");
-      data->store_references("g1m1c2", "g1m1a g1m1b"); // add ancestors
+      data->process_references("g1m1c2", "g1m1a g1m1b"); // add ancestors
       add_article_in_group("g1m1d1", "g1");
-      data->store_references("g1m1d1", "g1m1a g1m1b g1m1c1"); // add ancestors
+      data->process_references("g1m1d1", "g1m1a g1m1b g1m1c1"); // add ancestors
       add_article_in_group("g1m1d2", "g1");
-      data->store_references("g1m1d2", "g1m1a g1m1b g1m1c2"); // add ancestors
+      data->process_references("g1m1d2", "g1m1a g1m1b g1m1c2"); // add ancestors
 
       // g1m2a -> g1m2b -> g1m2c
       add_article_in_group("g1m2a", "g1");
       add_article_in_group("g1m2b", "g1");
-      data->store_references("g1m2b", "g1m2a"); // add ancestor
+      data->process_references("g1m2b", "g1m2a"); // add ancestor
       add_article_in_group("g1m2c", "g1");
-      data->store_references("g1m2c", "g1m2a g1m2b"); // add ancestors
+      data->process_references("g1m2c", "g1m2a g1m2b"); // add ancestors
 
       add_article_in_group("g1m2", "g1"); // no ancestors
     }
@@ -652,8 +652,8 @@ class DataImplTest : public CppUnit::TestFixture
 
 
       // add ancestor
-      data->store_references("g1m1a", "g1m1");
-      data->store_references("g1m1b", "g1m1");
+      data->process_references("g1m1a", "g1m1");
+      data->process_references("g1m1b", "g1m1");
 
       // setup my_tree
       tree = data->group_get_articles("g1", "/tmp", Data::SHOW_ARTICLES,

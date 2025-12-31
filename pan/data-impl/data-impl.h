@@ -336,7 +336,7 @@ public:
     void group_get_servers(Quark const &group, quarks_t &) const override;
     void server_get_groups(Quark const &server, quarks_t &) const override;
 
-    void store_references(Quark message_id, std::string references);
+    void process_references(Quark message_id, std::string references);
 
     /**
     ***  HEADERS

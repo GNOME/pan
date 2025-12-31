@@ -777,7 +777,7 @@ void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
   }
 }
 
-void DataImpl::store_references(Quark message_id, std::string references)
+void DataImpl::process_references(Quark message_id, std::string references)
 {
   if (! references.empty())
   {

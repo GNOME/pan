@@ -140,7 +140,7 @@ public:
       setup.bind(1, msg_id);
       int res (setup.exec());
       CPPUNIT_ASSERT_EQUAL_MESSAGE("insert article " + msg_id, 1, res);
-      data->store_references(msg_id, references);
+      data->process_references(msg_id, references);
     }
 
     void delete_article(std::string msg_id) {

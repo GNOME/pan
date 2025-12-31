@@ -394,7 +394,7 @@ Article const *DataImpl ::xover_add(Quark const &server,
     // parent_id and ghost articles according to references values to
     // construct a tree of articles (missing articles are stored in
     // `ghost` table)
-    store_references(message_id, references);
+    process_references(message_id, references);
 
     add_article.commit();
   }
