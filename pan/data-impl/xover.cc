@@ -396,7 +396,12 @@ Article const *DataImpl ::xover_add(Quark const &server,
     // `ghost` table)
     process_references(message_id, references);
 
-    add_article.commit();
+    // TODO: handle this by batch, trigger on article with non null
+    // references and null ghost or parent_id
+
+    LOG4CXX_DEBUG(logger, "Added article " << art_mid << " to DB in "
+                                           << timer.get_seconds_elapsed()
+                                           << "s");
   }
 
   /**

@@ -30,7 +30,6 @@ private:
     DataImpl *data;
 
     struct CheckRef {
-        std::string msg_id;
         std::string parent_msg_id;
         std::string ghost_msg_id;
         std::string ghost_parent_msg_id;
@@ -96,13 +95,13 @@ public:
         }
     }
 
+    // check parent_id, ghost msg_id and ghost_parent_id
     void check_ghost_tree(std::string label,
                         std::string test_msg_id,
                         CheckRef expect)
     {
       SQLite::Statement query(pan_db, R"SQL(
-            select a.message_id,
-                   (select message_id from article where id == a.parent_id) as parent_msg_id,
+            select (select message_id from article where id == a.parent_id) as parent_msg_id,
                    g.ghost_msg_id,
                    g.ghost_parent_msg_id
             from article as a
@@ -115,18 +114,15 @@ public:
       query.bind(1, test_msg_id);
       while (query.executeStep())
       {
-        CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": msg_id",
-                                     expect.msg_id,
-                                     std::string(query.getColumn(0).getText()));
         CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": parent msg id",
                                      expect.parent_msg_id,
-                                     std::string(query.getColumn(1).getText()));
+                                     std::string(query.getColumn(0).getText()));
         CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": ghost msg id",
                                      expect.ghost_msg_id,
-                                     std::string(query.getColumn(2).getText()));
+                                     std::string(query.getColumn(1).getText()));
         CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": ghost parent msg id",
                                      expect.ghost_parent_msg_id,
-                                     std::string(query.getColumn(3).getText()));
+                                     std::string(query.getColumn(2).getText()));
       }
     }
 
@@ -158,16 +154,16 @@ public:
       std::string a1("<a1>"), a2("<a2>"), a3("<a3>");
 
       add_article(a1, "");
-      check_ghost_tree("a1 only", a1, {a1});
+      check_ghost_tree("a1 only", a1, {});
 
       add_article(a2, a1);
-      check_ghost_tree("a2->a1", a1, {a1});
-      check_ghost_tree("a2->a1", a2, {a2, a1, "", ""});
+      check_ghost_tree("a2->a1", a1, {});
+      check_ghost_tree("a2->a1", a2, {a1, "", ""});
 
       add_article(a3, a1 + " " + a2);
-      check_ghost_tree("a3->a1", a1, {a1});
-      check_ghost_tree("a3->a2", a2, {a2, a1, "", ""});
-      check_ghost_tree("a3->a3", a3, {a3, a2, "", ""});
+      check_ghost_tree("a3->a1", a1, {});
+      check_ghost_tree("a3->a2", a2, {a1, "", ""});
+      check_ghost_tree("a3->a3", a3, {a2, "", ""});
     }
 
     void test_reverse_insertion()
@@ -182,21 +178,21 @@ public:
       add_article(a3, a1 + " " + a2 + " " + a3);
       check_ghost_presence(a1, true, __LINE__);
       check_ghost_presence(a2, true, __LINE__);
-      check_ghost_tree("a3", a3, {a3, "", a2, a1});
-      check_ghost_tree("a3->a2", a2, {a2, "", a1, ""});
-      check_ghost_tree("a3->a1", a1, {a1, "", "", ""});
+      check_ghost_tree("a3", a3, {"", a2, a1});
+      check_ghost_tree("a3->a2", a2, {"", a1, ""});
+      check_ghost_tree("a3->a1", a1, {"", "", ""});
 
       add_article(a1, "");
       check_ghost_presence(a1, false, __LINE__);
       check_ghost_presence(a2, true, __LINE__);
-      check_ghost_tree("a1->a3", a3, {a3, a1, a2, a1});
-      check_ghost_tree("a1->a1", a1, {a1});
+      check_ghost_tree("a1->a3", a3, {a1, a2, a1});
+      check_ghost_tree("a1->a1", a1, {});
 
       add_article(a2, a1);
       check_ghost_presence(a2,false, __LINE__);
-      check_ghost_tree("a2->a3", a3, {a3, a2, "", ""});
-      check_ghost_tree("a2->a2", a2, {a2, a1, "", ""});
-      check_ghost_tree("a2->a1", a1, {a1});
+      check_ghost_tree("a2->a3", a3, {a2, "", ""});
+      check_ghost_tree("a2->a2", a2, {a1, "", ""});
+      check_ghost_tree("a2->a1", a1, {});
     }
 
     void test_complex_tree()
@@ -210,36 +206,36 @@ public:
           d3("<d3>"), d4("<d4>");
 
       add_article(b3, b1 + " " + b2);
-      check_ghost_tree("b3", b3, {b3, "", b2, b1});
+      check_ghost_tree("b3", b3, {"", b2, b1});
 
       add_article(c3, b1 + " " + b2);
-      check_ghost_tree("c3", c3, {c3, "", b2, b1});
+      check_ghost_tree("c3", c3, {"", b2, b1});
 
       add_article(b2, b1);
       check_ghost_presence(b2,false, __LINE__);
-      check_ghost_tree("b2->b2", b2, {b2, "", b1, ""});
-      check_ghost_tree("b2->b3", b3, {b3, b2, "", ""});
-      check_ghost_tree("b2->c3", c3, {c3, b2, "", ""});
+      check_ghost_tree("b2->b2", b2, {"", b1, ""});
+      check_ghost_tree("b2->b3", b3, {b2, "", ""});
+      check_ghost_tree("b2->c3", c3, {b2, "", ""});
 
       add_article(b1, "");
       check_ghost_presence(b1,false, __LINE__);
-      check_ghost_tree("b1->b2", b2, {b2, b1, "", ""});
-      check_ghost_tree("b1", b1, {b1});
+      check_ghost_tree("b1->b2", b2, {b1, "", ""});
+      check_ghost_tree("b1", b1, {});
 
       add_article(d4, b1 + " " + d2 + " " + d3);
       check_ghost_presence(b1,false, __LINE__);
-      check_ghost_tree("d4", d4, {d4,b1,d3,d2});
-      check_ghost_tree("d4->b2", b2, {b2, b1, "", ""});
-      check_ghost_tree("d4->b1", b1, {b1});
-      check_ghost_tree("d4->c3", c3, {c3, b2, "", ""});
+      check_ghost_tree("d4", d4, {b1,d3,d2});
+      check_ghost_tree("d4->b2", b2, {b1, "", ""});
+      check_ghost_tree("d4->b1", b1, {});
+      check_ghost_tree("d4->c3", c3, {b2, "", ""});
 
       add_article(d3, b1 + " " + d2);
       check_ghost_presence(d3,false, __LINE__);
-      check_ghost_tree("d3", d3, {d3,b1,d2,b1});
+      check_ghost_tree("d3", d3, {b1,d2,b1});
 
       add_article(d2, b1);
       check_ghost_presence(d2,false, __LINE__);
-      check_ghost_tree("d2", d2, {d2,b1,"",""});
+      check_ghost_tree("d2", d2, {b1,"",""});
     }
 
     // seen in the wild: references from sibling lead to a circular reference
@@ -306,7 +302,7 @@ public:
       //   \-> b2 -> c3
       //         \-> b3
       check_ghost_presence(d3, true, __LINE__);
-      check_ghost_tree("del d3->d4", d4, {d4,d2,d3,d2});
+      check_ghost_tree("del d3->d4", d4, {d2,d3,d2});
 
       delete_article(d2);
       // b1 ->(d2)->(d3)-> d4 -> d5 -> d6
@@ -314,7 +310,7 @@ public:
       //         \-> b3
       check_ghost_presence(d2, true, __LINE__);
       check_ghost_presence(d3, true, __LINE__);
-      check_ghost_tree("del d2->d4", d4, {d4,b1,d3,d2});
+      check_ghost_tree("del d2->d4", d4, {b1,d3,d2});
 
       delete_article(d4);
       // b1 ->(d2)->(d3)->(d4)-> d5 -> d6
@@ -323,7 +319,7 @@ public:
       check_ghost_presence(d2, true, __LINE__);
       check_ghost_presence(d3, true, __LINE__);
       check_ghost_presence(d4, true, __LINE__);
-      check_ghost_tree("del d4->d5", d5, {d5,b1,d4,d3});
+      check_ghost_tree("del d4->d5", d5, {b1,d4,d3});
 
       delete_article(b2);
       // b1 ->(d2)->(d3)->(d4)-> d5 -> d6
@@ -333,8 +329,8 @@ public:
       check_ghost_presence(d2, true, __LINE__);
       check_ghost_presence(d3, true, __LINE__);
       check_ghost_presence(d4, true, __LINE__);
-      check_ghost_tree("del b2->c3", c3, {c3,b1,b2,b1});
-      check_ghost_tree("del b2->b3", b3, {b3,b1,b2,b1});
+      check_ghost_tree("del b2->c3", c3, {b1,b2,b1});
+      check_ghost_tree("del b2->b3", b3, {b1,b2,b1});
 
       delete_article(b1);
       //(b1)->(d2)->(d3)->(d4)-> d5 -> d6
@@ -345,8 +341,8 @@ public:
       check_ghost_presence(d2, true, __LINE__);
       check_ghost_presence(d3, true, __LINE__);
       check_ghost_presence(d4, true, __LINE__);
-      check_ghost_tree("del b1->c3", c3, {c3,"",b2,b1});
-      check_ghost_tree("del b1->b3", b3, {b3,"",b2,b1});
+      check_ghost_tree("del b1->c3", c3, {"",b2,b1});
+      check_ghost_tree("del b1->b3", b3, {"",b2,b1});
 
       // triggers a complete deletion of c3 since there's no other child
       delete_article(c3);
