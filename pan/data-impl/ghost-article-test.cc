@@ -95,6 +95,21 @@ public:
         }
     }
 
+    void check_ghost_entry(std::string label, std::string ghost_msg_id,
+                           std::string ghost_prt_msg_id, int line) {
+        SQLite::Statement query(pan_db, R"SQL(
+          select ghost_parent_msg_id from ghost where ghost_msg_id = ?
+        )SQL");
+        query.bind(1, ghost_msg_id);
+
+        while (query.executeStep()) {
+          CPPUNIT_ASSERT_EQUAL_MESSAGE(
+              label + ": ghost " + ghost_msg_id + " parent, line " +
+                  std::to_string(line),
+              ghost_prt_msg_id, std::string(query.getColumn(0).getText()));
+        }
+    }
+
     // check parent_id, ghost parent msg_id and its ghost_parent_msg_id (the
     // ghost grand parent message id ...)
     void check_real_to_ghost_relation(std::string label,
@@ -107,11 +122,10 @@ public:
             from article as a
             left outer join ghost as g on a.ghost_parent_id == g.id
             where a.message_id = ?
-            order by g.ghost_parent_msg_id
         )SQL");
 
-      std::string msg_id, parent_id;
       query.bind(1, test_msg_id);
+      int count(0);
       while (query.executeStep())
       {
         CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": parent msg id",
@@ -123,7 +137,9 @@ public:
         CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": ghost parent msg id",
                                      expect.ghost_parent_msg_id,
                                      std::string(query.getColumn(2).getText()));
+        count++;
       }
+      CPPUNIT_ASSERT_EQUAL_MESSAGE(label + ": found test entry", 1, count);
     }
 
     void add_article(std::string msg_id, std::string references)
@@ -179,8 +195,8 @@ public:
       check_ghost_presence(a1, true, __LINE__);
       check_ghost_presence(a2, true, __LINE__);
       check_real_to_ghost_relation("a3", a3, {"", a2, a1});
-      check_real_to_ghost_relation("a3->a2", a2, {"", a1, ""});
-      check_real_to_ghost_relation("a3->a1", a1, {"", "", ""});
+      check_ghost_entry("a3->a2", a2, a1, __LINE__);
+      check_ghost_entry("a3->a1", a1, "", __LINE__);
 
       add_article(a1, "");
       check_ghost_presence(a1, false, __LINE__);
