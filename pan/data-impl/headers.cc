@@ -726,45 +726,54 @@ void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
                                     << parent_msg_id);
     if (parent_msg_id != message_id.c_str())
     {
-      int found(0);
       // try to insert current ref in child message if it exists
       update_parent_in_article.reset();
       update_parent_in_article.bind(1, parent_msg_id);
       update_parent_in_article.bind(2, current_msg_id);
-      found = update_parent_in_article.exec();
+      int found_real = update_parent_in_article.exec();
+      LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": found "
+                                                   << found_real
+                                                   << " real article matching "
+                                                   << parent_msg_id);
 
-      LOG4CXX_TRACE(tree_logger,
-                    "references msg " << message_id << ": found " << found
-                                      << " real article");
-      if (found != 0)
+      if (found_real != 0)
       {
         // real parent is found, so there's no need to explore further the
         // references
         break;
       }
 
-      // insert ghost message linked to current real article
+      // insert ghost article linked to current real article
       // ghost message must also store its parent message_id (ghost or not
       // ghost)
       insert_ghost.reset();
       insert_ghost.bind(1, parent_msg_id);
       int inserted = insert_ghost.exec();
-      LOG4CXX_TRACE(tree_logger,
-                    "references msg " << message_id << ": added " << inserted
-                                      << " ghost article for parent msg id "
-                                      << parent_msg_id);
+      LOG4CXX_TRACE(tree_logger, "references msg "
+                                     << message_id << ": added " << inserted
+                                     << " ghost article for parent msg id "
+                                     << parent_msg_id);
 
       // insert parent in ghost article
       update_ghost.reset();
       update_ghost.bind(1, parent_msg_id);
       update_ghost.bind(2, current_msg_id);
-      found = update_ghost.exec();
+      int found = update_ghost.exec();
+      LOG4CXX_TRACE(tree_logger, "references msg "
+                                     << message_id << ": updated " << found
+                                     << " ghost parent for parent msg id "
+                                     << parent_msg_id << ", current msg id "
+                                     << current_msg_id);
 
       // update in real article
       update_ghost_parent_id.reset();
       update_ghost_parent_id.bind(1, parent_msg_id);
       update_ghost_parent_id.bind(2, current_msg_id);
-      update_ghost_parent_id.exec();
+      int updated = update_ghost_parent_id.exec();
+      LOG4CXX_TRACE(tree_logger,
+                    "references msg " << message_id << ": updated " << updated
+                                      << " real article with ghost parent msg id "
+                                      << parent_msg_id);
     }
     else
     {
@@ -809,9 +818,9 @@ void DataImpl::process_references(Quark message_id, std::string references)
     delete from ghost where ghost_msg_id == ?
   )SQL");
   delete_ghost.bind(1, message_id);
-  delete_ghost.exec();
-  LOG4CXX_TRACE(tree_logger,
-                "references msg " << message_id << ": delete ghost article");
+  int deleted = delete_ghost.exec();
+  LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": deleted "
+                                               << deleted << " ghost article");
 
   // now handle the case where a real article is added with some
   // references (stored above) and where one of these references is a
