@@ -711,6 +711,8 @@ void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
   LOG4CXX_TRACE(tree_logger,
                 "references msg " << message_id << ": storing refs " << refs);
 
+  int count(0);
+
   // get newest reference first
   while (refs.pop_last_token(parent_msg_id, ' '))
   {
@@ -729,22 +731,23 @@ void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
       // try to insert current ref in child message if it exists
       update_parent_in_article.reset();
       update_parent_in_article.bind(1, parent_msg_id);
-      update_parent_in_article.bind(2, current_msg_id);
+      update_parent_in_article.bind(2, message_id);
       int found_real = update_parent_in_article.exec();
       LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": found "
                                                    << found_real
                                                    << " real article matching "
                                                    << parent_msg_id);
 
-      if (found_real != 0)
-      {
-        // real parent is found, so there's no need to explore further the
-        // references
+      if (found_real != 0 && count == 0) {
+        // real parent is found and there's no ghost ancestor, so
+        // there's no need to explore further the references
         break;
       }
 
-      // insert ghost article linked to current real article
-      // ghost message must also store its parent message_id (ghost or not
+      // However, if some ghost ancestor are involded (when count >0),
+      // some operation must be done on these ghost ancestor. Here,
+      // insert ghost article linked to current real article ghost
+      // message must also store its parent message_id (ghost or not
       // ghost)
       insert_ghost.reset();
       insert_ghost.bind(1, parent_msg_id);
@@ -754,7 +757,7 @@ void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
                                      << " ghost article for parent msg id "
                                      << parent_msg_id);
 
-      // insert parent in ghost article
+      // insert parent message id in ghost article
       update_ghost.reset();
       update_ghost.bind(1, parent_msg_id);
       update_ghost.bind(2, current_msg_id);
@@ -765,15 +768,26 @@ void DataImpl::store_parent_articles(Quark &message_id, std::string &references)
                                      << parent_msg_id << ", current msg id "
                                      << current_msg_id);
 
-      // update in real article
+      // update parent message id in real article
       update_ghost_parent_id.reset();
       update_ghost_parent_id.bind(1, parent_msg_id);
       update_ghost_parent_id.bind(2, current_msg_id);
       int updated = update_ghost_parent_id.exec();
       LOG4CXX_TRACE(tree_logger,
-                    "references msg " << message_id << ": updated " << updated
-                                      << " real article with ghost parent msg id "
-                                      << parent_msg_id);
+                    "references msg "
+                        << message_id << ": updated " << updated
+                        << " real article with ghost parent msg id "
+                        << parent_msg_id);
+
+      count++;
+
+      if (found_real != 0)
+      {
+        // real parent is found, so there's no need to explore further the
+        // references
+        break;
+      }
+
     }
     else
     {
@@ -821,29 +835,6 @@ void DataImpl::process_references(Quark message_id, std::string references)
   int deleted = delete_ghost.exec();
   LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": deleted "
                                                << deleted << " ghost article");
-
-  // now handle the case where a real article is added with some
-  // references (stored above) and where one of these references is a
-  // real article. In this case the parent id of the new article must
-  // point to the first real article found in the reference chain
-  SQLite::Statement insert_parent_from_ancestor(pan_db, R"SQL(
-    with recursive p(ghost_id, msg_id) as (
-      select g.id, ghost_parent_msg_id from article as a
-      join ghost as g on a.ghost_parent_id == g.id
-      where message_id == $msg_id
-      union all
-      select id, ghost_parent_msg_id from ghost
-      join p
-      where ghost_msg_id == p.msg_id
-      limit 1000
-    )
-    update article
-    set parent_id = (select id from article as a join p on a.message_id == p.msg_id where true)
-	    where ghost_parent_id == (select ghost_id from p)
-  )SQL");
-  insert_parent_from_ancestor.bind(1,message_id);
-  changed = insert_parent_from_ancestor.exec();
-  LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": changed " << changed << " real parent id to an ancestor");
 
   // safety check
   if (_debug_flag) {

@@ -203,6 +203,7 @@ public:
       check_ghost_presence(a2, true, __LINE__);
       check_real_to_ghost_relation("a1->a3", a3, {a1, a2, a1});
       check_real_to_ghost_relation("a1->a1", a1, {});
+      check_ghost_entry("a1->a2", a2, a1, __LINE__);
 
       add_article(a2, a1);
       check_ghost_presence(a2,false, __LINE__);
@@ -244,10 +245,14 @@ public:
       check_real_to_ghost_relation("d4->b2", b2, {b1, "", ""});
       check_real_to_ghost_relation("d4->b1", b1, {});
       check_real_to_ghost_relation("d4->c3", c3, {b2, "", ""});
+      check_ghost_entry("d4->d3", d3, d2, __LINE__);
+      check_ghost_entry("d4->d2", d2, b1, __LINE__);
 
       add_article(d3, b1 + " " + d2);
       check_ghost_presence(d3,false, __LINE__);
       check_real_to_ghost_relation("d3", d3, {b1,d2,b1});
+      check_real_to_ghost_relation("d3->d4", d4, {d3, "",""});
+      check_ghost_entry("d3->d2", d2, b1, __LINE__);
 
       add_article(d2, b1);
       check_ghost_presence(d2,false, __LINE__);
