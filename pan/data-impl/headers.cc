@@ -807,34 +807,54 @@ void DataImpl::process_references(Quark message_id, std::string references)
     store_parent_articles(message_id, references);
   }
 
-  // now handle the case where a real article replaces a ghost article
-
-  // first add the parent_id pointing to the new real article in the
-  // real child articles that points to the ghost to be replaced
-  SQLite::Statement set_current_parent_id(pan_db, R"SQL(
-    with recursive p(id,msg_id) as (
-     select id, ghost_msg_id from ghost where ghost_msg_id == $msg_id
-     union all
-     select g.id, ghost_msg_id from ghost as g join p on p.msg_id == g.ghost_parent_msg_id
-	   limit 500 -- safety net
-    )
-    update article
-      set parent_id = (select id from article where message_id = $msg_id)
-	    where id in (select a.id from article as a join p on p.id = ghost_parent_id)
+  // check if the new article replaces a ghost article
+  SQLite::Statement check_replacement(pan_db, R"SQL(
+    select 1 from ghost where ghost_msg_id = ?
   )SQL");
-  set_current_parent_id.bind(1, message_id);
-  int changed = set_current_parent_id.exec();
+  check_replacement.bind(1, message_id);
+  bool is_replacement(false);
+  while (check_replacement.executeStep()) {
+    is_replacement = true;
+  }
 
-  LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": changed " << changed << " real parent id");
+  if (is_replacement) {
+    // now handle the case where a real article replaces a ghost article
 
-  // found a real article, so any matching ghost article must be deleted
-  SQLite::Statement delete_ghost(pan_db, R"SQL(
-    delete from ghost where ghost_msg_id == ?
-  )SQL");
-  delete_ghost.bind(1, message_id);
-  int deleted = delete_ghost.exec();
-  LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": deleted "
-                                               << deleted << " ghost article");
+    // first add the parent_id pointing to the new real article in the
+    // real child articles that points to the ghost to be replaced
+    SQLite::Statement set_current_parent_id(pan_db, R"SQL(
+      with recursive p(id,msg_id) as (
+       select id, ghost_msg_id from ghost where ghost_msg_id == $msg_id
+       union all
+       select g.id, ghost_msg_id
+       from ghost as g
+       join p on p.msg_id == g.ghost_parent_msg_id
+  	   limit 500 -- safety net
+      )
+      update article
+        set parent_id = (select id from article where message_id = $msg_id)
+  	    where id in (
+          select a.id from article as a
+          join p on p.id = ghost_parent_id
+      )
+    )SQL");
+    set_current_parent_id.bind(1, message_id);
+    int changed = set_current_parent_id.exec();
+
+    LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": changed "
+                                                 << changed
+                                                 << " real parent id");
+
+    // found a real article, so any matching ghost article must be deleted
+    SQLite::Statement delete_ghost(pan_db, R"SQL(
+      delete from ghost where ghost_msg_id == ?
+    )SQL");
+    delete_ghost.bind(1, message_id);
+    int deleted = delete_ghost.exec();
+    LOG4CXX_TRACE(tree_logger, "references msg " << message_id << ": deleted "
+                                                 << deleted
+                                                 << " ghost article");
+  }
 
   // safety check
   if (_debug_flag) {
