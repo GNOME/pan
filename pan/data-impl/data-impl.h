@@ -560,9 +560,13 @@ public:
             be assigned to the same XOVER task. */
         int refcount;
 
-        XOverEntry() :
-          _last_flush_time(0),
-          refcount(0)
+      // Used to improve perf
+      SQLite::Transaction *_add_article_transaction;
+
+      XOverEntry()
+        : _last_flush_time(time(nullptr)),
+            refcount(0),
+            _add_article_transaction(nullptr)
         {
         }
     };

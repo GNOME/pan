@@ -17,9 +17,8 @@
  *
  */
 
-#include <SQLiteCpp/Transaction.h>
 #include <config.h>
-#include <cmath>
+#include <SQLiteCpp/Transaction.h>
 #include <glib/gi18n.h>
 #include <gmime/gmime.h>
 #include <log4cxx/logger.h>
@@ -265,6 +264,14 @@ void DataImpl ::xover_flush(Quark const &group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
 
+  // commit current changes
+  if (workarea._add_article_transaction != nullptr) {
+    LOG4CXX_DEBUG(logger, "Committing add article DB transaction");
+    workarea._add_article_transaction->commit();
+    free(workarea._add_article_transaction);
+    workarea._add_article_transaction = nullptr;
+  }
+
   on_articles_added (group, workarea._added_batch);
   workarea._added_batch.clear();
   on_articles_changed (group, workarea._changed_batch, true);
@@ -361,11 +368,13 @@ Article const *DataImpl ::xover_add(Quark const &server,
     }
   }
 
+  if (workarea._add_article_transaction == nullptr) {
+    LOG4CXX_TRACE(logger, "Creating add article DB transaction");
+    workarea._add_article_transaction = new SQLite::Transaction (pan_db);
+  }
 
   if (art_mid.empty())
   {
-    SQLite::Transaction add_article(pan_db);
-
     art_mid = message_id;
 
     SQLite::Statement search_article_q(pan_db, R"SQL(
