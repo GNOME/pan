@@ -97,7 +97,7 @@ bool parse_multipart_subject(StringView const &subj,
   }
 
   return false;
-  }
+}
 
   void find_parts(StringView const &subj,
                   Quark const &group,
@@ -143,18 +143,21 @@ bool parse_multipart_subject(StringView const &subj,
       parts = 0;
   }
 
-  Quark find_article_in_db(Quark const &group, StringView const &author,
+  DataImpl::ArticleInfo
+  find_article_in_db(Quark const &group, StringView const &author,
                      std::string const &multipart_subject, int part_count) {
-    Quark art_mid;
+    DataImpl::ArticleInfo result;
 
     // search the article in DB
     SQLite::Statement search_article_q(pan_db, R"SQL(
-      select message_id
+      select message_id, part_state, server.pan_id
       from article as art
       join article_group as ag on ag.article_id == art.id
       join `group` as g on ag.group_id == g.id
       join author as auth on art.author_id == auth.id
       join subject on subject.id == art.subject_id
+      join article_xref as xref on xref.article_group_id = ag.id
+      join server on server.id == xref.server_id
       where g.name == ?
         and subject.subject == ?
         and auth.author == ?
@@ -171,12 +174,23 @@ bool parse_multipart_subject(StringView const &subj,
     search_article_q.bind(2, multipart_subject);
     search_article_q.bind(3, author);
     search_article_q.bind(4, part_count);
+
+    // get one line per server for this article
     while (search_article_q.executeStep()) {
       // ok, we'll use this article as the article for this part
-      art_mid = Quark(search_article_q.getColumn(0).getText());
+      Quark mid(search_article_q.getColumn(0).getText()),
+        pan_id(search_article_q.getColumn(2).getText());
+      if (result.mid.empty()) {
+        // fill data on first pass
+        Article a(group, mid);
+        result.mid = mid;
+        const char* c = search_article_q.getColumn(1).getText();
+        result.part_state = a.char_to_state(*c);
+      }
+      result.server_ids.insert(pan_id);
     }
 
-    return art_mid;
+    return result;
   }
 
   void add_article_in_db(Quark const &group, Quark const &art_mid,
@@ -341,32 +355,49 @@ Article const *DataImpl ::xover_add(Quark const &server,
   std::string multipart_subject;
   find_parts (subject, group, line_count, part_index, part_count, multipart_subject);
   const Quark multipart_subject_quark (multipart_subject);
-  Quark art_mid;
+  ArticleInfo art_info;
   std::string cache_key = group.to_string() + author.to_string() +
                           multipart_subject + std::to_string(part_count);
 
   if (part_count > 1) {
     auto search = _mid_cache.find(cache_key);
     if (search != _mid_cache.end()) {
-      art_mid = search->second;
+      art_info.mid = search->second.mid;
       LOG4CXX_TRACE(logger, "found cached mid "
-                                << art_mid << " for key " << cache_key << " in "
+                                << art_info.mid << " for key " << cache_key << " in "
                                 << timer.get_seconds_elapsed() << " s.");
     } else {
       // walk through the articles we've already got for the group
       // to see if there's already an Article allocated to this
       // multipart.  If there is, we use it here instead of adding a new one
-      art_mid = find_article_in_db(group, author, multipart_subject, part_count);
+      art_info = find_article_in_db(group, author, multipart_subject, part_count);
       // memoize the result
-      if (!art_mid.empty()) {
-        _mid_cache[cache_key] = art_mid;
-        LOG4CXX_TRACE(
-            logger, fmt::format("added mid {} in cache for key {} in {} s.",
-                                art_mid == nullptr ? "<null>" : art_mid.c_str(),
-                                cache_key, timer.get_seconds_elapsed()));
+      if (!art_info.mid.empty()) {
+        _mid_cache[cache_key] = art_info;
+        LOG4CXX_TRACE(logger,
+                      fmt::format("added mid {} in cache for key {} in {} s.",
+                                  art_info.mid == nullptr
+                                      ? "<null>"
+                                      : art_info.mid.c_str(),
+                                  cache_key,
+                                  timer.get_seconds_elapsed()
+                                  )
+            );
       }
     }
+
+    // drop line if article is known and complete
+    if (!art_info.mid.empty() && art_info.part_state == Article::COMPLETE) {
+      auto ids = art_info.server_ids;
+      auto search = ids.find(server);
+      // store the xref if the article comes from a new server
+      if (search == ids.end())
+        insert_xref_in_db(server, art_info.mid, xref);
+      return nullptr;
+    }
   }
+
+  Quark art_mid(art_info.mid);
 
   if (workarea._add_article_transaction == nullptr) {
     LOG4CXX_TRACE(logger, "Creating add article DB transaction");
@@ -396,7 +427,9 @@ Article const *DataImpl ::xover_add(Quark const &server,
       insert_xref_in_db(server, art_mid, xref);
 
       // memoize the result
-      _mid_cache[cache_key] = art_mid;
+      auto part_state = part_count > 1 ? Article::INCOMPLETE
+        : Article::SINGLE;
+      _mid_cache[cache_key] = ArticleInfo({art_mid, part_state});
     }
 
     // now update the article thread from references. i.e. set

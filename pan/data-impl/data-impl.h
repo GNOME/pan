@@ -577,8 +577,15 @@ public:
     XOverEntry *_cached_xover_entry;
     Quark _cached_xover_group;
 
-    // used to cache subject to article mid
-    std::unordered_map<std::string, Quark> _mid_cache;
+    // used by xover to cache subject to article info
+  public:
+    struct ArticleInfo {
+      Quark mid ;
+      Article::PartState part_state;
+      std::set<Quark> server_ids;
+    };
+  private:
+    std::unordered_map<std::string, ArticleInfo> _mid_cache;
 
     /**
      * Destroy the workarea.
