@@ -147,19 +147,38 @@ bool parse_multipart_subject(StringView const &subj,
   find_article_in_db(Quark const &group, StringView const &author,
                      std::string const &multipart_subject, int part_count) {
     DataImpl::ArticleInfo result;
+    TimeElapsed timer;
 
     // search the article in DB
+    // first try subject alone
+    SQLite::Statement search_subject_q(pan_db, R"SQL(
+      select id from subject where subject.subject == ?
+    )SQL");
+    search_subject_q.bindNoCopy(1, multipart_subject);
+    int subject_id(0);
+    while (search_subject_q.executeStep()) {
+      subject_id = search_subject_q.getColumn(0);
+    }
+    if (subject_id == 0) {
+      LOG4CXX_DEBUG(logger, "did not find subject in " << timer.get_seconds_elapsed() << "s");
+      // subject does not exist, no need to check elsewhere
+      return {Quark(), Article::INCOMPLETE};
+    }
+
+    // find all articles with same subject, author and part count to
+    // make sure that found article if a good match for this
+    // part. Note that part identifier like [3/50] are stripped before
+    // being stored.
     SQLite::Statement search_article_q(pan_db, R"SQL(
       select message_id, part_state, server.pan_id
       from article as art
       join article_group as ag on ag.article_id == art.id
       join `group` as g on ag.group_id == g.id
       join author as auth on art.author_id == auth.id
-      join subject on subject.id == art.subject_id
       join article_xref as xref on xref.article_group_id = ag.id
       join server on server.id == xref.server_id
       where g.name == ?
-        and subject.subject == ?
+        and art.subject_id == ?
         and auth.author == ?
         and art.expected_parts == ?
       limit 1
@@ -170,10 +189,11 @@ bool parse_multipart_subject(StringView const &subj,
     // part. Note that part identifier like [3/50] are stripped before
     // being stored.
     search_article_q.reset();
-    search_article_q.bind(1, group);
-    search_article_q.bind(2, multipart_subject);
+    search_article_q.bindNoCopy(1, group);
+    search_article_q.bind(2, subject_id);
     search_article_q.bind(3, author);
     search_article_q.bind(4, part_count);
+    std::string part_state;
 
     // get one line per server for this article
     while (search_article_q.executeStep()) {
@@ -184,12 +204,20 @@ bool parse_multipart_subject(StringView const &subj,
         // fill data on first pass
         Article a(group, mid);
         result.mid = mid;
-        const char* c = search_article_q.getColumn(1).getText();
-        result.part_state = a.char_to_state(*c);
+        part_state = search_article_q.getColumn(1).getText();
+        result.part_state = a.char_to_state(part_state.c_str()[0]);
       }
       result.server_ids.insert(pan_id);
     }
 
+    if (result.mid.empty())
+      LOG4CXX_DEBUG(logger, "did not find article in "
+                                << timer.get_seconds_elapsed() << "s");
+    else
+      LOG4CXX_DEBUG(logger, "found article " << result.mid << " status "
+                                             << part_state << " in "
+                                             << timer.get_seconds_elapsed()
+                                             << "s");
     return result;
   }
 
@@ -447,9 +475,9 @@ Article const *DataImpl ::xover_add(Quark const &server,
     // TODO: handle this by batch, trigger on article with non null
     // references and null ghost or parent_id
 
-    LOG4CXX_DEBUG(logger, "Added article " << art_mid << " to DB in "
-                                           << timer.get_seconds_elapsed()
-                                           << "s");
+    LOG4CXX_DEBUG(logger, "Added " << part_count << " part article " << art_mid
+                                   << " to DB in "
+                                   << timer.get_seconds_elapsed() << "s");
   }
 
   /**
