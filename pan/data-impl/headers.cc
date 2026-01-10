@@ -272,6 +272,54 @@ void DataImpl ::update_part_states(Quark const &group)
                << " in " << timer.get_seconds_elapsed() << "s.");
 }
 
+// update part state of the given articles.
+void DataImpl ::update_part_states(std::set<Quark> const &articles) {
+  TimeElapsed timer;
+
+  SQLite::Statement q(pan_db, R"SQL(
+    update article
+    set part_state = case
+       -- not a multipart
+       when upd.binary is false
+       then 'S'
+
+       -- someone's posted a followup to a multipart
+       when upd.line_count < 250 and upd.subject like 're: %'
+       then 'S'
+
+       --  someone's posted a "000/124" info message
+       when upd.found_parts == 0
+       then 'S'
+
+       -- complete multipart
+       when upd.found_parts == upd.expected_parts
+       then 'C'
+
+       -- incomplete multipart
+       else 'I'
+    end
+    from (
+       select a.id, binary, subject, line_count, expected_parts,
+             (select count() from article_part as p2 where p2.article_id == a.id) as found_parts
+       from article as a
+       join `subject` as sb on sb.id == a.subject_id
+       where a.message_id == ?
+    ) as upd
+    where article.id == upd.id
+  )SQL");
+
+  for (Quark mid : articles) {
+    q.reset();
+    q.bind(1, mid.c_str());
+    int count(q.exec());
+    assert(count == 1);
+
+    LOG4CXX_TRACE(logger, "Updated article " << mid << " part state in "
+                                             << timer.get_seconds_elapsed()
+                                             << "s.");
+  }
+}
+
 // load headers from internal file in ~/.pan2/groups
 void DataImpl ::migrate_headers(DataIO const &data_io, Quark const &group)
 {

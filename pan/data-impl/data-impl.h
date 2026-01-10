@@ -357,6 +357,8 @@ public:
 
     void migrate_headers(DataIO const &, Quark const &group);
     void update_part_states(Quark const &group) override;
+    void update_part_states(std::set<Quark> const &articles) override;
+
     void migrate_read_ranges(Quark const &group);
     void load_headers_from_db(Quark const &group);
 

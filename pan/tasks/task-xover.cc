@@ -157,6 +157,8 @@ TaskXOver::~TaskXOver()
     }
     _data.xover_unref(_group);
   }
+  // This is redundant with the call to update part state done in xover flush.
+  /// But it's systematic and can recover from previous errors
   _data.update_part_states(_group);
   _data.fire_group_entered(
     _group, static_cast<Article_Count>(1), static_cast<Article_Count>(0));

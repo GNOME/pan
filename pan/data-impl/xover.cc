@@ -290,6 +290,7 @@ void DataImpl ::xover_flush(Quark const &group)
   workarea._added_batch.clear();
 
   // not a new article, but articles with new parts.
+  update_part_states(workarea._changed_batch);
   on_articles_changed (group, workarea._changed_batch, false);
   workarea._changed_batch.clear();
 
