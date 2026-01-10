@@ -446,6 +446,7 @@ class Data :
                             size_t new_group_count) = 0;
 
     virtual void update_part_states(Quark const &group) = 0;
+    virtual void update_part_states(std::set<Quark> const &articles) = 0;
 
     /**
      * This will call listeners' on_group_counts().

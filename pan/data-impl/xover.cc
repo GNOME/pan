@@ -288,8 +288,13 @@ void DataImpl ::xover_flush(Quark const &group)
 
   on_articles_added (group, workarea._added_batch);
   workarea._added_batch.clear();
-  on_articles_changed (group, workarea._changed_batch, true);
+
+  // not a new article, but articles with new parts.
+  on_articles_changed (group, workarea._changed_batch, false);
   workarea._changed_batch.clear();
+
+  update_article_tables_and_gui();
+
   workarea._last_flush_time = time(nullptr);
 }
 

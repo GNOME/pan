@@ -417,7 +417,7 @@ public:
         virtual ~MyTree();
 
       protected:
-        void fire_updates() const ;
+        void update_article_tables_and_gui() const ;
 
       public: // from ArticleTree
         void reset_article_view() const;
@@ -460,7 +460,7 @@ public:
 
       public:
         void articles_changed(bool do_refilter);
-        void add_articles(quarks_t const &mids);
+        void apply_article_rules();
 
       private: // implementation fields
         const Quark _group;
@@ -482,6 +482,7 @@ public:
     void on_articles_changed(Quark const &group,
                              quarks_t const &mids,
                              bool do_refilter);
+    void update_article_tables_and_gui ();
     void remove_articles_from_tree(MyTree *, quarks_t const &mids) const;
     void add_articles_to_tree(MyTree *, quarks_t const &mids);
 

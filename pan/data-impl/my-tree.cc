@@ -624,10 +624,9 @@ DataImpl ::MyTree ::~MyTree()
   _data.unref_group(_group);
 }
 
-// the quirky way of incrementing 'it' is to prevent it from being
-// invalidated if update_tree() calls remove_listener()
-void DataImpl ::MyTree ::fire_updates() const
+void DataImpl ::MyTree ::update_article_tables_and_gui() const
 {
+  update_article_view_table();
   _listener->update_gui_tree();
   update_article_tables_after_gui_update();
 }
@@ -699,24 +698,17 @@ void DataImpl ::MyTree ::articles_changed(bool do_refilter)
 
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
 
+  // do_refilter is false after marking an article as read
   if (do_refilter)
   {
     update_article_view_table();
   }
 
-  fire_updates();
-
-  update_article_tables_after_gui_update();
   LOG4CXX_DEBUG(logger, "articles_changed done");
 }
 
-void DataImpl ::MyTree ::add_articles(quarks_t const &mids)
+void DataImpl ::MyTree ::apply_article_rules()
 {
-  LOG4CXX_DEBUG(logger, "group " << _group << ": " << mids.size() << " articles added");
-
   _header_rules.apply_rules(_data, _rules, _group, _save_path);
-
-  update_article_view_table();
-  fire_updates();
 }
 

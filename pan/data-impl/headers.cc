@@ -1672,6 +1672,10 @@ void DataImpl ::on_articles_changed(Quark const &group, quarks_t const &mids,
   _tree->articles_changed(do_refilter);
 }
 
+void DataImpl::update_article_tables_and_gui() {
+  _tree->update_article_tables_and_gui();
+}
+
 void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
 {
 
@@ -1684,7 +1688,7 @@ void DataImpl ::on_articles_added(Quark const &group, quarks_t const &mids)
     rescore_articles(group, mids);
 
     LOG4CXX_DEBUG(logger,"Adding " << mids.size() << " articles to group " << group);
-    _tree->add_articles(mids);
+    _tree->apply_article_rules();
 
     fire_group_counts(group);
   }
