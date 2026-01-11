@@ -485,7 +485,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     struct GroupHeaders
     {
         int _ref;
-        bool _dirty;
         nodes_t _nodes;
         MemChunk<Article> _art_chunk;
         MemChunk<ArticleNode> _node_chunk;

@@ -45,8 +45,7 @@ extern "C"
 using namespace pan;
 
 DataImpl ::GroupHeaders ::GroupHeaders() :
-  _ref(0),
-  _dirty(false)
+  _ref(0)
 {
 }
 
@@ -125,7 +124,6 @@ void DataImpl ::GroupHeaders ::remove_articles(quarks_t const &mids)
   {
     (*it)->_article = nullptr;
   }
-  _dirty = true;
 }
 
 DataImpl ::GroupHeaders const *DataImpl ::get_group_headers(
@@ -216,9 +214,7 @@ void DataImpl ::unref_group(Quark const &group)
   //  h->_ref << std::endl;
   if (h->_ref == 0)
   {
-    //    if (h->_dirty )
     save_headers(*_data_io, group);
-    h->_dirty = false;
     free_group_headers_memory(group);
   }
 }
@@ -226,7 +222,6 @@ void DataImpl ::unref_group(Quark const &group)
 void DataImpl ::fire_article_flag_changed(articles_t &a, Quark const &group)
 {
   GroupHeaders *h(get_group_headers(group));
-  h->_dirty = true;
   Data::fire_article_flag_changed(a, group);
 }
 

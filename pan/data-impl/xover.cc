@@ -258,8 +258,6 @@ DataImpl :: xover_add (const Quark         & server,
   **** Multipart Handling
   ***/
 
-  h->_dirty = true;
-
   int part_index, part_count;
   std::string multipart_subject;
   find_parts (subject, group, line_count, part_index, part_count, multipart_subject);
