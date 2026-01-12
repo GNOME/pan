@@ -306,14 +306,6 @@ void DataImpl ::xover_flush(Quark const &group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
 
-  // commit current changes
-  if (workarea._add_article_transaction != nullptr) {
-    LOG4CXX_DEBUG(logger, "Committing add article DB transaction");
-    workarea._add_article_transaction->commit();
-    free(workarea._add_article_transaction);
-    workarea._add_article_transaction = nullptr;
-  }
-
   on_articles_added (group, workarea._added_batch);
   workarea._added_batch.clear();
 
@@ -321,6 +313,14 @@ void DataImpl ::xover_flush(Quark const &group)
   update_part_states(workarea._changed_batch);
   on_articles_changed (group, workarea._changed_batch, false);
   workarea._changed_batch.clear();
+
+  // commit current changes
+  if (workarea._add_article_transaction != nullptr) {
+    LOG4CXX_DEBUG(logger, "Committing add article DB transaction");
+    workarea._add_article_transaction->commit();
+    free(workarea._add_article_transaction);
+    workarea._add_article_transaction = nullptr;
+  }
 
   update_article_tables_and_gui();
 
