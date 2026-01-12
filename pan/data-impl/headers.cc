@@ -1410,7 +1410,6 @@ void DataImpl ::mark_read(Article const **articles,
   {
     Quark const &group(it->first);
     fire_group_counts(group);
-    on_articles_changed(group, it->second, false);
   }
 }
 
