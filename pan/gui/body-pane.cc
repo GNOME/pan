@@ -1710,7 +1710,7 @@ void BodyPane ::text_size_allocated_idle()
   GtkAllocation aloc;
   for (;;)
   {
-    if (gtk_text_iter_begins_tag(&iter, tag))
+    if (gtk_text_iter_starts_tag(&iter, tag))
     {
       gtk_widget_get_allocation(_text, &aloc);
       //      std::cerr<<"1449 alloc "<<aloc.x<<" "<<aloc.y<<" "<<aloc.width<<"
