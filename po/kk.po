@@ -1,0 +1,3661 @@
+# Kazakh translation for pan.
+# Copyright (C) 2026 pan's COPYRIGHT HOLDER
+# This file is distributed under the same license as the pan package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pan master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues/\n"
+"POT-Creation-Date: 2026-02-03 18:58+0000\n"
+"PO-Revision-Date: 2026-03-15 13:14+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <Kazakh>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
+
+#. update the titlebar
+#: org.gnome.pan.desktop.in:2 org.gnome.pan.metainfo.xml.in:27 pan/gui/dl-headers-ui.cc:119 pan/gui/gui.cc:1041 pan/gui/gui.cc:1666
+#: pan/gui/gui.cc:1995 pan/gui/score-add-ui.cc:600
+msgid "Pan"
+msgstr "Pan"
+
+#: org.gnome.pan.desktop.in:3
+msgid "Newsreader"
+msgstr "Жаңалықтар оқу бағдарламасы"
+
+#: org.gnome.pan.desktop.in:4 org.gnome.pan.metainfo.xml.in:7
+msgid "Read and post Usenet articles"
+msgstr "Usenet мақалаларын оқу және жариялау"
+
+#. Translators: Search terms to find this application. Do NOT translate or
+#. localise the semicolons! The list MUST also end with a semicolon!
+#: org.gnome.pan.desktop.in:6
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;жаңалықтар;жаңалықтар_оқу;жаңалықтар_тобы;мақала;yenc;nzb;"
+
+#: org.gnome.pan.metainfo.xml.in:6
+msgid "Pan Newsreader"
+msgstr "Pan жаңалықтар оқу бағдарламасы"
+
+#: org.gnome.pan.metainfo.xml.in:9
+msgid ""
+"Pan is a Usenet newsreader that is good at both text and binaries. It supports offline reading, scoring and killfiles, yEnc, NZB, PGP "
+"handling, multiple servers, and secure connections."
+msgstr ""
+"Pan — мәтінді де, бинарлы файлдарды да жақсы өңдейтін Usenet жаңалықтар оқу бағдарламасы. Ол желіден тыс оқуды, ұпай қоюды және «killfile» "
+"сүзгілерін, yEnc, NZB, PGP өңдеуді, бірнеше серверлерді және қауіпсіз байланыстарды қолдайды."
+
+#: org.gnome.pan.metainfo.xml.in:12
+msgid "It is also the only Unix newsreader to get a perfect score on the Good Net-Keeping Seal of Approval evaluations."
+msgstr "Бұл сондай-ақ Good Net-Keeping Seal of Approval бағалауында мінсіз ұпай алған жалғыз Unix жаңалықтар оқу бағдарламасы болып табылады."
+
+#: pan/data/article-cache.cc:164 pan/data/encode-cache.cc:62
+#, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Буманы ашу қатесі: «%s»: %s"
+
+#: pan/data/article-cache.cc:261 pan/data/article-cache.cc:270 pan/data-impl/data-io.cc:278 pan/data-impl/data-io.cc:310
+#: pan/gui/post-ui.cc:1697
+#, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "«%s» сақтау мүмкін емес: %s"
+
+#: pan/data/article-cache.cc:388
+#, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "«%s» файлын ашу қатесі: %s"
+
+#: pan/data/article-cache.cc:419 pan/data-impl/profiles.cc:243 pan/data-impl/server.cc:478 pan/general/file-util.cc:311 pan/gui/post-ui.cc:566
+#: pan/gui/task-pane.cc:740
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "«%s» файлын оқу қатесі: %s"
+
+#: pan/data/cert-store.cc:335
+#, c-format
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr "Сертификаттар қоймасына %d SSL PEM сертификаты сәтті қосылды."
+
+#: pan/data/cert-store.cc:359
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, "
+"exiting."
+msgstr ""
+"Сертификаттар қоймасын инициализациялау қатесі. ~/.pan2 және ~/.pan2/ssl_certs бумаларының рұқсаттары дұрыс орнатылғанын тексеріңіз. "
+"Критикалық қате, жұмыс аяқталуда."
+
+#: pan/data/cert-store.cc:420
+#, c-format
+msgid "Could not export certificate for server: %s"
+msgstr "Сервер үшін сертификатты экспорттау мүмкін болмады: %s"
+
+#. load_group_descriptions (*_data_io);
+#: pan/data-impl/data-impl.cc:118
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr "Деректердің артқы модулі %.1f секундта жүктелді"
+
+#: pan/data-impl/data-impl.cc:154
+msgid "Pan Newsreader's server passwords"
+msgstr "Pan жаңалықтар оқу бағдарламасы серверінің парольдері"
+
+#: pan/data-impl/groups.cc:104
+#, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "«%s» сервері үшін newsrc файлы өткізіліп жіберіледі"
+
+#: pan/data-impl/headers.cc:708
+#, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "«%2$s» ішінен %1$lu ескі мақаланың мерзімі өтті"
+
+#: pan/data-impl/headers.cc:717
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"%s тақырыптамалары үшін деректер нұсқасына қолдау жоқ: %d.\n"
+"Байқаусызда Pan бағдарламасының ескі нұсқасын іске қосып тұрған жоқсыз ба?"
+
+#: pan/data-impl/headers.cc:735
+#, c-format
+msgid "Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr "%llu мақала \"%s\" үшін жүктелді, %.1f секунд ішінде (%.0f/сек)"
+
+#: pan/data-impl/headers.cc:1004
+#, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
+msgstr "%lu бөлік, %lu мақала «%s» ішінде %.1f секундта сақталды (секундына %.0f мақала)"
+
+#: pan/data-impl/headers.cc:1394
+#, c-format
+msgid "Added %lu articles to %s."
+msgstr "%lu мақала %s ішіне қосылды."
+
+#: pan/data-impl/server.cc:250
+#, c-format
+msgid "Received no password from libsecret for server %s."
+msgstr "%s сервері үшін libsecret-тен пароль алынбады."
+
+#: pan/data-impl/xover.cc:242
+#, c-format
+msgid "Error reading from %s: unknown group \"%s\""
+msgstr "%s ішінен оқу қатесі: белгісіз «%s» тобы"
+
+#: pan/general/e-util.cc:164
+msgid "%l:%M %p"
+msgstr "%H:%M"
+
+#: pan/general/e-util.cc:165
+msgid "Today %l:%M %p"
+msgstr "Бүгін %H:%M"
+
+#: pan/general/e-util.cc:166
+msgid "%a %l:%M %p"
+msgstr "%a %H:%M"
+
+#: pan/general/e-util.cc:167
+msgid "%b %d %l:%M %p"
+msgstr "%d %b %H:%M"
+
+#: pan/general/e-util.cc:168
+msgid "%b %d %Y"
+msgstr "%d %b %Y"
+
+#: pan/general/e-util.cc:200
+msgid "?"
+msgstr "?"
+
+#: pan/general/text-match.cc:194
+#, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "«%s» тұрақты өрнегін қолдану мүмкін емес: %s"
+
+#: pan/general/utf8-utils.cc:212
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr "Мақаланың кодтауын анықтау мүмкін болмады. UTF-8 емес таңбалар өшірілді."
+
+#: pan/gui/actions.cc:312 pan/gui/post-ui.cc:381
+msgid "_File"
+msgstr "_Файл"
+
+#: pan/gui/actions.cc:313 pan/gui/post-ui.cc:382
+msgid "_Edit"
+msgstr "_Түзету"
+
+#: pan/gui/actions.cc:314 pan/gui/prefs-ui.cc:1157
+msgid "_Layout"
+msgstr "_Жайма"
+
+#: pan/gui/actions.cc:315
+msgid "_Group Pane"
+msgstr "_Топтар панелі"
+
+#: pan/gui/actions.cc:316
+msgid "_Header Pane"
+msgstr "_Тақырыптамалар панелі"
+
+#: pan/gui/actions.cc:317
+msgid "_Body Pane"
+msgstr "_Мазмұн панелі"
+
+#: pan/gui/actions.cc:318
+msgid "_View"
+msgstr "_Көрініс"
+
+#: pan/gui/actions.cc:319
+msgid "Filte_r"
+msgstr "Сүз_гі"
+
+#: pan/gui/actions.cc:320
+msgid "_Go"
+msgstr "Ө_ту"
+
+#: pan/gui/actions.cc:321 pan/gui/prefs-ui.cc:1207
+msgid "_Actions"
+msgstr "Әр_екеттер"
+
+#: pan/gui/actions.cc:322
+msgid "_Articles"
+msgstr "_Мақалалар"
+
+#: pan/gui/actions.cc:323
+msgid "G_roups"
+msgstr "Т_оптар"
+
+#: pan/gui/actions.cc:324 pan/gui/actions.cc:325
+msgid "_Post"
+msgstr "_Жариялау"
+
+#: pan/gui/actions.cc:326
+msgid "_Help"
+msgstr "_Көмек"
+
+#: pan/gui/actions.cc:329
+msgid "_Read Group"
+msgstr "_Топты оқу"
+
+#: pan/gui/actions.cc:330
+msgid "Read Group"
+msgstr "Топты оқу"
+
+#: pan/gui/actions.cc:334
+msgid "_Mark Selected Groups Read"
+msgstr "_Таңдалған топтарды оқылған деп белгілеу"
+
+#: pan/gui/actions.cc:335
+msgid "Mark Selected Groups Read"
+msgstr "Таңдалған топтарды оқылған деп белгілеу"
+
+#: pan/gui/actions.cc:339
+msgid "_Delete Selected Groups' Articles"
+msgstr "_Таңдалған топтардың мақалаларын өшіру"
+
+#: pan/gui/actions.cc:340
+msgid "Delete Selected Groups' Articles"
+msgstr "Таңдалған топтардың мақалаларын өшіру"
+
+#: pan/gui/actions.cc:344
+msgid "Get New _Headers in Selected Groups"
+msgstr "Таңдалған топтардағы жаңа _тақырыптамаларды алу"
+
+#: pan/gui/actions.cc:345
+msgid "Get New Headers in Selected Groups"
+msgstr "Таңдалған топтардағы жаңа тақырыптамаларды алу"
+
+#: pan/gui/actions.cc:349 pan/gui/actions.cc:354
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Жазылған топтардағы жаңа _тақырыптамаларды алу"
+
+#: pan/gui/actions.cc:350 pan/gui/actions.cc:355
+msgid "Get New Headers in Subscribed Groups"
+msgstr "Жазылған топтардағы жаңа тақырыптамаларды алу"
+
+#: pan/gui/actions.cc:359
+msgid "Get _Headers..."
+msgstr "_Тақырыптамаларды алу..."
+
+#: pan/gui/actions.cc:360
+msgid "Get Headers..."
+msgstr "Тақырыптамаларды алу..."
+
+#: pan/gui/actions.cc:364 pan/gui/actions.cc:365
+msgid "Refresh Group List"
+msgstr "Топтар тізімін жаңарту"
+
+#: pan/gui/actions.cc:369
+msgid "_Subscribe"
+msgstr "_Жазылу"
+
+#: pan/gui/actions.cc:370
+msgid "Subscribe"
+msgstr "Жазылу"
+
+#: pan/gui/actions.cc:374
+msgid "_Unsubscribe"
+msgstr "_Жазылудан бас тарту"
+
+#: pan/gui/actions.cc:375
+msgid "Unsubscribe"
+msgstr "Жазылудан бас тарту"
+
+#: pan/gui/actions.cc:379
+msgid "_Save Articles..."
+msgstr "_Мақалаларды сақтау..."
+
+#: pan/gui/actions.cc:380
+msgid "Save Articles..."
+msgstr "Мақалаларды сақтау..."
+
+#: pan/gui/actions.cc:384
+msgid "Save Articles from Selected _NZB..."
+msgstr "Таңдалған _NZB ішінен мақалаларды сақтау..."
+
+#: pan/gui/actions.cc:385
+msgid "Save Articles from Selected NZB"
+msgstr "Таңдалған NZB ішінен мақалаларды сақтау"
+
+#: pan/gui/actions.cc:389
+msgid "Save Articles to an NZB _File..."
+msgstr "Мақалаларды NZB _файлына сақтау..."
+
+#: pan/gui/actions.cc:390
+msgid "Save Articles to an NZB File"
+msgstr "Мақалаларды NZB файлына сақтау"
+
+#: pan/gui/actions.cc:394 pan/gui/actions.cc:395
+msgid "Print"
+msgstr "Басып шығару"
+
+#: pan/gui/actions.cc:399
+msgid "_Import NZB Files..."
+msgstr "_NZB файлдарын импорттау..."
+
+#: pan/gui/actions.cc:404
+msgid "_Cancel Last Task"
+msgstr "_Соңғы тапсырмадан бас тарту"
+
+#: pan/gui/actions.cc:409
+msgid "_Task Manager"
+msgstr "_Тапсырмалар менеджері"
+
+#: pan/gui/actions.cc:414
+msgid "_Event Log"
+msgstr "_Оқиғалар журналы"
+
+#: pan/gui/actions.cc:419
+msgid "_Quit"
+msgstr "_Шығу"
+
+#: pan/gui/actions.cc:424
+msgid "Select _All Articles"
+msgstr "Барлық мақалаларды _таңдау"
+
+#: pan/gui/actions.cc:429
+msgid "_Deselect All Articles"
+msgstr "Барлық мақалалардан таңдауды _алу"
+
+#: pan/gui/actions.cc:434
+msgid "Add Su_bthreads to Selection"
+msgstr "Таңдауға ішкі т_армақтарды қосу"
+
+#: pan/gui/actions.cc:439
+msgid "Add _Threads to Selection"
+msgstr "Таңдауға _тармақтарды қосу"
+
+#: pan/gui/actions.cc:444
+msgid "Add _Similar Articles to Selection"
+msgstr "Таңдауға _ұқсас мақалаларды қосу"
+
+#: pan/gui/actions.cc:449
+msgid "Select Article _Body"
+msgstr "Мақаланың _мәтінін таңдау"
+
+#: pan/gui/actions.cc:454
+msgid "Edit _Preferences"
+msgstr "_Баптауларды түзету"
+
+#: pan/gui/actions.cc:459
+msgid "Edit Selected _Group's Preferences"
+msgstr "Таңдалған _топтың баптауларын түзету"
+
+#: pan/gui/actions.cc:464
+msgid "Edit S_core File"
+msgstr "_Ұпайлар файлын түзету"
+
+#: pan/gui/actions.cc:469 pan/gui/post-ui.cc:398
+msgid "Edit P_osting Profiles"
+msgstr "Жариялау _профильдерін түзету"
+
+#: pan/gui/actions.cc:474
+msgid "Edit _News Servers"
+msgstr "_Жаңалықтар серверлерін түзету"
+
+#: pan/gui/actions.cc:479
+msgid "Jump to _Group Tab"
+msgstr "_Топтар бетіне өту"
+
+#: pan/gui/actions.cc:484
+msgid "Jump to _Header Tab"
+msgstr "_Тақырыптамалар бетіне өту"
+
+#: pan/gui/actions.cc:489
+msgid "Jump to _Body Tab"
+msgstr "_Мәтін бетіне өту"
+
+#: pan/gui/actions.cc:494
+msgid "_Rot13 Selected Text"
+msgstr "Таңдалған мәтінді _Rot13 кодтау"
+
+#: pan/gui/actions.cc:499
+msgid "Clear _Header Pane"
+msgstr "Тақырыптамалар панелін _тазарту"
+
+#: pan/gui/actions.cc:504
+msgid "Clear _Body Pane"
+msgstr "Мәтін панелін _тазарту"
+
+#: pan/gui/actions.cc:509
+msgid "Cache Article"
+msgstr "Мақаланы кэштеу"
+
+#: pan/gui/actions.cc:514
+msgid "Read Article"
+msgstr "Мақаланы оқу"
+
+#: pan/gui/actions.cc:519
+msgid "Show Article Information"
+msgstr "Мақала ақпаратын көрсету"
+
+#: pan/gui/actions.cc:524
+msgid "Read _More"
+msgstr "_Әрі қарай оқу"
+
+#: pan/gui/actions.cc:525
+msgid "Read More"
+msgstr "Әрі қарай оқу"
+
+#: pan/gui/actions.cc:529
+msgid "Read _Back"
+msgstr "_Артқа оқу"
+
+#: pan/gui/actions.cc:530
+msgid "Read Back"
+msgstr "Артқа оқу"
+
+#: pan/gui/actions.cc:534
+msgid "Next _Unread Group"
+msgstr "Келесі _оқылмаған топ"
+
+#: pan/gui/actions.cc:539
+msgid "Next _Group"
+msgstr "Келесі _топ"
+
+#: pan/gui/actions.cc:544
+msgid "Next _Unread Article"
+msgstr "Келесі _оқылмаған мақала"
+
+#: pan/gui/actions.cc:545
+msgid "Next Unread Article"
+msgstr "Келесі оқылмаған мақала"
+
+#: pan/gui/actions.cc:549
+msgid "Next _Article"
+msgstr "Келесі _мақала"
+
+#: pan/gui/actions.cc:550
+msgid "Next Article"
+msgstr "Келесі мақала"
+
+#: pan/gui/actions.cc:554
+msgid "Next _Watched Article"
+msgstr "Келесі _бақыланатын мақала"
+
+#: pan/gui/actions.cc:559
+msgid "Next Unread _Thread"
+msgstr "Келесі оқылмаған _тармақ"
+
+#: pan/gui/actions.cc:560
+msgid "Next Unread Thread"
+msgstr "Келесі оқылмаған тармақ"
+
+#: pan/gui/actions.cc:564
+msgid "Next Threa_d"
+msgstr "Келесі тарм_ақ"
+
+#: pan/gui/actions.cc:569
+msgid "Pre_vious Article"
+msgstr "Алд_ыңғы мақала"
+
+#: pan/gui/actions.cc:574
+msgid "Previous _Thread"
+msgstr "Алдыңғы _тармақ"
+
+#: pan/gui/actions.cc:579
+msgid "_Parent Article"
+msgstr "_Негізгі мақала"
+
+#: pan/gui/actions.cc:584
+msgid "Ignore _Author"
+msgstr "_Авторды елемеу"
+
+#: pan/gui/actions.cc:588
+msgid "_Watch Thread"
+msgstr "Тармақты _бақылау"
+
+#: pan/gui/actions.cc:593
+msgid "_Ignore Thread"
+msgstr "Тармақты _елемеу"
+
+#: pan/gui/actions.cc:598 pan/gui/actions.cc:599
+msgid "_Toggle Flag On/Off for Thread"
+msgstr "Тармақ үшін жалаушаны _қосу/өшіру"
+
+#: pan/gui/actions.cc:603 pan/gui/actions.cc:604
+msgid "_Turn Flag Off for Thread"
+msgstr "Тармақ үшін жалаушаны _өшіру"
+
+#: pan/gui/actions.cc:608 pan/gui/actions.cc:609
+msgid "_Select All Flagged Threads"
+msgstr "Барлық жалауша қойылған тармақтарды _таңдау"
+
+#: pan/gui/actions.cc:613 pan/gui/actions.cc:614
+msgid "_Go to Next Flagged Thread"
+msgstr "Келесі жалауша қойылған тармаққа _өту"
+
+#: pan/gui/actions.cc:618 pan/gui/actions.cc:619
+msgid "_Go to Last Flagged Thread"
+msgstr "Соңғы жалауша қойылған тармаққа _өту"
+
+#: pan/gui/actions.cc:623 pan/gui/actions.cc:624
+msgid "_Invert Selection"
+msgstr "Таңдауды _инверсиялау"
+
+#: pan/gui/actions.cc:628
+msgid "Edit Article's Watch/Ignore/Score..."
+msgstr "Мақаланы бақылау/елемеу/ұпайын түзету..."
+
+#: pan/gui/actions.cc:633
+msgid "Add a _Scoring Rule..."
+msgstr "_Ұпай қою ережесін қосу..."
+
+#: pan/gui/actions.cc:638
+msgid "Cance_l Article..."
+msgstr "Мақаладан _бас тарту..."
+
+#: pan/gui/actions.cc:643
+msgid "_Supersede Article..."
+msgstr "Мақаланы _алмастыру..."
+
+#: pan/gui/actions.cc:648
+msgid "_Delete Article"
+msgstr "Мақаланы _өшіру"
+
+#: pan/gui/actions.cc:653
+msgid "Clear Article Cache"
+msgstr "Мақалалар кэшін тазарту"
+
+#: pan/gui/actions.cc:658
+msgid "_Mark Article as Read"
+msgstr "_Мақаланы оқылған деп белгілеу"
+
+#: pan/gui/actions.cc:663
+msgid "Mark Article as _Unread"
+msgstr "Мақаланы _оқылмаған деп белгілеу"
+
+#: pan/gui/actions.cc:669
+msgid "_Mark Thread as Read"
+msgstr "_Тармақты оқылған деп белгілеу"
+
+#: pan/gui/actions.cc:674
+msgid "Mark Thread as _Unread"
+msgstr "Тармақты _оқылмаған деп белгілеу"
+
+#: pan/gui/actions.cc:679
+msgid "_Post to Newsgroup"
+msgstr "Жаңалықтар тобына _жариялау"
+
+#: pan/gui/actions.cc:680
+msgid "Post to Newsgroup"
+msgstr "Жаңалықтар тобына жариялау"
+
+#: pan/gui/actions.cc:684
+msgid "_Followup to Newsgroup"
+msgstr "Жаңалықтар тобына _жауап жазу"
+
+#: pan/gui/actions.cc:685
+msgid "Followup to Newsgroup"
+msgstr "Жаңалықтар тобына жауап жазу"
+
+#: pan/gui/actions.cc:689
+msgid "_Reply to Author in Mail"
+msgstr "Авторға электронды поштамен _жауап беру"
+
+#: pan/gui/actions.cc:695
+msgid "_Contents"
+msgstr "_Мазмұны"
+
+#: pan/gui/actions.cc:701
+msgid "_Pan Home Page"
+msgstr "_Pan басты беті"
+
+#: pan/gui/actions.cc:706
+msgid "Give _Feedback or Report a Bug..."
+msgstr "_Кері байланыс беру немесе қате туралы хабарлау..."
+
+#: pan/gui/actions.cc:711
+msgid "_About"
+msgstr "_Осы туралы"
+
+#: pan/gui/actions.cc:716
+msgid "Edit _SSL Certificates"
+msgstr "_SSL сертификаттарын түзету"
+
+#: pan/gui/actions.cc:731
+msgid "_Thread Headers"
+msgstr "_Тармақ тақырыптамалары"
+
+#: pan/gui/actions.cc:732
+msgid "Wrap Article Body"
+msgstr "Мақала мәтінін тасымалдау"
+
+#: pan/gui/actions.cc:733
+msgid "Show Article Signature"
+msgstr "Мақала қолтаңбасын көрсету"
+
+#: pan/gui/actions.cc:734
+msgid "Mute _Quoted Text"
+msgstr "_Дәйексөз мәтінін жасыру"
+
+#: pan/gui/actions.cc:735
+msgid "Show All _Headers in Body Pane"
+msgstr "Мәтін панелінде барлық _тақырыптамаларды көрсету"
+
+#: pan/gui/actions.cc:736
+msgid "Show _Smilies as Graphics"
+msgstr "_Смайликтерді графика ретінде көрсету"
+
+#: pan/gui/actions.cc:737
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr "*Жуан*, __Асты сызылған__ және /Көлбеу/ мәтінді көрсету"
+
+#: pan/gui/actions.cc:738
+msgid "Size Pictures to _Fit"
+msgstr "Суреттерді өлшеміне қарай _сыйдыру"
+
+#: pan/gui/actions.cc:739
+msgid "Use _Monospace Font"
+msgstr "_Ені біркелкі қаріпті қолдану"
+
+#: pan/gui/actions.cc:740
+msgid "Set Focus to Images"
+msgstr "Фокусты суреттерге орнату"
+
+#: pan/gui/actions.cc:741
+msgid "Highlight _URLs"
+msgstr "_URL-дерді түспен ерекшелеу"
+
+#: pan/gui/actions.cc:744
+msgid "_Work Online"
+msgstr "_Желіде жұмыс істеу"
+
+#: pan/gui/actions.cc:745
+msgid "_Tabbed Layout"
+msgstr "_Беттер түріндегі жайма"
+
+#: pan/gui/actions.cc:746
+msgid "Show Group _Pane"
+msgstr "Топтар _панелін көрсету"
+
+#: pan/gui/actions.cc:747
+msgid "Show Hea_der Pane"
+msgstr "Тақырыпт_амалар панелін көрсету"
+
+#: pan/gui/actions.cc:748
+msgid "Show Bod_y Pane"
+msgstr "Мә_тін панелін көрсету"
+
+#: pan/gui/actions.cc:749
+msgid "Show _Toolbar"
+msgstr "Саймандар _панелін көрсету"
+
+#: pan/gui/actions.cc:750
+msgid "Abbreviate Group Names"
+msgstr "Топ атауларын қысқарту"
+
+#: pan/gui/actions.cc:752
+msgid "Match Only _Read Articles"
+msgstr "Тек _оқылған мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:752
+msgid "Match Only Read Articles"
+msgstr "Тек оқылған мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:753
+msgid "Match Only _Unread Articles"
+msgstr "Тек _оқылмаған мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:753
+msgid "Match Only Unread Articles"
+msgstr "Тек оқылмаған мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:754
+msgid "Match Only _Cached Articles"
+msgstr "Тек _кэштелген мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:754
+msgid "Match Only Cached Articles"
+msgstr "Тек кэштелген мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:755
+msgid "Match Only _Complete Articles"
+msgstr "Тек _толық мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:755
+msgid "Match Only Complete Articles"
+msgstr "Тек толық мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:756
+msgid "Match Only _My Articles"
+msgstr "Тек _менің мақалаларымды сәйкестендіру"
+
+#: pan/gui/actions.cc:756
+msgid "Match Only My Articles"
+msgstr "Тек менің мақалаларымды сәйкестендіру"
+
+#: pan/gui/actions.cc:757
+msgid "Match Only _Watched Articles"
+msgstr "Тек _бақыланатын мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:757
+msgid "Match Only Watched Articles"
+msgstr "Тек бақыланатын мақалаларды сәйкестендіру"
+
+#: pan/gui/actions.cc:759
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "9999 ұпайларын сәйкестендіру (_Бақыланатын)"
+
+#: pan/gui/actions.cc:760
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr "5000...9998 ұпайларын сәйкестендіру (_Жоғары)"
+
+#: pan/gui/actions.cc:761
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "1...4999 ұпайларын сәйкестендіру (_Орташа)"
+
+#: pan/gui/actions.cc:762
+msgid "Match Scores of 0 (_Normal)"
+msgstr "0 ұпайларын сәйкестендіру (_Қалыпты)"
+
+#: pan/gui/actions.cc:763
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr "-9998...-1 ұпайларын сәйкестендіру (_Төмен)"
+
+#: pan/gui/actions.cc:764
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "-9999 ұпайларын сәйкестендіру (_Еленбейтін)"
+
+#: pan/gui/actions.cc:766
+msgid "Enable/Disable All _Rules"
+msgstr "Барлық _ережелерді іске қосу/сөндіру"
+
+#: pan/gui/actions.cc:794
+msgid "Show Matching _Articles"
+msgstr "Сәйкес _мақалаларды көрсету"
+
+#: pan/gui/actions.cc:795
+msgid "Show Matching Articles' _Threads"
+msgstr "Сәйкес мақалалардың _тармақтарын көрсету"
+
+#: pan/gui/actions.cc:796
+msgid "Show Matching Articles' _Subthreads"
+msgstr "Сәйкес мақалалардың ішкі _тармақтарын көрсету"
+
+#: pan/gui/body-pane.cc:1228
+msgid "Unnamed File"
+msgstr "Атаусыз файл"
+
+#: pan/gui/body-pane.cc:1314 pan/gui/gui.cc:1966 pan/gui/header-pane.cc:1505 pan/gui/header-pane.cc:2005 pan/gui/post-ui.cc:2575
+#: pan/gui/prefs-ui.cc:896 pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:795
+msgid "Subject"
+msgstr "Тақырып"
+
+#: pan/gui/body-pane.cc:1316 pan/gui/gui.cc:1966
+msgid "From"
+msgstr "Кімнен"
+
+#: pan/gui/body-pane.cc:1318 pan/gui/gui.cc:1967 pan/gui/header-pane.cc:2015 pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:892
+msgid "Date"
+msgstr "Күні"
+
+#: pan/gui/body-pane.cc:1329
+msgid "Newsgroups"
+msgstr "Жаңалықтар топтары"
+
+#: pan/gui/body-pane.cc:1337 pan/gui/body-pane.cc:1345 pan/gui/body-pane.cc:1353
+msgid "User-Agent"
+msgstr "Пайдаланушы агенті"
+
+#: pan/gui/body-pane.cc:1361
+msgid "Followup-To"
+msgstr "Жауап қайда"
+
+#: pan/gui/body-pane.cc:1376
+msgid "Reply-To"
+msgstr "Кері жауап"
+
+#: pan/gui/body-pane.cc:1430
+msgid " from "
+msgstr " кімнен: "
+
+#: pan/gui/body-pane.cc:1432
+msgid " at "
+msgstr " уақыты: "
+
+#: pan/gui/body-pane.cc:1543
+#, c-format
+msgid ""
+"<u>This is a <b>PGP-Signed</b> message.</u>\n"
+"\n"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
+msgstr ""
+"<u>Бұл — <b>PGP арқылы қол қойылған</b> хабарлама.</u>\n"
+"\n"
+"<b>Қол қоюшы:</b> %s ('%s')\n"
+"<b>Жарамдылық мерзімі:</b> %s\n"
+"<b>Жасалған күні:</b> %s"
+
+#: pan/gui/body-pane.cc:1550
+msgid "always"
+msgstr "әрқашан"
+
+#: pan/gui/body-pane.cc:1772
+msgid "Copy _URL"
+msgstr "_URL көшіру"
+
+#: pan/gui/body-pane.cc:1977
+msgid "Save Attachment As..."
+msgstr "Салынымды қалайша сақтау..."
+
+#: pan/gui/body-pane.cc:1980
+msgid "Save All Attachments"
+msgstr "Барлық салынымдарды сақтау"
+
+#: pan/gui/body-pane.cc:2060
+msgid "Attachments:"
+msgstr "Салынымдар:"
+
+#: pan/gui/body-pane.cc:2090
+msgid "Text View"
+msgstr "Мәтіндік көрініс"
+
+#: pan/gui/body-pane.cc:2099
+msgid "HTML View"
+msgstr "HTML көрінісі"
+
+#: pan/gui/dl-headers-ui.cc:125
+#, c-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "%d топтар"
+
+#: pan/gui/dl-headers-ui.cc:148
+msgid "Get the last N _days' headers: "
+msgstr "Соңғы N _күннің тақырыптамаларын алу: "
+
+#: pan/gui/dl-headers-ui.cc:156
+msgid "Get _new headers"
+msgstr "_Жаңа тақырыптамаларды алу"
+
+#: pan/gui/dl-headers-ui.cc:160
+msgid "Get _all headers"
+msgstr "_Барлық тақырыптамаларды алу"
+
+#: pan/gui/dl-headers-ui.cc:164
+msgid "Get the _latest N headers: "
+msgstr "Соңғы N тақырыпт_аманы алу: "
+
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:889
+msgid "Action"
+msgstr "Әрекет"
+
+#: pan/gui/e-action-combo-box.c:387
+msgid "A GtkRadioAction"
+msgstr "GtkRadioAction нысаны"
+
+#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:561
+msgid "Unknown"
+msgstr "Белгісіз"
+
+#: pan/gui/e-charset.c:52
+msgid "Arabic"
+msgstr "Арабша"
+
+#: pan/gui/e-charset.c:53
+msgid "Baltic"
+msgstr "Балтық"
+
+#: pan/gui/e-charset.c:54
+msgid "Central European"
+msgstr "Орталық Еуропалық"
+
+#: pan/gui/e-charset.c:55
+msgid "Chinese"
+msgstr "Қытайша"
+
+#: pan/gui/e-charset.c:56
+msgid "Cyrillic"
+msgstr "Кириллица"
+
+#: pan/gui/e-charset.c:57
+msgid "Greek"
+msgstr "Грекше"
+
+#: pan/gui/e-charset.c:58
+msgid "Hebrew"
+msgstr "Иврит"
+
+#: pan/gui/e-charset.c:59
+msgid "Japanese"
+msgstr "Жапонша"
+
+#: pan/gui/e-charset.c:60
+msgid "Korean"
+msgstr "Корейше"
+
+#: pan/gui/e-charset.c:61
+msgid "Thai"
+msgstr "Тайша"
+
+#: pan/gui/e-charset.c:62
+msgid "Turkish"
+msgstr "Түрікше"
+
+#: pan/gui/e-charset.c:63
+msgid "Unicode"
+msgstr "Юникод"
+
+#: pan/gui/e-charset.c:64
+msgid "Western European"
+msgstr "Батыс Еуропалық"
+
+#: pan/gui/e-charset.c:65
+msgid "Western European, New"
+msgstr "Батыс Еуропалық, жаңа"
+
+#: pan/gui/e-charset.c:84 pan/gui/e-charset.c:85 pan/gui/e-charset.c:86
+msgid "Traditional"
+msgstr "Дәстүрлі"
+
+#: pan/gui/e-charset.c:87 pan/gui/e-charset.c:88 pan/gui/e-charset.c:89 pan/gui/e-charset.c:90
+msgid "Simplified"
+msgstr "Оңайлатылған"
+
+#: pan/gui/e-charset.c:93
+msgid "Ukrainian"
+msgstr "Украинша"
+
+#: pan/gui/e-charset.c:96
+msgid "Visual"
+msgstr "Визуалды"
+
+#: pan/gui/e-charset-combo-box.c:95 pan/gui/gui.cc:2164 pan/gui/post-ui.cc:476 pan/gui/prefs-ui.cc:800
+msgid "Character Encoding"
+msgstr "Таңбалар кодтауы"
+
+#: pan/gui/e-charset-combo-box.c:97 pan/gui/e-charset-dialog.c:51 pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:309
+msgid "Cancel"
+msgstr "Бас тарту"
+
+#: pan/gui/e-charset-combo-box.c:98 pan/gui/e-charset-dialog.c:52
+msgid "OK"
+msgstr "ОК"
+
+#: pan/gui/e-charset-combo-box.c:119
+msgid "Enter the character set to use"
+msgstr "Қолданылатын таңбалар жиынын енгізіңіз"
+
+#: pan/gui/e-charset-combo-box.c:339
+msgid "Other..."
+msgstr "Басқа..."
+
+#: pan/gui/e-cte-dialog.c:77
+msgid "Default Encoding"
+msgstr "Бастапқы кодтау"
+
+#: pan/gui/e-cte-dialog.c:79
+msgid "7-Bit Encoding"
+msgstr "7-биттік кодтау"
+
+#: pan/gui/e-cte-dialog.c:81
+msgid "8-Bit Encoding"
+msgstr "8-биттік кодтау"
+
+#: pan/gui/e-cte-dialog.c:83
+msgid "Base64 Encoding"
+msgstr "Base64 кодтауы"
+
+#: pan/gui/e-cte-dialog.c:85
+msgid "Quoted-Printable Encoding"
+msgstr "Quoted-Printable кодтауы"
+
+#: pan/gui/editor-spawner.cc:66
+#, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "«Сыртқы түзеткіш» командалық жолын талдау қатесі: %s (Команда: %s)"
+
+#: pan/gui/editor-spawner.cc:110
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Сыртқы түзеткішті іске қосу қатесі: %s"
+
+#. Local folders
+#: pan/gui/group-pane.cc:330
+msgid "Sent"
+msgstr "Жіберілген"
+
+#: pan/gui/group-pane.cc:330
+msgid "Drafts"
+msgstr "Шимайлар"
+
+#: pan/gui/group-pane.cc:540
+msgid "Group"
+msgstr "Топ"
+
+#: pan/gui/group-pane.cc:540
+msgid "Group (regex)"
+msgstr "Топ (regex)"
+
+#: pan/gui/group-pane.cc:985
+msgid "Local Folders"
+msgstr "Жергілікті бумалар"
+
+#: pan/gui/group-pane.cc:986
+msgid "Subscribed Groups"
+msgstr "Жазылған топтар"
+
+#: pan/gui/group-pane.cc:987
+msgid "Other Groups"
+msgstr "Басқа топтар"
+
+#: pan/gui/group-pane.cc:1028 pan/gui/score-view-ui.cc:156
+msgid "Name"
+msgstr "Аты"
+
+#: pan/gui/group-prefs-dialog.cc:161
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "«Түзету|Жариялау профильдері» бөлімінде профильдер анықталмаған."
+
+#: pan/gui/group-prefs-dialog.cc:264
+msgid "Pan: Group Preferences"
+msgstr "Pan: Топ баптаулары"
+
+#: pan/gui/group-prefs-dialog.cc:279
+msgid "Properties for Groups"
+msgstr "Топтар үшін қасиеттер"
+
+#: pan/gui/group-prefs-dialog.cc:281
+#, c-format
+msgid "Properties for %s"
+msgstr "%s үшін қасиеттер"
+
+#: pan/gui/group-prefs-dialog.cc:292
+msgid "Character _encoding:"
+msgstr "Таңбалар _кодтауы:"
+
+#: pan/gui/group-prefs-dialog.cc:294
+msgid "Directory for Saving Attachments"
+msgstr "Салынымдарды сақтау бумасы"
+
+#: pan/gui/group-prefs-dialog.cc:302
+msgid "Directory for _saving attachments:"
+msgstr "Салынымдарды _сақтау бумасы:"
+
+#: pan/gui/group-prefs-dialog.cc:304
+msgid "Posting _profile:"
+msgstr "Жариялау _профилі:"
+
+#: pan/gui/group-prefs-dialog.cc:309
+msgid "Spellchecker _language:"
+msgstr "Емле тексеру _тілі:"
+
+#: pan/gui/group-prefs-dialog.cc:312
+msgid "Group color:"
+msgstr "Топ түсі:"
+
+#: pan/gui/gui.cc:312
+msgid "Open the Task Manager"
+msgstr "Тапсырмалар менеджерін ашу"
+
+#: pan/gui/gui.cc:335
+msgid "Open the Event Log"
+msgstr "Оқиғалар журналын ашу"
+
+#: pan/gui/gui.cc:611
+msgid "Save NZB's Files"
+msgstr "NZB файлдарын сақтау"
+
+#: pan/gui/gui.cc:638
+msgid "Untitled.nzb"
+msgstr "Атаусыз.nzb"
+
+#: pan/gui/gui.cc:640
+msgid "Save NZB File as..."
+msgstr "NZB файлын қалайша сақтау..."
+
+#: pan/gui/gui.cc:809
+msgid "Import NZB Files"
+msgstr "NZB файлдарын импорттау"
+
+#: pan/gui/gui.cc:817 pan/gui/post-ui.cc:3288
+msgid "NZB Files"
+msgstr "NZB файлдары"
+
+#: pan/gui/gui.cc:822
+msgid "All Files"
+msgstr "Барлық файлдар"
+
+#: pan/gui/gui.cc:1336
+msgid "Unable to supersede article."
+msgstr "Мақаланы алмастыру мүмкін емес."
+
+#: pan/gui/gui.cc:1337 pan/gui/gui.cc:1413
+msgid "The article doesn't match any of your posting profiles."
+msgstr "Мақала сіздің ешбір жариялау профиліңізге сәйкес келмейді."
+
+#: pan/gui/gui.cc:1386
+msgid "Revise and send this article to replace the old one."
+msgstr "Ескі мақаланы алмастыру үшін осы мақаланы қайта қарап, жіберіңіз."
+
+#: pan/gui/gui.cc:1387 pan/gui/gui.cc:1451
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr "Сабырлы болыңыз! Өзгерістердің күшіне енуі үшін уақыт қажет."
+
+#: pan/gui/gui.cc:1412
+msgid "Unable to cancel article."
+msgstr "Мақаладан бас тарту мүмкін емес."
+
+#: pan/gui/gui.cc:1450
+msgid "Send this article to ask your server to cancel your other one."
+msgstr "Басқа мақаладан бас тартуды серверден сұрау үшін осы мақаланы жіберіңіз."
+
+#: pan/gui/gui.cc:1468
+msgid "You have marked some articles for deletion."
+msgstr "Кейбір мақалаларды өшіруге белгіледіңіз."
+
+#: pan/gui/gui.cc:1469
+msgid "Are you sure you want to delete them?"
+msgstr "Оларды өшіруді шынымен қалайсыз ба?"
+
+#: pan/gui/gui.cc:1495
+msgid "Do you want to accept it permanently? (You can change this later.)"
+msgstr "Оны тұрақты түрде қабылдауды қалайсыз ба? (Мұны кейінірек өзгертуге болады.)"
+
+#: pan/gui/gui.cc:1641
+msgid "Unable to open help file."
+msgstr "Көмек файлын ашу мүмкін емес."
+
+#: pan/gui/gui.cc:1678
+msgid "Copyright © 2002-2021 Charles Kerr and others"
+msgstr "Copyright © 2002-2021 Charles Kerr және басқалар"
+
+#: pan/gui/gui.cc:1683
+msgid "translator-credits"
+msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
+
+#: pan/gui/gui.cc:1811
+msgid "_1. Group Pane"
+msgstr "_1. Топтар панелі"
+
+#: pan/gui/gui.cc:1812
+msgid "_2. Header Pane"
+msgstr "_2. Тақырыптамалар панелі"
+
+#: pan/gui/gui.cc:1813
+msgid "_3. Body Pane"
+msgstr "_3. Мәтін панелі"
+
+#: pan/gui/gui.cc:1903 pan/gui/gui.cc:1918
+msgid " Bytes"
+msgstr " байт"
+
+#: pan/gui/gui.cc:1906
+msgid " KB"
+msgstr " КБ"
+
+#: pan/gui/gui.cc:1909
+msgid " MB"
+msgstr " МБ"
+
+#: pan/gui/gui.cc:1912
+msgid " GB"
+msgstr " ГБ"
+
+#: pan/gui/gui.cc:1915
+msgid " TB"
+msgstr " ТБ"
+
+#: pan/gui/gui.cc:1947
+#, c-format
+msgid "This article is complete with %d part."
+msgid_plural "This article has all %d parts."
+msgstr[0] "Бұл мақалада барлық %d бөлік бар."
+
+#: pan/gui/gui.cc:1949
+#, c-format
+msgid "This article is missing %d part."
+msgid_plural "This article is missing %d of its %d parts:"
+msgstr[0] "Бұл мақаланың %2$d бөлігінің %1$d бөлігі жетіспейді:"
+
+#: pan/gui/gui.cc:1967 pan/gui/header-pane.cc:1507 pan/gui/task-pane.cc:797
+msgid "Message-ID"
+msgstr "Хабарлама-ID"
+
+#: pan/gui/gui.cc:1968 pan/gui/header-pane.cc:2011 pan/gui/prefs-ui.cc:893
+msgid "Lines"
+msgstr "Жолдар"
+
+#: pan/gui/gui.cc:1968
+msgid "Size"
+msgstr "Өлшемі"
+
+#: pan/gui/gui.cc:1969 pan/gui/header-pane.cc:2013 pan/gui/prefs-ui.cc:891
+msgid "Bytes"
+msgstr "Байт"
+
+#: pan/gui/gui.cc:2019
+msgid "Error loading iconv library. Encoding certain character sets will not work in GUI."
+msgstr "iconv кітапханасын жүктеу қатесі. Кейбір таңбалар жиынтығын кодтау интерфейсте жұмыс істемейді."
+
+#: pan/gui/gui.cc:2165
+msgid "Body Pane Encoding"
+msgstr "Мәтін панелінің кодтауы"
+
+#: pan/gui/gui.cc:2196 pan/gui/task-pane.cc:612
+msgid "Offline"
+msgstr "Желіден тыс"
+
+#: pan/gui/gui.cc:2200
+#, c-format
+msgid "Closing %d connection"
+msgid_plural "Closing %d connections"
+msgstr[0] "%d байланыс жабылуда"
+
+#: pan/gui/gui.cc:2202 pan/gui/gui.cc:2232
+msgid "No Connections"
+msgstr "Байланыстар жоқ"
+
+#: pan/gui/gui.cc:2206
+msgid "Connecting"
+msgstr "Байланыс орнатылуда"
+
+#: pan/gui/gui.cc:2219
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr "%s: %d бос, %d белсенді @ %.1f КиБ/с"
+
+#: pan/gui/gui.cc:2275
+msgid "No Tasks"
+msgstr "Тапсырмалар жоқ"
+
+#: pan/gui/gui.cc:2277 pan/gui/prefs-ui.cc:1140
+msgid "Tasks"
+msgstr "Тапсырмалар"
+
+#: pan/gui/gui.cc:2294 pan/gui/task-pane.cc:478
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr "%lu тапсырма, %s, %.1f КиБ/с, қалды %d:%02d:%02d"
+
+#: pan/gui/gui.cc:2346
+msgid "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
+msgstr ""
+"Pan қазір желіден тыс. «Файл|Оқиғалар журналын» қарап, ақаулықты түзетіңіз, содан кейін жалғастыру үшін «Файл|Желіде жұмыс істеу» опциясын "
+"пайдаланыңыз."
+
+#: pan/gui/header-pane.cc:1503 pan/gui/task-pane.cc:793
+msgid "Subject or Author"
+msgstr "Тақырып немесе автор"
+
+#: pan/gui/header-pane.cc:1504 pan/gui/task-pane.cc:794
+msgid "Sub or Auth (regex)"
+msgstr "Тақ. не авт. (regex)"
+
+#: pan/gui/header-pane.cc:1506 pan/gui/header-pane.cc:2009 pan/gui/prefs-ui.cc:890 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:796
+msgid "Author"
+msgstr "Автор"
+
+#: pan/gui/header-pane.cc:2007 pan/gui/prefs-ui.cc:894
+msgid "Score"
+msgstr "Ұпай"
+
+#: pan/gui/log-ui.cc:105
+msgid "Save Event List"
+msgstr "Оқиғалар тізімін сақтау"
+
+#: pan/gui/log-ui.cc:259
+msgid "Pan: Events"
+msgstr "Pan: Оқиғалар"
+
+#: pan/gui/log-ui.cc:318
+msgid "Message"
+msgstr "Хабарлама"
+
+#: pan/gui/pan.cc:306
+msgid "Maximize"
+msgstr "Максималды"
+
+#: pan/gui/pan.cc:346
+msgid "An error has occurred!"
+msgstr "Қате орын алды!"
+
+#: pan/gui/pan.cc:359
+msgid "New Articles!"
+msgstr "Жаңа мақалалар!"
+
+#: pan/gui/pan.cc:360
+msgid ""
+"There are new\n"
+"articles available."
+msgstr ""
+"Жаңа мақалалар\n"
+"қолжетімді."
+
+#: pan/gui/pan.cc:435
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+"Pan бағдарламасын қолданып көргеніңізге рақмет!\n"
+" \n"
+"Жаңалықтарды оқуды бастау үшін алдымен Сервер қосыңыз."
+
+#: pan/gui/pan.cc:517
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage information and exit.\n"
+"  -v, --version            Print release version and exit.\n"
+"  --verbose                Be verbose (in non-GUI mode).\n"
+"  --debug                  Run in debug mode. Use --debug twice for verbose debug.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
+"\n"
+"URL Options\n"
+"  headers:group.name       Download new headers for the specified newsgroup.\n"
+"  news:message-id          When specified together with --no-gui, dump\n"
+"                           the message-id article to standard output.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
+"  -o path, --output=path   Path to save attachments listed in the NZB file(s).\n"
+"  --no-gui                 Only show console output, not the download queue.\n"
+msgstr ""
+"Жалпы опциялар\n"
+"  -h, --help               Осы ақпаратты көрсету және шығу.\n"
+"  -v, --version            Нұсқаны шығару және шығу.\n"
+"  --verbose                Толық ақпаратты көрсету (графикалық емес режимде).\n"
+"  --debug                  Дебаг режимінде іске қосу. Толық дебаг үшін екі рет қолданыңыз.\n"
+"  --debug-ssl              TLS (SSL) дебаг режимінде іске қосу.\n"
+"\n"
+"URL опциялары\n"
+"  headers:group.name       Көрсетілген жаңалықтар тобы үшін жаңа тақырыптамаларды жүктеп алу.\n"
+"  news:message-id          --no-gui опциясымен бірге қолданылса, хабарлама-id мақаласын\n"
+"                           стандартты шығысқа шығару.\n"
+"\n"
+"NZB пакеттік опциялары\n"
+"  --nzb file1 file2 ...    NZB файлдарын графикалық емес режимде өңдеу.\n"
+"  -o path, --output=path   NZB файлдарындағы салынымдарды сақтау жолы.\n"
+"  --no-gui                 Тек консольдік шығысты көрсету, жүктеу кезегін көрсетпеу.\n"
+
+#: pan/gui/pan.cc:854
+msgid "Error: --no-gui used without nzb files or news:message-id."
+msgstr "Қате: --no-gui опциясы nzb файлдарынсыз немесе news:message-id-сіз қолданылды."
+
+#: pan/gui/pan.cc:858
+#, c-format
+msgid "Pan %s started"
+msgstr "Pan %s іске қосылды"
+
+#: pan/gui/pan.cc:878
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr "Pan бағдарламасын nzb клиенті ретінде қолданар алдында оның жаңалықтар серверлерін баптаңыз."
+
+#: pan/gui/pan.cc:998
+msgid "Pan notification"
+msgstr "Pan хабарландыруы"
+
+#: pan/gui/post-ui.cc:174
+#, c-format
+msgid "Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."
+msgstr "Жүктеп салу кезегі: %llu тапсырма, барлығы %ld КБ (~ %.2f МБ)."
+
+#: pan/gui/post-ui.cc:383
+msgid "_Profile"
+msgstr "_Профиль"
+
+#: pan/gui/post-ui.cc:384
+msgid "Set Editor"
+msgstr "Түзеткішті орнату"
+
+#: pan/gui/post-ui.cc:386
+msgid "_Send Article"
+msgstr "_Мақаланы жіберу"
+
+#: pan/gui/post-ui.cc:386
+msgid "Send Article Now"
+msgstr "Мақаланы қазір жіберу"
+
+#: pan/gui/post-ui.cc:387
+msgid "_Send and Save Articles to NZB"
+msgstr "Мақалаларды жіберу және NZB-ге _сақтау"
+
+#: pan/gui/post-ui.cc:387
+msgid "Send and Save Articles to NZB"
+msgstr "Мақалаларды жіберу және NZB-ге сақтау"
+
+#: pan/gui/post-ui.cc:388
+msgid "Set Character _Encoding..."
+msgstr "Таңбалар _кодтауын орнату..."
+
+#: pan/gui/post-ui.cc:389
+msgid "Set Content _Transfer Encoding..."
+msgstr "Мазмұнды _тасымалдау кодтауын орнату..."
+
+#: pan/gui/post-ui.cc:390
+msgid "Sa_ve Draft"
+msgstr "Шимайды са_қтау"
+
+#: pan/gui/post-ui.cc:390
+msgid "Save as a Draft for Future Posting"
+msgstr "Болашақта жариялау үшін шимай ретінде сақтау"
+
+#: pan/gui/post-ui.cc:391
+msgid "_Open Draft..."
+msgstr "_Шимайды ашу..."
+
+#: pan/gui/post-ui.cc:391
+msgid "Open an Article Draft"
+msgstr "Мақала шимайын ашу"
+
+#: pan/gui/post-ui.cc:396
+msgid "_Rot13"
+msgstr "_Rot13"
+
+#: pan/gui/post-ui.cc:396
+msgid "Rot13 Selected Text"
+msgstr "Таңдалған мәтінді Rot13 кодтау"
+
+#: pan/gui/post-ui.cc:397
+msgid "Run _Editor"
+msgstr "_Түзеткішті іске қосу"
+
+#: pan/gui/post-ui.cc:397
+msgid "Run Editor"
+msgstr "Түзеткішті іске қосу"
+
+#: pan/gui/post-ui.cc:399
+msgid "Add _Files to Queue"
+msgstr "Кезекке _файлдарды қосу"
+
+#: pan/gui/post-ui.cc:399
+msgid "Add Files to Queue"
+msgstr "Кезекке файлдарды қосу"
+
+#: pan/gui/post-ui.cc:414 pan/gui/post-ui.cc:415
+msgid "Remove from Queue"
+msgstr "Кезекте өшіру"
+
+#: pan/gui/post-ui.cc:419 pan/gui/post-ui.cc:420
+msgid "Clear List"
+msgstr "Тізімді тазарту"
+
+#: pan/gui/post-ui.cc:424 pan/gui/post-ui.cc:425
+msgid "Select Needed Parts"
+msgstr "Қажетті бөліктерді таңдау"
+
+#: pan/gui/post-ui.cc:429 pan/gui/post-ui.cc:430 pan/gui/task-pane.cc:680 pan/gui/task-pane.cc:681
+msgid "Move Up"
+msgstr "Жоғары жылжыту"
+
+#: pan/gui/post-ui.cc:434 pan/gui/post-ui.cc:435 pan/gui/task-pane.cc:685 pan/gui/task-pane.cc:686
+msgid "Move Down"
+msgstr "Төмен жылжыту"
+
+#: pan/gui/post-ui.cc:439 pan/gui/post-ui.cc:440
+msgid "Move to Top"
+msgstr "Ең жоғарыға жылжыту"
+
+#: pan/gui/post-ui.cc:444 pan/gui/post-ui.cc:445
+msgid "Move to Bottom"
+msgstr "Ең төменге жылжыту"
+
+#: pan/gui/post-ui.cc:452
+msgid "_Wrap Text"
+msgstr "Мәтінді _тасымалдау"
+
+#: pan/gui/post-ui.cc:452
+msgid "Wrap Text"
+msgstr "Мәтінді тасымалдау"
+
+#: pan/gui/post-ui.cc:453
+msgid "Always Run Editor"
+msgstr "Әрқашан түзеткішті іске қосу"
+
+#: pan/gui/post-ui.cc:454
+msgid "Remember Character Encoding for This Group"
+msgstr "Осы топ үшін таңбалар кодтауын есте сақтау"
+
+#: pan/gui/post-ui.cc:455
+msgid "Thread Attached Replies"
+msgstr "Тіркелген жауаптарды тармақтау"
+
+#: pan/gui/post-ui.cc:456
+msgid "PGP-Encrypt the Article"
+msgstr "Мақаланы PGP арқылы шифрлеу"
+
+#: pan/gui/post-ui.cc:457
+msgid "PGP-Sign the Article"
+msgstr "Мақалаға PGP арқылы қол қою"
+
+#: pan/gui/post-ui.cc:458
+msgid "Check _Spelling"
+msgstr "Емлені _тексеру"
+
+#: pan/gui/post-ui.cc:477
+msgid "New Article's Encoding:"
+msgstr "Жаңа мақаланың кодтауы:"
+
+#: pan/gui/post-ui.cc:487
+msgid "Content Transfer Encoding"
+msgstr "Мазмұнды тасымалдау кодтауы"
+
+#: pan/gui/post-ui.cc:488
+msgid "New Article's Content Transfer Encoding:"
+msgstr "Жаңа мақаланың мазмұнын тасымалдау кодтауы:"
+
+#: pan/gui/post-ui.cc:672
+msgid "Your changes will be lost!"
+msgstr "Өзгерістеріңіз жоғалады!"
+
+#: pan/gui/post-ui.cc:673
+msgid "Close this window and lose your changes?"
+msgstr "Осы терезені жауып, өзгерістерден бас тартасыз ба?"
+
+#: pan/gui/post-ui.cc:718 pan/gui/post-ui.cc:757
+msgid "There were problems with this post."
+msgstr "Бұл жарияланымда ақаулар болды."
+
+#: pan/gui/post-ui.cc:720 pan/gui/post-ui.cc:759 pan/gui/post-ui.cc:824
+msgid "Go Back"
+msgstr "Артқа қайту"
+
+#: pan/gui/post-ui.cc:722
+msgid "Continue Anyway"
+msgstr "Бәрібір жалғастыру"
+
+#. Prompt the user
+#: pan/gui/post-ui.cc:751
+#, c-format
+msgid "Message uses characters not specified in charset '%s' - possibly use '%s' "
+msgstr "Хабарламада «%s» кодтауында көрсетілмеген таңбалар бар — мүмкін «%s» қолдану керек болар "
+
+#: pan/gui/post-ui.cc:774
+msgid "Go _Online"
+msgstr "_Желіге қосылу"
+
+#: pan/gui/post-ui.cc:823
+msgid "The file queue is empty, so no files can be saved."
+msgstr "Файлдар кезегі бос, сондықтан ешбір файл сақталмайды."
+
+#: pan/gui/post-ui.cc:1003
+msgid "IO Error"
+msgstr "Енгізу-шығару қатесі"
+
+#: pan/gui/post-ui.cc:1003
+msgid "No space left on device"
+msgstr "Құрылғыда бос орын қалмады"
+
+#: pan/gui/post-ui.cc:1004
+#, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr "Хабарламаны %s бумасына көшіру қатесі. Себебі: %s"
+
+#: pan/gui/post-ui.cc:1010
+#, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr "%s пошта бумасында хабарлама жасау қатесі: қате мақала."
+
+#: pan/gui/post-ui.cc:1032
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+"Бұл жариялау профилі үшін ешбір жариялау сервері орнатылмаған.\n"
+"Профильді «Түзету|Жариялау профильдерін басқару» арқылы түзетіңіз."
+
+#: pan/gui/post-ui.cc:1037
+msgid "The selected posting server is currently disabled. Please choose an appropriate alternative."
+msgstr "Таңдалған жариялау сервері қазір сөндірілген. Тиісті баламаны таңдаңыз."
+
+#: pan/gui/post-ui.cc:1079
+msgid "Pan is Offline."
+msgstr "Pan желіден тыс."
+
+#: pan/gui/post-ui.cc:1080
+msgid "Go online to post the article?"
+msgstr "Мақаланы жариялау үшін желіге қосыласыз ба?"
+
+#: pan/gui/post-ui.cc:1129
+#, c-format
+msgid "Error signing/encrypting your message. Perhaps you misspelled your email address (%s)?"
+msgstr "Хабарламаңызға қол қою/шифрлеу қатесі. Мүмкін электронды пошта адресіңізді (%s) қате жазған боларсыз?"
+
+#: pan/gui/post-ui.cc:1279
+msgid "Error opening temporary file"
+msgstr "Уақытша файлды ашу қатесі"
+
+#: pan/gui/post-ui.cc:1290
+#, c-format
+msgid "Error creating temporary file: %s"
+msgstr "Уақытша файлды жасау қатесі: %s"
+
+#: pan/gui/post-ui.cc:1298
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr "Мақаланы уақытша файлға жазу қатесі: %s"
+
+#: pan/gui/post-ui.cc:1371
+msgid "Open Draft Article"
+msgstr "Мақала шимайын ашу"
+
+#: pan/gui/post-ui.cc:1613
+msgid "Save Draft Article"
+msgstr "Мақала шимайын сақтау"
+
+#: pan/gui/post-ui.cc:1651
+msgid "File already exists."
+msgstr "Файл бұрыннан бар."
+
+#: pan/gui/post-ui.cc:1652
+msgid "Overwrite it?"
+msgstr "Оны үстінен жазу керек пе?"
+
+#: pan/gui/post-ui.cc:1861
+#, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "«%s» қолтаңба командасын талдау мүмкін болмады: %s"
+
+#: pan/gui/post-ui.cc:1897
+msgid "Couldn't convert signature to UTF-8."
+msgstr "Қолтаңбаны UTF-8 форматына түрлендіру мүмкін болмады."
+
+#: pan/gui/post-ui.cc:2409
+msgid "F_rom"
+msgstr "К_імнен"
+
+#: pan/gui/post-ui.cc:2427
+msgid "_Subject"
+msgstr "_Тақырып"
+
+#: pan/gui/post-ui.cc:2441
+msgid "_Newsgroups"
+msgstr "_Жаңалықтар топтары"
+
+#: pan/gui/post-ui.cc:2456
+msgid "Mail _To"
+msgstr "Пошта _адресі"
+
+#: pan/gui/post-ui.cc:2560
+msgid "Delete from Queue"
+msgstr "Кезектен өшіру"
+
+#: pan/gui/post-ui.cc:2573
+msgid "No."
+msgstr "№"
+
+#: pan/gui/post-ui.cc:2577 pan/gui/post-ui.cc:2669 pan/gui/post-ui.cc:2714
+msgid "Filename"
+msgstr "Файл аты"
+
+#: pan/gui/post-ui.cc:2579
+msgid "Size (KB)"
+msgstr "Өлшемі (КБ)"
+
+#: pan/gui/post-ui.cc:2679
+msgid "The current filename"
+msgstr "Ағымдағы файл аты"
+
+#: pan/gui/post-ui.cc:2683
+msgid "Subject Line"
+msgstr "Тақырып жолы"
+
+#: pan/gui/post-ui.cc:2693
+msgid "The current subject line"
+msgstr "Ағымдағы тақырып жолы"
+
+#: pan/gui/post-ui.cc:2707
+msgid "No. "
+msgstr "№ "
+
+#: pan/gui/post-ui.cc:2711
+msgid "Enable/Disable"
+msgstr "Іске қосу/Сөндіру"
+
+#: pan/gui/post-ui.cc:2745
+msgid "Follo_wup-To"
+msgstr "Жауап к_айда"
+
+#. i18n: "poster" is a key used by many newsreaders.  probably safest to keep
+#. this key in english.
+#: pan/gui/post-ui.cc:2755
+msgid ""
+"The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n"
+"\n"
+"To direct all replies to your email address, use \"Followup-To: poster\""
+msgstr ""
+"Хабарламаңызға берілген жауаптар баратын жаңалықтар топтары. Бұл «Жаңалықтар топтары» тақырыптамасынан өзгеше болған жағдайда ғана қажет.\n"
+"\n"
+"Барлық жауаптарды электронды поштаңызға бағыттау үшін «Followup-To: poster» қолданыңыз"
+
+#: pan/gui/post-ui.cc:2762
+msgid "_Reply-To"
+msgstr "_Кері жауап"
+
+#: pan/gui/post-ui.cc:2771
+msgid "The email account where mail replies to your posted message should go. This is only needed if it differs from the \"From\" header."
+msgstr "Жарияланған хабарламаңызға пошталық жауаптар келетін тіркелгі. Бұл «Кімнен» тақырыптамасынан өзгеше болған жағдайда ғана қажет."
+
+#: pan/gui/post-ui.cc:2778
+msgid "_Custom Headers"
+msgstr "_Пайдаланушы тақырыптамалары"
+
+#: pan/gui/post-ui.cc:2803
+msgid "Add \"_User-Agent\" header"
+msgstr "«_User-Agent» тақырыптамасын қосу"
+
+#: pan/gui/post-ui.cc:2810
+msgid "Add \"Message-_ID\" header"
+msgstr "«Message-_ID» тақырыптамасын қосу"
+
+#: pan/gui/post-ui.cc:2938
+msgid "Select Parts"
+msgstr "Бөліктерді таңдау"
+
+#: pan/gui/post-ui.cc:2951
+msgid "_Parts"
+msgstr "_Бөліктер"
+
+#: pan/gui/post-ui.cc:3116
+msgid "Post Article"
+msgstr "Мақаланы жариялау"
+
+#: pan/gui/post-ui.cc:3137
+msgid "_Message"
+msgstr "_Хабарлама"
+
+#: pan/gui/post-ui.cc:3138
+msgid "More _Headers"
+msgstr "Қосымша _тақырыптамалар"
+
+#: pan/gui/post-ui.cc:3139
+msgid "File _Queue"
+msgstr "Файлдар _кезегі"
+
+#: pan/gui/post-ui.cc:3170 pan/gui/profiles-dialog.cc:558
+#, no-c-format
+msgid "On %d, %n wrote:"
+msgstr "%d күні %n былай деп жазды:"
+
+#: pan/gui/post-ui.cc:3199
+msgid "Add files to queue"
+msgstr "Кезекке файлдарды қосу"
+
+#: pan/gui/post-ui.cc:3275
+msgid "Save Upload Queue as NZB File"
+msgstr "Жүктеу кезегін NZB файлы ретінде сақтау"
+
+#: pan/gui/prefs.cc:368
+#, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "%s түсін талдау мүмкін болмады: «%s»"
+
+#: pan/gui/prefs-ui.cc:140
+msgid "Grab Key"
+msgstr "Пернені ұстау"
+
+#: pan/gui/prefs-ui.cc:146
+#, c-format
+msgid ""
+"Press the combination of the keys\n"
+"you want to use for \"%s\"."
+msgstr ""
+"«%s» үшін қолданылатын пернелер\n"
+"тіркесімін басыңыз."
+
+#: pan/gui/prefs-ui.cc:183
+msgid "Edit Shortcut"
+msgstr "Жарлықты түзету"
+
+#: pan/gui/prefs-ui.cc:244
+msgid "Error: Shortcut key is invalid!"
+msgstr "Қате: Жарлық пернесі жарамсыз!"
+
+#: pan/gui/prefs-ui.cc:260
+msgid "Error: Shortcut key already exists!"
+msgstr "Қате: Жарлық пернесі бұрыннан бар!"
+
+#: pan/gui/prefs-ui.cc:601
+msgid "Show only icons"
+msgstr "Тек таңбашаларды көрсету"
+
+#: pan/gui/prefs-ui.cc:602
+msgid "Show only text"
+msgstr "Тек мәтінді көрсету"
+
+#: pan/gui/prefs-ui.cc:603
+msgid "Show icons and text"
+msgstr "Таңбашалар мен мәтінді көрсету"
+
+#: pan/gui/prefs-ui.cc:642
+msgid "Use GNOME Preferences"
+msgstr "GNOME баптауларын қолдану"
+
+#: pan/gui/prefs-ui.cc:643
+msgid "Use KDE Preferences"
+msgstr "KDE баптауларын қолдану"
+
+#: pan/gui/prefs-ui.cc:644
+msgid "Use OS X Preferences"
+msgstr "OS X баптауларын қолдану"
+
+#: pan/gui/prefs-ui.cc:645
+msgid "Use Windows Preferences"
+msgstr "Windows баптауларын қолдану"
+
+#: pan/gui/prefs-ui.cc:646
+msgid "Custom Command:"
+msgstr "Пайдаланушы командасы:"
+
+#: pan/gui/prefs-ui.cc:698
+msgid "Disabled"
+msgstr "Сөндірілген"
+
+#: pan/gui/prefs-ui.cc:699
+msgid "Only new (score == 0)"
+msgstr "Тек жаңа (ұпайы == 0)"
+
+#: pan/gui/prefs-ui.cc:700
+msgid "9999 or more"
+msgstr "9999 немесе одан көп"
+
+#: pan/gui/prefs-ui.cc:701
+msgid "5000 to 9998"
+msgstr "5000-нан 9998-ге дейін"
+
+#: pan/gui/prefs-ui.cc:702
+msgid "1 to 4999"
+msgstr "1-ден 4999-ға дейін"
+
+#: pan/gui/prefs-ui.cc:703
+msgid "-9998 to -1"
+msgstr "-9998-ден -1-ге дейін"
+
+#: pan/gui/prefs-ui.cc:704
+msgid "-9999 or less"
+msgstr "-9999 немесе одан аз"
+
+#: pan/gui/prefs-ui.cc:770
+#, c-format
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
+msgstr "Бастапқы <u>глобалды</u> таңбалар жиынын таңдаңыз. Ағымдағы баптау: <b>%s</b>."
+
+#: pan/gui/prefs-ui.cc:801
+msgid "Global Character Set Settings"
+msgstr "Глобалды таңбалар жиынының баптаулары"
+
+#: pan/gui/prefs-ui.cc:895 pan/gui/task-pane.cc:1067
+msgid "State"
+msgstr "Күйі"
+
+#: pan/gui/prefs-ui.cc:929
+msgid "Enabled"
+msgstr "Іске қосылған"
+
+#: pan/gui/prefs-ui.cc:933
+msgid "Column Name"
+msgstr "Баған аты"
+
+#: pan/gui/prefs-ui.cc:981
+msgid "Pan: Preferences"
+msgstr "Pan: Баптаулар"
+
+#: pan/gui/prefs-ui.cc:996
+msgid "Mouse"
+msgstr "Тышқан"
+
+#: pan/gui/prefs-ui.cc:998
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "Бір рет шерту топтарды таңдаудың орнына _белсендіреді"
+
+#: pan/gui/prefs-ui.cc:1000
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "Бір рет шерту мақалаларды таңдаудың орнына _белсендіреді"
+
+#: pan/gui/prefs-ui.cc:1003
+msgid "Groups"
+msgstr "Топтар"
+
+#: pan/gui/prefs-ui.cc:1005
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Іске қосылғанда жазылған топтардағы жаңа тақырыптамаларды _алу"
+
+#: pan/gui/prefs-ui.cc:1007
+msgid "Get new headers when _entering group"
+msgstr "Топқа _кіргенде жаңа тақырыптамаларды алу"
+
+#: pan/gui/prefs-ui.cc:1009
+msgid "Mark entire group _read when leaving group"
+msgstr "Топтан шыққанда бүкіл топты _оқылған деп белгілеу"
+
+#: pan/gui/prefs-ui.cc:1011
+msgid "Mark entire group read before getting _new headers"
+msgstr "Жаңа тақырыптамаларды алар алдында бүкіл топты _оқылған деп белгілеу"
+
+#: pan/gui/prefs-ui.cc:1013
+msgid "E_xpand all threads when entering group"
+msgstr "Топқа кіргенде барлық тармақтарды жа_ю"
+
+#: pan/gui/prefs-ui.cc:1018
+msgid "Articles"
+msgstr "Мақалалар"
+
+#: pan/gui/prefs-ui.cc:1020
+msgid "Mark downloaded articles read"
+msgstr "Жүктелген мақалаларды оқылған деп белгілеу"
+
+#: pan/gui/prefs-ui.cc:1022
+msgid "Space selects next article rather than next unread"
+msgstr "Бос орын пернесі келесі оқылмағанның орнына келесі мақаланы таңдайды"
+
+#: pan/gui/prefs-ui.cc:1024
+msgid "Expand threads upon selection"
+msgstr "Таңдау кезінде тармақтарды жаю"
+
+#: pan/gui/prefs-ui.cc:1026
+msgid "Always ask before deleting an article"
+msgstr "Мақаланы өшірер алдында әрқашан сұрау"
+
+#: pan/gui/prefs-ui.cc:1028
+msgid "Smooth scrolling"
+msgstr "Бірқалыпты айналдыру"
+
+#: pan/gui/prefs-ui.cc:1033
+msgid "Article Cache"
+msgstr "Мақалалар кэші"
+
+#: pan/gui/prefs-ui.cc:1034
+msgid "Clear article cache on shutdown"
+msgstr "Жұмысты аяқтағанда мақалалар кэшін тазарту"
+
+#: pan/gui/prefs-ui.cc:1037
+msgid "Size of article cache (in MiB):"
+msgstr "Мақалалар кэшінің өлшемі (МиБ):"
+
+#: pan/gui/prefs-ui.cc:1041
+msgid "File extension for cached articles: "
+msgstr "Кэштелген мақалалар үшін файл кеңейтуі: "
+
+#: pan/gui/prefs-ui.cc:1045
+msgid "Tabs"
+msgstr "Беттер"
+
+#: pan/gui/prefs-ui.cc:1050
+msgid "_Behavior"
+msgstr "_Мінез-құлық"
+
+#: pan/gui/prefs-ui.cc:1050
+msgid "Behavior"
+msgstr "Мінез-құлық"
+
+#: pan/gui/prefs-ui.cc:1056
+msgid "Task Pane"
+msgstr "Тапсырмалар панелі"
+
+#: pan/gui/prefs-ui.cc:1057
+msgid "Show task pane popups"
+msgstr "Тапсырмалар панелінің қалқымалы хабарламаларын көрсету"
+
+#: pan/gui/prefs-ui.cc:1059
+msgid "Show Download Meter"
+msgstr "Жүктеу өлшегішін көрсету"
+
+#: pan/gui/prefs-ui.cc:1063
+msgid "_Panes"
+msgstr "_Панельдер"
+
+#: pan/gui/prefs-ui.cc:1063
+msgid "Panes"
+msgstr "Панельдер"
+
+#: pan/gui/prefs-ui.cc:1069
+msgid "Language Settings"
+msgstr "Тіл баптаулары"
+
+#: pan/gui/prefs-ui.cc:1070
+msgid "Font"
+msgstr "Қаріп"
+
+#: pan/gui/prefs-ui.cc:1078
+msgid "System Tray Behavior"
+msgstr "Жүйелік трей мінез-құлқы"
+
+#: pan/gui/prefs-ui.cc:1080
+msgid "Show notifications"
+msgstr "Хабарландыруларды көрсету"
+
+#. allow multiple instances (seperate, not communicating with dbus)
+#: pan/gui/prefs-ui.cc:1085
+msgid "Startup Behavior"
+msgstr "Іске қосылу мінез-құлқы"
+
+#: pan/gui/prefs-ui.cc:1087
+msgid "Allow multiple instances of Pan"
+msgstr "Pan бағдарламасының бірнеше данасына рұқсат беру"
+
+#: pan/gui/prefs-ui.cc:1092
+msgid "Autosave Article Draft"
+msgstr "Мақала шимайын автоматты сақтау"
+
+#: pan/gui/prefs-ui.cc:1094
+msgid "Minutes to autosave the current Article Draft: "
+msgstr "Ағымдағы мақала шимайын автоматты сақтау аралығы (минут): "
+
+#: pan/gui/prefs-ui.cc:1100
+msgid "Autosave Articles"
+msgstr "Мақалаларды автоматты сақтау"
+
+#: pan/gui/prefs-ui.cc:1102
+msgid "Minutes to autosave newsrc files: "
+msgstr "newsrc файлдарын автоматты сақтау аралығы (минут): "
+
+#: pan/gui/prefs-ui.cc:1110
+msgid "Password Storage"
+msgstr "Парольдерді сақтау"
+
+#: pan/gui/prefs-ui.cc:1112
+msgid "Save passwords in password storage"
+msgstr "Парольдерді парольдер қоймасында сақтау"
+
+#: pan/gui/prefs-ui.cc:1119
+msgid "_Miscellaneous"
+msgstr "_Әртүрлі"
+
+#: pan/gui/prefs-ui.cc:1119
+msgid "Miscellaneous"
+msgstr "Әртүрлі"
+
+#: pan/gui/prefs-ui.cc:1124
+msgid "Pane Layout"
+msgstr "Панельдер жаймасы"
+
+#: pan/gui/prefs-ui.cc:1143
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr "1=Топтар, 2=Тақырыптамалар, 3=Мәтін"
+
+#: pan/gui/prefs-ui.cc:1145
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr "1=Топтар, 2=Мәтін, 3=Тақырыптамалар"
+
+#: pan/gui/prefs-ui.cc:1147
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr "1=Тақырыптамалар, 2=Топтар, 3=Мәтін"
+
+#: pan/gui/prefs-ui.cc:1149
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr "1=Тақырыптамалар, 2=Мәтін, 3=Топтар"
+
+#: pan/gui/prefs-ui.cc:1151
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr "1=Мәтін, 2=Топтар, 3=Тақырыптамалар"
+
+#: pan/gui/prefs-ui.cc:1153
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr "1=Мәтін, 2=Тақырыптамалар, 3=Топтар"
+
+#: pan/gui/prefs-ui.cc:1157
+msgid "Layout"
+msgstr "Жайма"
+
+#: pan/gui/prefs-ui.cc:1162
+msgid "Header Pane Columns"
+msgstr "Тақырыптамалар панелінің бағандары"
+
+#: pan/gui/prefs-ui.cc:1166
+msgid "_Headers"
+msgstr "_Тақырыптамалар"
+
+#: pan/gui/prefs-ui.cc:1166
+msgid "Headers"
+msgstr "Тақырыптамалар"
+
+#: pan/gui/prefs-ui.cc:1172
+msgid "This menu lets you configure Pan to take certain actions on your behalf automatically, based on an article's score."
+msgstr ""
+"Бұл мәзір Pan бағдарламасын мақаланың ұпайына қарай сіздің атыңыздан кейбір әрекеттерді автоматты түрде орындауға баптауға мүмкіндік береді."
+
+#: pan/gui/prefs-ui.cc:1177
+msgid "Mark affected articles read"
+msgstr "Әсер еткен мақалаларды оқылған деп белгілеу"
+
+#: pan/gui/prefs-ui.cc:1186
+msgid "_Delete articles scoring at: "
+msgstr "Мына ұпайдағы мақалаларды _өшіру: "
+
+#: pan/gui/prefs-ui.cc:1192
+msgid "Mark articles read scoring at: "
+msgstr "Мына ұпайдағы мақалаларды оқылған деп белгілеу: "
+
+#: pan/gui/prefs-ui.cc:1198
+msgid "_Cache articles scoring at: "
+msgstr "Мына ұпайдағы мақалаларды _кэштеу: "
+
+#: pan/gui/prefs-ui.cc:1204
+msgid "Download attachments of articles scoring at: "
+msgstr "Мына ұпайдағы мақалалардың салынымдарын жүктеп алу: "
+
+#: pan/gui/prefs-ui.cc:1207
+msgid "Actions"
+msgstr "Әрекеттер"
+
+#: pan/gui/prefs-ui.cc:1212 pan/gui/prefs-ui.cc:1233
+msgid "Fonts"
+msgstr "Қаріптер"
+
+#: pan/gui/prefs-ui.cc:1214
+msgid "Use custom font in Group Pane:"
+msgstr "Топтар панелінде таңдаулы қаріпті қолдану:"
+
+#: pan/gui/prefs-ui.cc:1219
+msgid "Use custom font in Header Pane:"
+msgstr "Тақырыптамалар панелінде таңдаулы қаріпті қолдану:"
+
+#: pan/gui/prefs-ui.cc:1224
+msgid "Use custom font in Body Pane:"
+msgstr "Мәтін панелінде таңдаулы қаріпті қолдану:"
+
+#: pan/gui/prefs-ui.cc:1229
+msgid "Monospace font:"
+msgstr "Ені біркелкі қаріп:"
+
+#: pan/gui/prefs-ui.cc:1233
+msgid "_Fonts"
+msgstr "_Қаріптер"
+
+#: pan/gui/prefs-ui.cc:1242
+msgid "Header Pane"
+msgstr "Тақырыптамалар панелі"
+
+#: pan/gui/prefs-ui.cc:1245 pan/gui/prefs-ui.cc:1251 pan/gui/prefs-ui.cc:1257 pan/gui/prefs-ui.cc:1263 pan/gui/prefs-ui.cc:1269
+#: pan/gui/prefs-ui.cc:1275 pan/gui/prefs-ui.cc:1284 pan/gui/prefs-ui.cc:1290 pan/gui/prefs-ui.cc:1296 pan/gui/prefs-ui.cc:1302
+#: pan/gui/prefs-ui.cc:1308 pan/gui/prefs-ui.cc:1318 pan/gui/prefs-ui.cc:1328
+msgid "Text:"
+msgstr "Мәтін:"
+
+#: pan/gui/prefs-ui.cc:1247 pan/gui/prefs-ui.cc:1253 pan/gui/prefs-ui.cc:1259 pan/gui/prefs-ui.cc:1265 pan/gui/prefs-ui.cc:1271
+#: pan/gui/prefs-ui.cc:1277 pan/gui/prefs-ui.cc:1286 pan/gui/prefs-ui.cc:1292 pan/gui/prefs-ui.cc:1298 pan/gui/prefs-ui.cc:1304
+#: pan/gui/prefs-ui.cc:1310 pan/gui/prefs-ui.cc:1320 pan/gui/prefs-ui.cc:1330
+msgid "Background:"
+msgstr "Фон:"
+
+#: pan/gui/prefs-ui.cc:1249
+msgid "Scores of 9999 or more:"
+msgstr "9999 немесе одан көп ұпайлар:"
+
+#: pan/gui/prefs-ui.cc:1255
+msgid "Scores from 5000 to 9998:"
+msgstr "5000-нан 9998-ге дейінгі ұпайлар:"
+
+#: pan/gui/prefs-ui.cc:1261
+msgid "Scores from 1 to 4999:"
+msgstr "1-ден 4999-ға дейінгі ұпайлар:"
+
+#: pan/gui/prefs-ui.cc:1267
+msgid "Scores from -9998 to -1:"
+msgstr "-9998-ден -1-ге дейінгі ұпайлар:"
+
+#: pan/gui/prefs-ui.cc:1273
+msgid "Scores of -9999 or less:"
+msgstr "-9999 немесе одан аз ұпайлар:"
+
+#: pan/gui/prefs-ui.cc:1279
+msgid "Collapsed thread with unread articles:"
+msgstr "Оқылмаған мақалалары бар жиналған тармақ:"
+
+#: pan/gui/prefs-ui.cc:1281
+msgid "Body Pane"
+msgstr "Мәтін панелі"
+
+#: pan/gui/prefs-ui.cc:1288
+msgid "First level of quoted text:"
+msgstr "Дәйексөз мәтінінің бірінші деңгейі:"
+
+#: pan/gui/prefs-ui.cc:1294
+msgid "Second level of quoted text:"
+msgstr "Дәйексөз мәтінінің екінші деңгейі:"
+
+#: pan/gui/prefs-ui.cc:1300
+msgid "Third level of quoted text:"
+msgstr "Дәйексөз мәтінінің үшінші деңгейі:"
+
+#: pan/gui/prefs-ui.cc:1306
+msgid "URL:"
+msgstr "URL:"
+
+#: pan/gui/prefs-ui.cc:1312
+msgid "Signature:"
+msgstr "Қолтаңба:"
+
+#: pan/gui/prefs-ui.cc:1315
+msgid "Group Pane"
+msgstr "Топтар панелі"
+
+#: pan/gui/prefs-ui.cc:1322
+msgid "Group Color:"
+msgstr "Топ түсі:"
+
+#: pan/gui/prefs-ui.cc:1326
+msgid "Other Text"
+msgstr "Басқа мәтін"
+
+#: pan/gui/prefs-ui.cc:1332
+msgid "Text Color:"
+msgstr "Мәтін түсі:"
+
+#: pan/gui/prefs-ui.cc:1335
+msgid "_Colors"
+msgstr "_Түстер"
+
+#: pan/gui/prefs-ui.cc:1335
+msgid "Colors"
+msgstr "Түстер"
+
+#: pan/gui/prefs-ui.cc:1340
+msgid "Preferred Applications"
+msgstr "Таңдаулы қолданбалар"
+
+#: pan/gui/prefs-ui.cc:1344
+msgid "_Web browser:"
+msgstr "_Веб-браузер:"
+
+#: pan/gui/prefs-ui.cc:1347
+msgid "_Gemini client:"
+msgstr "_Gemini клиенті:"
+
+#: pan/gui/prefs-ui.cc:1350
+msgid "_Mail reader:"
+msgstr "_Пошта оқу бағдарламасы:"
+
+#: pan/gui/prefs-ui.cc:1352
+msgid "_Text editor:"
+msgstr "_Мәтіндік түзеткіш:"
+
+#: pan/gui/prefs-ui.cc:1354
+msgid "_HTML previewer:"
+msgstr "_HTML алдын ала қарау құралы:"
+
+#: pan/gui/prefs-ui.cc:1356
+msgid "_Applications"
+msgstr "_Қолданбалар"
+
+#: pan/gui/prefs-ui.cc:1356
+msgid "Applications"
+msgstr "Қолданбалар"
+
+#: pan/gui/prefs-ui.cc:1361 pan/gui/task-pane.cc:555
+msgid "Encoding"
+msgstr "Кодтау"
+
+#: pan/gui/prefs-ui.cc:1365
+msgid "Default bytes per file (for encoder): "
+msgstr "Файлдағы бастапқы байттар (кодтаушы үшін): "
+
+#: pan/gui/prefs-ui.cc:1371
+msgid "_Upload"
+msgstr "_Жүктеп салу"
+
+#: pan/gui/prefs-ui.cc:1371
+msgid "Upload"
+msgstr "Жүктеп салу"
+
+#: pan/gui/prefs-ui.cc:1380
+msgid "_Shortcuts"
+msgstr "_Жарлықтар"
+
+#: pan/gui/prefs-ui.cc:1380
+msgid "Shortcuts"
+msgstr "Жарлықтар"
+
+#: pan/gui/profiles-dialog.cc:81
+msgid "Please choose your email address according to your PGP key's user id."
+msgstr "Электронды пошта адресіңізді PGP кілтіңіздің пайдаланушы id-іне сәйкес таңдаңыз."
+
+#: pan/gui/profiles-dialog.cc:131
+msgid "Posting Profile"
+msgstr "Жариялау профилі"
+
+#: pan/gui/profiles-dialog.cc:146
+msgid "Profile Information"
+msgstr "Профиль ақпараты"
+
+#: pan/gui/profiles-dialog.cc:150
+msgid "_Profile Name:"
+msgstr "_Профиль аты:"
+
+#: pan/gui/profiles-dialog.cc:153
+msgid "Required Information"
+msgstr "Міндетті ақпарат"
+
+#: pan/gui/profiles-dialog.cc:157
+msgid "_Full Name:"
+msgstr "_Толық аты:"
+
+#: pan/gui/profiles-dialog.cc:163
+msgid ""
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
+msgstr ""
+"Сіздің электронды пошта адресіңіз.\n"
+"Хабарламаларыңыз дұрыс шифрленуі немесе PGP арқылы қол қойылуы үшін мұның PGP қолтаңба адресіне сәйкес келуі керек екенін ескеріңіз."
+
+#: pan/gui/profiles-dialog.cc:167
+msgid "_Email Address:"
+msgstr "_Электронды пошта адресі:"
+
+#: pan/gui/profiles-dialog.cc:169
+msgid "_Post Articles via:"
+msgstr "_Мақалаларды мына арқылы жариялау:"
+
+#: pan/gui/profiles-dialog.cc:172
+msgid "Signature"
+msgstr "Қолтаңба"
+
+#: pan/gui/profiles-dialog.cc:176
+msgid "_Use a Signature"
+msgstr "_Қолтаңбаны қолдану"
+
+#: pan/gui/profiles-dialog.cc:181
+msgid "Signature File"
+msgstr "Қолтаңба файлы"
+
+#: pan/gui/profiles-dialog.cc:192
+msgid "Text File"
+msgstr "Мәтіндік файл"
+
+#: pan/gui/profiles-dialog.cc:194
+msgid "Text"
+msgstr "Мәтін"
+
+#: pan/gui/profiles-dialog.cc:196
+msgid "Command"
+msgstr "Команда"
+
+#: pan/gui/profiles-dialog.cc:200
+msgid "PGP Signature"
+msgstr "PGP қолтаңбасы"
+
+#: pan/gui/profiles-dialog.cc:205
+msgid "Signature Type: "
+msgstr "Қолтаңба түрі: "
+
+#: pan/gui/profiles-dialog.cc:247
+msgid "Avatars"
+msgstr "Аватарлар"
+
+#: pan/gui/profiles-dialog.cc:252
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+"Мақалаларыңызға Base64-кодталған PNG арқылы аватар таңбашасын қоса аласыз.\n"
+"Base64-кодталған суретті соңындағы <b>«Face:»</b>-сіз қосыңыз."
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "_Face:"
+msgstr "_Face:"
+
+#: pan/gui/profiles-dialog.cc:260
+msgid ""
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
+"Add the code without the trailing <b>\"X-Face:\"</b> \n"
+" if it was generated by a helper program (for example http://www.dairiki.org/xface/xface.php)."
+msgstr ""
+"Мақалаларыңызға бірегей X-Face коды арқылы аватар таңбашасын қоса аласыз.\n"
+"Кодты соңындағы <b>«X-Face:»</b>-сіз қосыңыз, егер ол көмекші бағдарламамен (мысалы, http://www.dairiki.org/xface/xface.php) жасалған болса."
+
+#: pan/gui/profiles-dialog.cc:265
+msgid "_X-Face:"
+msgstr "_X-Face:"
+
+#: pan/gui/profiles-dialog.cc:267
+msgid "Optional Information"
+msgstr "Қосымша ақпарат"
+
+#: pan/gui/profiles-dialog.cc:273
+msgid ""
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
+"You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."
+msgstr ""
+"Usenet-ке жариялағанда, мақалаңыздың хабарлама-ID-сінде домен аты болады.\n"
+"Мұнда пайдаланушы домен атын орната аласыз немесе Pan электронды поштаңыздағы домен атын қолдануы үшін оны бос қалдыра аласыз."
+
+#: pan/gui/profiles-dialog.cc:278
+msgid "Message-ID _Domain Name:"
+msgstr "Хабарлама-ID _домен аты:"
+
+#: pan/gui/profiles-dialog.cc:283
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+"Хабарлама-ID үшін %i\n"
+"Автор мен адрес үшін %a\n"
+"Автор аты үшін %n\n"
+"Күні үшін %d"
+
+#: pan/gui/profiles-dialog.cc:285
+msgid "_Attribution:"
+msgstr "_Атрибуция:"
+
+#: pan/gui/profiles-dialog.cc:318
+msgid ""
+"Extra headers to be included in your articles, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization\n"
+msgstr ""
+"Мақалаларыңызға қосылатын қосымша тақырыптамалар, мысалы:\n"
+"Reply-To: «Сіздің атыңыз» <yourname@somewhere.com>\n"
+"Organization: Сіздің ұйымыңыз\n"
+
+#: pan/gui/profiles-dialog.cc:329
+msgid "E_xtra Headers:"
+msgstr "Қ_осымша тақырыптамалар:"
+
+#: pan/gui/profiles-dialog.cc:379
+msgid "Invalid email address."
+msgstr "Жарамсыз электронды пошта адресі."
+
+#: pan/gui/profiles-dialog.cc:380
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr "joe@somewhere.org түріндегі адресті қолданыңыз"
+
+#: pan/gui/profiles-dialog.cc:559
+msgid "New Profile"
+msgstr "Жаңа профиль"
+
+#: pan/gui/profiles-dialog.cc:607
+msgid "Posting Profiles"
+msgstr "Жариялау профильдері"
+
+#: pan/gui/profiles-dialog.cc:630
+msgid "Profiles"
+msgstr "Профильдер"
+
+#: pan/gui/save-attach-ui.cc:44
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - топ бір бума ретінде (alt.binaries.pictures.trains)\n"
+"%G - топ ішіндегі бума ретінде (/alt/binaries/pictures/trains)\n"
+"%s - Тақырып жолының үзіндісі\n"
+"%S - Тақырып жолы\n"
+"%n - Жіберушінің көрсетілетін аты\n"
+"%e - Жіберушінің электронды поштасы\n"
+"%d - Мақаланың уақыт белгісі\n"
+"«/home/user/News/Pan/%g» келесіге айналады\n"
+"«/home/user/News/Pan/alt.binaries.pictures.trains», ал\n"
+"«/home/user/News/Pan/%G» келесіге айналады\n"
+"«/home/user/News/Pan/alt/binaries/pictures/trains»,"
+
+#: pan/gui/save-attach-ui.cc:196 pan/gui/save-ui.cc:216
+msgid "Add to the queue sorted by date posted"
+msgstr "Кезекке жариялау күні бойынша сұрыптап қосу"
+
+#: pan/gui/save-attach-ui.cc:197 pan/gui/save-ui.cc:217
+msgid "Add to the front of the queue"
+msgstr "Кезектің басына қосу"
+
+#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
+msgid "Add to the back of the queue"
+msgstr "Кезектің соңына қосу"
+
+#: pan/gui/save-attach-ui.cc:230
+msgid "Pan: Save Attachments"
+msgstr "Pan: Салынымдарды сақтау"
+
+#: pan/gui/save-attach-ui.cc:255 pan/gui/save-attach-ui.cc:273 pan/gui/save-ui.cc:270 pan/gui/save-ui.cc:291
+msgid "_Location:"
+msgstr "_Орналасуы:"
+
+#: pan/gui/save-attach-ui.cc:259 pan/gui/save-ui.cc:274
+msgid "Save Articles"
+msgstr "Мақалаларды сақтау"
+
+#: pan/gui/save-attach-ui.cc:276 pan/gui/save-ui.cc:294
+#, c-format
+msgid "_Group's path: %s"
+msgstr "Топтың _жолы: %s"
+
+#: pan/gui/save-attach-ui.cc:287 pan/gui/save-ui.cc:309
+msgid "_Priority:"
+msgstr "_Приоритет:"
+
+#: pan/gui/save-ui.cc:44
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
+"%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - топ бір бума ретінде (alt.binaries.pictures.trains)\n"
+"%G - топ ішіндегі бума ретінде (/alt/binaries/pictures/trains)\n"
+"%s - тақырып жолының үзіндісі\n"
+"%S - тақырып жолы\n"
+"%n - Жіберушінің көрсетілетін аты\n"
+"%e - Жіберушінің электронды поштасы\n"
+"%d - Мақаланың уақыт белгісі\n"
+" \n"
+"«/home/user/News/Pan/%g» келесіге айналады\n"
+"«/home/user/News/Pan/alt.binaries.pictures.trains», ал\n"
+"«/home/user/News/Pan/%G» келесіге айналады\n"
+"«/home/user/News/Pan/alt/binaries/pictures/trains»,"
+
+#: pan/gui/save-ui.cc:207
+msgid "Save attachments"
+msgstr "Салынымдарды сақтау"
+
+#: pan/gui/save-ui.cc:208
+msgid "Save text"
+msgstr "Мәтінді сақтау"
+
+#: pan/gui/save-ui.cc:209
+msgid "Save attachments and text"
+msgstr "Салынымдар мен мәтінді сақтау"
+
+#: pan/gui/save-ui.cc:245
+msgid "Pan: Save Articles"
+msgstr "Pan: Мақалаларды сақтау"
+
+#: pan/gui/save-ui.cc:305
+msgid "_Action:"
+msgstr "_Әрекет:"
+
+#: pan/gui/score-add-ui.cc:89
+msgid "is more than"
+msgstr "көп болса"
+
+#: pan/gui/score-add-ui.cc:90
+msgid "is at most"
+msgstr "көп болмаса"
+
+#: pan/gui/score-add-ui.cc:112
+msgid "increase the article's score by"
+msgstr "мақаланың ұпайын келесіге арттыру"
+
+#: pan/gui/score-add-ui.cc:113
+msgid "decrease the article's score by"
+msgstr "мақаланың ұпайын келесіге азайту"
+
+#: pan/gui/score-add-ui.cc:114
+msgid "set the article's score to"
+msgstr "мақаланың ұпайын келесіге орнату"
+
+#: pan/gui/score-add-ui.cc:115
+msgid "watch the article (set its score to 9999)"
+msgstr "мақаланы бақылау (оның ұпайын 9999-ға орнату)"
+
+#: pan/gui/score-add-ui.cc:116
+msgid "ignore the article (set its score to -9999)"
+msgstr "мақаланы елемеу (оның ұпайын -9999-ға орнату)"
+
+#: pan/gui/score-add-ui.cc:141
+msgid "References"
+msgstr "Сілтемелер"
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Line Count"
+msgstr "Жолдар саны"
+
+#: pan/gui/score-add-ui.cc:143
+msgid "Byte Count"
+msgstr "Байттар саны"
+
+#: pan/gui/score-add-ui.cc:144
+msgid "Crosspost Group Count"
+msgstr "Кросс-жариялау топтарының саны"
+
+#: pan/gui/score-add-ui.cc:145
+msgid "Age (in days)"
+msgstr "Жасы (күнмен)"
+
+#: pan/gui/score-add-ui.cc:167
+msgid "for the next month"
+msgstr "келесі айға"
+
+#: pan/gui/score-add-ui.cc:168
+msgid "for the next six months"
+msgstr "келесі алты айға"
+
+#: pan/gui/score-add-ui.cc:169
+msgid "forever"
+msgstr "мәңгілікке"
+
+#: pan/gui/score-add-ui.cc:194
+msgid "contains"
+msgstr "қамтиды"
+
+#: pan/gui/score-add-ui.cc:195
+msgid "doesn't contain"
+msgstr "қамтымайды"
+
+#: pan/gui/score-add-ui.cc:196
+msgid "is"
+msgstr "келесі болса"
+
+#: pan/gui/score-add-ui.cc:197
+msgid "isn't"
+msgstr "келесі болмаса"
+
+#: pan/gui/score-add-ui.cc:198
+msgid "starts with"
+msgstr "келесімен басталса"
+
+#: pan/gui/score-add-ui.cc:199
+msgid "ends with"
+msgstr "келесімен аяқталса"
+
+#: pan/gui/score-add-ui.cc:200
+msgid "matches regex"
+msgstr "тұрақты өрнекке сәйкес келсе"
+
+#: pan/gui/score-add-ui.cc:481
+msgid "Another rule already sets this article's score."
+msgstr "Басқа ереже осы мақаланың ұпайын орнатып қойған."
+
+#: pan/gui/score-add-ui.cc:482
+msgid "You may want to go back or delete the old rule."
+msgstr "Артқа қайтып немесе ескі ережені өшіргіңіз келуі мүмкін."
+
+#: pan/gui/score-add-ui.cc:484
+msgid "Back"
+msgstr "Артқа"
+
+#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1040
+msgid "Delete"
+msgstr "Өшіру"
+
+#: pan/gui/score-add-ui.cc:486 pan/gui/score-add-ui.cc:607 pan/gui/score-view-ui.cc:207
+msgid "Add"
+msgstr "Қосу"
+
+#: pan/gui/score-add-ui.cc:553
+msgid "Add and Re_score"
+msgstr "Қосу және ұпайды қай_та есептеу"
+
+#: pan/gui/score-add-ui.cc:602 pan/gui/score-add-ui.cc:622
+msgid "New Scoring Rule"
+msgstr "Жаңа ұпай қою ережесі"
+
+#: pan/gui/score-add-ui.cc:633
+msgid "Group name"
+msgstr "Топ аты"
+
+#: pan/gui/score-add-ui.cc:640
+msgid "and"
+msgstr "және"
+
+#: pan/gui/score-view-ui.cc:55
+msgid "Close and Re_score"
+msgstr "Жабу және ұпайды қай_та есептеу"
+
+#: pan/gui/score-view-ui.cc:153
+#, c-format
+msgid "File %s, Lines %d - %d"
+msgstr "Файл %s, Жолдар %d - %d"
+
+#: pan/gui/score-view-ui.cc:181
+msgid "Pan: Article's Scores"
+msgstr "Pan: Мақала ұпайлары"
+
+#: pan/gui/score-view-ui.cc:212
+msgid "New Score"
+msgstr "Жаңа ұпай"
+
+#: pan/gui/score-view-ui.cc:217
+msgid "Criteria"
+msgstr "Критерийлер"
+
+#: pan/gui/score-view-ui.cc:240
+msgid "Add a New Scoring Rule"
+msgstr "Жаңа ұпай қою ережесін қосу"
+
+#: pan/gui/score-view-ui.cc:247
+msgid "Remove the Selected Scoring Rule"
+msgstr "Таңдалған ұпай қою ережесін өшіру"
+
+#: pan/gui/server-ui.cc:292
+msgid "Please specify the server's address."
+msgstr "Сервер адресін көрсетіңіз."
+
+#: pan/gui/server-ui.cc:344
+msgid "Import SSL Certificate (PEM Format) From File"
+msgstr "Файлдан SSL сертификатын (PEM форматында) импорттау"
+
+#. create the dialog
+#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:998
+msgid "Add a Server"
+msgstr "Серверді қосу"
+
+#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:1004
+msgid "Edit a Server's Settings"
+msgstr "Сервер баптауларын түзету"
+
+#: pan/gui/server-ui.cc:401
+msgid "Location"
+msgstr "Орналасуы"
+
+#: pan/gui/server-ui.cc:405
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
+msgstr "Жаңалықтар серверінің нақты адресі, мысалы «news.mynewsserver.com»."
+
+#: pan/gui/server-ui.cc:406
+msgid "_Address:"
+msgstr "_Адрес:"
+
+#: pan/gui/server-ui.cc:411
+msgid "The news server's port number.  Typically 119 for unencrypted and 563 for encrypted connections (SSL/TLS)."
+msgstr "Жаңалықтар серверінің порт нөмірі. Әдетте шифрленбеген байланыстар үшін 119 және шифрленген байланыстар (SSL/TLS) үшін 563."
+
+#: pan/gui/server-ui.cc:412
+msgid "Por_t:"
+msgstr "П_орт:"
+
+#: pan/gui/server-ui.cc:415
+msgid "Login (if Required)"
+msgstr "Кіру (қажет болса)"
+
+#: pan/gui/server-ui.cc:419
+msgid "_Username:"
+msgstr "Па_йдаланушы аты:"
+
+#: pan/gui/server-ui.cc:420
+msgid "The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."
+msgstr "Сұралған кезде серверге берілетін пайдаланушы аты. Серверіңіз аутентификацияны қажет етпесе, мұны бос қалдыра аласыз."
+
+#: pan/gui/server-ui.cc:424
+msgid "_Password:"
+msgstr "_Пароль:"
+
+#: pan/gui/server-ui.cc:425
+msgid "The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."
+msgstr "Сұралған кезде серверге берілетін пароль. Серверіңіз аутентификацияны қажет етпесе, мұны бос қалдыра аласыз."
+
+#: pan/gui/server-ui.cc:428
+msgid "Settings"
+msgstr "Баптаулар"
+
+#: pan/gui/server-ui.cc:435
+msgid "Connection _Limit:"
+msgstr "Байланыс _шегі:"
+
+#: pan/gui/server-ui.cc:439
+msgid "After Two Weeks"
+msgstr "Екі аптадан кейін"
+
+#: pan/gui/server-ui.cc:440
+msgid "After One Month"
+msgstr "Бір айдан кейін"
+
+#: pan/gui/server-ui.cc:441
+msgid "After Two Months"
+msgstr "Екі айдан кейін"
+
+#: pan/gui/server-ui.cc:442
+msgid "After Three Months"
+msgstr "Үш айдан кейін"
+
+#: pan/gui/server-ui.cc:443
+msgid "After Six Months"
+msgstr "Алты айдан кейін"
+
+#: pan/gui/server-ui.cc:444
+msgid "Never Expire Old Articles"
+msgstr "Ескі мақалаларды ешқашан өшірмеу"
+
+#: pan/gui/server-ui.cc:458
+msgid "E_xpire Old Articles:"
+msgstr "Ескі мақалаларды _өшіру:"
+
+#: pan/gui/server-ui.cc:462
+msgid "Primary"
+msgstr "Негізгі"
+
+#: pan/gui/server-ui.cc:463
+msgid "Fallback"
+msgstr "Қосалқы"
+
+#: pan/gui/server-ui.cc:477
+msgid "Server Rank:"
+msgstr "Сервер рангі:"
+
+#: pan/gui/server-ui.cc:482
+msgid ""
+"Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+"Қосалқы серверлер негізгі серверлерден табылмаған мақалалар үшін қолданылады. Тегін серверлерді негізгі, ал ақылы серверлерді қосалқы "
+"ретінде қолдану — жиі кездесетін тәсіл."
+
+#: pan/gui/server-ui.cc:487
+msgid "Disable Compression (N/A)"
+msgstr "Сығуды сөндіру (қолжетімсіз)"
+
+#: pan/gui/server-ui.cc:488
+msgid "XZVER Compression (Astraweb)"
+msgstr "XZVER сығуы (Astraweb)"
+
+#: pan/gui/server-ui.cc:489
+msgid "GZIP Compression (Giganews etc.)"
+msgstr "GZIP сығуы (Giganews т.б.)"
+
+#: pan/gui/server-ui.cc:503
+msgid "Header Compression:"
+msgstr "Тақырыптамаларды сығу:"
+
+#: pan/gui/server-ui.cc:509
+msgid "Security"
+msgstr "Қауіпсіздік"
+
+#: pan/gui/server-ui.cc:514
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Қауіпсіз емес (ашық мәтінді) байланыстарды қолдану"
+
+#: pan/gui/server-ui.cc:515
+msgid "Use Secure SSL Connections"
+msgstr "Қауіпсіз SSL байланыстарын қолдану"
+
+#: pan/gui/server-ui.cc:530
+msgid "TLS (SSL) Settings:"
+msgstr "TLS (SSL) баптаулары:"
+
+#: pan/gui/server-ui.cc:536
+msgid ""
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/TLS, your data is encrypted and secure. It is encouraged to "
+"enable SSL/TLS for privacy reasons."
+msgstr ""
+"Мұнда қауіпсіз SSL/TLS байланыстарын іске қосуға немесе сөндіруге болады. SSL/TLS іске қосылса, деректеріңіз шифрленеді және қауіпсіз "
+"болады. Жекелік мақсатында SSL/TLS іске қосу ұсынылады."
+
+#: pan/gui/server-ui.cc:541
+msgid "Always trust this server's certificate"
+msgstr "Осы сервердің сертификатына әрқашан сену"
+
+#: pan/gui/server-ui.cc:726
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr "«%s» шынымен өшірілсін бе?"
+
+#: pan/gui/server-ui.cc:815
+msgid "No information available."
+msgstr "Ақпарат жоқ."
+
+#: pan/gui/server-ui.cc:825
+#, c-format
+msgid "Server Certificate for '%s'"
+msgstr "«%s» үшін сервер сертификаты"
+
+#: pan/gui/server-ui.cc:924
+#, c-format
+msgid "Really delete certificate for \"%s\"?"
+msgstr "«%s» үшін сертификат шынымен өшірілсін бе?"
+
+#. dialog
+#: pan/gui/server-ui.cc:951 pan/gui/server-ui.cc:972 pan/gui/server-ui.cc:1070
+msgid "Servers"
+msgstr "Серверлер"
+
+#: pan/gui/server-ui.cc:1011
+msgid "Remove a Server"
+msgstr "Серверді өшіру"
+
+#. dialog
+#: pan/gui/server-ui.cc:1044
+msgid "SSL Certificates"
+msgstr "SSL сертификаттары"
+
+#: pan/gui/server-ui.cc:1065
+msgid "Certificates"
+msgstr "Сертификаттар"
+
+#: pan/gui/server-ui.cc:1096
+msgid "Import Certificate"
+msgstr "Сертификатты импорттау"
+
+#: pan/gui/server-ui.cc:1102
+msgid "Inspect Certificate"
+msgstr "Сертификатты тексеру"
+
+#: pan/gui/server-ui.cc:1109
+msgid "Remove Certificate"
+msgstr "Сертификатты өшіру"
+
+#: pan/gui/task-pane.cc:124
+#, c-format
+msgid ""
+"\n"
+"<u>Upload</u>\n"
+"\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Sourcefile:</i> <b>%s</b>\n"
+msgstr ""
+"\n"
+"<u>Жүктеп салу</u>\n"
+"\n"
+"<i>Тақырып:</i> <b>«%s»</b>\n"
+"<i>Кімнен:</i> <b>%s</b>\n"
+"<i>Топтар:</i> <b>%s</b>\n"
+"<i>Бастапқы файл:</i> <b>%s</b>\n"
+
+#: pan/gui/task-pane.cc:136
+#, c-format
+msgid ""
+"\n"
+"<u>Download</u>\n"
+"\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Date:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Save Path:</i> <b>%s</b>\n"
+msgstr ""
+"\n"
+"<u>Жүктеп алу</u>\n"
+"\n"
+"<i>Тақырып:</i> <b>«%s»</b>\n"
+"<i>Кімнен:</i> <b>%s</b>\n"
+"<i>Күні:</i> <b>%s</b>\n"
+"<i>Топтар:</i> <b>%s</b>\n"
+"<i>Сақтау жолы:</i> <b>%s</b>\n"
+
+#: pan/gui/task-pane.cc:138
+msgid "unknown"
+msgstr "белгісіз"
+
+#: pan/gui/task-pane.cc:306
+msgid "Choose New Destination for Selected Tasks"
+msgstr "Таңдалған тапсырмалар үшін жаңа мақсатты таңдаңыз"
+
+#: pan/gui/task-pane.cc:310
+msgid "Save"
+msgstr "Сақтау"
+
+#: pan/gui/task-pane.cc:460
+#, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan: Тапсырмалар (%d кезекте, %d орындалуда, %d тоқтатылды)"
+
+#: pan/gui/task-pane.cc:462
+#, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan: Тапсырмалар (%d кезекте, %d орындалуда)"
+
+#: pan/gui/task-pane.cc:464
+msgid "Pan: Tasks"
+msgstr "Pan: Тапсырмалар"
+
+#: pan/gui/task-pane.cc:489
+#, c-format
+msgid "%lu selected, %s"
+msgstr "%lu таңдалды, %s"
+
+#: pan/gui/task-pane.cc:553
+msgid "Running"
+msgstr "Орындалуда"
+
+#: pan/gui/task-pane.cc:554
+msgid "Decoding"
+msgstr "Декодталуда"
+
+#: pan/gui/task-pane.cc:556
+msgid "Queued for Decode"
+msgstr "Декодтау үшін кезекте"
+
+#: pan/gui/task-pane.cc:557
+msgid "Queued for Encode"
+msgstr "Кодтау үшін кезекте"
+
+#: pan/gui/task-pane.cc:558
+msgid "Queued"
+msgstr "Кезекте"
+
+#: pan/gui/task-pane.cc:559
+msgid "Stopped"
+msgstr "Тоқтатылды"
+
+#: pan/gui/task-pane.cc:560
+msgid "Removing"
+msgstr "Өшірілуде"
+
+#: pan/gui/task-pane.cc:589
+#, c-format
+msgid "%d%% Done"
+msgstr "%d%% орындалды"
+
+#: pan/gui/task-pane.cc:595
+#, c-format
+msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d қалды (%d @ %lu КиБ/с)"
+
+#: pan/gui/task-pane.cc:690 pan/gui/task-pane.cc:691
+msgid "Move To Top"
+msgstr "Ең жоғарыға жылжыту"
+
+#: pan/gui/task-pane.cc:695 pan/gui/task-pane.cc:696
+msgid "Move To Bottom"
+msgstr "Ең төменге жылжыту"
+
+#: pan/gui/task-pane.cc:700 pan/gui/task-pane.cc:701
+msgid "Show Task Information"
+msgstr "Тапсырма ақпаратын көрсету"
+
+#: pan/gui/task-pane.cc:705 pan/gui/task-pane.cc:706
+msgid "Stop Task"
+msgstr "Тапсырманы тоқтату"
+
+#: pan/gui/task-pane.cc:710 pan/gui/task-pane.cc:711
+msgid "Delete Task"
+msgstr "Тапсырманы өшіру"
+
+#: pan/gui/task-pane.cc:715 pan/gui/task-pane.cc:716
+msgid "Restart Task"
+msgstr "Тапсырманы қайта іске қосу"
+
+#: pan/gui/task-pane.cc:720 pan/gui/task-pane.cc:721
+msgid "Change Download Destination"
+msgstr "Жүктеу мақсатын өзгерту"
+
+#: pan/gui/task-pane.cc:1016
+msgid "_Online"
+msgstr "_Желіде"
+
+#: pan/gui/task-pane.cc:1026
+msgid "Move up"
+msgstr "Жоғары жылжыту"
+
+#: pan/gui/task-pane.cc:1027
+msgid "Move task up"
+msgstr "Тапсырманы жоғары жылжыту"
+
+#: pan/gui/task-pane.cc:1028
+msgid "Move to top"
+msgstr "Ең жоғарыға жылжыту"
+
+#: pan/gui/task-pane.cc:1029
+msgid "Move task to top of the download queue"
+msgstr "Тапсырманы жүктеу кезегінің ең басына жылжыту"
+
+#: pan/gui/task-pane.cc:1031
+msgid "Move down"
+msgstr "Төмен жылжыту"
+
+#: pan/gui/task-pane.cc:1032
+msgid "Move task down"
+msgstr "Тапсырманы төмен жылжыту"
+
+#: pan/gui/task-pane.cc:1033
+msgid "Move to bottom"
+msgstr "Ең төменге жылжыту"
+
+#: pan/gui/task-pane.cc:1034
+msgid "Move task to the bottom of the download queue"
+msgstr "Тапсырманы жүктеу кезегінің ең соңына жылжыту"
+
+#: pan/gui/task-pane.cc:1036
+msgid "Restart"
+msgstr "Қайта іске қосу"
+
+#: pan/gui/task-pane.cc:1037
+msgid "Restart Tasks"
+msgstr "Тапсырмаларды қайта іске қосу"
+
+#: pan/gui/task-pane.cc:1038
+msgid "Stop"
+msgstr "Тоқтату"
+
+#: pan/gui/task-pane.cc:1039
+msgid "Stop Tasks"
+msgstr "Тапсырмаларды тоқтату"
+
+#: pan/gui/task-pane.cc:1041
+msgid "Delete Tasks"
+msgstr "Тапсырмаларды өшіру"
+
+#: pan/gui/task-pane.cc:1043
+msgid "Close"
+msgstr "Жабу"
+
+#: pan/gui/task-pane.cc:1047
+msgid "Show popups"
+msgstr "Қалқымалы хабарламаларды көрсету"
+
+#: pan/gui/url.cc:143
+#, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "URL іске қосу қатесі: %s (Команда: %s)"
+
+#: pan/tasks/decoder.cc:124
+#, c-format
+msgid "Couldn't save file \"%s\": %s"
+msgstr "«%s» файлын сақтау мүмкін болмады: %s"
+
+#: pan/tasks/decoder.cc:146 pan/tasks/encoder.cc:146
+msgid "Error initializing uulib"
+msgstr "uulib инициализациялау қатесі"
+
+#: pan/tasks/decoder.cc:166 pan/tasks/socket-impl-gio.cc:360 pan/tasks/socket-impl-openssl.cc:641
+#, c-format
+msgid "Error reading from %s: %s"
+msgstr "%s ішінен оқу қатесі: %s"
+
+#: pan/tasks/decoder.cc:206
+#, c-format
+msgid "Saved \"%s\""
+msgstr "«%s» сақталды"
+
+#: pan/tasks/decoder.cc:213
+#, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr ""
+"«%s» сақтау қатесі:\n"
+"%s."
+
+#: pan/tasks/decoder.cc:326 pan/tasks/task-article.cc:351
+#, c-format
+msgid "Decoding %s"
+msgstr "%s декодталуда"
+
+#: pan/tasks/encoder.cc:113 pan/tasks/encoder.cc:164
+#, c-format
+msgid "Error loading %s from cache."
+msgstr "Кэштен %s жүктеу қатесі."
+
+#: pan/tasks/encoder.cc:186
+#, c-format
+msgid "Error encoding %s: %s"
+msgstr "%s кодтау қатесі: %s"
+
+#: pan/tasks/encoder.cc:276
+#, c-format
+msgid "Encoding %s"
+msgstr "%s кодталуда"
+
+#: pan/tasks/nntp.cc:176
+#, c-format
+msgid "%s requires a username, but none is set."
+msgstr "%s пайдаланушы атын қажет етеді, бірақ ол орнатылмаған."
+
+#: pan/tasks/nntp.cc:189
+#, c-format
+msgid "%s requires a password, but none is set."
+msgstr "%s парольді қажет етеді, бірақ ол орнатылмаған."
+
+#: pan/tasks/nntp.cc:275
+#, c-format
+msgid "Sending \"%s\" to %s returned an error: %s"
+msgstr "«%s» мақаласын %s серверіне жіберу кезінде қате орын алды: %s"
+
+#: pan/tasks/nntp.cc:298
+#, c-format
+msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
+msgstr "«%s» мақаласын %s серверіне жіберу кезінде танылмаған жауап алынды: «%s»"
+
+#: pan/tasks/nntp-pool.cc:241
+#, c-format
+msgid "Unable to connect to \"%s\""
+msgstr "«%s» серверіне қосылу мүмкін емес"
+
+#: pan/tasks/queue.cc:778 pan/tasks/queue.cc:806 pan/tasks/queue.cc:833
+msgid "No space left on device."
+msgstr "Құрылғыда бос орын қалмады."
+
+#: pan/tasks/socket-impl-gio.cc:173 pan/tasks/socket-impl-gio.cc:211 pan/tasks/socket-impl-openssl.cc:213 pan/tasks/socket-impl-openssl.cc:251
+#, c-format
+msgid "Error connecting to \"%s\""
+msgstr "«%s» серверіне қосылу қатесі"
+
+#: pan/tasks/socket-impl-gio.cc:359 pan/tasks/socket-impl-openssl.cc:640
+msgid "Unknown Error"
+msgstr "Белгісіз қате"
+
+#: pan/tasks/task-article.cc:59 pan/tasks/task-article.cc:157
+#, c-format
+msgid "Saving %s"
+msgstr "%s сақталуда"
+
+#: pan/tasks/task-article.cc:61
+#, c-format
+msgid "Reading %s"
+msgstr "%s оқылуда"
+
+#: pan/tasks/task-article.cc:323
+#, c-format
+msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
+msgstr "«%s» мақаласы толық емес — жаңалықтар серверлерінде %s бөлігі жоқ"
+
+#: pan/tasks/task-groups.cc:41
+#, c-format
+msgid "Getting group list from \"%s\""
+msgstr "«%s» серверінен топтар тізімін алу"
+
+#: pan/tasks/task-groups.cc:134
+#, c-format
+msgid "Fetched %lu Groups"
+msgstr "%lu топ алынды"
+
+#: pan/tasks/task-post.cc:33
+#, c-format
+msgid "Posting \"%s\""
+msgstr "«%s» жариялануда"
+
+#: pan/tasks/task-post.cc:74
+#, c-format
+msgid "Posting of \"%s\" failed: %s"
+msgstr "«%s» жариялау сәтсіз аяқталды: %s"
+
+#: pan/tasks/task-post.cc:79
+#, c-format
+msgid "Posting of \"%s\" successful: %s"
+msgstr "«%s» сәтті жарияланды: %s"
+
+#: pan/tasks/task-upload.cc:55
+#, c-format
+msgid "Uploading %s"
+msgstr "%s жүктелуде"
+
+#: pan/tasks/task-upload.cc:249
+#, c-format
+msgid "Uploading %s - Part %d of %d"
+msgstr "%s жүктелуде — %d бөлік (%d бөліктің ішінен)"
+
+#: pan/tasks/task-upload.cc:251
+#, c-format
+msgid "Uploading message body with subject \"%s\""
+msgstr "Тақырыбы «%s» хабарлама мәтіні жүктелуде"
+
+#: pan/tasks/task-upload.cc:308
+#, c-format
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
+msgstr "%s файлын жариялау (%d бөлік, %d бөліктің ішінен) сәтсіз аяқталды: Сервер жариялауға рұқсат бермейді."
+
+#: pan/tasks/task-upload.cc:317
+#, c-format
+msgid "Posting of file %s (part %d of %d) failed: %s"
+msgstr "%s файлын жариялау (%d бөлік, %d бөліктің ішінен) сәтсіз аяқталды: %s"
+
+#: pan/tasks/task-upload.cc:328 pan/tasks/task-upload.cc:335
+#, c-format
+msgid "Posting of file %s (part %d of %d) successful: %s"
+msgstr "%s файлын жариялау (%d бөлік, %d бөліктің ішінен) сәтті аяқталды: %s"
+
+#: pan/tasks/task-upload.cc:345
+#, c-format
+msgid "Posting of file %s successful: %s"
+msgstr "%s файлы сәтті жарияланды: %s"
+
+#: pan/tasks/task-upload.cc:349
+#, c-format
+msgid "Posting of file %s not completely successful: Check the log (right-click list item)."
+msgstr "%s файлын жариялау толықтай сәтті болмады: Журналды қараңыз (тізім элементін оң жақпен шерту)."
+
+#: pan/tasks/task-upload.cc:368
+#, c-format
+msgid "Posting of file %s not successful: Check the log (right-click list item)."
+msgstr "%s файлын жариялау сәтсіз аяқталды: Журналды қараңыз (тізім элементін оң жақпен шерту)."
+
+#: pan/tasks/task-xover.cc:82
+#, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "«%s» үшін барлық тақырыптамаларды алу"
+
+#: pan/tasks/task-xover.cc:85
+#, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "«%s» үшін жаңа тақырыптамаларды алу"
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:89
+#, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "«%s» үшін тақырыптамалар сынамасын алу"
+
+#: pan/tasks/task-xover.cc:457
+#, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr "%s (%lu бөлік, %lu мақала)"
+
+#: pan/tasks/task-xover.cc:531
+#, c-format
+msgid "Getting new headers for \"%s\" done."
+msgstr "«%s» үшін жаңа тақырыптамаларды алу аяқталды."
+
+#: pan/usenet-utils/filter-info.cc:215
+msgid "article doesn't have attachments"
+msgstr "мақаланың салынымдары жоқ"
+
+#: pan/usenet-utils/filter-info.cc:219
+msgid "the article has attachments"
+msgstr "мақаланың салынымдары бар"
+
+#: pan/usenet-utils/filter-info.cc:223
+msgid "the article isn't cached locally"
+msgstr "мақала жергілікті кэште сақталмаған"
+
+#: pan/usenet-utils/filter-info.cc:227
+msgid "the article is cached locally"
+msgstr "мақала жергілікті кэште сақталған"
+
+#: pan/usenet-utils/filter-info.cc:231
+msgid "the article wasn't posted by you"
+msgstr "мақаланы сіз жариялаған жоқсыз"
+
+#: pan/usenet-utils/filter-info.cc:235
+msgid "the article was posted by you"
+msgstr "мақаланы сіз жарияладыңыз"
+
+#: pan/usenet-utils/filter-info.cc:239
+msgid "the article has been read"
+msgstr "мақала оқылды"
+
+#: pan/usenet-utils/filter-info.cc:243
+msgid "the article hasn't been read"
+msgstr "мақала оқылған жоқ"
+
+#: pan/usenet-utils/filter-info.cc:247
+#, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "мақала ұзындығы %ld байттан аз"
+
+#: pan/usenet-utils/filter-info.cc:252
+#, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "мақала ұзындығы кем дегенде %ld байт"
+
+#: pan/usenet-utils/filter-info.cc:257
+#, c-format
+msgid "the article is less than %ld lines long"
+msgstr "мақала ұзындығы %ld жолдан аз"
+
+#: pan/usenet-utils/filter-info.cc:262
+#, c-format
+msgid "the article is at least %ld lines long"
+msgstr "мақала ұзындығы кем дегенде %ld жол"
+
+#: pan/usenet-utils/filter-info.cc:267
+#, c-format
+msgid "the article is less than %ld days old"
+msgstr "мақаланың жарияланғанына %ld күннен аз болды"
+
+#: pan/usenet-utils/filter-info.cc:272
+#, c-format
+msgid "the article is at least %ld days old"
+msgstr "мақаланың жарияланғанына кем дегенде %ld күн болды"
+
+#: pan/usenet-utils/filter-info.cc:277
+#, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "мақала %ld топтан аз топқа жарияланды"
+
+#: pan/usenet-utils/filter-info.cc:282
+#, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "мақала кем дегенде %ld топқа жарияланды"
+
+#: pan/usenet-utils/filter-info.cc:287
+#, c-format
+msgid "the article's score is less than %ld"
+msgstr "мақаланың ұпайы %ld-ден аз"
+
+#: pan/usenet-utils/filter-info.cc:292
+#, c-format
+msgid "the article's score is %ld or higher"
+msgstr "мақаланың ұпайы %ld немесе одан жоғары"
+
+#: pan/usenet-utils/filter-info.cc:301 pan/usenet-utils/filter-info.cc:311
+#, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "%s «%s» мәнін қамтымайды"
+
+#: pan/usenet-utils/filter-info.cc:302 pan/usenet-utils/filter-info.cc:312
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr "%s «%s» емес"
+
+#: pan/usenet-utils/filter-info.cc:303 pan/usenet-utils/filter-info.cc:313
+#, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "%s «%s» мәнінен басталмайды"
+
+#: pan/usenet-utils/filter-info.cc:304 pan/usenet-utils/filter-info.cc:314
+#, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "%s «%s» мәнімен аяқталмайды"
+
+#: pan/usenet-utils/filter-info.cc:305 pan/usenet-utils/filter-info.cc:315
+#, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "%s «%s» тұрақты өрнегіне сәйкес келмейді"
+
+#: pan/usenet-utils/filter-info.cc:327
+#, c-format
+msgid "%s contains \"%s\""
+msgstr "%s «%s» мәнін қамтиды"
+
+#: pan/usenet-utils/filter-info.cc:328
+#, c-format
+msgid "%s is \"%s\""
+msgstr "%s — «%s»"
+
+#: pan/usenet-utils/filter-info.cc:329
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr "%s «%s» мәнінен басталады"
+
+#: pan/usenet-utils/filter-info.cc:330
+#, c-format
+msgid "%s ends with \"%s\""
+msgstr "%s «%s» мәнімен аяқталады"
+
+#: pan/usenet-utils/filter-info.cc:331
+#, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "%s «%s» тұрақты өрнегіне сәйкес келеді"
+
+#: pan/usenet-utils/filter-info.cc:337
+msgid "Any of these tests fail:"
+msgstr "Келесі тексерулердің кез келгені сәтсіз аяқталса:"
+
+#: pan/usenet-utils/filter-info.cc:344
+msgid "All of these tests pass:"
+msgstr "Осы тексерулердің барлығы сәтті өтсе:"
+
+#: pan/usenet-utils/filter-info.cc:351
+msgid "None of these tests pass:"
+msgstr "Бұл тексерулердің ешбірі сәтті өтпесе:"
+
+#: pan/usenet-utils/filter-info.cc:358
+msgid "Any of these tests pass:"
+msgstr "Бұл тексерулердің кез келгені сәтті өтсе:"
+
+#: pan/usenet-utils/gnksa.cc:880
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr "Электронды пошта адресі көрсетілмеген; хабарлама-id «%s» доменімен жасалуда"
+
+#: pan/usenet-utils/message-check.cc:122
+msgid "Warning: Reply seems to be top-posted."
+msgstr "Ескерту: Жауап мәтіннен жоғары жазылған (top-posting) сияқты."
+
+#: pan/usenet-utils/message-check.cc:143
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr "Ескерту: Қолтаңба маркері «--» емес, «-- » болуы керек."
+
+#: pan/usenet-utils/message-check.cc:160
+msgid "Warning: Signature prefix with no signature."
+msgstr "Ескерту: Қолтаңба префиксі бар, бірақ қолтаңбаның өзі жоқ."
+
+#: pan/usenet-utils/message-check.cc:165
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "Ескерту: Қолтаңба ұзындығы 4 жолдан асады."
+
+#: pan/usenet-utils/message-check.cc:170
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "Ескерту: Қолтаңбаның ені 80 таңбадан асады."
+
+#: pan/usenet-utils/message-check.cc:196
+#, c-format
+msgid "Warning: %d line is more than 80 characters wide."
+msgid_plural "Warning: %d lines are more than 80 characters wide."
+msgstr[0] "Ескерту: %d жол 80 таңбадан асып тұр."
+
+#: pan/usenet-utils/message-check.cc:221
+msgid "Error: Message is empty."
+msgstr "Қате: Хабарлама бос."
+
+#: pan/usenet-utils/message-check.cc:256
+msgid "Warning: The message is entirely quoted text!"
+msgstr "Ескерту: Хабарлама толығымен дәйексөз мәтінінен тұрады!"
+
+#: pan/usenet-utils/message-check.cc:257
+msgid "Warning: The message is mostly quoted text."
+msgstr "Ескерту: Хабарлама негізінен дәйексөз мәтінінен тұрады."
+
+#: pan/usenet-utils/message-check.cc:307
+msgid "Error: Message appears to have no new content."
+msgstr "Қате: Хабарламада жаңа мазмұн жоқ сияқты."
+
+#: pan/usenet-utils/message-check.cc:342 pan/usenet-utils/message-check.cc:381
+#, c-format
+msgid ""
+"Warning: The posting profile's server doesn't carry newsgroup\n"
+"\t\"%s\".\n"
+"\tIf the group name is correct, switch profiles in the \"From:\"\n"
+"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
+msgstr ""
+"Ескерту: Жариялау профилінің серверінде «%s» жаңалықтар тобы\n"
+"\tжоқ.\n"
+"\tТоп аты дұрыс болса, «Кімнен:» жолында профильді ауыстырыңыз\n"
+"\tнемесе «Түзету|Жариялау профильдерін басқару» арқылы түзетіңіз."
+
+#: pan/usenet-utils/message-check.cc:353
+msgid "Warning: Following-Up to too many groups."
+msgstr "Ескерту: Жауап тым көп топтарға жіберілуде."
+
+#: pan/usenet-utils/message-check.cc:364
+msgid "Error: No Subject specified."
+msgstr "Қате: Тақырып көрсетілмеген."
+
+#: pan/usenet-utils/message-check.cc:393
+#, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "Ескерту: «%s» тобы тек оқу үшін қолжетімді."
+
+#: pan/usenet-utils/message-check.cc:402
+msgid "Error: Posting to a very large number of groups."
+msgstr "Қате: Тым көп топтарға жариялануда."
+
+#: pan/usenet-utils/message-check.cc:407
+msgid "Warning: Posting to a large number of groups."
+msgstr "Ескерту: Көптеген топтарға жариялануда."
+
+#: pan/usenet-utils/message-check.cc:414
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr "Ескерту: «Followup-To» тақырыптамасын орнатпай кросс-жариялау орындалуда."
+
+#: pan/usenet-utils/message-check.cc:439
+msgid "Error: Bad email address."
+msgstr "Қате: Жарамсыз электронды пошта адресі."
+
+#: pan/usenet-utils/message-check.cc:448
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr "Ескерту: Көптеген жаңалықтар топтарында HTML жарияланымдары құпталмайды."
+
+#: pan/usenet-utils/message-check.cc:484
+msgid "Error: No Recipients."
+msgstr "Қате: Алушылар жоқ."
+
+#: pan/usenet-utils/scorefile.cc:310
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr "%*.*s файлының %d жолында ұпайды оқу қатесі: күтпеген жол."
+
+#: pan/usenet-utils/scorefile.cc:442
+#, c-format
+msgid "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
+msgstr "%*.*s файлының %d жолында ұпайды оқу қатесі: «Expires: MM/DD/YYYY» немесе «Expires: DD-MM-YYYY» күтілді."
+
+#: pan/usenet-utils/scorefile.cc:452
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr "%*.*s файлының %d жолынан мерзімі өткен ескі ұпай өшірілді"
+
+#: pan/usenet-utils/scorefile.cc:589
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr "«%3$s» ішінен %2$lu бөлімдегі %1$lu ұпай қою ережесі оқылды"
+
+#: pan/usenet-utils/ssl-utils.cc:172
+#, c-format
+msgid "Error printing the server certificate for '%s'"
+msgstr "«%s» үшін сервер сертификатын шығару қатесі"
+
+#: pan/usenet-utils/ssl-utils.cc:191
+#, c-format
+msgid ""
+"The current server <b>'%s'</b> sent this security certificate:\n"
+"\n"
+msgstr ""
+"Ағымдағы сервер <b>«%s»</b> келесі қауіпсіздік сертификатын жіберді:\n"
+"\n"
+
+#: pan/usenet-utils/ssl-utils.cc:197
+#, c-format
+msgid ""
+"Certificate information for server <b>'%s'</b>:\n"
+"\n"
+msgstr ""
+"<b>«%s»</b> сервері үшін сертификат ақпараты:\n"
+"\n"
+
+#: pan/usenet-utils/ssl-utils.cc:202
+#, c-format
+msgid ""
+"%s<b>Issuer information:</b>\n"
+"%s\n"
+"<b>Valid until:</b> %s\n"
+"\n"
+"<b>Not valid before:</b> %s\n"
+"\n"
+msgstr ""
+"%s<b>Шығарушы туралы ақпарат:</b>\n"
+"%s\n"
+"<b>Жарамдылық мерзімі:</b> %s\n"
+"\n"
+"<b>Мына уақытқа дейін жарамсыз:</b> %s\n"
+"\n"
+
+#: pan/usenet-utils/text-massager.cc:397
+msgid "> [quoted text muted]"
+msgstr "> [дәйексөз мәтіні жасырылды]"
+
+#: pan/usenet-utils/text-massager.cc:579
+msgid "no_name"
+msgstr "аты_жоқ"
+
+#: pan/usenet-utils/text-massager.cc:580
+msgid "no_mail"
+msgstr "пошта_жоқ"
