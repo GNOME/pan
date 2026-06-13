@@ -692,6 +692,27 @@ void HeadersDB::expire_articles(const std::string &group,
     sqlite3_finalize(st);
 }
 
+int64_t HeadersDB::expire_articles_before_time(const std::string &group,
+                                                int64_t cutoff_time)
+{
+    if (!_db) return 0;
+
+    static const char SQL[] =
+        "DELETE FROM articles WHERE group_name=? AND time_posted<?";
+
+    sqlite3_stmt *st = nullptr;
+    if (sqlite3_prepare_v2(_db, SQL, -1, &st, nullptr) != SQLITE_OK)
+        return 0;
+
+    sqlite3_bind_text (st, 1, group.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int64(st, 2, cutoff_time);
+
+    sqlite3_step(st);
+    const int64_t deleted = sqlite3_changes64(_db);
+    sqlite3_finalize(st);
+    return deleted;
+}
+
 void HeadersDB::delete_group(const std::string &group)
 {
     if (!_db) return;

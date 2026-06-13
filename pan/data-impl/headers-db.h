@@ -178,6 +178,14 @@ class HeadersDB
                          const std::string &server,
                          int64_t below_number);
 
+    /**
+     * Remove articles in @p group posted before @p cutoff_time (unix epoch).
+     * ON DELETE CASCADE removes matching parts and xrefs automatically.
+     * Returns the number of articles deleted.
+     */
+    int64_t expire_articles_before_time(const std::string &group,
+                                        int64_t cutoff_time);
+
     /** Remove all articles for a group (e.g. when unsubscribing). */
     void delete_group(const std::string &group);
 

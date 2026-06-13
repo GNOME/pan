@@ -18,6 +18,7 @@
  */
 
 #include <cerrno>
+#include <cinttypes>
 #include <cmath>
 #include <config.h>
 #include <fstream>
@@ -299,6 +300,39 @@ void DataImpl ::ref_group(Quark const &group)
        (count() returns > 0) or if the flat file was empty. */
     if (_headers_db && _headers_db->ok() && !h->_nodes.empty())
       migrate_group_to_db(group);
+
+    /* Time-based expiry for the SQLite store.
+       Find the longest article_expiration_age across all servers that carry
+       this group (0 = unlimited).  Use the maximum so an article is kept as
+       long as ANY server still considers it fresh. */
+    if (_headers_db && _headers_db->ok())
+    {
+      quarks_t servers;
+      group_get_servers(group, servers);
+
+      int max_age_days = 0; /* 0 = no expiry configured */
+      bool any_bounded = false;
+      for (Quark const &srv : servers)
+      {
+        const int age = get_server_article_expiration_age(srv);
+        if (age > 0)
+        {
+          any_bounded = true;
+          max_age_days = std::max(max_age_days, age);
+        }
+      }
+
+      if (any_bounded && max_age_days > 0)
+      {
+        const time_t cutoff = time(nullptr) - static_cast<time_t>(max_age_days) * 86400;
+        const std::string gstr(group.c_str());
+        const int64_t removed =
+          _headers_db->expire_articles_before_time(gstr, static_cast<int64_t>(cutoff));
+        if (removed > 0)
+          Log::add_info_va(_("Expired %" PRId64 " old articles from \"%s\""),
+                           removed, group.c_str());
+      }
+    }
 #endif
   }
   ++h->_ref;
