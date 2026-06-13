@@ -34,6 +34,9 @@ extern "C"
 #include "article-filter.h"
 #include "data-impl.h"
 #include <pan/data/article.h>
+#ifdef HAVE_SQLITE
+#  include "headers-db.h"
+#endif
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -191,6 +194,97 @@ void DataImpl ::free_group_headers_memory(Quark const &group)
   }
 }
 
+#ifdef HAVE_SQLITE
+/**
+ * Migrate one group's flat-file headers into SQLite.
+ *
+ * Called lazily the first time a group is opened when the DB has no
+ * articles for it but the flat file (already loaded by load_headers())
+ * is non-empty.  Uses a single transaction for speed.
+ */
+void DataImpl ::migrate_group_to_db(Quark const &group)
+{
+  GroupHeaders *h(get_group_headers(group));
+  if (!h || h->_nodes.empty()) return;
+
+  HeadersDB *db = _headers_db.get();
+  if (!db || !db->ok()) return;
+
+  const std::string group_str(group.c_str());
+  const int64_t already = db->count(group_str);
+  if (already > 0) return; /* already migrated */
+
+  Log::add_info_va("HeadersDB: migrating %zu articles for \"%s\"...",
+                   h->_nodes.size(), group.c_str());
+
+  TimeElapsed timer;
+  db->begin_batch();
+
+  size_t inserted = 0;
+  for (auto const &kv : h->_nodes)
+  {
+    ArticleNode const *node = kv.second;
+    Article const *a = node->_article;
+    if (!a) continue; /* ghost node used only for threading */
+
+    /* Build the DB row. */
+    HeadersDB::Row row;
+    row.message_id  = a->message_id.c_str();
+    row.author      = a->author.c_str();
+    row.subject     = a->subject.c_str();
+    row.time_posted = static_cast<int64_t>(a->time_posted);
+    row.lines       = static_cast<int32_t>(a->lines);
+    row.score       = a->score;
+    row.is_binary   = a->is_binary;
+    row.flag        = a->flag;
+    row.total_parts = static_cast<int32_t>(a->get_total_part_count());
+
+    /* Extract the direct parent from the References chain stored in the
+       thread tree: walk up one level from the current node. */
+    if (node->_parent)
+      row.parent_mid = node->_parent->_mid.c_str();
+
+    /* Total byte count across all parts (used for byte_count_ge filter). */
+    {
+      int64_t total_bytes = 0;
+      for (auto pit = a->pbegin(), pend = a->pend(); pit != pend; ++pit)
+        total_bytes += static_cast<int64_t>(pit.bytes());
+      row.bytes = total_bytes;
+    }
+
+    const int64_t article_id = db->upsert_article(group_str, row);
+    if (article_id <= 0) continue;
+
+    /* Insert individual parts (needed for download). */
+    for (auto pit = a->pbegin(), pend = a->pend(); pit != pend; ++pit)
+    {
+      db->insert_part(article_id,
+                      static_cast<int32_t>(pit.number()),
+                      pit.mid(),
+                      static_cast<int64_t>(pit.bytes()));
+    }
+
+    /* Insert xrefs (needed for expiry and cross-post tracking). */
+    for (auto const &t : a->xref)
+    {
+      db->insert_xref(article_id,
+                      t.server.c_str(),
+                      t.group.c_str(),
+                      static_cast<int64_t>(
+                        static_cast<Article_Number::type>(t.number)));
+    }
+
+    ++inserted;
+  }
+
+  db->commit_batch();
+
+  Log::add_info_va(
+    "HeadersDB: migrated %zu articles for \"%s\" in %.1f seconds",
+    inserted, group.c_str(), timer.get_seconds_elapsed());
+}
+#endif /* HAVE_SQLITE */
+
 void DataImpl ::ref_group(Quark const &group)
 {
   GroupHeaders *h(get_group_headers(group));
@@ -198,10 +292,16 @@ void DataImpl ::ref_group(Quark const &group)
   {
     h = _group_to_headers[group] = new GroupHeaders();
     load_headers(*_data_io, group);
+
+#ifdef HAVE_SQLITE
+    /* Lazy migration: if this group has flat-file data but no DB entries,
+       migrate now.  Skipped automatically if already migrated
+       (count() returns > 0) or if the flat file was empty. */
+    if (_headers_db && _headers_db->ok() && !h->_nodes.empty())
+      migrate_group_to_db(group);
+#endif
   }
   ++h->_ref;
-  //  std::cerr << LINE_ID << " group " << group << " refcount up to " <<
-  //  h->_ref << std::endl;
 }
 
 void DataImpl ::unref_group(Quark const &group)

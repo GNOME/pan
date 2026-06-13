@@ -31,6 +31,9 @@
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
 #include "data-impl.h"
+#ifdef HAVE_SQLITE
+#  include "headers-db.h"
+#endif
 
 using namespace pan;
 
@@ -183,6 +186,11 @@ DataImpl :: xover_ref (const Quark& group)
     if (a != nullptr)
       workarea._subject_lookup.insert (std::pair<Quark,Quark>(a->subject,mid));
   }
+
+#ifdef HAVE_SQLITE
+  if (_headers_db && _headers_db->ok())
+    _headers_db->begin_batch();
+#endif
 }
 
 void
@@ -206,6 +214,11 @@ DataImpl :: xover_unref (const Quark& group)
     xover_flush (group);
     xover_clear_workarea (group);
   }
+
+#ifdef HAVE_SQLITE
+  if (_headers_db && _headers_db->ok())
+    _headers_db->commit_batch();
+#endif
 
   unref_group (group);
 }
@@ -313,12 +326,60 @@ DataImpl :: xover_add (const Quark         & server,
   ***  Add the article's part info
   **/
 
+  const int part_number (part_count<2 ? 1 : part_index);
   {
-    const int number (part_count<2 ? 1 : part_index);
     load_part (group, art_mid,
-               number, message_id,
+               part_number, message_id,
                line_count, byte_count);
   }
+
+#ifdef HAVE_SQLITE
+  if (_headers_db && _headers_db->ok())
+  {
+    /* Extract direct parent: last token in the references string. */
+    std::string parent_mid;
+    {
+      StringView refs_sv (references.c_str());
+      StringView tok;
+      while (refs_sv.pop_last_token (tok, ' ')) {
+        tok.trim();
+        if (!tok.empty()) { parent_mid.assign(tok.str, tok.len); break; }
+      }
+    }
+
+    HeadersDB::Row row;
+    row.message_id  = art_mid.c_str();
+    row.author      = author.str ? std::string(author.str, author.len) : std::string();
+    row.subject     = multipart_subject;
+    row.time_posted = static_cast<int64_t>(time_posted);
+    row.lines       = static_cast<int32_t>(line_count);
+    row.bytes       = static_cast<int64_t>(byte_count);
+    row.is_binary   = (part_count >= 1);
+    row.total_parts = (part_count < 1) ? 1 : part_count;
+    row.parent_mid  = parent_mid;
+
+    const int64_t article_db_id = _headers_db->upsert_article(group.c_str(), row);
+
+    if (article_db_id > 0)
+    {
+      /* Record the part mid (for multipart: the individual part's message-id). */
+      const std::string part_mid_str (message_id.str, message_id.len);
+      _headers_db->insert_part(article_db_id, part_number, part_mid_str, byte_count);
+
+      /* Record the xref so we can expire old articles later. */
+      Xref::targets_t xref_targets;
+      {
+        Xref tmp;
+        tmp.insert(server, xref);
+        for (auto const& t : tmp)
+          _headers_db->insert_xref(article_db_id,
+                                   t.server.c_str(),
+                                   t.group.c_str(),
+                                   static_cast<int64_t>(static_cast<Article_Number::type>(t.number)));
+      }
+    }
+  }
+#endif
 
   if (!workarea._added_batch.count(art_mid))
     workarea._changed_batch.insert(art_mid);

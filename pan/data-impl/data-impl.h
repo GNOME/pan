@@ -32,6 +32,10 @@
 #include <pan/data-impl/memchunk.h>
 #include <pan/data-impl/profiles.h>
 #include <pan/data-impl/article-rules.h>
+#ifdef HAVE_SQLITE
+#  include <memory>
+#  include <pan/data-impl/headers-db.h>
+#endif
 #include <pan/data/article-cache.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
@@ -152,6 +156,13 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     bool const _unit_test;
     DataIO *_data_io;
     Prefs &_prefs;
+#ifdef HAVE_SQLITE
+    std::unique_ptr<HeadersDB> _headers_db;
+  public:
+    HeadersDB * get_headers_db() { return _headers_db.get(); }
+    HeadersDB const * get_headers_db() const { return _headers_db.get(); }
+  private:
+#endif
 
     /**
     *** SERVERS
@@ -547,6 +558,9 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
     void ref_group(Quark const &group);
     void unref_group(Quark const &group);
+#ifdef HAVE_SQLITE
+    void migrate_group_to_db(Quark const &group);
+#endif
 
   private:
     class MyTree final : public Data::ArticleTree
@@ -587,6 +601,17 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
         Data::ShowType _show_type;
         struct NodeMidCompare;
         struct TwoNodes;
+
+#ifdef HAVE_SQLITE
+        /* Owning storage for Article+ArticleNode objects loaded from SQLite.
+           Kept separate from MemChunk so the window can be cleared cheaply.
+           Reserve before use to prevent reallocation invalidating pointers. */
+        std::vector<Article>     _sql_articles;
+        std::vector<ArticleNode> _sql_nodes;
+        bool _using_db = false;
+        void populate_from_db();
+        void clear_sql_nodes();
+#endif
 
       private:
         typedef std::set<ArticleNode const *, NodeMidCompare> unique_nodes_t;

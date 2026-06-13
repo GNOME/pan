@@ -22,12 +22,18 @@
 #include "memchunk.h"
 #include <cassert>
 #include <config.h>
+#include <map>
+#include <string>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
+#include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
+#ifdef HAVE_SQLITE
+#  include "headers-db.h"
+#endif
 
 using namespace pan;
 
@@ -105,6 +111,23 @@ void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
     _rules.clear();
   }
 
+#ifdef HAVE_SQLITE
+  /* In DB mode the current window is already in _nodes; use that
+     directly rather than iterating (empty) GroupHeaders::_nodes. */
+  if (_using_db)
+  {
+    const_nodes_v candidates;
+    candidates.reserve(_nodes.size());
+    foreach_const (nodes_t, _nodes, it)
+    {
+      if (it->second->_article)
+        candidates.push_back((ArticleNode *)it->second);
+    }
+    apply_rules(candidates);
+    return;
+  }
+#endif
+
   GroupHeaders const *h(_data.get_group_headers(_group));
   g_assert(h != nullptr);
   const_nodes_v candidates;
@@ -121,6 +144,241 @@ void DataImpl ::MyTree ::set_rules(RulesInfo const *rules)
   apply_rules(candidates);
 }
 
+#ifdef HAVE_SQLITE
+/* Maximum articles to load into a single MyTree window from SQLite. */
+static const int DB_WINDOW_SIZE = 10000;
+
+void DataImpl ::MyTree ::clear_sql_nodes()
+{
+  _nodes.clear();
+  _sql_articles.clear();
+  _sql_nodes.clear();
+}
+
+/* -----------------------------------------------------------------------
+   FTS5 query builder
+   Translates a FilterInfo tree into an FTS5 MATCH expression string.
+   Returns empty string when the filter cannot be expressed in FTS5
+   (caller falls back to load_window + in-memory test_article).
+   ----------------------------------------------------------------------- */
+namespace {
+
+/* Escape a literal string for use inside an FTS5 quoted phrase: "…" */
+static std::string fts_escape(std::string const &s)
+{
+  std::string out;
+  out.reserve(s.size() + 2);
+  for (char c : s)
+  {
+    if (c == '"') out += "\"\""; // double-quote escapes a quote in FTS5
+    else          out += c;
+  }
+  return out;
+}
+
+/* Map a TextMatch to an FTS5 column filter expression.
+   col is "subject" or "author".
+   Returns empty if the match type cannot be expressed in FTS5. */
+static std::string text_match_to_fts(std::string const &col,
+                                      TextMatch const &tm)
+{
+  std::string const &text = tm._impl_text;
+  if (text.empty()) return "";
+
+  switch (tm._impl_type)
+  {
+    case TextMatch::CONTAINS:
+      /* "word"  — FTS5 phrase match: all tokens must appear in order.
+         Good enough for single-word searches; multi-word is a phrase. */
+      return col + ":\"" + fts_escape(text) + "\"";
+
+    case TextMatch::BEGINS_WITH:
+      /* word*  — FTS5 prefix query */
+      return col + ":" + fts_escape(text) + "*";
+
+    case TextMatch::IS:
+      /* ^word  — FTS5 initial-token anchor */
+      return col + ":\"^" + fts_escape(text) + "\"";
+
+    case TextMatch::ENDS_WITH:
+    case TextMatch::REGEX:
+    default:
+      return ""; /* fall back to in-memory */
+  }
+}
+
+static std::string filter_to_fts_query(FilterInfo const &f,
+                                        Quark const &subject_q,
+                                        Quark const &from_q);
+
+static std::string filter_to_fts_query(FilterInfo const &f,
+                                        Quark const &subject_q,
+                                        Quark const &from_q)
+{
+  if (f.empty() || f._negate)
+    return ""; /* negation not directly expressible in FTS5 */
+
+  if (f._type == FilterInfo::TEXT)
+  {
+    std::string col;
+    if      (f._header == subject_q) col = "subject";
+    else if (f._header == from_q)    col = "author";
+    else    return "";               /* other headers: fall back */
+
+    return text_match_to_fts(col, f._text);
+  }
+
+  if (f._type == FilterInfo::AGGREGATE_AND)
+  {
+    /* All sub-criteria must be expressible; one miss → full fall-back. */
+    std::string combined;
+    for (FilterInfo const *sub : f._aggregates)
+    {
+      std::string q = filter_to_fts_query(*sub, subject_q, from_q);
+      if (q.empty()) return "";
+      if (!combined.empty()) combined += ' ';
+      combined += q;
+    }
+    return combined;
+  }
+
+  if (f._type == FilterInfo::AGGREGATE_OR)
+  {
+    std::string combined;
+    for (FilterInfo const *sub : f._aggregates)
+    {
+      std::string q = filter_to_fts_query(*sub, subject_q, from_q);
+      if (q.empty()) return "";
+      if (!combined.empty()) combined += " OR ";
+      combined += q;
+    }
+    return combined;
+  }
+
+  return ""; /* IS_READ, IS_BINARY, etc.: fall back */
+}
+
+} // anonymous namespace
+
+/* -----------------------------------------------------------------------
+   populate_from_db: load a window (or FTS result set) from SQLite and
+   build Article + ArticleNode objects for the MyTree.
+   ----------------------------------------------------------------------- */
+void DataImpl ::MyTree ::populate_from_db()
+{
+  HeadersDB *db = _data.get_headers_db();
+  if (!db || !db->ok()) return;
+
+  const std::string group_str(_group.c_str());
+
+  /* Subject / From Quarks needed for FTS column mapping. */
+  static const Quark subject_q("Subject");
+  static const Quark from_q("From");
+
+  /* ---- Step 1: fetch rows ---- */
+  std::vector<HeadersDB::Row> rows;
+  bool used_fts = false;
+
+  if (!_filter.empty())
+  {
+    std::string fts_q = filter_to_fts_query(_filter, subject_q, from_q);
+    if (!fts_q.empty())
+    {
+      rows    = db->search_fts(group_str, fts_q, DB_WINDOW_SIZE);
+      used_fts = true;
+    }
+  }
+
+  if (!used_fts)
+    rows = db->load_window(group_str, 0, DB_WINDOW_SIZE, "time_posted", true);
+
+  if (rows.empty()) return;
+
+  /* ---- Step 2: build Article + ArticleNode objects ---- */
+
+  /* Reserve upfront: pointer stability is required because ArticleNode
+     stores Article*, and _nodes stores ArticleNode*.  With reserve() the
+     vectors never reallocate during the loop. */
+  _sql_articles.reserve(rows.size());
+  _sql_nodes.reserve(rows.size());
+
+  /* For threading: mid → parent_mid within this window. */
+  std::map<std::string, std::string> parent_of;
+
+  const bool need_post_filter = !_filter.empty() && !used_fts;
+
+  for (auto const &row : rows)
+  {
+    /* Always add to _sql_articles so the Article object is stable. */
+    _sql_articles.emplace_back();
+    Article &a = _sql_articles.back();
+    a.message_id  = Quark(row.message_id);
+    a.author      = Quark(row.author);
+    a.subject     = Quark(row.subject);
+    a.time_posted = static_cast<time_t>(row.time_posted);
+    a.lines       = static_cast<unsigned int>(row.lines);
+    a.is_binary   = row.is_binary;
+    a.flag        = row.flag;
+    a.score       = row.score;
+    a.set_part_count(static_cast<Parts::number_t>(
+                       row.total_parts > 0 ? row.total_parts : 1));
+
+    /* Post-filter for non-FTS paths (IS_READ, IS_BINARY, etc.).
+       Article stays in _sql_articles but is NOT added to _nodes. */
+    if (need_post_filter
+        && !_data._article_filter.test_article(_data, _filter, _group, a))
+      continue;
+
+    _sql_nodes.emplace_back();
+    ArticleNode &node = _sql_nodes.back();
+    node._mid     = a.message_id;
+    node._article = &a;
+    node._parent  = nullptr;
+
+    _nodes[a.message_id] = &node;
+
+    if (!row.parent_mid.empty())
+      parent_of[row.message_id] = row.parent_mid;
+  }
+
+  if (_nodes.empty()) return;
+
+  /* ---- Step 3: wire parent → child within the loaded window ---- */
+  ArticleTree::Diffs diffs;
+  for (auto const &kv : _nodes)
+  {
+    ArticleNode *node = kv.second;
+    if (!node->_article) continue;
+
+    auto pit = parent_of.find(node->_mid.c_str());
+    if (pit != parent_of.end())
+    {
+      auto parent_it = _nodes.find(Quark(pit->second));
+      if (parent_it != _nodes.end())
+      {
+        node->_parent = parent_it->second;
+        parent_it->second->_children.push_back(node);
+      }
+    }
+
+    Diffs::Added added;
+    added.message_id = node->_mid;
+    if (node->_parent)
+      added.parent = node->_parent->_mid;
+    diffs.added.insert(
+      diffs.added.end(),
+      std::pair<Quark, Diffs::Added>(added.message_id, added));
+  }
+
+  if (!diffs.added.empty())
+    fire_diffs(diffs);
+
+  Log::add_info_va("HeadersDB: %s %zu articles for %s",
+                   used_fts ? "FTS found" : "loaded",
+                   _nodes.size(), group_str.c_str());
+}
+#endif /* HAVE_SQLITE */
+
 void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
                                     FilterInfo const *criteria)
 {
@@ -134,6 +392,26 @@ void DataImpl ::MyTree ::set_filter(Data::ShowType const show_type,
     _filter.clear();
   }
   _show_type = show_type;
+
+#ifdef HAVE_SQLITE
+  /* For large groups, use the SQLite window path instead of scanning
+     the entire in-memory GroupHeaders. */
+  {
+    HeadersDB *db = _data.get_headers_db();
+    GroupHeaders const *h(_data.get_group_headers(_group));
+    const bool group_is_large = h && (h->_nodes.size() == 0)
+                                  && db && db->ok()
+                                  && (db->count(std::string(_group.c_str())) > 0);
+    if (group_is_large)
+    {
+      if (_using_db) clear_sql_nodes();
+      _using_db = true;
+      populate_from_db();
+      return;
+    }
+  }
+  _using_db = false;
+#endif
 
   // refilter all the articles in the group...
   GroupHeaders const *h(_data.get_group_headers(_group));
@@ -177,6 +455,10 @@ DataImpl ::MyTree ::MyTree(DataImpl &data_impl,
 DataImpl ::MyTree ::~MyTree()
 {
   _nodes.clear();
+#ifdef HAVE_SQLITE
+  _sql_articles.clear();
+  _sql_nodes.clear();
+#endif
   _data._trees.erase(this);
   _data.unref_group(_group);
 }

@@ -1,4 +1,4 @@
-add_library(data-impl
+set(DATA_IMPL_SOURCES
  article-filter.cc
  article-rules.cc
  data-io.cc
@@ -11,6 +11,12 @@ add_library(data-impl
  task-archive.cc
  xover.cc
 )
+
+if(WANT_SQLITE)
+  list(APPEND DATA_IMPL_SOURCES headers-db.cc)
+endif()
+
+add_library(data-impl ${DATA_IMPL_SOURCES})
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
@@ -26,4 +32,8 @@ endif()
 if(WANT_GKR)
   target_link_libraries(data-impl PUBLIC PkgConfig::LIBSECRET)
   target_link_libraries(data-impl PUBLIC PkgConfig::GCR3)
+endif()
+
+if(WANT_SQLITE)
+  target_link_libraries(data-impl PUBLIC PkgConfig::SQLITE3)
 endif()

@@ -31,6 +31,10 @@
 #include <pan/general/time-elapsed.h>
 #include "data-impl.h"
 
+#ifdef HAVE_SQLITE
+#  include <pan/data-impl/headers-db.h>
+#endif
+
 #ifdef HAVE_GKR
   #define GCR_API_SUBJECT_TO_CHANGE
   #include <libsecret/secret.h>
@@ -101,6 +105,18 @@ DataImpl :: rebuild_backend ()
   else
   {
     TimeElapsed timer;
+
+#ifdef HAVE_SQLITE
+    {
+      char * db_path = g_build_filename (file::get_pan_home().c_str(), "articles.db", nullptr);
+      _headers_db = std::make_unique<HeadersDB>(db_path);
+      if (!_headers_db->ok())
+        Log::add_err_va ("HeadersDB: %s", _headers_db->last_error().c_str());
+      else
+        Log::add_info_va ("HeadersDB opened: %s", db_path);
+      g_free (db_path);
+    }
+#endif
 
     const std::string score_filename (_data_io->get_scorefile_name());
     if (file :: file_exists (score_filename.c_str()))

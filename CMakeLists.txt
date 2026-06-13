@@ -176,6 +176,12 @@ if(WANT_GKR)
   set(HAVE_GKR TRUE)
 endif()
 
+option(WANT_SQLITE "enable SQLite backend for large newsgroup support (default: on)" ON)
+if(WANT_SQLITE)
+  pkg_check_modules(SQLITE3 REQUIRED IMPORTED_TARGET sqlite3>=3.9.0)
+  set(HAVE_SQLITE TRUE)
+endif()
+
 option(ENABLE_MANUAL "built in user manual (default: off)")
 if (ENABLE_MANUAL)
   set(HAVE_MANUAL 1)
