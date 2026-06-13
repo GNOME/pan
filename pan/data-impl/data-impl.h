@@ -25,6 +25,7 @@
 #include <list>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <pan/data-impl/article-filter.h>
@@ -609,6 +610,8 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
         std::vector<Article>     _sql_articles;
         std::vector<ArticleNode> _sql_nodes;
         bool _using_db = false;
+        /* message_id → SQLite articles.id, for lazy xref/parts loading */
+        mutable std::unordered_map<std::string, int64_t> _sql_mid_to_id;
         void populate_from_db();
         void clear_sql_nodes();
 #endif

@@ -89,7 +89,49 @@ Article const *DataImpl ::MyTree ::get_parent(Quark const &mid) const
 Article const *DataImpl ::MyTree ::get_article(Quark const &mid) const
 {
   nodes_t::const_iterator it(_nodes.find(mid));
-  return it == _nodes.end() ? nullptr : it->second->_article;
+  if (it == _nodes.end()) return nullptr;
+  Article *a = it->second->_article;
+
+#ifdef HAVE_SQLITE
+  /* Lazy-load xrefs and parts from SQLite the first time an article is
+     accessed for reading/downloading.  Without this, TaskArticle cannot
+     find a server to download from (xref is empty) and get_part_mids()
+     returns nothing. */
+  if (_using_db && a && a->xref.empty())
+  {
+    auto id_it = _sql_mid_to_id.find(mid.c_str());
+    if (id_it != _sql_mid_to_id.end())
+    {
+      HeadersDB *db = _data.get_headers_db();
+      if (db && db->ok())
+      {
+        const int64_t db_id = id_it->second;
+
+        /* Xrefs: which server(s) carry this article */
+        for (auto const &x : db->get_xrefs(db_id))
+          a->xref.insert(Quark(x.server),
+                         Quark(x.xref_group),
+                         Article_Number(static_cast<Article_Number::type>(
+                           x.article_number)));
+
+        /* Parts: needed so get_part_mids() returns the right message IDs */
+        auto parts = db->get_parts(db_id);
+        if (!parts.empty())
+        {
+          const auto n = static_cast<Parts::number_t>(parts.size());
+          PartBatch batch(a->message_id, n);
+          for (auto const &p : parts)
+            batch.add_part(static_cast<Parts::number_t>(p.part_number),
+                           StringView(p.part_mid.c_str(), p.part_mid.size()),
+                           static_cast<Parts::bytes_t>(p.bytes));
+          a->set_parts(batch);
+        }
+      }
+    }
+  }
+#endif
+
+  return a;
 }
 
 size_t DataImpl ::MyTree ::size() const
@@ -153,6 +195,7 @@ void DataImpl ::MyTree ::clear_sql_nodes()
   _nodes.clear();
   _sql_articles.clear();
   _sql_nodes.clear();
+  _sql_mid_to_id.clear();
 }
 
 /* -----------------------------------------------------------------------
@@ -322,6 +365,10 @@ void DataImpl ::MyTree ::populate_from_db()
     a.score       = row.score;
     a.set_part_count(static_cast<Parts::number_t>(
                        row.total_parts > 0 ? row.total_parts : 1));
+
+    /* Record id for lazy xref/parts loading when article is opened. */
+    if (row.id > 0)
+      _sql_mid_to_id[row.message_id] = row.id;
 
     /* Post-filter for non-FTS paths (IS_READ, IS_BINARY, etc.).
        Article stays in _sql_articles but is NOT added to _nodes. */
