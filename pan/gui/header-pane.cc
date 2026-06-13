@@ -2795,6 +2795,12 @@ void HeaderPane ::read_next_article() {
     read_next_if(ArticleExists());
 }
 
+void HeaderPane ::load_more_articles()
+{
+  if (_atree && _atree->has_more_articles())
+    _atree->load_next_page();
+}
+
 void HeaderPane ::read_next_thread()
 {
   if (_atree && _atree->size() > 0)

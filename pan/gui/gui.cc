@@ -1077,6 +1077,10 @@ void GUI :: do_read_next_article ()
 {
   _header_pane->read_next_article ();
 }
+void GUI :: do_load_more_articles ()
+{
+  _header_pane->load_more_articles();
+}
 void GUI :: do_read_next_watched_article ()
 {
   std::cerr << "FIXME " << LINE_ID << std::endl;

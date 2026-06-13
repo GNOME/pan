@@ -148,6 +148,7 @@ namespace pan
   void do_read_next_group              (GtkAction*) { pan_ui->do_read_next_group(); }
   void do_read_next_unread_article     (GtkAction*) { pan_ui->do_read_next_unread_article(); }
   void do_read_next_article            (GtkAction*) { pan_ui->do_read_next_article(); }
+  void do_load_more_articles           (GtkAction*) { pan_ui->do_load_more_articles(); }
   void do_read_next_watched_article    (GtkAction*) { pan_ui->do_read_next_watched_article(); }
   void do_read_next_unread_thread      (GtkAction*) { pan_ui->do_read_next_unread_thread(); }
   void do_read_next_thread             (GtkAction*) { pan_ui->do_read_next_thread(); }
@@ -549,6 +550,11 @@ namespace pan
         N_("Next _Article"), "<control>N",
         N_("Next Article"),
         G_CALLBACK(do_read_next_article) },
+
+      { "load-more-articles", NULL,
+        N_("Load _Older Articles"), "<control><shift>O",
+        N_("Load the next page of older articles from the database"),
+        G_CALLBACK(do_load_more_articles) },
 
       { "read-next-watched-article", NULL,
         N_("Next _Watched Article"), "<control><shift>N",

@@ -58,6 +58,7 @@ namespace pan
     virtual void do_read_next_group () = 0;
     virtual void do_read_next_unread_article () = 0;
     virtual void do_read_next_article () = 0;
+    virtual void do_load_more_articles () = 0;
     virtual void do_read_next_watched_article () = 0;
     virtual void do_read_next_unread_thread () = 0;
     virtual void do_read_next_thread () = 0;

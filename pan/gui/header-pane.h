@@ -122,6 +122,7 @@ class HeaderPane :
   public:
     void read_next_article();
     void read_next_unread_article();
+    void load_more_articles();
     void read_next_thread();
     void read_next_unread_thread();
     void read_previous_article();

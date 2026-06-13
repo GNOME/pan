@@ -644,6 +644,12 @@ class Data :
 
         virtual void set_rules(
           RulesInfo const *filter_or_null_to_reset = nullptr) = 0;
+
+        /** True when more articles exist beyond the currently loaded window. */
+        virtual bool has_more_articles() const { return false; }
+
+        /** Load the next page of older articles and fire Diffs::Added. */
+        virtual void load_next_page() {}
     };
 
     /**

@@ -140,6 +140,7 @@ namespace pan
       void do_read_next_group () override;
       void do_read_next_unread_article () override;
       void do_read_next_article () override;
+      void do_load_more_articles () override;
       void do_read_next_watched_article () override;
       void do_read_next_unread_thread () override;
       void do_read_next_thread () override;

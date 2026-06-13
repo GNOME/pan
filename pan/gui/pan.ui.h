@@ -89,6 +89,7 @@ const char * fallback_ui_file =
 "      <separator />\n"
 "      <menuitem action='read-next-unread-article' />\n"
 "      <menuitem action='read-next-article' />\n"
+"      <menuitem action='load-more-articles' />\n"
 "      <menuitem action='read-next-watched-article' />\n"
 "      <menuitem action='read-previous-article' />\n"
 "      <menuitem action='read-parent-article' />\n"

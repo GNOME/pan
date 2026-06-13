@@ -26,6 +26,7 @@
 #include <map>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include <pan/data-impl/article-filter.h>
@@ -607,13 +608,19 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
         /* Owning storage for Article+ArticleNode objects loaded from SQLite.
            Kept separate from MemChunk so the window can be cleared cheaply.
            Reserve before use to prevent reallocation invalidating pointers. */
-        std::vector<Article>     _sql_articles;
-        std::vector<ArticleNode> _sql_nodes;
-        bool _using_db = false;
+        /* deque guarantees pointer/reference stability on push_back(),
+           unlike vector — essential for progressive page loading. */
+        std::deque<Article>     _sql_articles;
+        std::deque<ArticleNode> _sql_nodes;
+        bool _using_db    = false;
+        int  _db_offset   = 0;    /* articles loaded so far (base window) */
+        bool _db_has_more = false; /* false when DB has no more articles */
         /* message_id → SQLite articles.id, for lazy xref/parts loading */
         mutable std::unordered_map<std::string, int64_t> _sql_mid_to_id;
         void populate_from_db();
         void clear_sql_nodes();
+        bool has_more_articles() const override;
+        void load_next_page() override;
 #endif
 
       private:

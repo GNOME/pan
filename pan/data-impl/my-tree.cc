@@ -197,6 +197,13 @@ void DataImpl ::MyTree ::clear_sql_nodes()
   _sql_articles.clear();
   _sql_nodes.clear();
   _sql_mid_to_id.clear();
+  _db_offset   = 0;
+  _db_has_more = false;
+}
+
+bool DataImpl ::MyTree ::has_more_articles() const
+{
+  return _using_db && _db_has_more;
 }
 
 /* -----------------------------------------------------------------------
@@ -403,13 +410,16 @@ void DataImpl ::MyTree ::populate_from_db()
     }
   }
 
-  /* ---- Step 2: build Article + ArticleNode objects ---- */
+  /* Track how many base-window rows we have (before thread expansion)
+     so load_next_page() can advance the offset correctly. */
+  const int base_count = static_cast<int>(
+    used_fts ? rows.size()            /* FTS result — no further paging */
+             : std::min(rows.size(),  /* window rows before expansion   */
+                        static_cast<size_t>(DB_WINDOW_SIZE)));
 
-  /* Reserve upfront: pointer stability is required because ArticleNode
-     stores Article*, and _nodes stores ArticleNode*.  With reserve() the
-     vectors never reallocate during the loop. */
-  _sql_articles.reserve(rows.size());
-  _sql_nodes.reserve(rows.size());
+  /* ---- Step 2: build Article + ArticleNode objects ---- */
+  /* _sql_articles and _sql_nodes are std::deque: push_back() never
+     invalidates existing pointers, so no reserve() is needed. */
 
   /* For threading: mid → parent_mid within this window. */
   std::map<std::string, std::string> parent_of;
@@ -486,9 +496,104 @@ void DataImpl ::MyTree ::populate_from_db()
   if (!diffs.added.empty())
     fire_diffs(diffs);
 
-  Log::add_info_va("HeadersDB: %s %zu articles for %s",
+  /* Update pagination state.  FTS results are not pageable (they are a
+     filtered set, not a time-ordered window), so mark them as complete. */
+  _db_offset   = base_count;
+  _db_has_more = !used_fts && (base_count >= DB_WINDOW_SIZE);
+
+  Log::add_info_va("HeadersDB: %s %zu articles for %s%s",
                    used_fts ? "FTS found" : "loaded",
-                   _nodes.size(), group_str.c_str());
+                   _nodes.size(), group_str.c_str(),
+                   _db_has_more ? " (more available)" : "");
+}
+
+void DataImpl ::MyTree ::load_next_page()
+{
+  if (!_using_db || !_db_has_more) return;
+
+  HeadersDB *db = _data.get_headers_db();
+  if (!db || !db->ok()) return;
+
+  const std::string group_str(_group.c_str());
+
+  auto new_rows = db->load_window(group_str, _db_offset, DB_WINDOW_SIZE,
+                                  "time_posted", true);
+  if (new_rows.empty())
+  {
+    _db_has_more = false;
+    return;
+  }
+
+  /* Skip articles already in the window (can happen at page boundaries). */
+  std::vector<std::string> added_mids;
+  std::map<std::string, std::string> parent_of;
+
+  for (auto const &row : new_rows)
+  {
+    if (_nodes.count(Quark(row.message_id))) continue;
+
+    _sql_articles.emplace_back();
+    Article &a = _sql_articles.back();
+    a.message_id  = Quark(row.message_id);
+    a.author      = Quark(row.author);
+    a.subject     = Quark(row.subject);
+    a.time_posted = static_cast<time_t>(row.time_posted);
+    a.lines       = static_cast<unsigned int>(row.lines);
+    a.is_binary   = row.is_binary;
+    a.flag        = row.flag;
+    a.score       = row.score;
+    a.set_part_count(static_cast<Parts::number_t>(
+                       row.total_parts > 0 ? row.total_parts : 1));
+
+    if (row.id > 0)
+      _sql_mid_to_id[row.message_id] = row.id;
+
+    _sql_nodes.emplace_back();
+    ArticleNode &node = _sql_nodes.back();
+    node._mid     = a.message_id;
+    node._article = &a;
+    node._parent  = nullptr;
+
+    _nodes[a.message_id] = &node;
+    added_mids.push_back(row.message_id);
+
+    if (!row.parent_mid.empty())
+      parent_of[row.message_id] = row.parent_mid;
+  }
+
+  /* Wire parent → child for the new batch (and to existing nodes). */
+  ArticleTree::Diffs diffs;
+  for (auto const &mid_str : added_mids)
+  {
+    ArticleNode *node = _nodes[Quark(mid_str)];
+
+    auto pit = parent_of.find(mid_str);
+    if (pit != parent_of.end())
+    {
+      auto parent_it = _nodes.find(Quark(pit->second));
+      if (parent_it != _nodes.end())
+      {
+        node->_parent = parent_it->second;
+        parent_it->second->_children.push_back(node);
+      }
+    }
+
+    Diffs::Added added;
+    added.message_id = node->_mid;
+    if (node->_parent)
+      added.parent = node->_parent->_mid;
+    diffs.added[added.message_id] = added;
+  }
+
+  _db_offset   += static_cast<int>(new_rows.size());
+  _db_has_more  = (static_cast<int>(new_rows.size()) >= DB_WINDOW_SIZE);
+
+  if (!diffs.added.empty())
+    fire_diffs(diffs);
+
+  Log::add_info_va("HeadersDB: loaded %zu more articles for %s%s",
+                   added_mids.size(), group_str.c_str(),
+                   _db_has_more ? " (more available)" : "");
 }
 #endif /* HAVE_SQLITE */
 
