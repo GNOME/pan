@@ -134,6 +134,14 @@ class HeadersDB
                                  const std::string &root_mid) const;
 
     /**
+     * Walk up the parent_mid chain from @p mid to find the thread root.
+     * Returns the message_id of the topmost ancestor found in the DB.
+     * Returns @p mid itself if it has no parent in the DB.
+     */
+    std::string find_thread_root(const std::string &group,
+                                 const std::string &mid) const;
+
+    /**
      * FTS5 full-text search on subject and author.
      * query follows FTS5 match syntax (e.g. "nzb OR yenc", "subject:foo").
      */

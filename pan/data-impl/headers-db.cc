@@ -510,6 +510,45 @@ HeadersDB::load_thread(const std::string &group,
     return out;
 }
 
+std::string HeadersDB::find_thread_root(const std::string &group,
+                                         const std::string &mid) const
+{
+    if (!_db) return mid;
+
+    /* Recursive CTE: walk UP via parent_mid to find the topmost ancestor.
+       Each recursive step goes one level toward the root.  The step with
+       the highest depth value is the root (or highest ancestor found in DB).
+       depth < 200 prevents infinite loops from malformed data. */
+    static const char SQL[] =
+        "WITH RECURSIVE anc(message_id, parent_mid, depth) AS ("
+        "  SELECT message_id, parent_mid, 0"
+        "    FROM articles WHERE group_name=? AND message_id=?"
+        "  UNION ALL"
+        "  SELECT a.message_id, a.parent_mid, anc.depth+1"
+        "    FROM articles a"
+        "    JOIN anc ON a.message_id = anc.parent_mid AND a.group_name=?"
+        "   WHERE anc.depth < 200"
+        ")"
+        "SELECT message_id FROM anc ORDER BY depth DESC LIMIT 1";
+
+    sqlite3_stmt *st = nullptr;
+    if (sqlite3_prepare_v2(_db, SQL, -1, &st, nullptr) != SQLITE_OK)
+        return mid;
+
+    sqlite3_bind_text(st, 1, group.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(st, 2, mid.c_str(),   -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(st, 3, group.c_str(), -1, SQLITE_TRANSIENT);
+
+    std::string root = mid;
+    if (sqlite3_step(st) == SQLITE_ROW)
+    {
+        const char *p = reinterpret_cast<const char *>(sqlite3_column_text(st, 0));
+        if (p) root = p;
+    }
+    sqlite3_finalize(st);
+    return root;
+}
+
 std::vector<HeadersDB::Row>
 HeadersDB::search_fts(const std::string &group,
                       const std::string &query,

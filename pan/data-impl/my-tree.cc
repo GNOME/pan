@@ -24,6 +24,7 @@
 #include <config.h>
 #include <map>
 #include <string>
+#include <unordered_set>
 #include <pan/data/article.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -336,6 +337,71 @@ void DataImpl ::MyTree ::populate_from_db()
     rows = db->load_window(group_str, 0, DB_WINDOW_SIZE, "time_posted", true);
 
   if (rows.empty()) return;
+
+  /* ---- Step 1b: thread expansion for SHOW_THREADS mode ----
+     Walk up parent_mid chains to find thread roots that lie outside the
+     window, then call load_thread() to fill in any missing articles.
+     This makes SHOW_THREADS show complete threads even when the root was
+     posted before the 10K-article window.
+
+     Limits: at most MAX_THREAD_EXTRA extra articles total to avoid loading
+     runaway mega-threads.  We only expand each unique root once. */
+  if (_show_type == Data::SHOW_THREADS || _show_type == Data::SHOW_SUBTHREADS)
+  {
+    static const size_t MAX_THREAD_EXTRA = 2000;
+
+    /* Build a set of message_ids already in rows for fast membership test. */
+    std::unordered_set<std::string> mid_set;
+    mid_set.reserve(rows.size());
+    for (auto const &r : rows)
+      mid_set.insert(r.message_id);
+
+    /* Find candidate seeds: articles whose parent is NOT in the current
+       window.  For SHOW_THREADS those are local thread roots; for
+       SHOW_SUBTHREADS each article is its own expansion seed. */
+    std::unordered_set<std::string> expanded_roots;
+    std::vector<HeadersDB::Row> extra;
+
+    for (auto const &seed : rows)
+    {
+      if (extra.size() >= MAX_THREAD_EXTRA) break;
+
+      std::string expand_from;
+      if (_show_type == Data::SHOW_THREADS)
+      {
+        /* Only expand from articles whose parent is outside the window. */
+        if (!seed.parent_mid.empty() && !mid_set.count(seed.parent_mid))
+          expand_from = db->find_thread_root(group_str, seed.message_id);
+        else if (seed.parent_mid.empty())
+          expand_from = seed.message_id; /* already a root */
+      }
+      else /* SHOW_SUBTHREADS: expand all descendants of each article */
+      {
+        expand_from = seed.message_id;
+      }
+
+      if (expand_from.empty() || expanded_roots.count(expand_from))
+        continue;
+      expanded_roots.insert(expand_from);
+
+      auto thread_rows = db->load_thread(group_str, expand_from);
+      for (auto &tr : thread_rows)
+      {
+        if (!mid_set.count(tr.message_id) && extra.size() < MAX_THREAD_EXTRA)
+        {
+          mid_set.insert(tr.message_id);
+          extra.push_back(std::move(tr));
+        }
+      }
+    }
+
+    if (!extra.empty())
+    {
+      rows.reserve(rows.size() + extra.size());
+      for (auto &r : extra)
+        rows.push_back(std::move(r));
+    }
+  }
 
   /* ---- Step 2: build Article + ArticleNode objects ---- */
 
