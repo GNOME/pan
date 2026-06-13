@@ -44,6 +44,9 @@ extern "C" {
 #include <pan/usenet-utils/numbers.h>
 
 #include "data-impl.h"
+#ifdef HAVE_SQLITE
+#  include "headers-db.h"
+#endif
 
 using namespace pan;
 
@@ -382,6 +385,27 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
     }
   }
   delete in;
+
+#ifdef HAVE_SQLITE
+  /* Merge in any SQLite-persisted high-water marks.
+     During migration the DB value may be higher (more recent) than the
+     flat file; we always take the maximum so no articles are re-fetched. */
+  if (_headers_db && _headers_db->ok())
+  {
+    for (auto &[group_quark, rg] : _read_groups)
+    {
+      const std::string gstr(group_quark.c_str());
+      for (auto &[server_quark, rgs] : rg._servers)
+      {
+        const std::string sstr(server_quark.c_str());
+        const int64_t db_high = _headers_db->get_xover_high(gstr, sstr);
+        if (db_high > static_cast<int64_t>(
+                        static_cast<Article_Number::type>(rgs._xover_high)))
+          rgs._xover_high = Article_Number(static_cast<Article_Number::type>(db_high));
+      }
+    }
+  }
+#endif
 }
 
 void
@@ -493,6 +517,14 @@ DataImpl :: set_xover_high (const Quark & group,
   //std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
   ReadGroup::Server& rgs (_read_groups[group][server]);
   rgs._xover_high = high;
+
+#ifdef HAVE_SQLITE
+  if (_headers_db && _headers_db->ok())
+    _headers_db->set_xover_high(
+      std::string(group.c_str()),
+      std::string(server.c_str()),
+      static_cast<int64_t>(static_cast<Article_Number::type>(high)));
+#endif
 }
 
 void
