@@ -126,7 +126,7 @@ On Fedora, dependencies can be installed with:
 
 #+BEGIN_SRC shell :results verbatim
   sudo dnf install gcc gcc-c++ ninja-build libassuan-devel \
-       cmake gtk3-devel glib-devel gmime30-devel gspell-devel gnutls-devel
+       cmake cmake-gui gtk3-devel glib-devel gmime30-devel gspell-devel gnutls-devel
 #+END_SRC
 
 Note that I work on Debian and I did not test this instructions on
@@ -163,7 +163,7 @@ Run the following command to setup Pan build with the default options:
 
 #+BEGIN_SRC shell :results verbatim
   mkdir -p std-build
-  cmake -B std-build
+  cmake -B std-build -G 'Unix Makefiles'
 #+END_SRC
 
 To setup options, you can run:
