@@ -106,7 +106,7 @@ The following libraries add extra features but are optional:
 - [[http://www.freedesktop.org/wiki/Software/dbus][D-Bus]] to support running multiple Pan instances
 - [[http://www.gnu.org/software/gnutls/][GnuTLS]] 3.3.6 or higher for encrypted connections (TLS 1.x)
 - [[http://itstool.org/][ITS Tool]] for built-in user manual
-  
+
 The following libraries are experimental and not suitable for any use
 other than testing. Use at your own risk:
 
@@ -146,12 +146,12 @@ This procedure is to be run once if you used to build pan with
 autotools in your repository.
 
 First, check the list the files to be deleted:
-#+BEGIN_SRC shell :results verbatim 
+#+BEGIN_SRC shell :results verbatim
 git clean -dxn
 #+END_SRC
 
 Then, delete all extra files:
-#+BEGIN_SRC shell :results verbatim 
+#+BEGIN_SRC shell :results verbatim
 git clean -dxf
 #+END_SRC
 
